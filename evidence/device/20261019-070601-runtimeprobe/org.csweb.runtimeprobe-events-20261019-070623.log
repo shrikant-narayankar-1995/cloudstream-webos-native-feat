@@ -1,0 +1,80 @@
+         0 INFO  [app] (14824) start app_id=org.csweb.runtimeprobe platform=webos params={"@system_native_app":true,"nid":"org.csweb.runtimeprobe"}
+         0 INFO  [device] (14824) webos OLED65C1PTB webOS 6.5.3 (kisscurl-koli) firmware 03.53.45 board O20_DVB ram 3 GB kernel 4.4.84-229.kcl4tv.6 aarch64
+         1 INFO  [crash] (14824) handler installed: /tmp/org.csweb.runtimeprobe/crash.log, version 0.1.0, build id c778fb5a1d5a64227d00950dc54c19b7146b69a9
+         1 INFO  [lifecycle] (14824) Created -> Initialising (Start)
+       125 INFO  [gamepad] (14824) uid 6516 gid 5000 groups [29,44,505,509,777]; /dev/input event files readable 32 of 32
+       125 INFO  [gamepad] (14824) at start: 0 joystick(s)
+       125 INFO  [screensaver] (14824) allowed (default)
+       125 INFO  [app] (14824) video driver wayland, display mode 1920x1080 @0 Hz
+       375 INFO  [gl] (14824) ARM / Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       378 INFO  [i18n] (14824) locale en-AU (formats en-US) from settingsservice; 0 catalog file(s), 0 entries
+       386 INFO  [caps] (14824) diagnostics.crash_record   supported   /tmp/org.csweb.runtimeprobe/crash.log
+       386 INFO  [caps] (14824) i18n.system_locale         supported   en-AU
+       386 INFO  [caps] (14824) display.gles2              supported   Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       386 INFO  [caps] (14824) display.fragment_highp     supported   
+       386 INFO  [caps] (14824) display.max_texture_size   supported   8192
+       386 INFO  [caps] (14824) display.mode               supported   1920x1080 @0 Hz
+       386 INFO  [caps] (14824) display.panel              supported   3840x2160
+       386 INFO  [caps] (14824) display.refresh_rate       supported   120 Hz
+       386 INFO  [caps] (14824) storage.kv                 unknown     not requested by the app
+       386 INFO  [caps] (14824) net.http                   unknown     not requested by the app
+       386 INFO  [caps] (14824) audio.output               unknown     not requested by the app
+       387 INFO  [caps] (14824) images.decode              supported   PNG, JPEG, GIF, BMP, WebP, SVG
+       387 INFO  [caps] (14824) input.pointer              unknown     no pointer event yet
+       387 INFO  [caps] (14824) lifecycle.background       unknown     no background event yet
+       387 INFO  [caps] (14824) lifecycle.relaunch_params  supported   SDL_webOSTakeRelaunchMessage
+       387 INFO  [caps] (14824) media.playback             unknown     not implemented in the kit yet
+       391 INFO  [csprobe] (14824) probe start exe=/media/developer/apps/usr/palm/applications/org.csweb.runtimeprobe/wnk-csprobe app_dir=/media/developer/apps/usr/palm/applications/org.csweb.runtimeprobe runtime_dir=/tmp/org.csweb.runtimeprobe
+       391 INFO  [lifecycle] (14824) Initialising -> Running (Started)
+       865 INFO  [window] (14824) shown
+       865 INFO  [speech] (14824) Audio Guidance setting: off
+       865 INFO  [caps] (14824) accessibility.audio_guidance now supported: off
+       865 INFO  [network] (14824) online (Wi-Fi)
+       865 INFO  [caps] (14824) network.status now supported: online (Wi-Fi)
+       865 INFO  [csprobe] (14824) run exec_app_dir status=exit 0 lines=19
+       865 INFO  [csprobe] (14824) exec_app_dir child.pid=14850
+       865 INFO  [csprobe] (14824) exec_app_dir child.ids=uid=6516 gid=5000 euid=6516
+       865 INFO  [csprobe] (14824) exec_app_dir child.uname=Linux 4.4.84-229.kcl4tv.6 aarch64
+       865 INFO  [csprobe] (14824) exec_app_dir child.ptr_bits=32
+       865 INFO  [csprobe] (14824) exec_app_dir child.mounts=/tmp -> /tmp tmpfs rw,relatime | /dev/shm -> /dev/shm tmpfs rw | /media/developer/apps/usr/palm/applications/org.csweb.runtimeprobe -> /media/developer ext4 rw,nosuid,relatime,data=ordered | /tmp/org.csweb.runtimeprobe -> /tmp tmpfs rw,relatime
+       865 INFO  [csprobe] (14824) exec_app_dir child.jit_rwx=ok
+       865 INFO  [csprobe] (14824) exec_app_dir child.jit_wx=ok
+       865 INFO  [csprobe] (14824) exec_app_dir child.file_exec_map_tmp=ok
+       865 INFO  [csprobe] (14824) exec_app_dir child.file_exec_map_shm=ok
+       865 INFO  [csprobe] (14824) exec_app_dir child.entropy=getrandom not in headers; /dev/urandom ok; /dev/random FAIL open/read: No such file or directory
+       865 INFO  [csprobe] (14824) exec_app_dir child.rlimits=AS=inf/inf DATA=inf/inf STACK=8388608/inf NOFILE=1024/4096 NPROC=5597/5597 MEMLOCK=inf/inf
+       865 INFO  [csprobe] (14824) exec_app_dir child.meminfo=MemTotal:        2678680 kB | MemAvailable:     436424 kB | CommitLimit:     1953736 kB | Committed_AS:   10213768 kB
+       865 INFO  [csprobe] (14824) exec_app_dir child.overcommit=0
+       865 INFO  [csprobe] (14824) exec_app_dir child.cpu=Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics | CPU architecture: 8 | Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics | CPU architecture: 8 | Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics | CPU architecture: 8 | Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics | CPU architecture: 8
+       865 INFO  [csprobe] (14824) exec_app_dir child.ncpu=4
+       865 INFO  [csprobe] (14824) exec_app_dir child.tmp_free_mib=1280
+       865 INFO  [csprobe] (14824) exec_app_dir child.threads=64/64 created
+       865 INFO  [csprobe] (14824) exec_app_dir child.tcp_archive_org_443=ok ipv4
+       865 INFO  [csprobe] (14824) exec_app_dir child.done=1
+       865 INFO  [csprobe] (14824) run exec_tmpfs_copy status=exit 0 lines=18
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.pid=14980
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.ids=uid=6516 gid=5000 euid=6516
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.uname=Linux 4.4.84-229.kcl4tv.6 aarch64
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.ptr_bits=32
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.mounts=/tmp -> /tmp tmpfs rw,relatime | /dev/shm -> /dev/shm tmpfs rw | /media/developer/apps/usr/palm/applications/org.csweb.runtimeprobe -> /media/developer ext4 rw,nosuid,relatime,data=ordered | /tmp/org.csweb.runtimeprobe -> /tmp tmpfs rw,relatime
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.jit_rwx=ok
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.jit_wx=ok
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.file_exec_map_tmp=ok
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.file_exec_map_shm=ok
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.entropy=getrandom not in headers; /dev/urandom ok; /dev/random FAIL open/read: No such file or directory
+       865 INFO  [csprobe] (14824) exec_tmpfs_copy child.rlimits=AS=inf/inf DATA=inf/inf STACK=8388608/inf NOFILE=1024/4096 NPROC=5597/5597 MEMLOCK=inf/inf
+       866 INFO  [csprobe] (14824) exec_tmpfs_copy child.meminfo=MemTotal:        2678680 kB | MemAvailable:     436444 kB | CommitLimit:     1953736 kB | Committed_AS:   10215220 kB
+       866 INFO  [csprobe] (14824) exec_tmpfs_copy child.overcommit=0
+       866 INFO  [csprobe] (14824) exec_tmpfs_copy child.cpu=Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics | CPU architecture: 8 | Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics | CPU architecture: 8 | Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics | CPU architecture: 8 | Features	: fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics | CPU architecture: 8
+       866 INFO  [csprobe] (14824) exec_tmpfs_copy child.ncpu=4
+       866 INFO  [csprobe] (14824) exec_tmpfs_copy child.tmp_free_mib=1278
+       866 INFO  [csprobe] (14824) exec_tmpfs_copy child.threads=64/64 created
+       866 INFO  [csprobe] (14824) exec_tmpfs_copy child.done=1
+       866 INFO  [csprobe] (14824) run exec_aarch64 status=exit 42 lines=1
+       866 INFO  [csprobe] (14824) exec_aarch64 a64 ok
+       866 INFO  [csprobe] (14824) probe done
+       962 INFO  [focus] (14824) focus #7
+      1030 INFO  [app] (14824) first frame: drawable 1920x1080
+      1104 INFO  [lifecycle] (14824) SDL WILLENTERFOREGROUND
+      1104 INFO  [lifecycle] (14824) SDL DIDENTERFOREGROUND
+      1336 INFO  [window] (14824) focus gained
