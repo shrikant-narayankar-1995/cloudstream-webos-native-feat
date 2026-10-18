@@ -1,0 +1,567 @@
+{
+ "archive": "evidence/plugins/download/InternetArchiveProvider.cs3",
+ "dex": [
+  {
+   "entry": "classes.dex",
+   "dex_version": "035",
+   "counts": {
+    "strings": 773,
+    "types": 149,
+    "methods": 366,
+    "fields": 114,
+    "classes": 33
+   },
+   "classes": [
+    {
+     "class": "Lrecloudstream/InternetArchivePlugin;",
+     "access_flags": 17,
+     "super": "Lcom/lagradost/cloudstream3/plugins/BasePlugin;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$$ExternalSyntheticLambda0;",
+     "access_flags": 4113,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function0;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$DocsResponse;",
+     "access_flags": 16,
+     "super": "Ljava/lang/Object;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$LoadData;",
+     "access_flags": 17,
+     "super": "Ljava/lang/Object;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MediaEntry;",
+     "access_flags": 16,
+     "super": "Ljava/lang/Object;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MediaFile$$ExternalSyntheticLambda0;",
+     "access_flags": 4113,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function0;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MediaFile;",
+     "access_flags": 16,
+     "super": "Ljava/lang/Object;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult$$ExternalSyntheticLambda0;",
+     "access_flags": 4113,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function0;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult$$ExternalSyntheticLambda1;",
+     "access_flags": 4113,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function1;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult$$ExternalSyntheticLambda2;",
+     "access_flags": 4113,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function1;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult$$ExternalSyntheticLambda3;",
+     "access_flags": 4113,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function1;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult$$ExternalSyntheticLambda4;",
+     "access_flags": 4113,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function1;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult$$ExternalSyntheticLambda5;",
+     "access_flags": 4113,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function1;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult$$ExternalSyntheticLambda6;",
+     "access_flags": 4113,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function1;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult$Companion;",
+     "access_flags": 17,
+     "super": "Ljava/lang/Object;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult$toLoadResponse$3;",
+     "access_flags": 16,
+     "super": "Lkotlin/coroutines/jvm/internal/SuspendLambda;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function2;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult$toLoadResponse$5;",
+     "access_flags": 16,
+     "super": "Lkotlin/coroutines/jvm/internal/SuspendLambda;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function2;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$MetadataResult;",
+     "access_flags": 16,
+     "super": "Ljava/lang/Object;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$SearchEntry$$ExternalSyntheticLambda0;",
+     "access_flags": 4113,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function1;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$SearchEntry;",
+     "access_flags": 16,
+     "super": "Ljava/lang/Object;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$SearchResult;",
+     "access_flags": 16,
+     "super": "Ljava/lang/Object;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$URLData;",
+     "access_flags": 17,
+     "super": "Ljava/lang/Object;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$getMainPage$$inlined$tryParseJson$1;",
+     "access_flags": 17,
+     "super": "Lcom/fasterxml/jackson/core/type/TypeReference;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$getMainPage$1;",
+     "access_flags": 16,
+     "super": "Lkotlin/coroutines/jvm/internal/ContinuationImpl;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$load$$inlined$readValue$1;",
+     "access_flags": 17,
+     "super": "Lcom/fasterxml/jackson/core/type/TypeReference;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$load$1;",
+     "access_flags": 16,
+     "super": "Lkotlin/coroutines/jvm/internal/ContinuationImpl;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$loadLinks$$inlined$sortedByDescending$1;",
+     "access_flags": 17,
+     "super": "Ljava/lang/Object;",
+     "interfaces": [
+      "Ljava/util/Comparator;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$loadLinks$$inlined$tryParseJson$1;",
+     "access_flags": 17,
+     "super": "Lcom/fasterxml/jackson/core/type/TypeReference;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$loadLinks$1;",
+     "access_flags": 16,
+     "super": "Lkotlin/coroutines/jvm/internal/ContinuationImpl;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$loadLinks$3$1;",
+     "access_flags": 16,
+     "super": "Lkotlin/coroutines/jvm/internal/SuspendLambda;",
+     "interfaces": [
+      "Lkotlin/jvm/functions/Function2;"
+     ]
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$search$$inlined$tryParseJson$1;",
+     "access_flags": 17,
+     "super": "Lcom/fasterxml/jackson/core/type/TypeReference;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider$search$1;",
+     "access_flags": 16,
+     "super": "Lkotlin/coroutines/jvm/internal/ContinuationImpl;",
+     "interfaces": []
+    },
+    {
+     "class": "Lrecloudstream/InternetArchiveProvider;",
+     "access_flags": 17,
+     "super": "Lcom/lagradost/cloudstream3/MainAPI;",
+     "interfaces": []
+    }
+   ],
+   "external_packages": {
+    "com.android.tools.r8.annotations": 1,
+    "com.fasterxml.jackson.core.type": 1,
+    "com.fasterxml.jackson.databind": 2,
+    "com.fasterxml.jackson.databind.json": 1,
+    "com.fasterxml.jackson.module.kotlin": 1,
+    "com.lagradost.cloudstream3": 18,
+    "com.lagradost.cloudstream3.mvvm": 1,
+    "com.lagradost.cloudstream3.plugins": 2,
+    "com.lagradost.cloudstream3.utils": 6,
+    "com.lagradost.nicehttp": 3,
+    "dalvik.annotation": 6,
+    "java.lang": 15,
+    "java.util": 10,
+    "java.util.concurrent": 1,
+    "java.util.regex": 2,
+    "kotlin": 6,
+    "kotlin.collections": 2,
+    "kotlin.comparisons": 1,
+    "kotlin.coroutines": 1,
+    "kotlin.coroutines.intrinsics": 1,
+    "kotlin.coroutines.jvm.internal": 5,
+    "kotlin.jvm.functions": 4,
+    "kotlin.jvm.internal": 3,
+    "kotlin.math": 1,
+    "kotlin.sequences": 2,
+    "kotlin.text": 5,
+    "okhttp3": 1,
+    "org.jetbrains.annotations": 2,
+    "org.jsoup": 1,
+    "org.jsoup.nodes": 3,
+    "org.jsoup.select": 1
+   },
+   "external_types": [
+    "Lcom/android/tools/r8/annotations/SynthesizedClassV2;",
+    "Lcom/fasterxml/jackson/core/type/TypeReference;",
+    "Lcom/fasterxml/jackson/databind/DeserializationFeature;",
+    "Lcom/fasterxml/jackson/databind/ObjectMapper;",
+    "Lcom/fasterxml/jackson/databind/json/JsonMapper;",
+    "Lcom/fasterxml/jackson/module/kotlin/ExtensionsKt;",
+    "Lcom/lagradost/cloudstream3/Actor;",
+    "Lcom/lagradost/cloudstream3/ActorData;",
+    "Lcom/lagradost/cloudstream3/ActorRole;",
+    "Lcom/lagradost/cloudstream3/Episode;",
+    "Lcom/lagradost/cloudstream3/ErrorLoadingException;",
+    "Lcom/lagradost/cloudstream3/HomePageList;",
+    "Lcom/lagradost/cloudstream3/HomePageResponse;",
+    "Lcom/lagradost/cloudstream3/LoadResponse;",
+    "Lcom/lagradost/cloudstream3/MainAPI;",
+    "Lcom/lagradost/cloudstream3/MainAPIKt;",
+    "Lcom/lagradost/cloudstream3/MainActivityKt;",
+    "Lcom/lagradost/cloudstream3/MainPageRequest;",
+    "Lcom/lagradost/cloudstream3/MovieLoadResponse;",
+    "Lcom/lagradost/cloudstream3/MovieSearchResponse;",
+    "Lcom/lagradost/cloudstream3/SearchResponse;",
+    "Lcom/lagradost/cloudstream3/SearchResponseList;",
+    "Lcom/lagradost/cloudstream3/TvSeriesLoadResponse;",
+    "Lcom/lagradost/cloudstream3/TvType;",
+    "Lcom/lagradost/cloudstream3/mvvm/ArchComponentExtKt;",
+    "Lcom/lagradost/cloudstream3/plugins/BasePlugin;",
+    "Lcom/lagradost/cloudstream3/plugins/CloudstreamPlugin;",
+    "Lcom/lagradost/cloudstream3/utils/AppUtils;",
+    "Lcom/lagradost/cloudstream3/utils/ExtractorApiKt;",
+    "Lcom/lagradost/cloudstream3/utils/ExtractorLink;",
+    "Lcom/lagradost/cloudstream3/utils/ExtractorLinkType;",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;",
+    "Lcom/lagradost/cloudstream3/utils/StringUtils;",
+    "Lcom/lagradost/nicehttp/NiceResponse;",
+    "Lcom/lagradost/nicehttp/Requests;",
+    "Lcom/lagradost/nicehttp/ResponseParser;",
+    "Ldalvik/annotation/EnclosingClass;",
+    "Ldalvik/annotation/EnclosingMethod;",
+    "Ldalvik/annotation/InnerClass;",
+    "Ldalvik/annotation/MemberClasses;",
+    "Ldalvik/annotation/Signature;",
+    "Ldalvik/annotation/SourceDebugExtension;",
+    "Ljava/lang/Boolean;",
+    "Ljava/lang/CharSequence;",
+    "Ljava/lang/Comparable;",
+    "Ljava/lang/Exception;",
+    "Ljava/lang/Float;",
+    "Ljava/lang/IllegalStateException;",
+    "Ljava/lang/Integer;",
+    "Ljava/lang/Iterable;",
+    "Ljava/lang/Number;",
+    "Ljava/lang/Object;",
+    "Ljava/lang/String;",
+    "Ljava/lang/StringBuilder;",
+    "Ljava/lang/Throwable;",
+    "Ljava/util/ArrayList;",
+    "Ljava/util/Collection;",
+    "Ljava/util/Comparator;",
+    "Ljava/util/Iterator;",
+    "Ljava/util/LinkedHashMap;",
+    "Ljava/util/List;",
+    "Ljava/util/Map$Entry;",
+    "Ljava/util/Map;",
+    "Ljava/util/NoSuchElementException;",
+    "Ljava/util/Set;",
+    "Ljava/util/concurrent/TimeUnit;",
+    "Ljava/util/regex/Matcher;",
+    "Ljava/util/regex/Pattern;",
+    "Lkotlin/Lazy;",
+    "Lkotlin/LazyKt;",
+    "Lkotlin/Metadata;",
+    "Lkotlin/Pair;",
+    "Lkotlin/ResultKt;",
+    "Lkotlin/Unit;",
+    "Lkotlin/collections/CollectionsKt;",
+    "Lkotlin/collections/SetsKt;",
+    "Lkotlin/comparisons/ComparisonsKt;",
+    "Lkotlin/coroutines/Continuation;",
+    "Lkotlin/coroutines/intrinsics/IntrinsicsKt;",
+    "Lkotlin/coroutines/jvm/internal/Boxing;",
+    "Lkotlin/coroutines/jvm/internal/ContinuationImpl;",
+    "Lkotlin/coroutines/jvm/internal/DebugMetadata;",
+    "Lkotlin/coroutines/jvm/internal/SpillingKt;",
+    "Lkotlin/coroutines/jvm/internal/SuspendLambda;",
+    "Lkotlin/jvm/functions/Function0;",
+    "Lkotlin/jvm/functions/Function1;",
+    "Lkotlin/jvm/functions/Function2;",
+    "Lkotlin/jvm/internal/DefaultConstructorMarker;",
+    "Lkotlin/jvm/internal/Intrinsics;",
+    "Lkotlin/jvm/internal/SourceDebugExtension;",
+    "Lkotlin/math/MathKt;",
+    "Lkotlin/sequences/Sequence;",
+    "Lkotlin/sequences/SequencesKt;",
+    "Lkotlin/text/MatchResult;",
+    "Lkotlin/text/Regex;",
+    "Lkotlin/text/RegexOption;",
+    "Lkotlin/text/StringsKt;",
+    "Lokhttp3/Interceptor;",
+    "Lorg/jetbrains/annotations/NotNull;",
+    "Lorg/jetbrains/annotations/Nullable;",
+    "Lorg/jsoup/Jsoup;",
+    "Lorg/jsoup/nodes/Document;",
+    "Lorg/jsoup/nodes/Element;",
+    "Lorg/jsoup/nodes/Node;",
+    "Lorg/jsoup/select/Elements;",
+    "[Ljava/lang/Object;",
+    "[Ljava/lang/String;",
+    "[Lkotlin/jvm/functions/Function1;",
+    "[Lkotlin/text/Regex;"
+   ],
+   "external_methods": [
+    "Lcom/fasterxml/jackson/core/type/TypeReference;-><init>()V",
+    "Lcom/fasterxml/jackson/databind/ObjectMapper;->configure(Lcom/fasterxml/jackson/databind/DeserializationFeature;Z)Lcom/fasterxml/jackson/databind/ObjectMapper;",
+    "Lcom/fasterxml/jackson/databind/ObjectMapper;->readValue(Ljava/lang/String;Lcom/fasterxml/jackson/core/type/TypeReference;)Ljava/lang/Object;",
+    "Lcom/fasterxml/jackson/module/kotlin/ExtensionsKt;->jacksonObjectMapper()Lcom/fasterxml/jackson/databind/ObjectMapper;",
+    "Lcom/lagradost/cloudstream3/Actor;-><init>(Ljava/lang/String;Ljava/lang/String;)V",
+    "Lcom/lagradost/cloudstream3/ActorData;-><init>(Lcom/lagradost/cloudstream3/Actor;Lcom/lagradost/cloudstream3/ActorRole;Ljava/lang/String;Lcom/lagradost/cloudstream3/Actor;ILkotlin/jvm/internal/DefaultConstructorMarker;)V",
+    "Lcom/lagradost/cloudstream3/Episode;->getEpisode()Ljava/lang/Integer;",
+    "Lcom/lagradost/cloudstream3/Episode;->getSeason()Ljava/lang/Integer;",
+    "Lcom/lagradost/cloudstream3/Episode;->setEpisode(Ljava/lang/Integer;)V",
+    "Lcom/lagradost/cloudstream3/Episode;->setName(Ljava/lang/String;)V",
+    "Lcom/lagradost/cloudstream3/Episode;->setPosterUrl(Ljava/lang/String;)V",
+    "Lcom/lagradost/cloudstream3/Episode;->setRunTime(Ljava/lang/Integer;)V",
+    "Lcom/lagradost/cloudstream3/Episode;->setSeason(Ljava/lang/Integer;)V",
+    "Lcom/lagradost/cloudstream3/ErrorLoadingException;-><init>(Ljava/lang/String;)V",
+    "Lcom/lagradost/cloudstream3/HomePageList;-><init>(Ljava/lang/String;Ljava/util/List;Z)V",
+    "Lcom/lagradost/cloudstream3/MainAPI;-><init>()V",
+    "Lcom/lagradost/cloudstream3/MainAPIKt;->getMapper()Lcom/fasterxml/jackson/databind/json/JsonMapper;",
+    "Lcom/lagradost/cloudstream3/MainAPIKt;->newEpisode(Lcom/lagradost/cloudstream3/MainAPI;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Lcom/lagradost/cloudstream3/Episode;",
+    "Lcom/lagradost/cloudstream3/MainAPIKt;->newHomePageResponse(Ljava/util/List;Ljava/lang/Boolean;)Lcom/lagradost/cloudstream3/HomePageResponse;",
+    "Lcom/lagradost/cloudstream3/MainAPIKt;->newHomePageResponse$default(Ljava/util/List;Ljava/lang/Boolean;ILjava/lang/Object;)Lcom/lagradost/cloudstream3/HomePageResponse;",
+    "Lcom/lagradost/cloudstream3/MainAPIKt;->newMovieLoadResponse(Lcom/lagradost/cloudstream3/MainAPI;Ljava/lang/String;Ljava/lang/String;Lcom/lagradost/cloudstream3/TvType;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;",
+    "Lcom/lagradost/cloudstream3/MainAPIKt;->newMovieSearchResponse$default(Lcom/lagradost/cloudstream3/MainAPI;Ljava/lang/String;Ljava/lang/String;Lcom/lagradost/cloudstream3/TvType;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/lagradost/cloudstream3/MovieSearchResponse;",
+    "Lcom/lagradost/cloudstream3/MainAPIKt;->newTvSeriesLoadResponse(Lcom/lagradost/cloudstream3/MainAPI;Ljava/lang/String;Ljava/lang/String;Lcom/lagradost/cloudstream3/TvType;Ljava/util/List;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;",
+    "Lcom/lagradost/cloudstream3/MainAPIKt;->toNewSearchResponseList$default(Ljava/util/List;Ljava/lang/Boolean;ILjava/lang/Object;)Lcom/lagradost/cloudstream3/SearchResponseList;",
+    "Lcom/lagradost/cloudstream3/MainActivityKt;->getApp()Lcom/lagradost/nicehttp/Requests;",
+    "Lcom/lagradost/cloudstream3/MovieLoadResponse;->setActors(Ljava/util/List;)V",
+    "Lcom/lagradost/cloudstream3/MovieLoadResponse;->setDuration(Ljava/lang/Integer;)V",
+    "Lcom/lagradost/cloudstream3/MovieLoadResponse;->setPlot(Ljava/lang/String;)V",
+    "Lcom/lagradost/cloudstream3/MovieLoadResponse;->setPosterUrl(Ljava/lang/String;)V",
+    "Lcom/lagradost/cloudstream3/MovieLoadResponse;->setTags(Ljava/util/List;)V",
+    "Lcom/lagradost/cloudstream3/MovieLoadResponse;->setYear(Ljava/lang/Integer;)V",
+    "Lcom/lagradost/cloudstream3/MovieSearchResponse;->setPosterUrl(Ljava/lang/String;)V",
+    "Lcom/lagradost/cloudstream3/TvSeriesLoadResponse;->setActors(Ljava/util/List;)V",
+    "Lcom/lagradost/cloudstream3/TvSeriesLoadResponse;->setDuration(Ljava/lang/Integer;)V",
+    "Lcom/lagradost/cloudstream3/TvSeriesLoadResponse;->setPlot(Ljava/lang/String;)V",
+    "Lcom/lagradost/cloudstream3/TvSeriesLoadResponse;->setPosterUrl(Ljava/lang/String;)V",
+    "Lcom/lagradost/cloudstream3/TvSeriesLoadResponse;->setTags(Ljava/util/List;)V",
+    "Lcom/lagradost/cloudstream3/TvSeriesLoadResponse;->setYear(Ljava/lang/Integer;)V",
+    "Lcom/lagradost/cloudstream3/mvvm/ArchComponentExtKt;->logError(Ljava/lang/Throwable;)V",
+    "Lcom/lagradost/cloudstream3/plugins/BasePlugin;-><init>()V",
+    "Lcom/lagradost/cloudstream3/utils/AppUtils;->toJson(Ljava/lang/Object;)Ljava/lang/String;",
+    "Lcom/lagradost/cloudstream3/utils/ExtractorApiKt;->loadExtractor(Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;",
+    "Lcom/lagradost/cloudstream3/utils/ExtractorApiKt;->newExtractorLink$default(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/lagradost/cloudstream3/utils/ExtractorLinkType;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;",
+    "Lcom/lagradost/cloudstream3/utils/ExtractorLink;->setQuality(I)V",
+    "Lcom/lagradost/cloudstream3/utils/ExtractorLink;->setReferer(Ljava/lang/String;)V",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;->getValue()I",
+    "Lcom/lagradost/cloudstream3/utils/StringUtils;->encodeUri(Ljava/lang/String;)Ljava/lang/String;",
+    "Lcom/lagradost/nicehttp/NiceResponse;->getText()Ljava/lang/String;",
+    "Lcom/lagradost/nicehttp/Requests;->get$default(Lcom/lagradost/nicehttp/Requests;Ljava/lang/String;Ljava/util/Map;Ljava/lang/String;Ljava/util/Map;Ljava/util/Map;ZILjava/util/concurrent/TimeUnit;JLokhttp3/Interceptor;ZLcom/lagradost/nicehttp/ResponseParser;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;",
+    "Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;",
+    "Ljava/lang/Float;->compare(FF)I",
+    "Ljava/lang/Float;->floatToIntBits(F)I",
+    "Ljava/lang/Float;->floatValue()F",
+    "Ljava/lang/Float;->valueOf(F)Ljava/lang/Float;",
+    "Ljava/lang/IllegalStateException;-><init>(Ljava/lang/String;)V",
+    "Ljava/lang/Integer;->intValue()I",
+    "Ljava/lang/Integer;->parseInt(Ljava/lang/String;)I",
+    "Ljava/lang/Integer;->valueOf(I)Ljava/lang/Integer;",
+    "Ljava/lang/Iterable;->iterator()Ljava/util/Iterator;",
+    "Ljava/lang/Number;->floatValue()F",
+    "Ljava/lang/Number;->intValue()I",
+    "Ljava/lang/Object;-><init>()V",
+    "Ljava/lang/Object;->hashCode()I",
+    "Ljava/lang/Object;->toString()Ljava/lang/String;",
+    "Ljava/lang/String;->hashCode()I",
+    "Ljava/lang/String;->length()I",
+    "Ljava/lang/StringBuilder;-><init>()V",
+    "Ljava/lang/StringBuilder;->append(C)Ljava/lang/StringBuilder;",
+    "Ljava/lang/StringBuilder;->append(F)Ljava/lang/StringBuilder;",
+    "Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;",
+    "Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;",
+    "Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;",
+    "Ljava/lang/StringBuilder;->toString()Ljava/lang/String;",
+    "Ljava/util/ArrayList;-><init>()V",
+    "Ljava/util/ArrayList;-><init>(I)V",
+    "Ljava/util/Collection;->add(Ljava/lang/Object;)Z",
+    "Ljava/util/Collection;->isEmpty()Z",
+    "Ljava/util/Collection;->size()I",
+    "Ljava/util/Iterator;->hasNext()Z",
+    "Ljava/util/Iterator;->next()Ljava/lang/Object;",
+    "Ljava/util/LinkedHashMap;-><init>()V",
+    "Ljava/util/List;->add(Ljava/lang/Object;)Z",
+    "Ljava/util/List;->get(I)Ljava/lang/Object;",
+    "Ljava/util/List;->iterator()Ljava/util/Iterator;",
+    "Ljava/util/Map$Entry;->getKey()Ljava/lang/Object;",
+    "Ljava/util/Map$Entry;->getValue()Ljava/lang/Object;",
+    "Ljava/util/Map;->containsKey(Ljava/lang/Object;)Z",
+    "Ljava/util/Map;->entrySet()Ljava/util/Set;",
+    "Ljava/util/Map;->get(Ljava/lang/Object;)Ljava/lang/Object;",
+    "Ljava/util/Map;->put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;",
+    "Ljava/util/Map;->size()I",
+    "Ljava/util/NoSuchElementException;-><init>(Ljava/lang/String;)V",
+    "Ljava/util/Set;->add(Ljava/lang/Object;)Z",
+    "Ljava/util/Set;->iterator()Ljava/util/Iterator;",
+    "Ljava/util/regex/Matcher;->find()Z",
+    "Ljava/util/regex/Matcher;->group(I)Ljava/lang/String;",
+    "Ljava/util/regex/Pattern;->compile(Ljava/lang/String;)Ljava/util/regex/Pattern;",
+    "Ljava/util/regex/Pattern;->matcher(Ljava/lang/CharSequence;)Ljava/util/regex/Matcher;",
+    "Lkotlin/Lazy;->getValue()Ljava/lang/Object;",
+    "Lkotlin/LazyKt;->lazy(Lkotlin/jvm/functions/Function0;)Lkotlin/Lazy;",
+    "Lkotlin/Pair;-><init>(Ljava/lang/Object;Ljava/lang/Object;)V",
+    "Lkotlin/Pair;->getFirst()Ljava/lang/Object;",
+    "Lkotlin/Pair;->getSecond()Ljava/lang/Object;",
+    "Lkotlin/ResultKt;->throwOnFailure(Ljava/lang/Object;)V",
+    "Lkotlin/collections/CollectionsKt;->asSequence(Ljava/lang/Iterable;)Lkotlin/sequences/Sequence;",
+    "Lkotlin/collections/CollectionsKt;->collectionSizeOrDefault(Ljava/lang/Iterable;I)I",
+    "Lkotlin/collections/CollectionsKt;->emptyList()Ljava/util/List;",
+    "Lkotlin/collections/CollectionsKt;->listOf(Ljava/lang/Object;)Ljava/util/List;",
+    "Lkotlin/collections/CollectionsKt;->listOf([Ljava/lang/Object;)Ljava/util/List;",
+    "Lkotlin/collections/CollectionsKt;->sortedWith(Ljava/lang/Iterable;Ljava/util/Comparator;)Ljava/util/List;",
+    "Lkotlin/collections/SetsKt;->mutableSetOf([Ljava/lang/Object;)Ljava/util/Set;",
+    "Lkotlin/collections/SetsKt;->setOf(Ljava/lang/Object;)Ljava/util/Set;",
+    "Lkotlin/comparisons/ComparisonsKt;->compareBy([Lkotlin/jvm/functions/Function1;)Ljava/util/Comparator;",
+    "Lkotlin/comparisons/ComparisonsKt;->compareValues(Ljava/lang/Comparable;Ljava/lang/Comparable;)I",
+    "Lkotlin/coroutines/intrinsics/IntrinsicsKt;->getCOROUTINE_SUSPENDED()Ljava/lang/Object;",
+    "Lkotlin/coroutines/jvm/internal/Boxing;->boxBoolean(Z)Ljava/lang/Boolean;",
+    "Lkotlin/coroutines/jvm/internal/Boxing;->boxInt(I)Ljava/lang/Integer;",
+    "Lkotlin/coroutines/jvm/internal/ContinuationImpl;-><init>(Lkotlin/coroutines/Continuation;)V",
+    "Lkotlin/coroutines/jvm/internal/SpillingKt;->nullOutSpilledVariable(Ljava/lang/Object;)Ljava/lang/Object;",
+    "Lkotlin/coroutines/jvm/internal/SuspendLambda;-><init>(ILkotlin/coroutines/Continuation;)V",
+    "Lkotlin/jvm/functions/Function1;->invoke(Ljava/lang/Object;)Ljava/lang/Object;",
+    "Lkotlin/jvm/internal/Intrinsics;->areEqual(Ljava/lang/Object;Ljava/lang/Object;)Z",
+    "Lkotlin/math/MathKt;->roundToInt(F)I",
+    "Lkotlin/sequences/Sequence;->iterator()Ljava/util/Iterator;",
+    "Lkotlin/sequences/SequencesKt;->count(Lkotlin/sequences/Sequence;)I",
+    "Lkotlin/sequences/SequencesKt;->distinctBy(Lkotlin/sequences/Sequence;Lkotlin/jvm/functions/Function1;)Lkotlin/sequences/Sequence;",
+    "Lkotlin/sequences/SequencesKt;->filter(Lkotlin/sequences/Sequence;Lkotlin/jvm/functions/Function1;)Lkotlin/sequences/Sequence;",
+    "Lkotlin/sequences/SequencesKt;->firstOrNull(Lkotlin/sequences/Sequence;)Ljava/lang/Object;",
+    "Lkotlin/sequences/SequencesKt;->map(Lkotlin/sequences/Sequence;Lkotlin/jvm/functions/Function1;)Lkotlin/sequences/Sequence;",
+    "Lkotlin/text/MatchResult;->getGroupValues()Ljava/util/List;",
+    "Lkotlin/text/Regex;-><init>(Ljava/lang/String;Lkotlin/text/RegexOption;)V",
+    "Lkotlin/text/Regex;->find$default(Lkotlin/text/Regex;Ljava/lang/CharSequence;IILjava/lang/Object;)Lkotlin/text/MatchResult;",
+    "Lkotlin/text/StringsKt;->contains(Ljava/lang/CharSequence;Ljava/lang/CharSequence;Z)Z",
+    "Lkotlin/text/StringsKt;->contains$default(Ljava/lang/CharSequence;Ljava/lang/CharSequence;ZILjava/lang/Object;)Z",
+    "Lkotlin/text/StringsKt;->endsWith$default(Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Z",
+    "Lkotlin/text/StringsKt;->replace$default(Ljava/lang/String;CCZILjava/lang/Object;)Ljava/lang/String;",
+    "Lkotlin/text/StringsKt;->replace$default(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Ljava/lang/String;",
+    "Lkotlin/text/StringsKt;->split$default(Ljava/lang/CharSequence;[Ljava/lang/String;ZIILjava/lang/Object;)Ljava/util/List;",
+    "Lkotlin/text/StringsKt;->startsWith(Ljava/lang/String;Ljava/lang/String;Z)Z",
+    "Lkotlin/text/StringsKt;->substringAfterLast$default(Ljava/lang/String;CLjava/lang/String;ILjava/lang/Object;)Ljava/lang/String;",
+    "Lkotlin/text/StringsKt;->substringAfterLast$default(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ljava/lang/String;",
+    "Lkotlin/text/StringsKt;->substringBeforeLast$default(Ljava/lang/String;CLjava/lang/String;ILjava/lang/Object;)Ljava/lang/String;",
+    "Lkotlin/text/StringsKt;->substringBeforeLast$default(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ljava/lang/String;",
+    "Lkotlin/text/StringsKt;->toFloatOrNull(Ljava/lang/String;)Ljava/lang/Float;",
+    "Lkotlin/text/StringsKt;->toIntOrNull(Ljava/lang/String;)Ljava/lang/Integer;",
+    "Lkotlin/text/StringsKt;->trim(Ljava/lang/CharSequence;)Ljava/lang/CharSequence;",
+    "Lorg/jsoup/Jsoup;->parse(Ljava/lang/String;)Lorg/jsoup/nodes/Document;",
+    "Lorg/jsoup/nodes/Document;->body()Lorg/jsoup/nodes/Element;",
+    "Lorg/jsoup/nodes/Document;->select(Ljava/lang/String;)Lorg/jsoup/select/Elements;",
+    "Lorg/jsoup/nodes/Element;->html()Ljava/lang/String;",
+    "Lorg/jsoup/nodes/Element;->unwrap()Lorg/jsoup/nodes/Node;",
+    "Lorg/jsoup/select/Elements;->iterator()Ljava/util/Iterator;",
+    "Lorg/jsoup/select/Elements;->last()Lorg/jsoup/nodes/Element;"
+   ],
+   "external_fields": [
+    "Lcom/fasterxml/jackson/databind/DeserializationFeature;->ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT:Lcom/fasterxml/jackson/databind/DeserializationFeature;",
+    "Lcom/fasterxml/jackson/databind/DeserializationFeature;->ACCEPT_EMPTY_STRING_AS_NULL_OBJECT:Lcom/fasterxml/jackson/databind/DeserializationFeature;",
+    "Lcom/fasterxml/jackson/databind/DeserializationFeature;->ACCEPT_FLOAT_AS_INT:Lcom/fasterxml/jackson/databind/DeserializationFeature;",
+    "Lcom/fasterxml/jackson/databind/DeserializationFeature;->ACCEPT_SINGLE_VALUE_AS_ARRAY:Lcom/fasterxml/jackson/databind/DeserializationFeature;",
+    "Lcom/fasterxml/jackson/databind/DeserializationFeature;->FAIL_ON_UNKNOWN_PROPERTIES:Lcom/fasterxml/jackson/databind/DeserializationFeature;",
+    "Lcom/lagradost/cloudstream3/TvType;->Audio:Lcom/lagradost/cloudstream3/TvType;",
+    "Lcom/lagradost/cloudstream3/TvType;->Movie:Lcom/lagradost/cloudstream3/TvType;",
+    "Lcom/lagradost/cloudstream3/TvType;->Others:Lcom/lagradost/cloudstream3/TvType;",
+    "Lcom/lagradost/cloudstream3/TvType;->TvSeries:Lcom/lagradost/cloudstream3/TvType;",
+    "Lcom/lagradost/cloudstream3/utils/AppUtils;->INSTANCE:Lcom/lagradost/cloudstream3/utils/AppUtils;",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;->P1080:Lcom/lagradost/cloudstream3/utils/Qualities;",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;->P144:Lcom/lagradost/cloudstream3/utils/Qualities;",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;->P1440:Lcom/lagradost/cloudstream3/utils/Qualities;",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;->P2160:Lcom/lagradost/cloudstream3/utils/Qualities;",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;->P240:Lcom/lagradost/cloudstream3/utils/Qualities;",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;->P360:Lcom/lagradost/cloudstream3/utils/Qualities;",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;->P480:Lcom/lagradost/cloudstream3/utils/Qualities;",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;->P720:Lcom/lagradost/cloudstream3/utils/Qualities;",
+    "Lcom/lagradost/cloudstream3/utils/Qualities;->Unknown:Lcom/lagradost/cloudstream3/utils/Qualities;",
+    "Lcom/lagradost/cloudstream3/utils/StringUtils;->INSTANCE:Lcom/lagradost/cloudstream3/utils/StringUtils;",
+    "Lkotlin/Unit;->INSTANCE:Lkotlin/Unit;",
+    "Lkotlin/text/RegexOption;->IGNORE_CASE:Lkotlin/text/RegexOption;"
+   ]
+  }
+ ]
+}

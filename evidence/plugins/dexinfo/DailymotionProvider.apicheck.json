@@ -1,0 +1,7 @@
+{
+ "dexinfo": "evidence/plugins/dexinfo/DailymotionProvider.json",
+ "api": "external/cloudstream/library/api/jvm/library.api",
+ "prefix": "com/lagradost/cloudstream3/",
+ "checked": 34,
+ "missing": []
+}

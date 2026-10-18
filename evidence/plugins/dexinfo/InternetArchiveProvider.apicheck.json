@@ -1,0 +1,7 @@
+{
+ "dexinfo": "evidence/plugins/dexinfo/InternetArchiveProvider.json",
+ "api": "external/cloudstream/library/api/jvm/library.api",
+ "prefix": "com/lagradost/cloudstream3/",
+ "checked": 85,
+ "missing": []
+}
