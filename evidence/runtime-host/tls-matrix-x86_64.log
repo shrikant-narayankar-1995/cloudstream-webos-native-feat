@@ -1,0 +1,17 @@
+Aborted (core dumped)
+https://example.com/ https=status=200 cipher=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 bytes=200
+Aborted (core dumped)
+https://www.google.com/ https=status=200 cipher=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 bytes=200
+Aborted (core dumped)
+https://archive.org/ https=FAIL javax.net.ssl.SSLHandshakeException: ASN parsing error, invalid input (error code: -140)
+Aborted (core dumped)
+https://api.github.com/ https=status=200 cipher=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 bytes=11
+Aborted (core dumped)
+https://www.dailymotion.com/ https=status=200 cipher=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 bytes=200
+Aborted (core dumped)
+https://letsencrypt.org/ https=status=200 cipher=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 bytes=200
+https://www.debian.org/ https=status=200 cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 bytes=200
+https://www.kernel.org/ https=status=200 cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 bytes=200
+https://www.godaddy.com/ https=FAIL java.io.FileNotFoundException: https://www.godaddy.com/
+https://ia800300.us.archive.org/ https=FAIL java.net.SocketTimeoutException: failed to connect to ia800300.us.archive.org/207.241.228.10 (port 443) from /172.17.0.2 (port 36138) after 10000ms
+https://archive.org/ https=FAIL javax.net.ssl.SSLHandshakeException: ASN parsing error, invalid input (error code: -140)

@@ -1,0 +1,34 @@
+Unable to find image 'alpine:edge' locally
+edge: Pulling from library/alpine
+173a115417ee: Pulling fs layer
+173a115417ee: Verifying Checksum
+173a115417ee: Download complete
+173a115417ee: Pull complete
+Digest: sha256:020dfcbaaf4cc1078bf2d9c7ba31a8466e334061dcd2f248001d68f79e52c000
+Status: Downloaded newer image for alpine:edge
+art_standalone: A standalone version of Dalvik with Art build in
+art_standalone: https://gitlab.com/android_translation_layer/art_standalone
+art_standalone: 28 MiB
+bionic_translation: A set of libraries for loading bionic-linked .so files on musl/glibc
+bionic_translation: https://gitlab.com/android_translation_layer/bionic_translation
+bionic_translation: 172 KiB
+wolfssl-jni: Embedded TLS Library (built without OpenSSL compatibility layer) - with jni support
+wolfssl-jni: https://www.wolfssl.com/
+wolfssl-jni: 1458 KiB
+dalvikvm
+dex2oat
+sh: line 0: dalvikvm64: not found
+rc=0
+apache-xml-hostdex.jar
+apachehttp-hostdex.jar
+bouncycastle-hostdex.jar
+core-junit-hostdex.jar
+core-libart-hostdex.jar
+core-oj-hostdex.jar
+hamcrest-hostdex.jar
+junit-runner-hostdex.jar
+natives
+okhttp-hostdex.jar
+wolfssljni-hostdex.jar
+14.8M	/usr/lib/java
+12.5M	/usr/lib/art

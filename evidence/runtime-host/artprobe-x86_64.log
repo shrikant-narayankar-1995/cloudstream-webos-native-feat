@@ -1,0 +1,10 @@
+r8 8.5.35 sha256 4733945987ee0a840fafc34080b135259e01678412e07212b23f706334290294
+vm=Dalvik 2.1.0
+arch=x86_64 cp=445
+lambda=42
+stream_tolist=FAIL java.lang.BootstrapMethodError: Exception from call site #115 bootstrap method
+stream_joining=FAIL java.lang.BootstrapMethodError: Exception from call site #262 bootstrap method
+future=true
+https=FAIL javax.net.ssl.SSLHandshakeException: ASN parsing error, invalid input (error code: -140)
+done=1
+dalvikvm rc=134

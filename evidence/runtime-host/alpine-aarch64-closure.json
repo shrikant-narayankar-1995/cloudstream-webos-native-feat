@@ -1,0 +1,459 @@
+{
+ "roots": [
+  "art_standalone"
+ ],
+ "packages": [
+  {
+   "name": "art_standalone",
+   "version": "0_git20251009-r3",
+   "licence": "Apache-2.0",
+   "repo": "testing",
+   "size": 19197312,
+   "installed": 29482616,
+   "checksum": "Q1r3O88emcIbI/qrdHRWORFnSuqt4="
+  },
+  {
+   "name": "bash",
+   "version": "5.3.9-r2",
+   "licence": "GPL-3.0-or-later",
+   "repo": "main",
+   "size": 542112,
+   "installed": 3563731,
+   "checksum": "Q1v1HYbFX4XXadf5GQcx01esom4rQ="
+  },
+  {
+   "name": "bash-binsh",
+   "version": "5.3.9-r2",
+   "licence": "GPL-3.0-or-later",
+   "repo": "main",
+   "size": 1555,
+   "installed": 1,
+   "checksum": "Q1wqm2jwXVAhKc/XxlCauVT2Nj8X8="
+  },
+  {
+   "name": "bionic_translation",
+   "version": "0_git20260317-r0",
+   "licence": "Apache-2.0",
+   "repo": "testing",
+   "size": 56584,
+   "installed": 271348,
+   "checksum": "Q1VxEM2mR+NgSqOjl3LynRNk8dxGM="
+  },
+  {
+   "name": "busybox",
+   "version": "1.38.0-r7",
+   "licence": "GPL-2.0-only",
+   "repo": "main",
+   "size": 527937,
+   "installed": 928228,
+   "checksum": "Q1grOo7glBOiZXCVwtST+sTvK0W0Y="
+  },
+  {
+   "name": "ca-certificates",
+   "version": "20260909-r0",
+   "licence": "MPL-2.0 AND MIT",
+   "repo": "main",
+   "size": 132577,
+   "installed": 321635,
+   "checksum": "Q1mBC6TKf1hbJdhHS+toi3F6euFcM="
+  },
+  {
+   "name": "hwdata-pci",
+   "version": "0.412-r0",
+   "licence": "GPL-2.0-or-later OR XFree86-1.1",
+   "repo": "main",
+   "size": 375888,
+   "installed": 1671363,
+   "checksum": "Q1PTHh+EmTZ2ouCqzY7MnOMWJiqHk="
+  },
+  {
+   "name": "icu-data-en",
+   "version": "78.1-r0",
+   "licence": "ICU",
+   "repo": "main",
+   "size": 1025834,
+   "installed": 3021952,
+   "checksum": "Q1bLYLR7NGSsC+c4wy/Yat7NqUUJU="
+  },
+  {
+   "name": "icu-libs",
+   "version": "78.1-r0",
+   "licence": "ICU",
+   "repo": "main",
+   "size": 1957451,
+   "installed": 5184720,
+   "checksum": "Q1q0bpl8gZcTXmb5UYZTJANHh5Jzs="
+  },
+  {
+   "name": "java-cacerts",
+   "version": "1.1-r0",
+   "licence": "MIT",
+   "repo": "community",
+   "size": 1899,
+   "installed": 32768,
+   "checksum": "Q1yv2brGicdeu0wUJAwf+ZgxaDuEU="
+  },
+  {
+   "name": "libatomic",
+   "version": "15.2.0-r9",
+   "licence": "GPL-2.0-or-later AND LGPL-2.1-or-later",
+   "repo": "main",
+   "size": 10377,
+   "installed": 67168,
+   "checksum": "Q1EkSIWpc+p5zVrxNVg4/QLnCcAHQ="
+  },
+  {
+   "name": "libbsd",
+   "version": "0.12.2-r0",
+   "licence": "BSD-3-Clause",
+   "repo": "main",
+   "size": 31592,
+   "installed": 81920,
+   "checksum": "Q15EMYWwcG8h4uWaYqUA2HVR2scAM="
+  },
+  {
+   "name": "libcrypto3",
+   "version": "3.5.9-r0",
+   "licence": "Apache-2.0",
+   "repo": "main",
+   "size": 2286824,
+   "installed": 4961766,
+   "checksum": "Q1CBNPHItTRXjCim8xdY0aazWA14k="
+  },
+  {
+   "name": "libdrm",
+   "version": "2.4.134-r0",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 206163,
+   "installed": 896425,
+   "checksum": "Q1lZJELb5pAteaIHl28stSwtdpjTM="
+  },
+  {
+   "name": "libelf",
+   "version": "0.195-r0",
+   "licence": "GPL-3.0-or-later AND ( GPL-2.0-or-later OR LGPL-3.0-or-later )",
+   "repo": "main",
+   "size": 44738,
+   "installed": 133080,
+   "checksum": "Q1zyZm3N+QJ2MWANXY8BsLMLnp4Ok="
+  },
+  {
+   "name": "libexpat",
+   "version": "2.9.0-r0",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 61888,
+   "installed": 198392,
+   "checksum": "Q1JOjPZzH5hmc9/EWzzgda0U+vSz8="
+  },
+  {
+   "name": "libffi",
+   "version": "3.8.0-r0",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 21307,
+   "installed": 67544,
+   "checksum": "Q1uvTMRdru2ch8mrGobNsW34Gp/wI="
+  },
+  {
+   "name": "libgcc",
+   "version": "15.2.0-r9",
+   "licence": "GPL-2.0-or-later AND LGPL-2.1-or-later",
+   "repo": "main",
+   "size": 66331,
+   "installed": 133008,
+   "checksum": "Q1W0HcPOySMRXN7IjdoDkQXKxnllE="
+  },
+  {
+   "name": "libmd",
+   "version": "1.3.0-r0",
+   "licence": "BSD-3-Clause AND BSD-2-Clause AND ISC AND Beerware AND Public Domain",
+   "repo": "main",
+   "size": 26887,
+   "installed": 67536,
+   "checksum": "Q1hcm5MRqOZgxCthu0r2JkzW1yiVk="
+  },
+  {
+   "name": "libncursesw",
+   "version": "6.6_p20260822-r0",
+   "licence": "X11",
+   "repo": "main",
+   "size": 162336,
+   "installed": 396160,
+   "checksum": "Q1DupJYDNDE4gRgWmZVKKHnBf2INQ="
+  },
+  {
+   "name": "libpciaccess",
+   "version": "0.19-r0",
+   "licence": "X11",
+   "repo": "main",
+   "size": 15529,
+   "installed": 67336,
+   "checksum": "Q1ZVFAl0TXjAeStg3B7NdacMFMcPY="
+  },
+  {
+   "name": "libstdc++",
+   "version": "15.2.0-r9",
+   "licence": "GPL-2.0-or-later AND LGPL-2.1-or-later",
+   "repo": "main",
+   "size": 908720,
+   "installed": 2820600,
+   "checksum": "Q1E7P5gTguWspC84S5Z61N/+brlho="
+  },
+  {
+   "name": "libtasn1",
+   "version": "4.21.0-r0",
+   "licence": "LGPL-2.1-or-later",
+   "repo": "main",
+   "size": 34170,
+   "installed": 67480,
+   "checksum": "Q1GLj1tV4Psr/uUBV3kBlkud8ymh0="
+  },
+  {
+   "name": "libucontext",
+   "version": "1.5.2-r0",
+   "licence": "ISC",
+   "repo": "main",
+   "size": 6015,
+   "installed": 134336,
+   "checksum": "Q1T7dHqIUOVvYFku/Ylw1St8r65ws="
+  },
+  {
+   "name": "libunwind",
+   "version": "1.8.3-r0",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 87579,
+   "installed": 335360,
+   "checksum": "Q1OKxdP1OEO0SDJsDD+EkMgvyHa9w="
+  },
+  {
+   "name": "libx11",
+   "version": "1.8.14-r0",
+   "licence": "X11",
+   "repo": "main",
+   "size": 869459,
+   "installed": 2410856,
+   "checksum": "Q1ubD0OGLWwev11giNGcpl1rhsug0="
+  },
+  {
+   "name": "libxau",
+   "version": "1.0.12-r0",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 6164,
+   "installed": 67240,
+   "checksum": "Q1NLWcaf5CwdcW5+4LInu+mwbDV5M="
+  },
+  {
+   "name": "libxcb",
+   "version": "1.17.0-r2",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 261275,
+   "installed": 2076936,
+   "checksum": "Q1m64FvOJewc85IeGrTooKps+M3v8="
+  },
+  {
+   "name": "libxdmcp",
+   "version": "1.1.5-r1",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 9931,
+   "installed": 81920,
+   "checksum": "Q1kIZdSrI2x9m7jsyQIuwwwiw3+Tw="
+  },
+  {
+   "name": "libxml2",
+   "version": "2.13.9-r2",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 496763,
+   "installed": 1182624,
+   "checksum": "Q1OujKP8ZnJ77jYcVaH5ZJsjkUkKY="
+  },
+  {
+   "name": "libxshmfence",
+   "version": "1.3.3-r0",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 4281,
+   "installed": 67248,
+   "checksum": "Q1jQihuRHB9AY0wmqCmKKzUBHSlyw="
+  },
+  {
+   "name": "llvm23-libs",
+   "version": "23.1.3-r0",
+   "licence": "Apache-2.0",
+   "repo": "main",
+   "size": 64332737,
+   "installed": 177718896,
+   "checksum": "Q1FaR3WUYcjNEf7NpuYV2jpmdHLhY="
+  },
+  {
+   "name": "lz4-libs",
+   "version": "1.10.0-r1",
+   "licence": "BSD-2-Clause AND GPL-2.0-or-later",
+   "repo": "main",
+   "size": 82528,
+   "installed": 198392,
+   "checksum": "Q1qQ5XwvW4WHq+D4uuk2YWyAlE1lw="
+  },
+  {
+   "name": "mesa",
+   "version": "26.2.5-r0",
+   "licence": "MIT AND SGI-B-2.0 AND BSL-1.0",
+   "repo": "main",
+   "size": 12469544,
+   "installed": 38296095,
+   "checksum": "Q1t8EBcSQ+559OKKlOanAZsUaIRyo="
+  },
+  {
+   "name": "mesa-egl",
+   "version": "26.2.5-r0",
+   "licence": "MIT AND SGI-B-2.0 AND BSL-1.0",
+   "repo": "main",
+   "size": 130522,
+   "installed": 330664,
+   "checksum": "Q1Uj+yZl06D8SSb+XD1h1FsdBkthw="
+  },
+  {
+   "name": "mesa-gbm",
+   "version": "26.2.5-r0",
+   "licence": "MIT AND SGI-B-2.0 AND BSL-1.0",
+   "repo": "main",
+   "size": 7472,
+   "installed": 67296,
+   "checksum": "Q11IhKfb8/Enw52owzdwGdf3GCjVc="
+  },
+  {
+   "name": "mesa-gles",
+   "version": "26.2.5-r0",
+   "licence": "MIT AND SGI-B-2.0 AND BSL-1.0",
+   "repo": "main",
+   "size": 22094,
+   "installed": 134672,
+   "checksum": "Q1IgsR6+Ep1MFzTPR73FhJS+xjE7w="
+  },
+  {
+   "name": "musl",
+   "version": "1.2.6-r5",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 417718,
+   "installed": 723480,
+   "checksum": "Q10Z0JJSa0yMR2udrTZpi9qdodjmw="
+  },
+  {
+   "name": "ncurses-terminfo-base",
+   "version": "6.6_p20260822-r0",
+   "licence": "X11",
+   "repo": "main",
+   "size": 22177,
+   "installed": 103132,
+   "checksum": "Q1SclW2kim4hBpVrHdEW6Ttlps8bw="
+  },
+  {
+   "name": "p11-kit",
+   "version": "0.26.2-r1",
+   "licence": "BSD-3-Clause",
+   "repo": "main",
+   "size": 361427,
+   "installed": 1836167,
+   "checksum": "Q1fP0ui93BcbaowZgE8a80VWD6wus="
+  },
+  {
+   "name": "p11-kit-trust",
+   "version": "0.26.2-r1",
+   "licence": "BSD-3-Clause",
+   "repo": "main",
+   "size": 148841,
+   "installed": 464470,
+   "checksum": "Q1HKlOnbMn+2B2hCmzNdvM8145EQE="
+  },
+  {
+   "name": "readline",
+   "version": "8.3.3-r1",
+   "licence": "GPL-3.0-or-later",
+   "repo": "main",
+   "size": 129718,
+   "installed": 352692,
+   "checksum": "Q1QCfXo0vQv4/OwHnLmOG2hyxew5Y="
+  },
+  {
+   "name": "spirv-tools",
+   "version": "1.4.357.0-r0",
+   "licence": "Apache-2.0",
+   "repo": "main",
+   "size": 1928924,
+   "installed": 5744114,
+   "checksum": "Q1fFZvPyPU4GcOmfSTVslhKjseRl4="
+  },
+  {
+   "name": "vixl",
+   "version": "8.0.0-r0",
+   "licence": "BSD-3-Clause",
+   "repo": "testing",
+   "size": 827558,
+   "installed": 2951688,
+   "checksum": "Q1cCJh1MINIn4a18L+56GZGd8HmJk="
+  },
+  {
+   "name": "wayland-libs-client",
+   "version": "1.26.0-r0",
+   "licence": "MIT",
+   "repo": "main",
+   "size": 23616,
+   "installed": 68304,
+   "checksum": "Q1xYKAzSE0AqgWNdlsZ+qgg5PpCQc="
+  },
+  {
+   "name": "wolfssl",
+   "version": "5.9.4-r0",
+   "licence": "GPL-3.0-only",
+   "repo": "community",
+   "size": 369271,
+   "installed": 722888,
+   "checksum": "Q1y58Fd3E+EfyHo0EO7zFcNl224is="
+  },
+  {
+   "name": "wolfssl-jni",
+   "version": "5.9.4-r0",
+   "licence": "GPL-3.0-only",
+   "repo": "community",
+   "size": 734270,
+   "installed": 1579032,
+   "checksum": "Q1UmsTxfLrzhlzX+r6K+w5Zf0rxAw="
+  },
+  {
+   "name": "xz-libs",
+   "version": "5.8.4-r0",
+   "licence": "GPL-2.0-or-later AND 0BSD AND Public-Domain AND LGPL-2.1-or-later",
+   "repo": "main",
+   "size": 119441,
+   "installed": 263928,
+   "checksum": "Q1okeKpflF+UtsyyG3k6zV0DB6QnU="
+  },
+  {
+   "name": "zlib",
+   "version": "1.3.2-r1",
+   "licence": "Zlib",
+   "repo": "main",
+   "size": 54349,
+   "installed": 133008,
+   "checksum": "Q1cpe/M4p/RfsDUcH9l9Nr5+RvMNE="
+  },
+  {
+   "name": "zstd-libs",
+   "version": "1.5.7-r2",
+   "licence": "BSD-3-Clause OR GPL-2.0-or-later",
+   "repo": "main",
+   "size": 363934,
+   "installed": 657256,
+   "checksum": "Q1dWoSWoXW8Icc+e+42vCpxSuTbEI="
+  }
+ ],
+ "unresolved": [],
+ "total_installed": 293139471
+}

@@ -1,0 +1,33 @@
+dalvikvm I 10-18 20:09:28   116   116 image_space.cc:166] Using an offset of 0xe74000 from default art base address of 0x60000000
+dalvikvm I 10-18 20:09:28   116   116 image_space.cc:180] GenerateImage: dex2oat --image=/root/.cache/art//x86_64/usr@bin@..@lib@art@@..@java@dex@art@oat@boot.art --dex-file=/usr/lib/java/dex/art/core-oj-hostdex.jar --dex-location=/usr/lib/java/dex/art/core-oj-hostdex.jar --dex-file=/usr/lib/java/dex/art/apachehttp-hostdex.jar --dex-location=/usr/lib/java/dex/art/apachehttp-hostdex.jar --dex-file=/usr/lib/java/dex/art/apache-xml-hostdex.jar --dex-location=/usr/lib/java/dex/art/apache-xml-hostdex.jar --dex-file=/usr/lib/java/dex/art/bouncycastle-hostdex.jar --dex-location=/usr/lib/java/dex/art/bouncycastle-hostdex.jar --dex-file=/usr/lib/java/dex/art/core-junit-hostdex.jar --dex-location=/usr/lib/java/dex/art/core-junit-hostdex.jar --dex-file=/usr/lib/java/dex/art/core-libart-hostdex.jar --dex-location=/usr/lib/java/dex/art/core-libart-hostdex.jar --dex-file=/usr/lib/java/dex/art/hamcrest-hostdex.jar --dex-location=/usr/lib/java/dex/art/hamcrest-hostdex.jar --dex-file=/usr/lib/java/dex/art/junit-runner-hostdex.jar --dex-location=/usr/lib/java/dex/art/junit-runner-hostdex.jar --dex-file=/usr/lib/java/dex/art/okhttp-hostdex.jar --dex-location=/usr/lib/java/dex/art/okhttp-hostdex.jar --dex-file=/usr/lib/java/dex/art/wolfssljni-hostdex.jar --dex-location=/usr/lib/java/dex/art/wolfssljni-hostdex.jar --oat-file=/root/.cache/art//x86_64/usr@bin@..@lib@art@@..@java@dex@art@oat@boot.oat --instruction-set=x86_64 --instruction-set-features=-ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt --base=0x60e74000 --host
+dex2oat I 10-18 20:09:28   117   117 dex2oat.cc:3090] dex2oat --image=/root/.cache/art//x86_64/usr@bin@..@lib@art@@..@java@dex@art@oat@boot.art --dex-file=/usr/lib/java/dex/art/core-oj-hostdex.jar --dex-location=/usr/lib/java/dex/art/core-oj-hostdex.jar --dex-file=/usr/lib/java/dex/art/apachehttp-hostdex.jar --dex-location=/usr/lib/java/dex/art/apachehttp-hostdex.jar --dex-file=/usr/lib/java/dex/art/apache-xml-hostdex.jar --dex-location=/usr/lib/java/dex/art/apache-xml-hostdex.jar --dex-file=/usr/lib/java/dex/art/bouncycastle-hostdex.jar --dex-location=/usr/lib/java/dex/art/bouncycastle-hostdex.jar --dex-file=/usr/lib/java/dex/art/core-junit-hostdex.jar --dex-location=/usr/lib/java/dex/art/core-junit-hostdex.jar --dex-file=/usr/lib/java/dex/art/core-libart-hostdex.jar --dex-location=/usr/lib/java/dex/art/core-libart-hostdex.jar --dex-file=/usr/lib/java/dex/art/hamcrest-hostdex.jar --dex-location=/usr/lib/java/dex/art/hamcrest-hostdex.jar --dex-file=/usr/lib/java/dex/art/junit-runner-hostdex.jar --dex-location=/usr/lib/java/dex/art/junit-runner-hostdex.jar --dex-file=/usr/lib/java/dex/art/okhttp-hostdex.jar --dex-location=/usr/lib/java/dex/art/okhttp-hostdex.jar --dex-file=/usr/lib/java/dex/art/wolfssljni-hostdex.jar --dex-location=/usr/lib/java/dex/art/wolfssljni-hostdex.jar --oat-file=/root/.cache/art//x86_64/usr@bin@..@lib@art@@..@java@dex@art@oat@boot.oat --instruction-set=x86_64 --instruction-set-features=-ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt --base=0x60e74000 --host
+dex2oat I 10-18 20:09:28   117   117 parsed_options.cc:559] setting boot class path to /usr/lib/java/dex/art/core-oj-hostdex.jar:/usr/lib/java/dex/art/apachehttp-hostdex.jar:/usr/lib/java/dex/art/apache-xml-hostdex.jar:/usr/lib/java/dex/art/bouncycastle-hostdex.jar:/usr/lib/java/dex/art/core-junit-hostdex.jar:/usr/lib/java/dex/art/core-libart-hostdex.jar:/usr/lib/java/dex/art/hamcrest-hostdex.jar:/usr/lib/java/dex/art/junit-runner-hostdex.jar:/usr/lib/java/dex/art/okhttp-hostdex.jar:/usr/lib/java/dex/art/wolfssljni-hostdex.jar
+dex2oat I 10-18 20:09:28   117   117 heap.cc:2841] Explicit mark sweep GC freed 1(36KB) AllocSpace objects, 0(0B) LOS objects, 48% free, 4390KB/8486KB, paused 1.616ms total 1.660ms
+dex2oat I 10-18 20:09:29   117   117 heap.cc:2841] Explicit mark sweep GC freed 17883(3048KB) AllocSpace objects, 0(0B) LOS objects, 66% free, 1341KB/4025KB, paused 692us total 1.413ms
+dex2oat I 10-18 20:09:30   117   117 dex2oat.cc:2796] dex2oat took 2.621s (9.736s cpu) (threads: 12) arena alloc=7926KB (8116232B) java alloc=1347KB (1379672B)
+E/AsynchronousCloseMonitor(  116): setting blocked thread signal handler failed: Invalid argument
+dalvikvm I 10-18 20:09:30   116   116 oat_file_assistant.cc:229] Compiling dex file: dex2oat --dex-file=/tmp/d/classes.dex --oat-file=/root/.cache/art/x86_64/tmp@d@classes.dex --instruction-set=x86_64 --instruction-set-features=-ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt --host --boot-image=/usr/bin/../lib/art//../java/dex/art/oat/boot.art
+dex2oat I 10-18 20:09:30   131   131 dex2oat.cc:3090] dex2oat --dex-file=/tmp/d/classes.dex --oat-file=/root/.cache/art/x86_64/tmp@d@classes.dex --instruction-set=x86_64 --instruction-set-features=-ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt --host --boot-image=/usr/bin/../lib/art//../java/dex/art/oat/boot.art
+dex2oat I 10-18 20:09:31   131   131 dex2oat.cc:2796] dex2oat took 26.202ms (12.594ms cpu) (threads: 12) arena alloc=412KB (422664B) java alloc=137KB (140448B)
+I/wolfssljni(  116): Unable to set FIPS callback without wolfCrypt FIPS code
+STRAWTOGRASP: GetFieldID(0x49, delegate, Ljava/net/SocketImpl;) returning NULL
+E/libcore (  116): JavaVM::GetEnv() failed
+*** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
+Fatal signal 6 (SIGABRT), code -6 (SI_TKILL)
+OS: Linux 7.0.0-38-generic (x86_64)
+Cmdline: <unset>
+Thread: 116 "Shutdown thread"
+Registers:
+    rax: 0x0000000000000000    rbx: 0x0000000000000000    rcx: 0x00007377dffe1f8c    rdx: 0x0000000000000000
+    rdi: 0x0000000000000002    rsi: 0x00007ffc1f77c3f0    rbp: 0x00007377cae7ff28    rsp: 0x00007ffc1f77c3e8
+    r8 : 0x0000000000000080    r9 : 0x0000000000000000    r10: 0x0000000000000008    r11: 0x0000000000000246
+    r12: 0x00007377d0b59a40    r13: 0x6e556e4f5f494e4a    r14: 0x00007377cae7ff38    r15: 0x00007377ce23d940
+    rip: 0x00007377dffe1f8c    eflags: 0x00000246 [ PF ZF IF ]
+     cs: 0x00000033     gs: 0x00000000     fs: 0x00000000
+
+Backtrace:
+sh: line 0: /usr/bin/addr2line: not found
+	#00 pc 000000000004af8c  /lib/ld-musl-x86_64.so.1 (offset 14000) (???)
+
+Fault message: 
+Aborted (core dumped)
