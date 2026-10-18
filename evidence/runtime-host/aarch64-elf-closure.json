@@ -1,0 +1,981 @@
+{
+ "files": [
+  {
+   "path": "usr/lib/libLLVM.so.23.1",
+   "size": 177718896,
+   "needed": [
+    "libffi.so.8",
+    "libz.so.1",
+    "libzstd.so.1",
+    "libxml2.so.2",
+    "libstdc++.so.6",
+    "libgcc_s.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libgallium-26.2.5.so",
+   "size": 38069008,
+   "needed": [
+    "libdrm.so.2",
+    "libLLVM.so.23.1",
+    "libexpat.so.1",
+    "libz.so.1",
+    "libzstd.so.1",
+    "libSPIRV-Tools.so",
+    "libxcb.so.1",
+    "libxcb-randr.so.0",
+    "libxcb-sync.so.1",
+    "libxcb-present.so.0",
+    "libxshmfence.so.1",
+    "libxcb-xfixes.so.0",
+    "libxcb-dri3.so.0",
+    "libelf.so.1",
+    "libdrm_amdgpu.so.1",
+    "libX11-xcb.so.1",
+    "libstdc++.so.6",
+    "libgcc_s.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libart.so",
+   "size": 7352136,
+   "needed": [
+    "libartbase.so",
+    "libdexfile.so",
+    "libprofile.so",
+    "libartpalette.so",
+    "libnativebridge.so",
+    "libbacktrace.so",
+    "libbase.so",
+    "libsigchain.so",
+    "libatomic.so.1",
+    "libz.so.1",
+    "libdl_bio.so.0",
+    "liblz4.so.1",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libcrypto.so.3",
+   "size": 4533144,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libart-compiler.so",
+   "size": 3475128,
+   "needed": [
+    "libart.so",
+    "libartbase.so",
+    "libartpalette.so",
+    "libprofile.so",
+    "libdexfile.so",
+    "libbase.so",
+    "liblzma.so.5",
+    "libvixl.so.5",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libicui18n.so.78",
+   "size": 3148224,
+   "needed": [
+    "libicuuc.so.78",
+    "libstdc++.so.6",
+    "libgcc_s.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libvixl.so.5",
+   "size": 2951688,
+   "needed": [
+    "libstdc++.so.6",
+    "libgcc_s.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libstdc++.so.6",
+   "size": 2820600,
+   "needed": [
+    "libc.musl-aarch64.so.1",
+    "libgcc_s.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libicuuc.so.78",
+   "size": 1902632,
+   "needed": [
+    "libicudata.so.78",
+    "libstdc++.so.6",
+    "libgcc_s.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libwolfssl.so.46",
+   "size": 1579032,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libSPIRV-Tools.so",
+   "size": 1313232,
+   "needed": [
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libX11.so.6",
+   "size": 1193040,
+   "needed": [
+    "libxcb.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libxml2.so.2",
+   "size": 1182624,
+   "needed": [
+    "libz.so.1",
+    "liblzma.so.5",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/bin/dex2oat",
+   "size": 1050600,
+   "needed": [
+    "libprofile.so",
+    "libart-compiler.so",
+    "libart-dexlayout.so",
+    "libart.so",
+    "libdexfile.so",
+    "libartbase.so",
+    "libartpalette.so",
+    "libbase.so",
+    "libatomic.so.1",
+    "libcrypto.so.3",
+    "liblz4.so.1",
+    "libz.so.1",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "lib/libc.musl-aarch64.so.1",
+   "size": 723480,
+   "needed": []
+  },
+  {
+   "path": "usr/lib/libzstd.so.1",
+   "size": 657256,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libart-dexlayout.so",
+   "size": 460472,
+   "needed": [
+    "libartbase.so",
+    "libdexfile.so",
+    "libprofile.so",
+    "libbase.so",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libEGL.so.1",
+   "size": 330664,
+   "needed": [
+    "libgallium-26.2.5.so",
+    "libgbm.so.1",
+    "libexpat.so.1",
+    "libX11-xcb.so.1",
+    "libX11.so.6",
+    "libxcb.so.1",
+    "libxcb-randr.so.0",
+    "libxcb-xfixes.so.0",
+    "libxcb-shm.so.0",
+    "libdrm.so.2",
+    "libwayland-client.so.0",
+    "libxcb-dri3.so.0",
+    "libxcb-present.so.0",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/java/dex/art/natives/libjavacore.so",
+   "size": 270240,
+   "needed": [
+    "liblog.so",
+    "libnativehelper.so",
+    "libbase.so",
+    "libexpat.so.1",
+    "libz.so.1",
+    "libicuuc.so.78",
+    "libicui18n.so.78",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/java/dex/art/natives/libopenjdk.so",
+   "size": 269520,
+   "needed": [
+    "liblog.so",
+    "libnativehelper.so",
+    "libopenjdkjvm.so",
+    "libicuuc.so.78",
+    "libz.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/liblzma.so.5",
+   "size": 263928,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libdexfile.so",
+   "size": 263856,
+   "needed": [
+    "libziparchive.so",
+    "libartbase.so",
+    "libartpalette.so",
+    "libbase.so",
+    "libz.so.1",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libartbase.so",
+   "size": 198472,
+   "needed": [
+    "libziparchive.so",
+    "libbase.so",
+    "libstdc++.so.6",
+    "libgcc_s.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libxcb.so.1",
+   "size": 198456,
+   "needed": [
+    "libXau.so.6",
+    "libXdmcp.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/liblz4.so.1",
+   "size": 198392,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libexpat.so.1",
+   "size": 198392,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/java/dex/art/natives/libwolfssljni.so",
+   "size": 198248,
+   "needed": [
+    "libwolfssl.so.46",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libelf.so.1",
+   "size": 133080,
+   "needed": [
+    "libz.so.1",
+    "libzstd.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libz.so.1",
+   "size": 133008,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libgcc_s.so.1",
+   "size": 133008,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libdrm.so.2",
+   "size": 132968,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libbase.so",
+   "size": 132944,
+   "needed": [
+    "libbsd.so.0",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libutils.so",
+   "size": 132888,
+   "needed": [
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libprofile.so",
+   "size": 132864,
+   "needed": [
+    "libbase.so",
+    "libartbase.so",
+    "libartpalette.so",
+    "libdexfile.so",
+    "libz.so.1",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libziparchive.so",
+   "size": 132784,
+   "needed": [
+    "liblog.so",
+    "libbase.so",
+    "libz.so.1",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libunwind.so",
+   "size": 132560,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libdl_bio.so.0",
+   "size": 68920,
+   "needed": [
+    "libEGL.so.1",
+    "libelf.so.1",
+    "libunwind.so.8",
+    "libucontext.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libbsd.so.0",
+   "size": 68400,
+   "needed": [
+    "libmd.so.0",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libwayland-client.so.0",
+   "size": 68304,
+   "needed": [
+    "libffi.so.8",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libffi.so.8",
+   "size": 67544,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libmd.so.0",
+   "size": 67536,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libxcb-present.so.0",
+   "size": 67352,
+   "needed": [
+    "libxcb.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libxcb-xfixes.so.0",
+   "size": 67352,
+   "needed": [
+    "libxcb.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libXdmcp.so.6",
+   "size": 67344,
+   "needed": [
+    "libbsd.so.0",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libxcb-dri3.so.0",
+   "size": 67344,
+   "needed": [
+    "libxcb.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libxcb-shm.so.0",
+   "size": 67344,
+   "needed": [
+    "libxcb.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libxcb-randr.so.0",
+   "size": 67344,
+   "needed": [
+    "libxcb.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libxcb-sync.so.1",
+   "size": 67344,
+   "needed": [
+    "libxcb.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libgbm.so.1",
+   "size": 67296,
+   "needed": [
+    "libdrm.so.2",
+    "libexpat.so.1",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/liblog.so",
+   "size": 67272,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libcutils.so",
+   "size": 67264,
+   "needed": [
+    "liblog.so",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/java/dex/art/natives/libopenjdkjvm.so",
+   "size": 67248,
+   "needed": [
+    "libart.so",
+    "libartbase.so",
+    "libbase.so",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libxshmfence.so.1",
+   "size": 67248,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libbacktrace.so",
+   "size": 67248,
+   "needed": [
+    "libbase.so",
+    "libunwind.so",
+    "liblog.so",
+    "libcutils.so",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libXau.so.6",
+   "size": 67240,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libdrm_amdgpu.so.1",
+   "size": 67240,
+   "needed": [
+    "libdrm.so.2",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/bin/dalvikvm",
+   "size": 67240,
+   "needed": [
+    "libnativehelper.so",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libX11-xcb.so.1",
+   "size": 67176,
+   "needed": []
+  },
+  {
+   "path": "usr/lib/art/libsigchain.so",
+   "size": 67176,
+   "needed": [
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libnativebridge.so",
+   "size": 67176,
+   "needed": [
+    "liblog.so",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/art/libartpalette.so",
+   "size": 67176,
+   "needed": [
+    "libbase.so",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/java/dex/art/natives/libnativehelper.so",
+   "size": 67176,
+   "needed": [
+    "liblog.so",
+    "libstdc++.so.6",
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libucontext.so.1",
+   "size": 67168,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libatomic.so.1",
+   "size": 67168,
+   "needed": [
+    "libc.musl-aarch64.so.1"
+   ]
+  },
+  {
+   "path": "usr/lib/libunwind.so.8",
+   "size": 67112,
+   "needed": [
+    "libc.musl-aarch64.so.1",
+    "liblzma.so.5"
+   ]
+  },
+  {
+   "path": "usr/lib/libicudata.so.78",
+   "size": 66296,
+   "needed": []
+  }
+ ],
+ "total_bytes": 255738512,
+ "unresolved": {},
+ "pulled_by": {
+  "usr/lib/libwolfssl.so.46": [
+   "usr/lib/java/dex/art/natives/libwolfssljni.so"
+  ],
+  "lib/libc.musl-aarch64.so.1": [
+   "usr/lib/java/dex/art/natives/libwolfssljni.so",
+   "usr/lib/libwolfssl.so.46",
+   "usr/lib/java/dex/art/natives/libopenjdk.so",
+   "usr/lib/libz.so.1",
+   "usr/lib/libicuuc.so.78",
+   "usr/lib/libgcc_s.so.1",
+   "usr/lib/libstdc++.so.6",
+   "usr/lib/java/dex/art/natives/libopenjdkjvm.so",
+   "usr/lib/art/libbase.so",
+   "usr/lib/libbsd.so.0",
+   "usr/lib/libmd.so.0",
+   "usr/lib/art/libartbase.so",
+   "usr/lib/art/libziparchive.so",
+   "usr/lib/art/liblog.so",
+   "usr/lib/art/libart.so",
+   "usr/lib/liblz4.so.1",
+   "usr/lib/libdl_bio.so.0",
+   "usr/lib/libucontext.so.1",
+   "usr/lib/libunwind.so.8",
+   "usr/lib/liblzma.so.5",
+   "usr/lib/libelf.so.1",
+   "usr/lib/libzstd.so.1",
+   "usr/lib/libEGL.so.1",
+   "usr/lib/libxcb-present.so.0",
+   "usr/lib/libxcb.so.1",
+   "usr/lib/libXdmcp.so.6",
+   "usr/lib/libXau.so.6",
+   "usr/lib/libxcb-dri3.so.0",
+   "usr/lib/libwayland-client.so.0",
+   "usr/lib/libffi.so.8",
+   "usr/lib/libdrm.so.2",
+   "usr/lib/libxcb-shm.so.0",
+   "usr/lib/libxcb-xfixes.so.0",
+   "usr/lib/libxcb-randr.so.0",
+   "usr/lib/libX11.so.6",
+   "usr/lib/libexpat.so.1",
+   "usr/lib/libgbm.so.1",
+   "usr/lib/libgallium-26.2.5.so",
+   "usr/lib/libdrm_amdgpu.so.1",
+   "usr/lib/libxshmfence.so.1",
+   "usr/lib/libxcb-sync.so.1",
+   "usr/lib/libSPIRV-Tools.so",
+   "usr/lib/libLLVM.so.23.1",
+   "usr/lib/libxml2.so.2",
+   "usr/lib/libatomic.so.1",
+   "usr/lib/art/libsigchain.so",
+   "usr/lib/art/libbacktrace.so",
+   "usr/lib/art/libcutils.so",
+   "usr/lib/art/libunwind.so",
+   "usr/lib/art/libnativebridge.so",
+   "usr/lib/art/libartpalette.so",
+   "usr/lib/art/libprofile.so",
+   "usr/lib/art/libdexfile.so",
+   "usr/lib/java/dex/art/natives/libnativehelper.so",
+   "usr/lib/java/dex/art/natives/libjavacore.so",
+   "usr/lib/libicui18n.so.78",
+   "usr/lib/art/libutils.so",
+   "usr/lib/art/libart-dexlayout.so",
+   "usr/lib/art/libart-compiler.so",
+   "usr/lib/libvixl.so.5",
+   "usr/bin/dex2oat",
+   "usr/lib/libcrypto.so.3",
+   "usr/bin/dalvikvm"
+  ],
+  "usr/lib/art/liblog.so": [
+   "usr/lib/java/dex/art/natives/libopenjdk.so",
+   "usr/lib/art/libziparchive.so",
+   "usr/lib/art/libbacktrace.so",
+   "usr/lib/art/libcutils.so",
+   "usr/lib/art/libnativebridge.so",
+   "usr/lib/java/dex/art/natives/libnativehelper.so",
+   "usr/lib/java/dex/art/natives/libjavacore.so"
+  ],
+  "usr/lib/java/dex/art/natives/libnativehelper.so": [
+   "usr/lib/java/dex/art/natives/libopenjdk.so",
+   "usr/lib/java/dex/art/natives/libjavacore.so",
+   "usr/bin/dalvikvm"
+  ],
+  "usr/lib/java/dex/art/natives/libopenjdkjvm.so": [
+   "usr/lib/java/dex/art/natives/libopenjdk.so"
+  ],
+  "usr/lib/libicuuc.so.78": [
+   "usr/lib/java/dex/art/natives/libopenjdk.so",
+   "usr/lib/java/dex/art/natives/libjavacore.so",
+   "usr/lib/libicui18n.so.78"
+  ],
+  "usr/lib/libz.so.1": [
+   "usr/lib/java/dex/art/natives/libopenjdk.so",
+   "usr/lib/art/libziparchive.so",
+   "usr/lib/art/libart.so",
+   "usr/lib/libelf.so.1",
+   "usr/lib/libgallium-26.2.5.so",
+   "usr/lib/libLLVM.so.23.1",
+   "usr/lib/libxml2.so.2",
+   "usr/lib/art/libprofile.so",
+   "usr/lib/art/libdexfile.so",
+   "usr/lib/java/dex/art/natives/libjavacore.so",
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/libicudata.so.78": [
+   "usr/lib/libicuuc.so.78"
+  ],
+  "usr/lib/libstdc++.so.6": [
+   "usr/lib/libicuuc.so.78",
+   "usr/lib/java/dex/art/natives/libopenjdkjvm.so",
+   "usr/lib/art/libbase.so",
+   "usr/lib/art/libartbase.so",
+   "usr/lib/art/libziparchive.so",
+   "usr/lib/art/libart.so",
+   "usr/lib/libgallium-26.2.5.so",
+   "usr/lib/libSPIRV-Tools.so",
+   "usr/lib/libLLVM.so.23.1",
+   "usr/lib/art/libsigchain.so",
+   "usr/lib/art/libbacktrace.so",
+   "usr/lib/art/libnativebridge.so",
+   "usr/lib/art/libartpalette.so",
+   "usr/lib/art/libprofile.so",
+   "usr/lib/art/libdexfile.so",
+   "usr/lib/java/dex/art/natives/libnativehelper.so",
+   "usr/lib/java/dex/art/natives/libjavacore.so",
+   "usr/lib/libicui18n.so.78",
+   "usr/lib/art/libutils.so",
+   "usr/lib/art/libart-dexlayout.so",
+   "usr/lib/art/libart-compiler.so",
+   "usr/lib/libvixl.so.5",
+   "usr/bin/dex2oat",
+   "usr/bin/dalvikvm"
+  ],
+  "usr/lib/libgcc_s.so.1": [
+   "usr/lib/libicuuc.so.78",
+   "usr/lib/libstdc++.so.6",
+   "usr/lib/art/libartbase.so",
+   "usr/lib/libgallium-26.2.5.so",
+   "usr/lib/libLLVM.so.23.1",
+   "usr/lib/libicui18n.so.78",
+   "usr/lib/libvixl.so.5"
+  ],
+  "usr/lib/art/libart.so": [
+   "usr/lib/java/dex/art/natives/libopenjdkjvm.so",
+   "usr/lib/art/libart-compiler.so",
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/art/libartbase.so": [
+   "usr/lib/java/dex/art/natives/libopenjdkjvm.so",
+   "usr/lib/art/libart.so",
+   "usr/lib/art/libprofile.so",
+   "usr/lib/art/libdexfile.so",
+   "usr/lib/art/libart-dexlayout.so",
+   "usr/lib/art/libart-compiler.so",
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/art/libbase.so": [
+   "usr/lib/java/dex/art/natives/libopenjdkjvm.so",
+   "usr/lib/art/libartbase.so",
+   "usr/lib/art/libziparchive.so",
+   "usr/lib/art/libart.so",
+   "usr/lib/art/libbacktrace.so",
+   "usr/lib/art/libartpalette.so",
+   "usr/lib/art/libprofile.so",
+   "usr/lib/art/libdexfile.so",
+   "usr/lib/java/dex/art/natives/libjavacore.so",
+   "usr/lib/art/libart-dexlayout.so",
+   "usr/lib/art/libart-compiler.so",
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/libbsd.so.0": [
+   "usr/lib/art/libbase.so",
+   "usr/lib/libXdmcp.so.6"
+  ],
+  "usr/lib/libmd.so.0": [
+   "usr/lib/libbsd.so.0"
+  ],
+  "usr/lib/art/libziparchive.so": [
+   "usr/lib/art/libartbase.so",
+   "usr/lib/art/libdexfile.so"
+  ],
+  "usr/lib/art/libdexfile.so": [
+   "usr/lib/art/libart.so",
+   "usr/lib/art/libprofile.so",
+   "usr/lib/art/libart-dexlayout.so",
+   "usr/lib/art/libart-compiler.so",
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/art/libprofile.so": [
+   "usr/lib/art/libart.so",
+   "usr/lib/art/libart-dexlayout.so",
+   "usr/lib/art/libart-compiler.so",
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/art/libartpalette.so": [
+   "usr/lib/art/libart.so",
+   "usr/lib/art/libprofile.so",
+   "usr/lib/art/libdexfile.so",
+   "usr/lib/art/libart-compiler.so",
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/art/libnativebridge.so": [
+   "usr/lib/art/libart.so"
+  ],
+  "usr/lib/art/libbacktrace.so": [
+   "usr/lib/art/libart.so"
+  ],
+  "usr/lib/art/libsigchain.so": [
+   "usr/lib/art/libart.so"
+  ],
+  "usr/lib/libatomic.so.1": [
+   "usr/lib/art/libart.so",
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/libdl_bio.so.0": [
+   "usr/lib/art/libart.so"
+  ],
+  "usr/lib/liblz4.so.1": [
+   "usr/lib/art/libart.so",
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/libEGL.so.1": [
+   "usr/lib/libdl_bio.so.0"
+  ],
+  "usr/lib/libelf.so.1": [
+   "usr/lib/libdl_bio.so.0",
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libunwind.so.8": [
+   "usr/lib/libdl_bio.so.0"
+  ],
+  "usr/lib/libucontext.so.1": [
+   "usr/lib/libdl_bio.so.0"
+  ],
+  "usr/lib/liblzma.so.5": [
+   "usr/lib/libunwind.so.8",
+   "usr/lib/libxml2.so.2",
+   "usr/lib/art/libart-compiler.so"
+  ],
+  "usr/lib/libzstd.so.1": [
+   "usr/lib/libelf.so.1",
+   "usr/lib/libgallium-26.2.5.so",
+   "usr/lib/libLLVM.so.23.1"
+  ],
+  "usr/lib/libgallium-26.2.5.so": [
+   "usr/lib/libEGL.so.1"
+  ],
+  "usr/lib/libgbm.so.1": [
+   "usr/lib/libEGL.so.1"
+  ],
+  "usr/lib/libexpat.so.1": [
+   "usr/lib/libEGL.so.1",
+   "usr/lib/libgbm.so.1",
+   "usr/lib/libgallium-26.2.5.so",
+   "usr/lib/java/dex/art/natives/libjavacore.so"
+  ],
+  "usr/lib/libX11-xcb.so.1": [
+   "usr/lib/libEGL.so.1",
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libX11.so.6": [
+   "usr/lib/libEGL.so.1"
+  ],
+  "usr/lib/libxcb.so.1": [
+   "usr/lib/libEGL.so.1",
+   "usr/lib/libxcb-present.so.0",
+   "usr/lib/libxcb-dri3.so.0",
+   "usr/lib/libxcb-shm.so.0",
+   "usr/lib/libxcb-xfixes.so.0",
+   "usr/lib/libxcb-randr.so.0",
+   "usr/lib/libX11.so.6",
+   "usr/lib/libgallium-26.2.5.so",
+   "usr/lib/libxcb-sync.so.1"
+  ],
+  "usr/lib/libxcb-randr.so.0": [
+   "usr/lib/libEGL.so.1",
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libxcb-xfixes.so.0": [
+   "usr/lib/libEGL.so.1",
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libxcb-shm.so.0": [
+   "usr/lib/libEGL.so.1"
+  ],
+  "usr/lib/libdrm.so.2": [
+   "usr/lib/libEGL.so.1",
+   "usr/lib/libgbm.so.1",
+   "usr/lib/libgallium-26.2.5.so",
+   "usr/lib/libdrm_amdgpu.so.1"
+  ],
+  "usr/lib/libwayland-client.so.0": [
+   "usr/lib/libEGL.so.1"
+  ],
+  "usr/lib/libxcb-dri3.so.0": [
+   "usr/lib/libEGL.so.1",
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libxcb-present.so.0": [
+   "usr/lib/libEGL.so.1",
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libXau.so.6": [
+   "usr/lib/libxcb.so.1"
+  ],
+  "usr/lib/libXdmcp.so.6": [
+   "usr/lib/libxcb.so.1"
+  ],
+  "usr/lib/libffi.so.8": [
+   "usr/lib/libwayland-client.so.0",
+   "usr/lib/libLLVM.so.23.1"
+  ],
+  "usr/lib/libLLVM.so.23.1": [
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libSPIRV-Tools.so": [
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libxcb-sync.so.1": [
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libxshmfence.so.1": [
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libdrm_amdgpu.so.1": [
+   "usr/lib/libgallium-26.2.5.so"
+  ],
+  "usr/lib/libxml2.so.2": [
+   "usr/lib/libLLVM.so.23.1"
+  ],
+  "usr/lib/art/libunwind.so": [
+   "usr/lib/art/libbacktrace.so"
+  ],
+  "usr/lib/art/libcutils.so": [
+   "usr/lib/art/libbacktrace.so"
+  ],
+  "usr/lib/libicui18n.so.78": [
+   "usr/lib/java/dex/art/natives/libjavacore.so"
+  ],
+  "usr/lib/libvixl.so.5": [
+   "usr/lib/art/libart-compiler.so"
+  ],
+  "usr/lib/art/libart-compiler.so": [
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/art/libart-dexlayout.so": [
+   "usr/bin/dex2oat"
+  ],
+  "usr/lib/libcrypto.so.3": [
+   "usr/bin/dex2oat"
+  ]
+ }
+}

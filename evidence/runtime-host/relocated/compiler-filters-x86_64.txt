@@ -1,0 +1,16 @@
+speed-default cold ok=1  cache=315M
+speed-default warm ok=1  cache=315M
+app-verify cold ok=1  cache=315M
+app-verify warm ok=1  cache=315M
+all-verify cold ok=1  cache=261M
+all-verify warm ok=1  cache=261M
+imageless+app-verify cold ok=1  cache=16K
+imageless+app-verify warm ok=1  cache=16K
+speed-default cold: 16.02 s wall, 64.56+13.06 s cpu, 577016 KB maxrss "elapsed_ms":1102
+speed-default warm: 0.64 s wall, 0.15+0.04 s cpu, 193380 KB maxrss "elapsed_ms":614
+app-verify cold: 16.18 s wall, 64.71+11.58 s cpu, 577312 KB maxrss "elapsed_ms":1091
+app-verify warm: 0.60 s wall, 0.16+0.03 s cpu, 190624 KB maxrss "elapsed_ms":572
+all-verify cold: 14.18 s wall, 56.59+12.80 s cpu, 575184 KB maxrss "elapsed_ms":1165
+all-verify warm: 0.75 s wall, 0.39+0.07 s cpu, 177376 KB maxrss "elapsed_ms":733
+imageless+app-verify cold: 1.56 s wall, 1.25+0.12 s cpu, 128324 KB maxrss "elapsed_ms":1134
+imageless+app-verify warm: 1.59 s wall, 1.28+0.11 s cpu, 125648 KB maxrss "elapsed_ms":1177

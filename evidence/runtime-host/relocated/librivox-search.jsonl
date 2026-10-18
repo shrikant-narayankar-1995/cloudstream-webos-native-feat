@@ -1,0 +1,6 @@
+{"event":"plugin","name":"LibriVoxAudiobook","version":34,"class":"com.RowdyAvocado.LibriVoxAudiobookPlugin","base":"Plugin","requiresResources":false,"sha256":"71e7aac096b706b69c53cc2122750ff114e3274741f5807d866f37be1819a54b"}
+{"event":"provider","name":"Librivox Audiobook","mainUrl":"https://librivox.org","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"event":"result","class":"com.lagradost.cloudstream3.AnimeSearchResponse","name":"Pride and Prejudice","url":"https://librivox.org/pride-and-prejudice-by-jane-austen/","apiName":"Librivox Audiobook","type":"Anime","posterUrl":"https://archive.org/services/img/pride_and_prejudice_librivox"}
+{"event":"result","class":"com.lagradost.cloudstream3.AnimeSearchResponse","name":"Pride and Prejudice","url":"","apiName":"Librivox Audiobook","type":"Anime"}
+{"event":"count","kind":"result","value":2}
+{"event":"done","ok":true,"elapsed_ms":1100}
