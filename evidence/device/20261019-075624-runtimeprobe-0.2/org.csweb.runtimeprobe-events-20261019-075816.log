@@ -1,0 +1,37 @@
+         0 INFO  [app] (20380) start app_id=org.csweb.runtimeprobe platform=webos params={"@system_native_app":true,"nid":"org.csweb.runtimeprobe"}
+         0 INFO  [device] (20380) webos OLED65C1PTB webOS 6.5.3 (kisscurl-koli) firmware 03.53.45 board O20_DVB ram 3 GB kernel 4.4.84-229.kcl4tv.6 aarch64
+         1 INFO  [crash] (20380) handler installed: /tmp/org.csweb.runtimeprobe/crash.log, version 0.2.0, build id b352c6ff25c7861a5a891c3c5a1f101cb3077a3e
+         2 INFO  [lifecycle] (20380) Created -> Initialising (Start)
+       128 INFO  [gamepad] (20380) uid 6516 gid 5000 groups [29,44,505,509,777]; /dev/input event files readable 32 of 32
+       128 INFO  [gamepad] (20380) at start: 0 joystick(s)
+       128 INFO  [screensaver] (20380) allowed (default)
+       128 INFO  [app] (20380) video driver wayland, display mode 1920x1080 @0 Hz
+       247 INFO  [gl] (20380) ARM / Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       251 INFO  [i18n] (20380) locale en-AU (formats en-US) from settingsservice; 0 catalog file(s), 0 entries
+       260 INFO  [caps] (20380) diagnostics.crash_record   supported   /tmp/org.csweb.runtimeprobe/crash.log
+       260 INFO  [caps] (20380) i18n.system_locale         supported   en-AU
+       260 INFO  [caps] (20380) display.gles2              supported   Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       260 INFO  [caps] (20380) display.fragment_highp     supported   
+       260 INFO  [caps] (20380) display.max_texture_size   supported   8192
+       260 INFO  [caps] (20380) display.mode               supported   1920x1080 @0 Hz
+       260 INFO  [caps] (20380) display.panel              supported   3840x2160
+       260 INFO  [caps] (20380) display.refresh_rate       supported   120 Hz
+       260 INFO  [caps] (20380) storage.kv                 unknown     not requested by the app
+       260 INFO  [caps] (20380) net.http                   unknown     not requested by the app
+       260 INFO  [caps] (20380) audio.output               unknown     not requested by the app
+       260 INFO  [caps] (20380) images.decode              supported   PNG, JPEG, GIF, BMP, WebP, SVG
+       260 INFO  [caps] (20380) input.pointer              unknown     no pointer event yet
+       260 INFO  [caps] (20380) lifecycle.background       unknown     no background event yet
+       260 INFO  [caps] (20380) lifecycle.relaunch_params  supported   SDL_webOSTakeRelaunchMessage
+       260 INFO  [caps] (20380) media.playback             unknown     not implemented in the kit yet
+       262 INFO  [csprobe] (20380) probe start exe=/media/developer/apps/usr/palm/applications/org.csweb.runtimeprobe/wnk-csprobe app_dir=/media/developer/apps/usr/palm/applications/org.csweb.runtimeprobe runtime_dir=/tmp/org.csweb.runtimeprobe
+       262 INFO  [lifecycle] (20380) Initialising -> Running (Started)
+       604 INFO  [window] (20380) shown
+       604 INFO  [speech] (20380) Audio Guidance setting: off
+       605 INFO  [caps] (20380) accessibility.audio_guidance now supported: off
+       605 INFO  [network] (20380) online (Wi-Fi)
+       605 INFO  [caps] (20380) network.status now supported: online (Wi-Fi)
+       662 INFO  [app] (20380) first frame: drawable 1920x1080
+       707 INFO  [lifecycle] (20380) SDL WILLENTERFOREGROUND
+       707 INFO  [lifecycle] (20380) SDL DIDENTERFOREGROUND
+       707 INFO  [window] (20380) focus gained

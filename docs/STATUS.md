@@ -1,67 +1,55 @@
 # Agent Status Report
 
 Date/time: 2026-10-19
-Branch/commit: project directory is not a git repository
-Native App Kit commit: `e10f35ecd6e27987cc866b28caea6be66a023fcc` + `docs/kit-patches/0001-extra-app-dirs.patch`
-CloudStream source commit: `eb962b4fb7b1387b8de42ec58000cee0a01fe741`
-Other sources: art_standalone `66a5d907…`, bionic_translation `6253dec7…`, recloudstream/extensions builds `fcb6101c…`
+Branch/commit: `main` (project repository; see `git log`)
+Native App Kit commit: `e10f35ecd6e27987cc866b28caea6be66a023fcc` + `docs/kit-patches/0001`, `0002`
+CloudStream: source `eb962b4fb7b1387b8de42ec58000cee0a01fe741`; pre-release APK sha256 `add4b760…6d83`
+Runtime: Alpine art_standalone 0_git20251009-r3 (aarch64 on the TV, x86_64 on the host)
 Target TV / firmware: LG OLED65C1PTB, webOS 6.5.3 (kisscurl-koli), firmware 03.53.45, Developer Mode
-Toolchain / NDK: arm-webos-linux-gnueabi gcc 12.2.0 (Buildroot), cmake 3.28.3, ares-cli-rs
+Toolchain / NDK: arm-webos-linux-gnueabi gcc 12.2.0; OpenJDK 17 + D8 8.5.35 and clang/lld in alpine:edge containers
 
 ## Current phase and gate
-Phase: 0 complete; Phase 1 in progress (platform probe done on TV; runtime host-tested)
-Runtime feasibility: **INCONCLUSIVE**
-Reason: runtime on TV (T1) and unmodified plugin execution (T2/T3) not yet run; T2/T3 need approval.
+Phase: 1 complete (feasibility gate)
+Runtime feasibility: **PASS** (scoped; see docs/FEASIBILITY_DECISION.md)
+Reason: unmodified Dailymotion and LibriVoxAudiobook plugins loaded, registered and returned real
+search/details/links results inside the bundled ART runtime on the TV.
 
 ## Completed work
-- Kit audit and baseline (doctor, 89/89 host tests, ARM build, package checks, 7/7 firmware verify).
-- CloudStream loader audit; three official plugins inspected statically; 172/172 API refs resolve.
-- Runtime probe app built with the kit and run on the TV: exec, aarch64, JIT/AOT mappings, entropy,
-  threads, network all available to a child process; ~436 MB RAM available.
-- Candidate runtime (Alpine art_standalone) found and host-tested: DEX execution works; TLS works
-  except archive.org; libcore stream collectors and exit path defective.
+- Phase 0 audits, TV platform probe, runtime evaluation (earlier commits).
+- Android compat layer + csloader (CloudStream's loadPlugin sequence) with 110 host tests.
+- CNCVerse survey: 37 plugins, all Android `Plugin`; load-only pass 31/40 load and register.
+- Relocatable, pruned aarch64 runtime (50 MiB + 62 MiB CloudStream DEX), kit private-runtime packaging.
+- On-TV plugin execution (probe 0.2.0).
 
-## Files changed
-- `docs/research/{kit-audit,kit-baseline,cloudstream-loader-audit,plugin-format-audit,platform-capability-matrix,dependency-inventory,runtime-test-plan}.md`
-- `docs/FEASIBILITY_DECISION.md`, `docs/STATUS.md`, `docs/kit-patches/0001-extra-app-dirs.{md,patch}`
-- `tools/dexinfo.py`, `tools/check_api_refs.py`, `tools/apk_closure.py`, `tests/test_tools.py`
-- `apps/runtime-probe/` (main.cpp, child_probe.{hpp,cpp}, a64_elf.cpp, CMakeLists.txt, icons, expected-needed.txt)
-- `runtime-tests/artprobe/` (ArtProbe.java, run-alpine.sh, tls-matrix.sh)
-- kit checkout: `CMakeLists.txt` (WNK_EXTRA_APP_DIRS hook)
-
-## Commands executed
-| Command | Exit status | Notes |
+## Commands executed (this phase)
+| Command | Exit | Notes |
 |---|---:|---|
-| `tools/doctor.sh` | 0 | |
-| `tools/test.sh` | 0 | 89/89 |
-| `tools/build-webos.sh` (examples; then + probe) | 0 / 0 | all packages pass check-package; 0 warnings |
-| `tools/verify.sh <hello ipk> --runtime-libs …`, `<probe ipk>` | 0 / 0 | 7/7 each |
-| host `ctest -R csweb` | 0 | 1/1 |
-| `python3 -m unittest discover -s tests` | 0 | 8/8 |
-| `tools/install.sh`, `tools/launch.sh`, `tools/logs.sh` (probe) | 0 / 0 / 0 | TV run |
-| `docker run alpine:edge … run-alpine.sh` | 0 (dalvikvm rc 134, exit abort) | ART host probe |
-| `docker run alpine:edge … tls-matrix.sh` | 0 | 7/8 hosts ok |
+| `docker run … runtime/build.sh` | 0 | compat tests 110/110, csweb-host.dex |
+| `docker run … runtime/make-rootfs.sh aarch64/x86_64` | 0 | apk signature-checked roots |
+| `python3 runtime/make_dist.py …` | 0 | dists 110 / 113 MiB |
+| `runtime/run-batch-host.sh evidence/plugins/all …` | 0 | load-only 31/40 |
+| `python3 -m unittest discover -s tests/tools` (kit) | 0 | 33 passed |
+| `tools/build-webos.sh` (with probe) | 0 | 0 warnings, check-package passed |
+| `tools/verify.sh … --private-runtime runtime-aarch64` | 0 | 7/7 |
+| `tools/install.sh … --private-runtime runtime-aarch64`, `launch.sh`, `logs.sh` | 0 | TV run |
 
 ## Tests
-- Passed: kit 89/89; project 8/8 Python; probe host test 1/1; TV probe (all checks ran)
-- Failed: ART host probe: stream collectors, archive.org TLS, exit abort (runtime defects, recorded)
-- Skipped: `webosbrew-ipk-verify` (not installed); getrandom check (no syscall number in NDK headers)
+- Passed: compat 110; project tools 8; kit tool tests 33; kit host suite incl. csweb probe test; TV runtime tests 4/5
+- Failed: TV InternetArchive search (wolfSSL vs archive.org chain, known runtime defect)
+- Skipped: provider operations for plugins sourcing unlicensed content (by decision); webosbrew-ipk-verify (not installed)
 
 ## Evidence
-- Logs: `evidence/baseline/`, `evidence/device/20261019-070601-runtimeprobe/`, `evidence/runtime-host/`
-- Plugin SHA-256: `evidence/plugins/download/SHA256SUMS`
-- Probe ipk SHA-256: `10351717a32f5ee27d0ff9903943fdcb48294afc1c71ec62861adf5cf66d1a79`
-- Reproduction: `docs/research/kit-baseline.md` table
+- TV: `evidence/device/20261019-075624-runtimeprobe-0.2/`
+- Host runs: `evidence/runtime-host/runs/`, `load-only/`, `relocated/`
+- Plugin hashes: `evidence/plugins/*/SHA256SUMS`; probe ipk `evidence/baseline/probe-0.2-ipk-sha256.txt`
 
 ## Risks/blockers
-- Approval needed before any plugin execution (T2, T3).
-- Kit package checks forbid the runtime's ELFs; needs an approved, documented extension.
-- Runtime memory footprint on TV unknown; ~436 MB available.
-- TLS failure for archive.org in the runtime's wolfSSL; stream collectors broken in libcore.
-- Only `BasePlugin` plugins without resources are in reach of this design.
-- Host disk: 26 GiB free.
+- ~10 s per operation with a fresh runtime; memory ~120 MiB per process.
+- TLS failures for some chains (archive.org); Activity-dependent, resource and WebView plugins unsupported.
+- Licence audit of the bundled runtime still metadata-only (needed before any redistribution).
+- Kit patches 0001/0002 live in this repo; consider proposing 0002 upstream.
 
 ## Next tasks
-1. T1: package the aarch64 runtime with the probe app and run ArtProbe on the TV (memory, time, TLS).
-2. Build the `csloader` harness and the dexed CloudStream API; T2 on host (after approval).
-3. T3 on the TV (after approval); then update FEASIBILITY_DECISION.md.
+1. Long-lived runtime service (one ART process, JSON requests over stdin/stdout) and a host-precompiled arm64 boot image.
+2. Fix TLS for archive.org in the runtime layer (BouncyCastle JSSE provider or wolfSSL build).
+3. Phase 2: native app skeleton on the kit (repositories, plugin install with hash checks, search UI) using the runtime service.

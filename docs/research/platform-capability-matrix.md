@@ -61,7 +61,18 @@ inference; `[UNK]` unknown.
 2. Both **armv7** (matching the userland) and **aarch64** (kernel supports 64-bit EL0) processes run `[HW]`.
    Either needs its own bundled C library and loader, because the TV's glibc is 32-bit and its 64-bit
    userland does not exist.
-3. **Memory is the tightest budget**: ~430 MB available with a small native app running. An ART
-   process for one small provider is expected to need tens of MB `[INF]`; must be measured (test T3 in
-   `runtime-test-plan.md`).
-4. Runtime caches (dalvik-cache) must live on tmpfs and are rebuilt after each reboot `[INF]`.
+3. **Memory is the tightest budget**: ~430 MB available with a small native app running; one ART
+   process running a plugin operation peaks at 111–118 MiB on the TV `[HW]` (see below).
+4. Writable storage is tmpfs (RAM). Compiling the boot image and class path costs ~577 MB peak and a
+   315 MB cache on the host `[TEST]`, so the TV runs imageless with verify-only compilation and keeps no
+   cache `[HW]`; a boot image precompiled on the host and shipped read-only is the planned improvement.
+
+## Bundled ART runtime on the TV (probe 0.2.0, 2026-10-19) `[HW]`
+
+| Measure | Value |
+|---|---|
+| Runtime | Alpine art_standalone 0_git20251009-r3 aarch64, musl loader bundled, started by fork/exec |
+| Mode | `-Xnoimage-dex2oat -Xcompiler-option --compiler-filter=verify -Xmx256m` (nothing compiled to tmpfs) |
+| Wall time per plugin operation (fresh process) | 7.6–10.1 s, of which the operation itself 4.1–6.6 s (`elapsed_ms`) |
+| Peak RSS per runtime process | 111–118 MiB |
+| HTTPS from the runtime | works (Dailymotion, LibriVox); archive.org fails (wolfSSL) |
