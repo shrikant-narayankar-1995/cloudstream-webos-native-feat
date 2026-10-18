@@ -1,0 +1,541 @@
+Preset CMake variables:
+
+  CMAKE_BUILD_TYPE="Release"
+  CMAKE_TOOLCHAIN_FILE:FILEPATH="/home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/share/buildroot/toolchainfile.cmake"
+  WNK_BUILD_TESTS="OFF"
+
+-- The C compiler identification is GNU 12.2.0
+-- The CXX compiler identification is GNU 12.2.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/bin/arm-webos-linux-gnueabi-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/bin/arm-webos-linux-gnueabi-g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- wnk: target webOS (arm), NDK /home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/bin
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Failed
+-- Looking for pthread_create in pthreads
+-- Looking for pthread_create in pthreads - not found
+-- Looking for pthread_create in pthread
+-- Looking for pthread_create in pthread - found
+-- Found Threads: TRUE  
+-- Bundled FFmpeg (arm): /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/ffmpeg
+-- Found Python3: /home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/bin/python3 (found suitable version "3.10.8", minimum required is "3.8") found components: Interpreter 
+-- Configuring done (0.9s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release
+[  2%] Built target wnk_input
+[  4%] Built target wnk_focus
+[ 10%] Built target wnk_sdl_webos_ext
+[ 13%] Built target wnk_logging
+[ 14%] Built target wnk_async
+[ 20%] Built target wnk_libwebp_ext
+[ 21%] Built target wnk_i18n
+[ 23%] Built target wnk_audio
+[ 27%] Built target wnk_render
+[ 30%] Built target wnk_lifecycle
+[ 33%] Built target wnk_diagnostics
+[ 36%] Built target wnk_platform
+[ 36%] Built target wnk-player-clips
+[ 38%] Built target wnk_input_sdl
+[ 39%] Built target wnk_render_gles2
+[ 46%] Built target wnk_net
+[ 47%] Built target wnk_audio_sdl
+[ 51%] Built target wnk_storage
+[ 58%] Built target wnk_ui
+[ 65%] Built target wnk_example_shows_catalogue
+[ 68%] Built target wnk_media
+[ 71%] Built target wnk_image
+[ 75%] Built target wnk_auth
+[ 76%] Built target wnk_media_starfish
+[ 78%] Built target wnk_media_ndl
+[ 80%] Built target wnk_media_ui
+[ 85%] Built target wnk_media_ffmpeg
+[ 85%] Built target wnk_image_textures
+[ 90%] Built target wnk_ui_images
+[ 90%] Built target wnk-hello
+[ 92%] Built target wnk_app
+[ 96%] Built target wnk-shows
+[ 96%] Built target wnk-player
+[ 96%] Built target wnk-tvui
+[ 96%] Building CXX object extra-apps/runtime-probe/CMakeFiles/wnk-csprobe.dir/main.cpp.o
+In file included from /home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/arm-webos-linux-gnueabi/include/c++/12.2.0/map:60,
+                 from /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/third_party/nlohmann/json.hpp:164,
+                 from /home/sostk/Desktop/cloudstream-webos-agent-pack/apps/runtime-probe/main.cpp:23:
+/home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/arm-webos-linux-gnueabi/include/c++/12.2.0/bits/stl_tree.h: In function ‘std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::iterator std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_emplace_hint_unique(const_iterator, _Args&& ...) [with _Args = {const std::piecewise_construct_t&, std::tuple<const std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&>, std::tuple<>}; _Key = std::__cxx11::basic_string<char>; _Val = std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> >; _KeyOfValue = std::_Select1st<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> > >; _Compare = std::less<void>; _Alloc = std::allocator<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> > >]’:
+/home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/arm-webos-linux-gnueabi/include/c++/12.2.0/bits/stl_tree.h:2457:7: note: parameter passing for argument of type ‘std::_Rb_tree<std::__cxx11::basic_string<char>, std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> >, std::_Select1st<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> > >, std::less<void>, std::allocator<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> > > >::const_iterator’ changed in GCC 7.1
+ 2457 |       _Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::
+      |       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/arm-webos-linux-gnueabi/include/c++/12.2.0/map:61:
+/home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/arm-webos-linux-gnueabi/include/c++/12.2.0/bits/stl_map.h: In member function ‘std::map<_Key, _Tp, _Compare, _Alloc>::mapped_type& std::map<_Key, _Tp, _Compare, _Alloc>::operator[](const key_type&) [with _Key = std::__cxx11::basic_string<char>; _Tp = nlohmann::json_abi_v3_11_3::basic_json<>; _Compare = std::less<void>; _Alloc = std::allocator<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> > >]’:
+/home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/arm-webos-linux-gnueabi/include/c++/12.2.0/bits/stl_map.h:511:44: note: parameter passing for argument of type ‘std::_Rb_tree<std::__cxx11::basic_string<char>, std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> >, std::_Select1st<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> > >, std::less<void>, std::allocator<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> > > >::const_iterator’ changed in GCC 7.1
+  511 |           __i = _M_t._M_emplace_hint_unique(__i, std::piecewise_construct,
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  512 |                                             std::tuple<const key_type&>(__k),
+      |                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  513 |                                             std::tuple<>());
+      |                                             ~~~~~~~~~~~~~~~
+In member function ‘std::map<_Key, _Tp, _Compare, _Alloc>::mapped_type& std::map<_Key, _Tp, _Compare, _Alloc>::operator[](const key_type&) [with _Key = std::__cxx11::basic_string<char>; _Tp = nlohmann::json_abi_v3_11_3::basic_json<>; _Compare = std::less<void>; _Alloc = std::allocator<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> > >]’,
+    inlined from ‘bool nlohmann::json_abi_v3_11_3::detail::json_sax_dom_callback_parser<BasicJsonType>::key(string_t&) [with BasicJsonType = nlohmann::json_abi_v3_11_3::basic_json<>]’ at /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/third_party/nlohmann/json.hpp:7079:83:
+/home/sostk/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot/arm-webos-linux-gnueabi/include/c++/12.2.0/bits/stl_map.h:511:44: note: parameter passing for argument of type ‘std::_Rb_tree<std::__cxx11::basic_string<char>, std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> >, std::_Select1st<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> > >, std::less<void>, std::allocator<std::pair<const std::__cxx11::basic_string<char>, nlohmann::json_abi_v3_11_3::basic_json<> > > >::const_iterator’ changed in GCC 7.1
+  511 |           __i = _M_t._M_emplace_hint_unique(__i, std::piecewise_construct,
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  512 |                                             std::tuple<const key_type&>(__k),
+      |                                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  513 |                                             std::tuple<>());
+      |                                             ~~~~~~~~~~~~~~~
+[ 97%] Linking CXX executable wnk-csprobe
+[100%] Built target wnk-csprobe
+[  1%] Built target wnk_i18n
+[  7%] Built target wnk_libwebp_ext
+[ 14%] Built target wnk_sdl_webos_ext
+[ 15%] Built target wnk_logging
+[ 18%] Built target wnk_platform
+[ 20%] Built target wnk_audio
+[ 21%] Built target wnk_audio_sdl
+[ 25%] Built target wnk_render
+[ 27%] Built target wnk_input
+[ 29%] Built target wnk_focus
+[ 36%] Built target wnk_ui
+[ 39%] Built target wnk_async
+[ 46%] Built target wnk_net
+[ 50%] Built target wnk_image
+[ 52%] Built target wnk_image_textures
+[ 54%] Built target wnk_ui_images
+[ 57%] Built target wnk_diagnostics
+[ 60%] Built target wnk_lifecycle
+[ 61%] Built target wnk_input_sdl
+[ 63%] Built target wnk_render_gles2
+[ 66%] Built target wnk_storage
+[ 68%] Built target wnk_app
+[ 71%] Built target wnk-csprobe
+[ 71%] Packaging org.csweb.runtimeprobe 0.2.0
+mkipk: wrote /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/dist/org.csweb.runtimeprobe_0.2.0_arm.ipk (53886100 bytes)
+58bc621b2819352179494ab7c898688ef58155b262a6a3f49dc773fbb2e92097  org.csweb.runtimeprobe_0.2.0_arm.ipk
+check-package: /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/dist/org.csweb.runtimeprobe_0.2.0_arm.ipk
+  ok   ar members are debian-binary, control.tar.gz, data.tar.gz in order with bare names (got ['debian-binary', 'control.tar.gz', 'data.tar.gz'])
+  ok   debian-binary is '2.0\n'
+  ok   control.tar.gz contains 'control'
+  ok   control has Package
+  ok   control has Version
+  ok   control has Architecture
+  ok   control has Installed-Size
+  ok   control has Maintainer
+  ok   control has Description
+  ok   control Architecture is arm
+  ok   Maintainer is 'Name <email>'
+  ok   Version is three integers
+  ok   every payload path is under usr/palm/ and relative
+  ok   payload has no symlinks or hard links
+  ok   payload has only files and directories
+  ok   payload is owned by root:root
+  ok   Installed-Size 118791 KiB matches payload (121641948 bytes)
+  ok   usr/palm/applications/org.csweb.runtimeprobe/appinfo.json present
+  ok   appinfo id equals control Package and directory name
+  ok   appinfo version equals control Version
+  ok   appinfo type is native
+  ok   packageinfo.json present (required by appInstallService)
+  ok   packageinfo app/id match
+  ok   packageinfo version matches
+  ok   icon 'icon.png' present
+  ok   largeIcon 'largeIcon.png' present
+  ok   main executable wnk-csprobe present
+  ok   main executable has exec permission
+  ok   lib/libSDL2-2.0.so.0: ELF32 little-endian ARM
+  ok   lib/libSDL2-2.0.so.0: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   lib/libSDL2-2.0.so.0: staged under its SONAME (libSDL2-2.0.so.0)
+  ok   lib/libSDL2-2.0.so.0: allowed to be bundled (not a firmware/runtime library)
+  ok   lib/libSDL2-2.0.so.0: does not need libstdc++.so (link it statically)
+  ok   wnk-csprobe: ELF32 little-endian ARM
+  ok   wnk-csprobe: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   wnk-csprobe: does not need libstdc++.so (link it statically)
+  ok   runtime-aarch64/: private runtime contains ELF files
+  ok   runtime-aarch64/bin/dex2oat: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/bin/dex2oat: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/bin/dex2oat: not an LG firmware library
+  ok   runtime-aarch64/lib/ld-musl-aarch64.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/lib/ld-musl-aarch64.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/lib/ld-musl-aarch64.so.1: not an LG firmware library
+  ok   runtime-aarch64/lib/libEGL.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/lib/libEGL.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/lib/libEGL.so.1: not an LG firmware library
+  ok   runtime-aarch64/lib/libc.musl-aarch64.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/lib/libc.musl-aarch64.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/lib/libc.musl-aarch64.so.1: not an LG firmware library
+  ok   runtime-aarch64/usr/bin/dalvikvm: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/bin/dalvikvm: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/bin/dalvikvm: not an LG firmware library
+  ok   runtime-aarch64/usr/bin/dex2oat: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/bin/dex2oat: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/bin/dex2oat: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libart-compiler.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libart-compiler.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libart-compiler.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libart-dexlayout.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libart-dexlayout.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libart-dexlayout.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libart.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libart.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libart.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libartbase.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libartbase.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libartbase.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libartpalette.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libartpalette.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libartpalette.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libbacktrace.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libbacktrace.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libbacktrace.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libbase.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libbase.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libbase.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libcutils.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libcutils.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libcutils.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libdexfile.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libdexfile.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libdexfile.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/liblog.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/liblog.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/liblog.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libnativebridge.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libnativebridge.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libnativebridge.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libprofile.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libprofile.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libprofile.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libsigchain.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libsigchain.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libsigchain.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libunwind.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libunwind.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libunwind.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libutils.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libutils.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libutils.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/art/libziparchive.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/art/libziparchive.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/art/libziparchive.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libjavacore.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libjavacore.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libjavacore.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libnativehelper.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libnativehelper.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libnativehelper.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libopenjdk.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libopenjdk.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libopenjdk.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libopenjdkjvm.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libopenjdkjvm.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libopenjdkjvm.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libwolfssljni.so: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libwolfssljni.so: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/java/dex/art/natives/libwolfssljni.so: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libatomic.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libatomic.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libatomic.so.1: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libbsd.so.0: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libbsd.so.0: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libbsd.so.0: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libcrypto.so.3: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libcrypto.so.3: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libcrypto.so.3: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libdl_bio.so.0: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libdl_bio.so.0: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libdl_bio.so.0: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libelf.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libelf.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libelf.so.1: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libexpat.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libexpat.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libexpat.so.1: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libgcc_s.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libgcc_s.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libgcc_s.so.1: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libicudata.so.78: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libicudata.so.78: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libicudata.so.78: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libicui18n.so.78: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libicui18n.so.78: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libicui18n.so.78: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libicuuc.so.78: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libicuuc.so.78: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libicuuc.so.78: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/liblz4.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/liblz4.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/liblz4.so.1: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/liblzma.so.5: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/liblzma.so.5: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/liblzma.so.5: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libmd.so.0: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libmd.so.0: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libmd.so.0: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libstdc++.so.6: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libstdc++.so.6: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libstdc++.so.6: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libucontext.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libucontext.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libucontext.so.1: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libunwind.so.8: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libunwind.so.8: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libunwind.so.8: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libvixl.so.5: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libvixl.so.5: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libvixl.so.5: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libwolfssl.so.46: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libwolfssl.so.46: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libwolfssl.so.46: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libz.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libz.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libz.so.1: not an LG firmware library
+  ok   runtime-aarch64/usr/lib/libzstd.so.1: machine 183 allowed in a private runtime for arm
+  ok   runtime-aarch64/usr/lib/libzstd.so.1: every DT_NEEDED is inside runtime-aarch64/
+  ok   runtime-aarch64/usr/lib/libzstd.so.1: not an LG firmware library
+  ok   lib/libSDL2-2.0.so.0: does not load libraries from runtime-aarch64/
+  ok   wnk-csprobe: does not load libraries from runtime-aarch64/
+  ok   licenses/LICENSE present
+  ok   licenses/THIRD-PARTY-NOTICES.md present
+  ok   licenses/SOURCE.txt present
+  ok   licenses/SDL2-zlib.txt present (SDL is bundled)
+  ok   main has RPATH/RUNPATH $ORIGIN/lib for bundled libraries (has ['$ORIGIN/lib'])
+  ok   main DT_NEEDED equals the reviewed list
+check-package: all checks passed
+[ 71%] Built target wnk-csprobe-ipk
+[ 73%] Built target wnk-hello
+[ 73%] Packaging org.wnk.examples.hello 0.8.0
+mkipk: wrote /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/dist/org.wnk.examples.hello_0.8.0_arm.ipk (1142950 bytes)
+7dd27cb9807b037d245ff7a628de122640ff22733f430d4288c97164cde64969  org.wnk.examples.hello_0.8.0_arm.ipk
+check-package: /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/dist/org.wnk.examples.hello_0.8.0_arm.ipk
+  ok   ar members are debian-binary, control.tar.gz, data.tar.gz in order with bare names (got ['debian-binary', 'control.tar.gz', 'data.tar.gz'])
+  ok   debian-binary is '2.0\n'
+  ok   control.tar.gz contains 'control'
+  ok   control has Package
+  ok   control has Version
+  ok   control has Architecture
+  ok   control has Installed-Size
+  ok   control has Maintainer
+  ok   control has Description
+  ok   control Architecture is arm
+  ok   Maintainer is 'Name <email>'
+  ok   Version is three integers
+  ok   every payload path is under usr/palm/ and relative
+  ok   payload has no symlinks or hard links
+  ok   payload has only files and directories
+  ok   payload is owned by root:root
+  ok   Installed-Size 2458 KiB matches payload (2516419 bytes)
+  ok   usr/palm/applications/org.wnk.examples.hello/appinfo.json present
+  ok   appinfo id equals control Package and directory name
+  ok   appinfo version equals control Version
+  ok   appinfo type is native
+  ok   packageinfo.json present (required by appInstallService)
+  ok   packageinfo app/id match
+  ok   packageinfo version matches
+  ok   icon 'icon.png' present
+  ok   largeIcon 'largeIcon.png' present
+  ok   main executable wnk-hello present
+  ok   main executable has exec permission
+  ok   lib/libSDL2-2.0.so.0: ELF32 little-endian ARM
+  ok   lib/libSDL2-2.0.so.0: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   lib/libSDL2-2.0.so.0: staged under its SONAME (libSDL2-2.0.so.0)
+  ok   lib/libSDL2-2.0.so.0: allowed to be bundled (not a firmware/runtime library)
+  ok   lib/libSDL2-2.0.so.0: does not need libstdc++.so (link it statically)
+  ok   wnk-hello: ELF32 little-endian ARM
+  ok   wnk-hello: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   wnk-hello: does not need libstdc++.so (link it statically)
+  ok   licenses/LICENSE present
+  ok   licenses/THIRD-PARTY-NOTICES.md present
+  ok   licenses/SOURCE.txt present
+  ok   licenses/SDL2-zlib.txt present (SDL is bundled)
+  ok   main has RPATH/RUNPATH $ORIGIN/lib for bundled libraries (has ['$ORIGIN/lib'])
+  ok   main DT_NEEDED equals the reviewed list
+check-package: all checks passed
+[ 73%] Built target wnk-hello-ipk
+[ 75%] Built target wnk-tvui
+[ 76%] Packaging org.wnk.examples.tvui 0.6.6
+mkipk: wrote /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/dist/org.wnk.examples.tvui_0.6.6_arm.ipk (1483590 bytes)
+c5f0555cf48be1d0cbecb39f10b35e059decdc06ca5ba56db1ac8a535ee25c72  org.wnk.examples.tvui_0.6.6_arm.ipk
+check-package: /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/dist/org.wnk.examples.tvui_0.6.6_arm.ipk
+  ok   ar members are debian-binary, control.tar.gz, data.tar.gz in order with bare names (got ['debian-binary', 'control.tar.gz', 'data.tar.gz'])
+  ok   debian-binary is '2.0\n'
+  ok   control.tar.gz contains 'control'
+  ok   control has Package
+  ok   control has Version
+  ok   control has Architecture
+  ok   control has Installed-Size
+  ok   control has Maintainer
+  ok   control has Description
+  ok   control Architecture is arm
+  ok   Maintainer is 'Name <email>'
+  ok   Version is three integers
+  ok   every payload path is under usr/palm/ and relative
+  ok   payload has no symlinks or hard links
+  ok   payload has only files and directories
+  ok   payload is owned by root:root
+  ok   Installed-Size 3166 KiB matches payload (3241340 bytes)
+  ok   usr/palm/applications/org.wnk.examples.tvui/appinfo.json present
+  ok   appinfo id equals control Package and directory name
+  ok   appinfo version equals control Version
+  ok   appinfo type is native
+  ok   packageinfo.json present (required by appInstallService)
+  ok   packageinfo app/id match
+  ok   packageinfo version matches
+  ok   icon 'icon.png' present
+  ok   largeIcon 'largeIcon.png' present
+  ok   main executable wnk-tvui present
+  ok   main executable has exec permission
+  ok   lib/libSDL2-2.0.so.0: ELF32 little-endian ARM
+  ok   lib/libSDL2-2.0.so.0: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   lib/libSDL2-2.0.so.0: staged under its SONAME (libSDL2-2.0.so.0)
+  ok   lib/libSDL2-2.0.so.0: allowed to be bundled (not a firmware/runtime library)
+  ok   lib/libSDL2-2.0.so.0: does not need libstdc++.so (link it statically)
+  ok   wnk-tvui: ELF32 little-endian ARM
+  ok   wnk-tvui: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   wnk-tvui: does not need libstdc++.so (link it statically)
+  ok   licenses/LICENSE present
+  ok   licenses/THIRD-PARTY-NOTICES.md present
+  ok   licenses/SOURCE.txt present
+  ok   licenses/SDL2-zlib.txt present (SDL is bundled)
+  ok   main has RPATH/RUNPATH $ORIGIN/lib for bundled libraries (has ['$ORIGIN/lib'])
+  ok   main DT_NEEDED equals the reviewed list
+check-package: all checks passed
+[ 76%] Built target wnk-tvui-ipk
+[ 77%] Built target wnk_example_shows_catalogue
+[ 78%] Built target wnk-shows
+[ 79%] Packaging org.wnk.examples.shows 0.3.1
+mkipk: wrote /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/dist/org.wnk.examples.shows_0.3.1_arm.ipk (1410074 bytes)
+24b6ab0c8b64ba498d250c2776e255444a6cbf36233fbd9ea3cfeb1683d1f28b  org.wnk.examples.shows_0.3.1_arm.ipk
+check-package: /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/dist/org.wnk.examples.shows_0.3.1_arm.ipk
+  ok   ar members are debian-binary, control.tar.gz, data.tar.gz in order with bare names (got ['debian-binary', 'control.tar.gz', 'data.tar.gz'])
+  ok   debian-binary is '2.0\n'
+  ok   control.tar.gz contains 'control'
+  ok   control has Package
+  ok   control has Version
+  ok   control has Architecture
+  ok   control has Installed-Size
+  ok   control has Maintainer
+  ok   control has Description
+  ok   control Architecture is arm
+  ok   Maintainer is 'Name <email>'
+  ok   Version is three integers
+  ok   every payload path is under usr/palm/ and relative
+  ok   payload has no symlinks or hard links
+  ok   payload has only files and directories
+  ok   payload is owned by root:root
+  ok   Installed-Size 3137 KiB matches payload (3211742 bytes)
+  ok   usr/palm/applications/org.wnk.examples.shows/appinfo.json present
+  ok   appinfo id equals control Package and directory name
+  ok   appinfo version equals control Version
+  ok   appinfo type is native
+  ok   packageinfo.json present (required by appInstallService)
+  ok   packageinfo app/id match
+  ok   packageinfo version matches
+  ok   icon 'icon.png' present
+  ok   largeIcon 'largeIcon.png' present
+  ok   main executable wnk-shows present
+  ok   main executable has exec permission
+  ok   lib/libSDL2-2.0.so.0: ELF32 little-endian ARM
+  ok   lib/libSDL2-2.0.so.0: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   lib/libSDL2-2.0.so.0: staged under its SONAME (libSDL2-2.0.so.0)
+  ok   lib/libSDL2-2.0.so.0: allowed to be bundled (not a firmware/runtime library)
+  ok   lib/libSDL2-2.0.so.0: does not need libstdc++.so (link it statically)
+  ok   wnk-shows: ELF32 little-endian ARM
+  ok   wnk-shows: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   wnk-shows: does not need libstdc++.so (link it statically)
+  ok   licenses/LICENSE present
+  ok   licenses/THIRD-PARTY-NOTICES.md present
+  ok   licenses/SOURCE.txt present
+  ok   licenses/SDL2-zlib.txt present (SDL is bundled)
+  ok   main has RPATH/RUNPATH $ORIGIN/lib for bundled libraries (has ['$ORIGIN/lib'])
+  ok   main DT_NEEDED equals the reviewed list
+check-package: all checks passed
+[ 79%] Built target wnk-shows-ipk
+[ 88%] Built target wnk_media
+[ 91%] Built target wnk_media_ffmpeg
+[ 93%] Built target wnk_media_ndl
+[ 95%] Built target wnk_media_ui
+[ 96%] Built target wnk_media_starfish
+[ 96%] Built target wnk-player-clips
+[ 98%] Built target wnk-player
+[100%] Packaging org.wnk.examples.player 0.20.0
+mkipk: wrote /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/dist/org.wnk.examples.player_0.20.0_arm.ipk (19855340 bytes)
+7a7c1356e97389a06f12247cbfdc2ba7b2905843f9bb9bb50e2242f06c77426b  org.wnk.examples.player_0.20.0_arm.ipk
+check-package: /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/webos-release/dist/org.wnk.examples.player_0.20.0_arm.ipk
+  ok   ar members are debian-binary, control.tar.gz, data.tar.gz in order with bare names (got ['debian-binary', 'control.tar.gz', 'data.tar.gz'])
+  ok   debian-binary is '2.0\n'
+  ok   control.tar.gz contains 'control'
+  ok   control has Package
+  ok   control has Version
+  ok   control has Architecture
+  ok   control has Installed-Size
+  ok   control has Maintainer
+  ok   control has Description
+  ok   control Architecture is arm
+  ok   Maintainer is 'Name <email>'
+  ok   Version is three integers
+  ok   every payload path is under usr/palm/ and relative
+  ok   payload has no symlinks or hard links
+  ok   payload has only files and directories
+  ok   payload is owned by root:root
+  ok   Installed-Size 23701 KiB matches payload (24268811 bytes)
+  ok   usr/palm/applications/org.wnk.examples.player/appinfo.json present
+  ok   appinfo id equals control Package and directory name
+  ok   appinfo version equals control Version
+  ok   appinfo type is native
+  ok   packageinfo.json present (required by appInstallService)
+  ok   packageinfo app/id match
+  ok   packageinfo version matches
+  ok   icon 'icon.png' present
+  ok   largeIcon 'largeIcon.png' present
+  ok   main executable wnk-player present
+  ok   main executable has exec permission
+  ok   lib/libSDL2-2.0.so.0: ELF32 little-endian ARM
+  ok   lib/libSDL2-2.0.so.0: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   lib/libSDL2-2.0.so.0: staged under its SONAME (libSDL2-2.0.so.0)
+  ok   lib/libSDL2-2.0.so.0: allowed to be bundled (not a firmware/runtime library)
+  ok   lib/libSDL2-2.0.so.0: does not need libstdc++.so (link it statically)
+  ok   lib/libavcodec-wnk.so.63: ELF32 little-endian ARM
+  ok   lib/libavcodec-wnk.so.63: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   lib/libavcodec-wnk.so.63: staged under its SONAME (libavcodec-wnk.so.63)
+  ok   lib/libavcodec-wnk.so.63: allowed to be bundled (not a firmware/runtime library)
+  ok   lib/libavcodec-wnk.so.63: does not need libstdc++.so (link it statically)
+  ok   lib/libavformat-wnk.so.63: ELF32 little-endian ARM
+  ok   lib/libavformat-wnk.so.63: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   lib/libavformat-wnk.so.63: staged under its SONAME (libavformat-wnk.so.63)
+  ok   lib/libavformat-wnk.so.63: allowed to be bundled (not a firmware/runtime library)
+  ok   lib/libavformat-wnk.so.63: does not need libstdc++.so (link it statically)
+  ok   lib/libavutil-wnk.so.61: ELF32 little-endian ARM
+  ok   lib/libavutil-wnk.so.61: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   lib/libavutil-wnk.so.61: staged under its SONAME (libavutil-wnk.so.61)
+  ok   lib/libavutil-wnk.so.61: allowed to be bundled (not a firmware/runtime library)
+  ok   lib/libavutil-wnk.so.61: does not need libstdc++.so (link it statically)
+  ok   lib/libswresample-wnk.so.7: ELF32 little-endian ARM
+  ok   lib/libswresample-wnk.so.7: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   lib/libswresample-wnk.so.7: staged under its SONAME (libswresample-wnk.so.7)
+  ok   lib/libswresample-wnk.so.7: allowed to be bundled (not a firmware/runtime library)
+  ok   lib/libswresample-wnk.so.7: does not need libstdc++.so (link it statically)
+  ok   wnk-player: ELF32 little-endian ARM
+  ok   wnk-player: EABI5 soft-float calling convention (arm-webos-linux-gnueabi)
+  ok   wnk-player: does not need libstdc++.so (link it statically)
+  ok   licenses/LICENSE present
+  ok   licenses/THIRD-PARTY-NOTICES.md present
+  ok   licenses/SOURCE.txt present
+  ok   licenses/SDL2-zlib.txt present (SDL is bundled)
+  ok   licenses/FFmpeg-LGPL-2.1.txt present (FFmpeg is bundled)
+  ok   licenses/SOURCE.txt names the FFmpeg source tarball and its checksum
+  ok   main has RPATH/RUNPATH $ORIGIN/lib for bundled libraries (has ['$ORIGIN/lib'])
+  ok   main DT_NEEDED equals the reviewed list
+check-package: all checks passed
+[100%] Built target wnk-player-ipk
+[100%] Built target wnk-ipks
+total 77316
+-rw-rw-r-- 1 sostk sostk  1376806 Oct 19 07:05 org.csweb.runtimeprobe_0.1.0_arm.ipk
+-rw-rw-r-- 1 sostk sostk 53886100 Oct 19 07:55 org.csweb.runtimeprobe_0.2.0_arm.ipk
+-rw-rw-r-- 1 sostk sostk  1142950 Oct 19 07:55 org.wnk.examples.hello_0.8.0_arm.ipk
+-rw-rw-r-- 1 sostk sostk 19855340 Oct 19 07:55 org.wnk.examples.player_0.20.0_arm.ipk
+-rw-rw-r-- 1 sostk sostk  1410074 Oct 19 07:55 org.wnk.examples.shows_0.3.1_arm.ipk
+-rw-rw-r-- 1 sostk sostk  1483590 Oct 19 07:55 org.wnk.examples.tvui_0.6.6_arm.ipk

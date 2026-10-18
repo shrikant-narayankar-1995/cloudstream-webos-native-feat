@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 """Assemble a relocatable plugin runtime from an Alpine root (runtime/make-rootfs.sh).
 
-usage: make_dist.py <rootfs dir> <arch: aarch64|x86_64> <out dir>
+usage: make_dist.py <rootfs dir> <arch: aarch64|x86_64> <out dir, by convention runtime/dist/runtime-<arch>>
 
 Layout of <out dir> (every file a regular file, no symlinks, so it can travel in an ipk):
   lib/ld-musl-<arch>.so.1            musl dynamic loader (the runtime is started through it)
@@ -120,6 +120,8 @@ def main(rootfs, arch, out):
         for f in os.listdir(os.path.join(icu, ver)):
             if f.endswith(".dat"):
                 put(os.path.join(icu, ver, f), f"usr/share/icu/{ver}/{f}")
+        with open(os.path.join(out, "ICU_VERSION"), "w") as fh:
+            fh.write(ver + "\n")
     put(os.path.join(native, f"relaunch.{arch}"), "bin/dex2oat")
     put(os.path.join(HERE, "trust", "cacerts"), "trust/cacerts")
     put(os.path.join(HERE, "out", "csweb-host.dex"), "csweb/csweb-host.dex")

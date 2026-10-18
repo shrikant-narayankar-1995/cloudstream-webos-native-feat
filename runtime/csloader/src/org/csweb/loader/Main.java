@@ -36,7 +36,7 @@ import kotlinx.coroutines.BuildersKt;
  * runs one provider operation, and reports on stdout as JSON lines:
  *
  *   csloader --plugin F.cs3 --data DIR --op load-only|search|mainpage|details|links [--query Q] [--url U]
- *            [--provider NAME] [--timeout SECONDS] [--limit N]
+ *            [--provider NAME] [--timeout SECONDS] [--limit N] [--sha256 HEX]
  *
  * Events: plugin, provider, result, link, subtitle, unsupported, error, done. Diagnostics (plugin
  * logging) go to stderr. The process ends with Runtime.halt, because ART's shutdown thread aborts after
@@ -76,6 +76,13 @@ public final class Main {
         File data = new File(required("data"));
         String op = args.getOrDefault("op", "load-only");
         String hashBefore = sha256(file);
+        String expected = args.get("sha256");
+        if (expected != null && !expected.equalsIgnoreCase(hashBefore)) {
+            // A supplied hash proves only that the bytes are the ones the caller vetted, not who made them.
+            emit(event("error", "stage", "integrity", "type", "HashMismatch", "message",
+                    "plugin SHA-256 " + hashBefore + " does not match the supplied " + expected));
+            return false;
+        }
 
         // --- PluginManager.loadPlugin, step by step -------------------------------------------------
         PathClassLoader loader = new PathClassLoader(file.getAbsolutePath(), Main.class.getClassLoader());

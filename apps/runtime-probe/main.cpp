@@ -7,16 +7,20 @@
 #include <fcntl.h>
 #include <poll.h>
 #include <signal.h>
+#include <sys/resource.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <unistd.h>
 
 #include <chrono>
 #include <cstring>
+#include <fstream>
 #include <memory>
 #include <sstream>
 #include <string>
 #include <vector>
+
+#include <nlohmann/json.hpp>
 
 #include "child_probe.hpp"
 #include "wnk/app/app.hpp"
@@ -31,17 +35,28 @@ namespace {
 constexpr const char *kCat = "csprobe";
 constexpr const char *kChildFlag = "--child-probe";
 constexpr int kChildTimeoutMs = 30000;
+constexpr int kRuntimeTimeoutMs = 240000;  // an imageless ART start interprets the whole class path
+#if defined(__arm__) || defined(__aarch64__)
+constexpr const char *kRuntimeDir = "runtime-aarch64";
+constexpr const char *kLoader = "ld-musl-aarch64.so.1";
+#else
+constexpr const char *kRuntimeDir = "runtime-x86_64";
+constexpr const char *kLoader = "ld-musl-x86_64.so.1";
+#endif
 
 struct RunResult {
     std::string label;
     std::string status;  // "exit N", "signal N", "exec failed: ...", "timeout"
     std::vector<std::string> lines;
+    long wall_ms = 0;
+    long maxrss_kb = 0;  // peak resident set of the child (wait4 rusage)
 };
 
 // fork + execve with a fixed environment; stdout and stderr captured; killed after the timeout.
 RunResult run(const std::string &label, const std::string &path, const std::vector<std::string> &args,
-              const std::vector<std::string> &env) {
+              const std::vector<std::string> &env, int timeout_ms = kChildTimeoutMs) {
     RunResult r{label, {}, {}};
+    const auto started = std::chrono::steady_clock::now();
     int fds[2];
     if (pipe2(fds, O_CLOEXEC) != 0) {
         r.status = std::string("pipe failed: ") + std::strerror(errno);
@@ -75,7 +90,7 @@ RunResult run(const std::string &label, const std::string &path, const std::vect
     }
     close(fds[1]);
     std::string out;
-    const auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(kChildTimeoutMs);
+    const auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(timeout_ms);
     bool timed_out = false;
     for (;;) {
         const auto left = std::chrono::duration_cast<std::chrono::milliseconds>(deadline - std::chrono::steady_clock::now());
@@ -88,12 +103,16 @@ RunResult run(const std::string &label, const std::string &path, const std::vect
         char buf[4096];
         const ssize_t n = read(fds[0], buf, sizeof(buf));
         if (n <= 0) break;
-        if (out.size() < 64 * 1024) out.append(buf, static_cast<size_t>(n));
+        if (out.size() < 256 * 1024) out.append(buf, static_cast<size_t>(n));
     }
     close(fds[0]);
     if (timed_out) kill(pid, SIGKILL);
     int status = 0;
-    waitpid(pid, &status, 0);
+    struct rusage ru {};
+    wait4(pid, &status, 0, &ru);
+    r.maxrss_kb = ru.ru_maxrss;
+    r.wall_ms = static_cast<long>(std::chrono::duration_cast<std::chrono::milliseconds>(
+            std::chrono::steady_clock::now() - started).count());
     if (timed_out) {
         r.status = "timeout";
     } else if (WIFEXITED(status)) {
@@ -132,6 +151,45 @@ bool copy_file(const std::string &from, const std::string &to, std::string &erro
     return write_executable(to, data.data(), data.size(), error);
 }
 
+// Unmodified CloudStream plugins on the bundled ART (runtime-<arch>/, see runtime/make_dist.py), one
+// process per operation: imageless boot and verify-only compilation, so nothing is compiled to tmpfs.
+void run_runtime_tests(const std::string &app_dir, const std::string &tmp, std::vector<RunResult> &results) {
+    const std::string rt = app_dir + "/" + kRuntimeDir;
+    std::ifstream spec(app_dir + "/testplugins/tests.json");
+    if (access((rt + "/lib/" + kLoader).c_str(), X_OK) != 0 || !spec) {
+        results.push_back({"runtime", "not bundled in this build", {}});
+        return;
+    }
+    const auto tests = nlohmann::json::parse(spec, nullptr, false);
+    if (!tests.is_array()) {
+        results.push_back({"runtime", "testplugins/tests.json is not a JSON array", {}});
+        return;
+    }
+    std::string icu;
+    if (std::ifstream v(rt + "/ICU_VERSION"); v) std::getline(v, icu);
+    const std::vector<std::string> env{"PATH=" + rt + "/bin", "ANDROID_DATA=" + tmp + "/art", "HOME=" + tmp + "/home",
+                                       "ICU_DATA=" + rt + "/usr/share/icu/" + icu};
+    mkdir((tmp + "/art").c_str(), 0700);
+    mkdir((tmp + "/home").c_str(), 0700);
+    mkdir((tmp + "/plugin-data").c_str(), 0700);
+    const std::string libs = rt + "/usr/lib:" + rt + "/usr/lib/art:" + rt + "/usr/lib/java/dex/art/natives:" + rt + "/lib";
+    for (const auto &t : tests) {
+        if (!t.is_object() || !t.value("plugin", "").size() || !t.contains("args") || !t["args"].is_array()) continue;
+        const std::string plugin = t.value("plugin", "");
+        if (plugin.find('/') != std::string::npos) continue;  // file names inside testplugins/ only
+        std::vector<std::string> args{"--library-path", libs, rt + "/usr/bin/dalvikvm", "-Xmx256m", "-Xnoimage-dex2oat",
+                                      "-Xcompiler-option", "--compiler-filter=verify",
+                                      "-Djavax.net.ssl.trustStore=" + rt + "/trust/cacerts",
+                                      "-Djava.library.path=" + rt + "/usr/lib/java/dex/art/natives",
+                                      "-cp", rt + "/csweb/csweb-host.dex:" + rt + "/csweb/cloudstream.jar",
+                                      "org.csweb.loader.Main", "--data", tmp + "/plugin-data",
+                                      "--plugin", app_dir + "/testplugins/" + plugin, "--sha256", t.value("sha256", ""),
+                                      "--timeout", "200"};
+        for (const auto &a : t["args"]) if (a.is_string()) args.push_back(a.get<std::string>());
+        results.push_back(run("rt " + t.value("label", plugin), rt + "/lib/" + kLoader, args, env, kRuntimeTimeoutMs));
+    }
+}
+
 std::vector<RunResult> run_probes(const std::string &exe, const std::string &app_dir, const std::string &tmp) {
     std::vector<RunResult> results;
     const std::vector<std::string> env{"PATH=/usr/bin:/bin", "HOME=" + tmp, "LD_LIBRARY_PATH=" + app_dir + "/lib"};
@@ -158,6 +216,7 @@ std::vector<RunResult> run_probes(const std::string &exe, const std::string &app
     } else {
         results.push_back({"exec_aarch64", "write failed: " + error, {}});
     }
+    run_runtime_tests(app_dir, tmp, results);
     return results;
 }
 
@@ -203,8 +262,10 @@ class App : public wnk::app::Delegate {
                 [this](std::vector<RunResult> results) {
                     std::string text;
                     for (const auto &r : results) {
-                        WNK_LOGI(kCat, "run %s status=%s lines=%zu", r.label.c_str(), r.status.c_str(), r.lines.size());
-                        text += "[" + r.label + "] " + r.status + "\n";
+                        WNK_LOGI(kCat, "run %s status=%s lines=%zu wall_ms=%ld maxrss_kb=%ld", r.label.c_str(),
+                                 r.status.c_str(), r.lines.size(), r.wall_ms, r.maxrss_kb);
+                        text += "[" + r.label + "] " + r.status + " " + std::to_string(r.wall_ms) + " ms, " +
+                                std::to_string(r.maxrss_kb / 1024) + " MiB peak\n";
                         for (const auto &line : r.lines) {
                             WNK_LOGI(kCat, "%s %s", r.label.c_str(), line.c_str());
                             text += "  " + line + "\n";
