@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="vertical" android:padding="@dimen/padding">
+    <TextView android:id="@+id/label_name" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="@string/label_name" />
+    <EditText android:id="@+id/name_field" android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:inputType="text" />
+    <CheckBox android:id="@+id/enabled_box" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="@string/label_enabled" />
+</LinearLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<resources>
+    <string name="provider_name">Conformance</string>
+    <string name="settings_title">Conformance settings</string>
+    <string name="label_name">Display name</string>
+    <string name="label_enabled">Show extra results</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="plot">Test fixture: this text comes from the plugin\'s resources.arsc.</string>
+    <string-array name="titles">
+        <item>Conformance Alpha</item>
+        <item>Conformance Beta</item>
+        <item>Conformance Gamma</item>
+    </string-array>
+</resources>
