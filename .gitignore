@@ -1,0 +1,16 @@
+# Upstream checkouts (pinned by commit in docs/research/*.md); the kit patch lives in docs/kit-patches/
+/external/
+
+# Third-party binaries: never committed. Their SHA-256 sums and source URLs are.
+*.cs3
+*.apk
+/evidence/cloudstream-app/*.jar
+/runtime/rootfs/
+/runtime/trust/cacerts
+
+# Build outputs (reproducible with runtime/build.sh, runtime/native/build-native.sh)
+/runtime/out/
+/runtime/native/out/
+__pycache__/
+*.pyc
+*.dex
