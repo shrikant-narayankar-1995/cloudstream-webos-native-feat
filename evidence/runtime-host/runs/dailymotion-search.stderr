@@ -1,0 +1,11 @@
+E/AsynchronousCloseMonitor(    1): setting blocked thread signal handler failed: Invalid argument
+dalvikvm E 10-18 20:30:09     1     1 oat_file_assistant.cc:434] Dex checksum does not match for dex: /rt/csweb-host.dex.Expected: 788411095, actual: 2036604994
+dalvikvm I 10-18 20:30:09     1     1 oat_file_assistant.cc:229] Compiling dex file: dex2oat --dex-file=/rt/csweb-host.dex --oat-file=/cache/home/.cache/art/x86_64/rt@csweb-host.dex --instruction-set=x86_64 --instruction-set-features=-ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt --host --boot-image=/usr/bin/../lib/art//../java/dex/art/oat/boot.art
+dex2oat I 10-18 20:30:09    18    18 dex2oat.cc:3090] dex2oat --dex-file=/rt/csweb-host.dex --oat-file=/cache/home/.cache/art/x86_64/rt@csweb-host.dex --instruction-set=x86_64 --instruction-set-features=-ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt --host --boot-image=/usr/bin/../lib/art//../java/dex/art/oat/boot.art
+dex2oat I 10-18 20:30:09    18    18 dex2oat.cc:2796] dex2oat took 42.348ms (48.148ms cpu) (threads: 12) arena alloc=1598KB (1636632B) java alloc=226KB (231840B)
+dalvikvm W 10-18 20:30:09     1     1 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*788411095])
+I/wolfssljni(    1): Unable to set FIPS callback without wolfCrypt FIPS code
+dalvikvm W 10-18 20:30:09     1     1 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*788411095:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+I/PluginInstance: Adding Dailymotion (https://api.dailymotion.com) MainAPI
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+dalvikvm I 10-18 20:30:10     1     1 OpenjdkJvm.cc:314] System.exit called, status: 0

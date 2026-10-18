@@ -1,0 +1,5 @@
+{"event":"plugin","name":"InternetArchiveProvider","version":1,"class":"recloudstream.InternetArchivePlugin","base":"BasePlugin","requiresResources":false,"sha256":"54f3de560bebeff2e4a10d1163f6146313c59061d21c3a230125611f01b531eb"}
+{"event":"provider","name":"Internet Archive","mainUrl":"https://archive.org","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+Exception in NiceHttp: javax.net.ssl.SSLHandshakeException ASN parsing error, invalid input (error code: -140)
+{"event":"empty","kind":"result"}
+{"event":"done","ok":false,"elapsed_ms":627}

@@ -1,0 +1,32 @@
+E/AsynchronousCloseMonitor(    1): setting blocked thread signal handler failed: Invalid argument
+dalvikvm W 10-18 20:32:10     1     1 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*454770230])
+I/wolfssljni(    1): Unable to set FIPS callback without wolfCrypt FIPS code
+dalvikvm I 10-18 20:32:10     1     1 oat_file_assistant.cc:229] Compiling dex file: dex2oat --dex-file=/plugins/InternetArchiveProvider.cs3 --oat-file=/cache/home/.cache/art/x86_64/plugins@InternetArchiveProvider.cs3@classes.dex --instruction-set=x86_64 --instruction-set-features=-ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt --host --boot-image=/usr/bin/../lib/art//../java/dex/art/oat/boot.art
+dex2oat I 10-18 20:32:10    28    28 dex2oat.cc:3090] dex2oat --dex-file=/plugins/InternetArchiveProvider.cs3 --oat-file=/cache/home/.cache/art/x86_64/plugins@InternetArchiveProvider.cs3@classes.dex --instruction-set=x86_64 --instruction-set-features=-ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt --host --boot-image=/usr/bin/../lib/art//../java/dex/art/oat/boot.art
+dex2oat I 10-18 20:32:10    28    28 dex2oat.cc:2796] dex2oat took 46.314ms (60.177ms cpu) (threads: 12) arena alloc=1771KB (1813792B) java alloc=119KB (122440B)
+dalvikvm W 10-18 20:32:10     1     1 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*454770230:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+I/PluginInstance: Adding Internet Archive (https://archive.org) MainAPI
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+D/ApiError: -------------------------------------------------------------------
+D/ApiError: safeApiCall: ASN parsing error, invalid input (error code: -140)
+javax.net.ssl.SSLHandshakeException: ASN parsing error, invalid input (error code: -140)
+	at com.wolfssl.provider.jsse.WolfSSLSocket.startHandshake(WolfSSLSocket.java:1165)
+	at okhttp3.internal.connection.ConnectPlan.connectTls(ConnectPlan.kt:351)
+	at okhttp3.internal.connection.ConnectPlan.connectTlsEtc(ConnectPlan.kt:206)
+	at okhttp3.internal.connection.FastFallbackExchangeFinder.find(FastFallbackExchangeFinder.kt:78)
+	at okhttp3.internal.connection.RealCall.initExchange$okhttp(RealCall.kt:298)
+	at okhttp3.internal.connection.ConnectInterceptor.intercept(ConnectInterceptor.kt:32)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:126)
+	at okhttp3.internal.cache.CacheInterceptor.intercept(CacheInterceptor.kt:101)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:126)
+	at okhttp3.internal.http.BridgeInterceptor.intercept(BridgeInterceptor.kt:85)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:126)
+	at okhttp3.internal.http.RetryAndFollowUpInterceptor.intercept(RetryAndFollowUpInterceptor.kt:74)
+	at okhttp3.internal.http.RealInterceptorChain.proceed(RealInterceptorChain.kt:126)
+	at okhttp3.internal.connection.RealCall.getResponseWithInterceptorChain$okhttp(RealCall.kt:226)
+	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:574)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1162)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:636)
+	at java.lang.Thread.run(Thread.java:768)
+D/ApiError: -------------------------------------------------------------------
+dalvikvm I 10-18 20:32:10     1     1 OpenjdkJvm.cc:314] System.exit called, status: 2

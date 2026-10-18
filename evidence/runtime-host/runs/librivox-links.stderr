@@ -1,0 +1,6 @@
+E/AsynchronousCloseMonitor(    1): setting blocked thread signal handler failed: Invalid argument
+dalvikvm W 10-18 20:34:10     1     1 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*894805942])
+I/wolfssljni(    1): Unable to set FIPS callback without wolfCrypt FIPS code
+dalvikvm W 10-18 20:34:10     1     1 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*894805942:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+I/PluginInstance: Adding Librivox Audiobook (https://librivox.org) MainAPI
+dalvikvm I 10-18 20:34:10     1     1 OpenjdkJvm.cc:314] System.exit called, status: 0
