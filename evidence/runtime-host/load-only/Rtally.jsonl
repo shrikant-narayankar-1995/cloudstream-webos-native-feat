@@ -1,0 +1,3 @@
+{"event":"plugin","name":"Rtally","version":52,"class":"com.cncverse.RtallyPlugin","base":"Plugin","requiresResources":false,"sha256":"93bd486939947b4d8435a3d536f642505e412a87a778859e7716d376e3fb8075"}
+{"event":"provider","name":"Rtally","mainUrl":"https://www.rtally.link","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries, AsianDrama, AnimeMovie, Anime]"}
+{"event":"done","ok":true,"elapsed_ms":122}

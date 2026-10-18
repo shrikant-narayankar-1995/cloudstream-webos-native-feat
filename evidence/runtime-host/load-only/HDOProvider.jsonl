@@ -1,0 +1,3 @@
+{"event":"plugin","name":"HDOProvider","version":35,"class":"com.hdo.HDOProviderPlugin","base":"Plugin","requiresResources":false,"sha256":"fe629aceb38d5404cdbeffaefe551b4058e6dc76fdf9400aa547ec6c2e573ce0"}
+{"event":"provider","name":"HDO","mainUrl":"NONE","lang":"ta","hasMainPage":true,"hasQuickSearch":true,"supportedTypes":"[Movie, TvSeries]"}
+{"event":"done","ok":true,"elapsed_ms":126}

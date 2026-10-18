@@ -1,0 +1,10 @@
+{"event":"plugin","name":"SKTechProvider","version":58,"class":"com.cncverse.SKTechPlugin","base":"Plugin","requiresResources":true,"sha256":"f7605368aff29d108c0975d23bddf4f98b3d6dae0662c5db3f5be0c76ab9150d"}
+{"event":"unsupported","api":"Plugin.resources (requiresResources)","stage":"load"}
+SKTech: Fetched encrypted categories data: 39936 chars
+[ERROR] Legacy decryption failed: pad block corrupted
+[ERROR] Legacy decryption failed: bad base-64
+[ERROR] Legacy decryption failed: pad block corrupted
+SKLiveCrypto: ✓ decryptFallbackB succeeded (22373 chars)
+SKTech: Decrypted categories successfully: 22373 chars
+{"event":"error","stage":"lifecycle","type":"java.lang.ClassCastException","message":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity","rootType":"java.lang.ClassCastException","rootMessage":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity"}
+{"event":"done","ok":false,"elapsed_ms":1863}

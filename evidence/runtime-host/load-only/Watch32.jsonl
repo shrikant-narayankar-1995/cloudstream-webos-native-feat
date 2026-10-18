@@ -1,0 +1,3 @@
+{"event":"plugin","name":"Watch32","version":35,"class":"com.cncverse.Watch32Plugin","base":"Plugin","requiresResources":false,"sha256":"fac67d1362a2ae4bf85f5dc1e51c1875c1b584214699f472826f0e070263ae0c"}
+{"event":"provider","name":"Watch32","mainUrl":"https://watch32.bar","lang":"en","hasMainPage":true,"hasQuickSearch":true,"supportedTypes":"[Movie, TvSeries]"}
+{"event":"done","ok":true,"elapsed_ms":131}

@@ -1,0 +1,3 @@
+{"event":"plugin","name":"M3UPlaylistPlayerProvider","version":18,"class":"com.cncverse.M3UPlaylistPlayer.M3UPlaylistPlayerPlugin","base":"Plugin","requiresResources":false,"sha256":"72cffdaecaf9ae08f24a312b035c5ac4fc8915ef7ffc955ac45446b5e260f558"}
+{"event":"error","stage":"register","type":"NoProvider","message":"plugin registered no MainAPI"}
+{"event":"done","ok":false,"elapsed_ms":144}

@@ -1,0 +1,3 @@
+{"event":"plugin","name":"MovieBoxProviderIN","version":54,"class":"com.cncverse.MovieBoxProviderINPlugin","base":"Plugin","requiresResources":false,"sha256":"366dfcd24732a1ab0751c6c824bd33dd562ff6ad845a1c7912c397bdf30201aa"}
+{"event":"provider","name":"MovieBoxIN","mainUrl":"https://api3.aoneroom.com","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries]"}
+{"event":"done","ok":true,"elapsed_ms":127}

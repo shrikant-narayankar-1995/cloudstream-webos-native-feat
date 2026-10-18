@@ -1,0 +1,3 @@
+{"event":"plugin","name":"InvidiousProvider","version":9,"class":"recloudstream.InvidiousPlugin","base":"BasePlugin","requiresResources":false,"sha256":"a0a2ff7e8484f69118598d347458774935733399ba0f76ef0d4921886a7db4a9"}
+{"event":"provider","name":"Invidious","mainUrl":"https://inv.nadeko.net","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"event":"done","ok":true,"elapsed_ms":117}

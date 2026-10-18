@@ -1,0 +1,3 @@
+{"event":"plugin","name":"TamilUltraProvider","version":40,"class":"com.cncverse.TamilUltraProviderPlugin","base":"Plugin","requiresResources":false,"sha256":"2f8ff86feb4c181e7a405bb7981d9173dd358794777cbc9ec83b805496b80270"}
+{"event":"provider","name":"TamilUltra","mainUrl":"https://tamilultra.co.uk","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Live]"}
+{"event":"done","ok":true,"elapsed_ms":139}

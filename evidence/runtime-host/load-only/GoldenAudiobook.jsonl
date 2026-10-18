@@ -1,0 +1,3 @@
+{"event":"plugin","name":"GoldenAudiobook","version":34,"class":"com.cncverse.GoldenAudiobookPlugin","base":"Plugin","requiresResources":false,"sha256":"68eb43fd257fc4b02450689b80f5492e91aad5d33762e3581d2bed0a206ee350"}
+{"event":"provider","name":"Golden Audiobook","mainUrl":"https://goldenaudiobooks.com","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"event":"done","ok":true,"elapsed_ms":121}

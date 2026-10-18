@@ -1,0 +1,89 @@
+[
+ {
+  "file": "DailymotionProvider.cs3",
+  "entries": [
+   "manifest.json",
+   "classes.dex"
+  ],
+  "manifest": {
+   "requiresResources": false,
+   "version": 4,
+   "pluginClassName": "recloudstream.DailymotionPlugin",
+   "name": "DailymotionProvider"
+  },
+  "entry_super": "Lcom/lagradost/cloudstream3/plugins/BasePlugin;",
+  "dex_versions": [
+   "035"
+  ],
+  "android_types": [],
+  "android_members": [],
+  "cloudstream_missing": [],
+  "foreign_packages": [],
+  "native_libs": [],
+  "has_resources": false,
+  "dex_files": [
+   "classes.dex"
+  ],
+  "defined_classes": 14,
+  "tier": "A",
+  "reasons": []
+ },
+ {
+  "file": "InternetArchiveProvider.cs3",
+  "entries": [
+   "manifest.json",
+   "classes.dex"
+  ],
+  "manifest": {
+   "requiresResources": false,
+   "version": 1,
+   "pluginClassName": "recloudstream.InternetArchivePlugin",
+   "name": "InternetArchiveProvider"
+  },
+  "entry_super": "Lcom/lagradost/cloudstream3/plugins/BasePlugin;",
+  "dex_versions": [
+   "035"
+  ],
+  "android_types": [],
+  "android_members": [],
+  "cloudstream_missing": [],
+  "foreign_packages": [],
+  "native_libs": [],
+  "has_resources": false,
+  "dex_files": [
+   "classes.dex"
+  ],
+  "defined_classes": 33,
+  "tier": "A",
+  "reasons": []
+ },
+ {
+  "file": "InvidiousProvider.cs3",
+  "entries": [
+   "manifest.json",
+   "classes.dex"
+  ],
+  "manifest": {
+   "requiresResources": false,
+   "version": 9,
+   "pluginClassName": "recloudstream.InvidiousPlugin",
+   "name": "InvidiousProvider"
+  },
+  "entry_super": "Lcom/lagradost/cloudstream3/plugins/BasePlugin;",
+  "dex_versions": [
+   "035"
+  ],
+  "android_types": [],
+  "android_members": [],
+  "cloudstream_missing": [],
+  "foreign_packages": [],
+  "native_libs": [],
+  "has_resources": false,
+  "dex_files": [
+   "classes.dex"
+  ],
+  "defined_classes": 16,
+  "tier": "A",
+  "reasons": []
+ }
+]

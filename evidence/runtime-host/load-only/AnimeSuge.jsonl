@@ -1,0 +1,3 @@
+{"event":"plugin","name":"AnimeSuge","version":10,"class":"com.animesuge.provider.AnimeSugePlugin","base":"Plugin","requiresResources":false,"sha256":"1b2333c6b01909f8d3dc71678289e4f35a1fcab0dd690779eb62656cf7992a1d"}
+{"event":"provider","name":"AnimeSuge","mainUrl":"https://animesuge.cz","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Anime, AnimeMovie, OVA]"}
+{"event":"done","ok":true,"elapsed_ms":129}

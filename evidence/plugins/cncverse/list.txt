@@ -1,0 +1,37 @@
+AniKoto 10 1 1 66350 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/AniKoto.cs3
+AnimeSuge 10 1 1 61577 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/AnimeSuge.cs3
+BilibiliProvider 36 3 1 104387 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/BilibiliProvider.cs3
+CastleTvProvider 40 1 1 88009 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/CastleTvProvider.cs3
+CineTvProvider 35 1 1 60002 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/CineTvProvider.cs3
+CineVoodProvider 2 1 1 112039 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/CineVoodProvider.cs3
+CNC Verse 114 1 1 92713 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/CNC Verse.cs3
+CNC Verse Mobile 11 1 1 97614 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/CNC Verse Mobile.cs3
+CricifyProvider 71 1 1 117026 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/CricifyProvider.cs3
+DesiSerialsProvider 33 1 1 59470 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/DesiSerialsProvider.cs3
+DoFlixProvider 37 1 1 98904 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/DoFlixProvider.cs3
+EinthusanProvider 37 1 1 40139 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/EinthusanProvider.cs3
+GoldenAudiobook 34 1 1 38072 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/GoldenAudiobook.cs3
+HDOProvider 35 0 1 48310 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/HDOProvider.cs3
+HDrezkaProvider 36 1 1 60123 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/HDrezkaProvider.cs3
+LibriVoxAudiobook 34 1 1 36205 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/LibriVoxAudiobook.cs3
+LivXowProvider 20 1 1 127205 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/LivXowProvider.cs3
+M3UPlaylistPlayerProvider 18 1 1 65129 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/M3UPlaylistPlayerProvider.cs3
+MLSBDProvider 35 1 1 118734 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/MLSBDProvider.cs3
+MovieBoxProvider 52 1 1 94749 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/MovieBoxProvider.cs3
+MovieBoxProviderIN 54 1 1 92281 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/MovieBoxProviderIN.cs3
+MovieLinkBDProvider 25 1 1 58080 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/MovieLinkBDProvider.cs3
+MoviezwapProvider 32 1 1 40219 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/MoviezwapProvider.cs3
+PikashowProvider 32 1 1 82128 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/PikashowProvider.cs3
+PlayFyProvider 14 1 1 106982 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/PlayFyProvider.cs3
+PlayZTVProvider 42 1 1 117275 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/PlayZTVProvider.cs3
+RadioIndiaProvider 33 1 1 36329 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/RadioIndiaProvider.cs3
+Rtally 52 1 1 111335 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/Rtally.cs3
+SKTechProvider 58 1 1 125231 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/SKTechProvider.cs3
+SportzxProvider 26 1 1 123166 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/SportzxProvider.cs3
+StreamFlixProvider 34 1 1 65089 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/StreamFlixProvider.cs3
+SubscriptionManager 16 1 1 38794 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/SubscriptionManager.cs3
+TamilDhoolProvider 40 1 1 53361 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/TamilDhoolProvider.cs3
+Tamilian 32 1 1 38280 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/Tamilian.cs3
+TamilUltraProvider 40 1 1 35478 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/TamilUltraProvider.cs3
+Watch32 35 1 1 48222 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/Watch32.cs3
+XonProvider 35 1 1 63340 https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/builds/XonProvider.cs3

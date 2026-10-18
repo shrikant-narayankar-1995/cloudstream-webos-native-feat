@@ -1,0 +1,3 @@
+{"event":"plugin","name":"Tamilian","version":32,"class":"com.Tamilian.HiAnimeProviderPlugin","base":"Plugin","requiresResources":false,"sha256":"1e5cdce0eb999a67d58151508a85098fdb75acdbbbac954256833c63bfe0334d"}
+{"event":"provider","name":"Tamilian","mainUrl":"NONE","lang":"ta","hasMainPage":true,"hasQuickSearch":true,"supportedTypes":"[Movie]"}
+{"event":"done","ok":true,"elapsed_ms":125}

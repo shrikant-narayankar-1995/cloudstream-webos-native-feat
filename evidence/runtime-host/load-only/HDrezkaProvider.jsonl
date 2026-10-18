@@ -1,0 +1,3 @@
+{"event":"plugin","name":"HDrezkaProvider","version":36,"class":"com.hexated.HDrezkaProviderPlugin","base":"Plugin","requiresResources":false,"sha256":"ae3d7d50571b6c28c974c20e7b828371fa6b2ceae06f04925fbf5f6c77475957"}
+{"event":"provider","name":"HDrezka","mainUrl":"https://rezka.ag","lang":"ru","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries, Anime, AsianDrama]"}
+{"event":"done","ok":true,"elapsed_ms":121}

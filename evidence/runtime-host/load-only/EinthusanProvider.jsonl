@@ -1,0 +1,3 @@
+{"event":"plugin","name":"EinthusanProvider","version":37,"class":"com.cncverse.EinthusanProviderPlugin","base":"Plugin","requiresResources":false,"sha256":"61beb2c31a559cbc10192b145856b180108c4b99f077577b2b6bd8ecdfa09748"}
+{"event":"provider","name":"Einthusan","mainUrl":"https://einthusan.tv","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie]"}
+{"event":"done","ok":true,"elapsed_ms":123}

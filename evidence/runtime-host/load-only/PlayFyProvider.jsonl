@@ -1,0 +1,5 @@
+{"event":"plugin","name":"PlayFyProvider","version":14,"class":"com.cncverse.PlayFyPlugin","base":"Plugin","requiresResources":true,"sha256":"365edb434209a559a3a7dfd7b6744b28831c137f2ef098fa418b08bfc1390250"}
+{"event":"unsupported","api":"Plugin.resources (requiresResources)","stage":"load"}
+PlayFy: fetchProviders → https://nexuvo.online/cc.json
+{"event":"error","stage":"lifecycle","type":"java.lang.ClassCastException","message":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity","rootType":"java.lang.ClassCastException","rootMessage":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity"}
+{"event":"done","ok":false,"elapsed_ms":2376}

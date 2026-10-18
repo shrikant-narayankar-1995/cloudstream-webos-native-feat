@@ -1,0 +1,4 @@
+{"event":"plugin","name":"CNC Verse","version":114,"class":"com.horis.cncverse.CNCVersePlugin","base":"Plugin","requiresResources":true,"sha256":"61dce8378f02424fb50a214f4b7b5fd62ab62c36736432627ff808b245043507"}
+{"event":"unsupported","api":"Plugin.resources (requiresResources)","stage":"load"}
+{"event":"error","stage":"lifecycle","type":"java.lang.ClassCastException","message":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity","rootType":"java.lang.ClassCastException","rootMessage":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity"}
+{"event":"done","ok":false,"elapsed_ms":133}

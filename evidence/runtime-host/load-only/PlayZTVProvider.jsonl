@@ -1,0 +1,16 @@
+{"event":"plugin","name":"PlayZTVProvider","version":42,"class":"com.cncverse.PlayZTVPlugin","base":"Plugin","requiresResources":true,"sha256":"e6411013cca732e3f597f60493798b2c3841ed7d5d8ecdffa84a3248fae75b4c"}
+{"event":"unsupported","api":"Plugin.resources (requiresResources)","stage":"load"}
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/TXVzaWMxNzY3MDA4NTMyNjM3.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/S29sa2F0YTE3NjcwMDgwNjY5MDg.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/TmVwYWwxNzY3MDI1MjMxODU0.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/Qk4xNzY3MDIzMTU1NzMy.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/TmV3czE3NjcwMDgxODM1MjQ.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/ZmMxNzc4NjU2NTczMjk3.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/UmFkaW8xNzY3MDA4Mjg0MjM5.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/SW5kaWExNzY3MDA3MjE1ODgz.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/TW92aWUxNzY3MDA4NDgxMzM3.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/RklGQSBXQyAyNiBIaWdobGlnaHRzMTc4MTIzMTU1MTMxMw.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/SklPVFYgQUxMMTc4NTY2MTQyNTkyMA.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+PlayZTV: Exception fetching https://pabbdyzone.shop/channels/SW5mb3RhaW5tZW50MTc2NzAwODU2NjcwNg.txt – Failed to connect to pabbdyzone.shop/2606:4700:3032::ac43:d60c:443
+{"event":"error","stage":"lifecycle","type":"java.lang.ClassCastException","message":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity","rootType":"java.lang.ClassCastException","rootMessage":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity"}
+{"event":"done","ok":false,"elapsed_ms":3329}

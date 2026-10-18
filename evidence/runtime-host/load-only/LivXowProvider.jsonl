@@ -1,0 +1,7 @@
+{"event":"plugin","name":"LivXowProvider","version":20,"class":"com.cncverse.LivXowPlugin","base":"Plugin","requiresResources":true,"sha256":"1c078966138490b7da7f48f7eb36d4c20b538c311016a5b7341ef1fbf91d0086"}
+{"event":"unsupported","api":"Plugin.resources (requiresResources)","stage":"load"}
+LivXow: Firebase fetch succeeded — state=UPDATE, templateVersion=88
+LivXow: Fetching categories from https://sohsjodhegsiejeh.shop/categories.txt
+{"event":"provider","name":"⚡LivXow Live Events","mainUrl":"https://welalagaa.site","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Live]"}
+{"event":"provider","name":"🎬LivXow Highlights","mainUrl":"https://welalagaa.site","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Live]"}
+{"event":"done","ok":true,"elapsed_ms":1902}
