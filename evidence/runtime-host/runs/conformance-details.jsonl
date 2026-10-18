@@ -1,0 +1,6 @@
+{"event":"plugin","name":"CswebConformance","version":1,"class":"org.csweb.conformance.ConformancePlugin","base":"Plugin","requiresResources":true,"sha256":"579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632"}
+{"event":"resources","package":"org.csweb.conformance"}
+{"event":"unsupported","api":"Plugin.openSettings (Android settings screen)","stage":"load"}
+{"event":"provider","name":"Conformance","mainUrl":"https://conformance.invalid","lang":"en","hasMainPage":false,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"event":"details","class":"com.lagradost.cloudstream3.MovieLoadResponse","name":"Conformance Beta","url":"https://conformance.invalid/item/1?x","apiName":"Conformance","type":"Others","plot":"Test fixture: this text comes from the plugin's resources.arsc.","dataUrl":"1"}
+{"event":"done","ok":true,"elapsed_ms":118}

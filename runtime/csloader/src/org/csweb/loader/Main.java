@@ -143,13 +143,28 @@ public final class Main {
             emit(event("plugin", "name", manifest.getName(), "version", manifest.getVersion(),
                     "class", manifest.getPluginClassName(), "base", plugin instanceof Plugin ? "Plugin" : "BasePlugin",
                     "requiresResources", manifest.getRequiresResources(), "sha256", hash));
-            if (manifest.getRequiresResources()) {
-                // Upstream builds Resources from the .cs3 with AssetManager.addAssetPath. No Android resource
-                // system exists here; the plugin keeps resources == null and fails only if it uses them.
-                emit(event("unsupported", "api", "Plugin.resources (requiresResources)", "stage", "load"));
-            }
         }
         HeadlessContext app = new HeadlessContext(data, "com.lagradost.cloudstream3");
+        if (manifest.getRequiresResources()) {
+            // PluginManager.loadPlugin: AssetManager by reflection, addAssetPath(<.cs3>), then Resources over it.
+            try {
+                android.content.res.AssetManager assets =
+                        android.content.res.AssetManager.class.getDeclaredConstructor().newInstance();
+                java.lang.reflect.Method addAssetPath =
+                        android.content.res.AssetManager.class.getMethod("addAssetPath", String.class);
+                addAssetPath.invoke(assets, file.getAbsolutePath());
+                if (plugin instanceof Plugin) {
+                    ((Plugin) plugin).setResources(new android.content.res.Resources(assets,
+                            app.getResources().getDisplayMetrics(), app.getResources().getConfiguration()));
+                }
+                if (activityType == null) {
+                    emit(event("resources", "package", assets.resourceTable() == null ? null : assets.resourceTable().packageName()));
+                }
+            } catch (Throwable t) {
+                error("resources", t);
+                return null;
+            }
+        }
         try {
             if (plugin instanceof Plugin) {
                 ((Plugin) plugin).load(activityType == null ? app : HeadlessActivities.create(activityType, app));

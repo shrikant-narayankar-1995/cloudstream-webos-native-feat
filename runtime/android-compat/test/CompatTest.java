@@ -62,7 +62,78 @@ public final class CompatTest {
         }
     }
 
+    static void resources() throws Exception {
+        java.io.File cs3 = new java.io.File(System.getProperty("conformance", ""));
+        if (!cs3.isFile()) {
+            System.out.println("SKIP resources: conformance plugin not built (test-plugins/conformance/build.sh)");
+            return;
+        }
+        android.content.res.AssetManager am = android.content.res.AssetManager.class.getDeclaredConstructor().newInstance();
+        eq("addAssetPath cookie", 1, am.getClass().getMethod("addAssetPath", String.class).invoke(am, cs3.getPath()));
+        android.content.res.Resources sys = android.content.res.Resources.getSystem();
+        android.content.res.Resources r = new android.content.res.Resources(am, sys.getDisplayMetrics(), sys.getConfiguration());
+        String pkg = "org.csweb.conformance";
+        int name = r.getIdentifier("provider_name", "string", pkg);
+        eq("identifier found", true, name != 0);
+        eq("identifier forms agree", name, r.getIdentifier(pkg + ":string/provider_name", null, null));
+        eq("identifier type/name", name, r.getIdentifier("string/provider_name", null, pkg));
+        eq("other package -> 0", 0, r.getIdentifier("provider_name", "string", "android"));
+        eq("missing -> 0", 0, r.getIdentifier("nope", "string", pkg));
+        eq("string", "Conformance", r.getString(name));
+        eq("escaped apostrophe", true, r.getString(r.getIdentifier("plot", "string", pkg)).contains("plugin's"));
+        eq("format", "Conformance!", r.getString(name) + "!");
+        eq("resource name", pkg + ":string/provider_name", r.getResourceName(name));
+        eq("string array", Arrays.asList("Conformance Alpha", "Conformance Beta", "Conformance Gamma"),
+                Arrays.asList(r.getStringArray(r.getIdentifier("titles", "array", pkg))));
+        eq("color", 0xFF2F8F5B, r.getColor(r.getIdentifier("accent", "color", pkg)));
+        int pad = r.getIdentifier("padding", "dimen", pkg);
+        eq("dimension 16dp at xhdpi", 32.0f, r.getDimension(pad));
+        eq("dimension pixel size", 32, r.getDimensionPixelSize(pad));
+        boolean threw = false;
+        try {
+            r.getString(0x7f7f0000);
+        } catch (android.content.res.Resources.NotFoundException e) {
+            threw = true;
+        }
+        eq("unknown id throws NotFoundException", true, threw);
+        threw = false;
+        try {
+            r.getDrawable(r.getIdentifier("icon", "drawable", pkg));
+        } catch (org.csweb.compat.Unsupported e) {
+            threw = true;
+        }
+        eq("drawable reported unsupported", true, threw);
+
+        android.content.res.XmlResourceParser x = r.getLayout(r.getIdentifier("settings", "layout", pkg));
+        String android = "http://schemas.android.com/apk/res/android";
+        java.util.List<String> tags = new java.util.ArrayList<>();
+        String orientation = null, text = null, inputType = null, padding = null;
+        int textRes = 0, idRes = 0;
+        for (int ev = x.getEventType(); ev != org.xmlpull.v1.XmlPullParser.END_DOCUMENT; ev = x.next()) {
+            if (ev != org.xmlpull.v1.XmlPullParser.START_TAG) continue;
+            tags.add(x.getName() + "@" + x.getDepth());
+            if (x.getName().equals("LinearLayout")) {
+                orientation = x.getAttributeValue(android, "orientation");
+                padding = x.getAttributeValue(android, "padding");
+            }
+            if (x.getName().equals("TextView")) {
+                text = x.getAttributeValue(android, "text");
+                textRes = x.getAttributeResourceValue(android, "text", 0);
+                idRes = x.getIdAttributeResourceValue(0);
+            }
+            if (x.getName().equals("EditText")) inputType = x.getAttributeValue(android, "inputType");
+        }
+        eq("layout tags", Arrays.asList("LinearLayout@1", "TextView@2", "EditText@2", "CheckBox@2"), tags);
+        eq("enum attribute as int text", "1", orientation);
+        eq("reference attribute text", "@" + r.getIdentifier("label_name", "string", pkg), text);
+        eq("reference attribute value", r.getIdentifier("label_name", "string", pkg), textRes);
+        eq("id attribute", r.getIdentifier("label_name", "id", pkg), idRes);
+        eq("padding attribute references dimen", "@" + pad, padding);
+        eq("flag attribute", "0x1", inputType);
+    }
+
     public static void main(String[] args) throws Exception {
+        resources();
         base64();
         uri();
         json();

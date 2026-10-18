@@ -1,0 +1,7 @@
+{"event":"plugin","name":"CswebConformance","version":1,"class":"org.csweb.conformance.ConformancePlugin","base":"Plugin","requiresResources":true,"sha256":"579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632"}
+{"event":"resources","package":"org.csweb.conformance"}
+{"event":"unsupported","api":"Plugin.openSettings (Android settings screen)","stage":"load"}
+{"event":"provider","name":"Conformance","mainUrl":"https://conformance.invalid","lang":"en","hasMainPage":false,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"event":"link","class":"com.lagradost.cloudstream3.utils.ExtractorLink","name":"Conformance","url":"https://www.archive.org/download/pride_and_prejudice_librivox/prideandprejudice_01-03_austen.mp3","type":"VIDEO","source":"Conformance","quality":400,"referer":"","isM3u8":false,"headerNames":[]}
+{"event":"links_returned","value":"true","count":1}
+{"event":"done","ok":true,"elapsed_ms":132}

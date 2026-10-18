@@ -1,0 +1,8 @@
+{"event":"plugin","name":"CswebConformance","version":1,"class":"org.csweb.conformance.ConformancePlugin","base":"Plugin","requiresResources":true,"sha256":"579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632"}
+{"event":"resources","package":"org.csweb.conformance"}
+{"event":"unsupported","api":"Plugin.openSettings (Android settings screen)","stage":"load"}
+{"event":"provider","name":"Conformance","mainUrl":"https://conformance.invalid","lang":"en","hasMainPage":false,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"event":"result","class":"com.lagradost.cloudstream3.MovieSearchResponse","name":"Conformance Alpha","url":"https://conformance.invalid/item/0?color=ff2f8f5b&padding=32","apiName":"Conformance","type":"Others"}
+{"event":"result","class":"com.lagradost.cloudstream3.MovieSearchResponse","name":"Conformance Beta","url":"https://conformance.invalid/item/1?color=ff2f8f5b&padding=32","apiName":"Conformance","type":"Others"}
+{"event":"count","kind":"result","value":2}
+{"event":"done","ok":true,"elapsed_ms":127}

@@ -18,7 +18,7 @@ parent class path and `runtime/android-compat` providing the Android framework c
 | `BasePlugin`, no resources | supported | no Android framework needed beyond the compat layer |
 | `Plugin` (Context) whose UI is guarded by `context is Activity` | supported | the compat Context is an application context; guarded UI never runs (e.g. CNCVerse donation dialog) |
 | `Plugin` that casts the context to an Activity type in `load()` | supported (load) | after the cast fails on the application context, the plugin is unloaded as `PluginManager.unloadPlugin` does and loaded again with a headless instance of that exact class (`org.csweb.compat.HeadlessActivities`: real type, base context attached, no window/lifecycle; `isFinishing()`/`isDestroyed()` true). In all 8 surveyed cases the cast only captures the Activity for `openSettings`, after the providers are registered |
-| `requiresResources` (Android resources from the .cs3) | **unsupported** | no resource table/AssetManager; reported as `unsupported` event |
+| `requiresResources` (Android resources from the .cs3) | supported (values, arrays, layouts as XML) | loaded as upstream does (`AssetManager` + `addAssetPath` + `Resources`); `resources.arsc` and binary XML parsed by `org.csweb.compat.res`. Drawables and color state lists are reported unsupported (no graphics stack). Verified with the conformance test plugin |
 | Plugins whose operations use `android.webkit.WebView` (7 CNCVerse plugins reference it) | unsupported when reached | no browser engine in the runtime; would fail with `Unsupported` at that call |
 | Settings screens (`openSettings`) | unsupported | Android views; settings must be offered by the native app instead |
 | Native `.so` in plugins | none seen | |
@@ -95,3 +95,15 @@ services or live sports were not exercised beyond the load-only pass.
 | LibriVoxAudiobook | loadLinks | 1 MP3 ExtractorLink with referer | same, 7.6 s | playable URL on archive.org |
 
 TV log: `evidence/device/20261019-075624-runtimeprobe-0.2/org.csweb.runtimeprobe-events-20261019-075836.log`.
+
+## Conformance test plugin (test fixture, not a provider)
+
+`test-plugins/conformance` (CswebConformance, built with Kotlin 2.4.0 / aapt2 / D8 like a real plugin) checks
+features no available legitimate plugin uses. Host ART results (`evidence/runtime-host/runs/conformance-*.jsonl`):
+
+| Feature | Result |
+|---|---|
+| `requiresResources`: strings, string-array, color, dimension (16dp -> 32 px at xhdpi) | search returns resource-derived titles, color and padding |
+| plot from `resources.arsc` (details), links | ok |
+| layout via `getLayout` (binary XML events and attributes) | ok in compat host tests (133 passed) |
+| `openSettings` with LayoutInflater + AlertDialog | not yet: reported unsupported (next: dialog/settings bridge) |

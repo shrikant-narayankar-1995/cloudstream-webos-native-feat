@@ -27,8 +27,8 @@ javac -Xlint:all,-options,-processing,-classfile --release 8 -cp "$CP:/tmp/stubc
     $(find $P/runtime/android-compat/src $P/runtime/csloader/src -name '*.java')
 # host tests of the compat layer on the JVM (no Android needed for these classes)
 mkdir -p /tmp/testcls
-javac -nowarn --release 8 -cp /tmp/cls -d /tmp/testcls $P/runtime/android-compat/test/*.java
-java -cp /tmp/cls:/tmp/testcls CompatTest
+javac -nowarn --release 8 -cp /tmp/cls:/tmp/stubcls -d /tmp/testcls $P/runtime/android-compat/test/*.java
+java -Dconformance=$P/test-plugins/conformance/out/CswebConformance.cs3 -cp /tmp/cls:/tmp/testcls:/tmp/stubcls CompatTest
 rm -f /tmp/dex/*; mkdir -p /tmp/dex
 java -cp /tmp/r8.jar com.android.tools.r8.D8 --min-api 26 --lib "$JAVA_HOME" --classpath $P/evidence/cloudstream-app/classes.jar \
     $(for j in /tmp/lib/*.jar; do printf -- '--classpath %s ' "$j"; done) --classpath /tmp/stubcls \
