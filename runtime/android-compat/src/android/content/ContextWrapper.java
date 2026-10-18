@@ -1,23 +1,32 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
+// As android.content.ContextWrapper: every call is delegated to the base context (mBase), which can be
+// attached once.
 package android.content;
 
 import java.io.File;
 
 public class ContextWrapper extends Context {
-    private Context base;
+    Context mBase;
 
     public ContextWrapper(Context base) {
-        this.base = base;
+        mBase = base;
+    }
+
+    protected void attachBaseContext(Context base) {
+        if (mBase != null) throw new IllegalStateException("Base context already set");
+        mBase = base;
     }
 
     public Context getBaseContext() {
-        return base;
+        return mBase;
     }
 
-    @Override public SharedPreferences getSharedPreferences(String name, int mode) { return base.getSharedPreferences(name, mode); }
-    @Override public Context getApplicationContext() { return base.getApplicationContext(); }
-    @Override public String getPackageName() { return base.getPackageName(); }
-    @Override public File getFilesDir() { return base.getFilesDir(); }
-    @Override public File getCacheDir() { return base.getCacheDir(); }
-    @Override public ClassLoader getClassLoader() { return base.getClassLoader(); }
+    @Override public SharedPreferences getSharedPreferences(String name, int mode) { return mBase.getSharedPreferences(name, mode); }
+    @Override public Context getApplicationContext() { return mBase.getApplicationContext(); }
+    @Override public String getPackageName() { return mBase.getPackageName(); }
+    @Override public File getFilesDir() { return mBase.getFilesDir(); }
+    @Override public File getCacheDir() { return mBase.getCacheDir(); }
+    @Override public ClassLoader getClassLoader() { return mBase.getClassLoader(); }
+    @Override public android.content.res.Resources getResources() { return mBase.getResources(); }
+    @Override public Object getSystemService(String name) { return mBase.getSystemService(name); }
 }

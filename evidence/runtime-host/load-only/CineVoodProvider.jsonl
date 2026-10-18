@@ -1,4 +1,4 @@
 {"event":"plugin","name":"CineVoodProvider","version":2,"class":"com.cncverse.cinevood.CineVoodPlugin","base":"Plugin","requiresResources":false,"sha256":"7bbc504288bd6bfda47008063a28265cb03e9a99cd1ac14b58dbfa1fffc2ecb2"}
 {"event":"provider","name":"CineVood","mainUrl":"https://new2.cinevood.fyi","lang":"hi","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries]"}
 {"event":"provider","name":"CineVood Mirror","mainUrl":"https://cinevood.dog","lang":"hi","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries]"}
-{"event":"done","ok":true,"elapsed_ms":133}
+{"event":"done","ok":true,"elapsed_ms":136}

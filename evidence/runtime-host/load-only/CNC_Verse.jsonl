@@ -1,4 +1,12 @@
 {"event":"plugin","name":"CNC Verse","version":114,"class":"com.horis.cncverse.CNCVersePlugin","base":"Plugin","requiresResources":true,"sha256":"61dce8378f02424fb50a214f4b7b5fd62ab62c36736432627ff808b245043507"}
 {"event":"unsupported","api":"Plugin.resources (requiresResources)","stage":"load"}
-{"event":"error","stage":"lifecycle","type":"java.lang.ClassCastException","message":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity","rootType":"java.lang.ClassCastException","rootMessage":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity"}
-{"event":"done","ok":false,"elapsed_ms":133}
+{"event":"compat","context":"headless-activity","type":"androidx.appcompat.app.AppCompatActivity","reason":"load(Context) casts its context to an Activity"}
+{"event":"unsupported","api":"Plugin.openSettings (Android settings screen)","stage":"load"}
+{"event":"provider","name":"Netflix","mainUrl":"https://net52.cc","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries, Anime, AsianDrama]"}
+{"event":"provider","name":"Prime Video","mainUrl":"https://net52.cc","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries, Anime, AsianDrama]"}
+{"event":"provider","name":"Hotstar","mainUrl":"https://net52.cc","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries, Anime, AsianDrama]"}
+{"event":"provider","name":"Disney","mainUrl":"https://net52.cc","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries, Anime, AsianDrama]"}
+{"event":"provider","name":"Marvel","mainUrl":"https://net52.cc","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries, Anime, AsianDrama]"}
+{"event":"provider","name":"Star Wars","mainUrl":"https://net52.cc","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries, Anime, AsianDrama]"}
+{"event":"provider","name":"Pixar","mainUrl":"https://net52.cc","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries, Anime, AsianDrama]"}
+{"event":"done","ok":true,"elapsed_ms":167}

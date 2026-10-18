@@ -1,0 +1,5 @@
+{"event":"plugin","name":"DailymotionProvider","version":4,"class":"recloudstream.DailymotionPlugin","base":"BasePlugin","requiresResources":false,"sha256":"9036525a64e8b3c8fe04f94e9fe89a744c13d69af684ed0d2ad2a7eb0f332cd9"}
+{"event":"provider","name":"Dailymotion","mainUrl":"https://api.dailymotion.com","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"event":"result","class":"com.lagradost.cloudstream3.MovieSearchResponse","name":"NASA - NASA TV","url":"https://www.dailymotion.com/video/xhfpjn","apiName":"Dailymotion","type":"Movie","posterUrl":"https://s2.dmcdn.net/v/1lk0J1eoUqsyOnBuQ/x360"}
+{"event":"count","kind":"result","value":26}
+{"event":"done","ok":true,"elapsed_ms":1323}

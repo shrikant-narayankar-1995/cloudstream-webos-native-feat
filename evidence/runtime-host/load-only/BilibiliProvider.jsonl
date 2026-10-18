@@ -1,3 +1,3 @@
 {"event":"plugin","name":"BilibiliProvider","version":36,"class":"com.cncverse.BilibiliProviderPlugin","base":"Plugin","requiresResources":false,"sha256":"7a3f1868e58bc4cb1afdb4574db78411d73c2b158029f84950427b0c85206c3c"}
 {"event":"provider","name":"BilibiliTV","mainUrl":"https://www.bilibili.tv","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Anime, Movie, TvSeries]"}
-{"event":"done","ok":true,"elapsed_ms":138}
+{"event":"done","ok":true,"elapsed_ms":129}

@@ -1,3 +1,3 @@
 {"event":"plugin","name":"CineTvProvider","version":35,"class":"com.cncverse.CineTvPlugin","base":"Plugin","requiresResources":false,"sha256":"883bc02309c6da77f18f214202f9aa9353913cb36faa20ec642ccedcc692abaf"}
 {"event":"provider","name":"CineTv","mainUrl":"https://filmin.ajfysu.com","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries]"}
-{"event":"done","ok":true,"elapsed_ms":125}
+{"event":"done","ok":true,"elapsed_ms":132}

@@ -1,7 +1,7 @@
-E/AsynchronousCloseMonitor(  653): setting blocked thread signal handler failed: Invalid argument
-dalvikvm W 10-18 20:36:29   653   653 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*3204466331])
-I/wolfssljni(  653): Unable to set FIPS callback without wolfCrypt FIPS code
-dalvikvm W 10-18 20:36:29   653   653 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*3204466331:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+E/AsynchronousCloseMonitor(  682): setting blocked thread signal handler failed: Invalid argument
+dalvikvm W 10-18 21:15:12   682   682 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*521514852])
+I/wolfssljni(  682): Unable to set FIPS callback without wolfCrypt FIPS code
+dalvikvm W 10-18 21:15:12   682   682 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*521514852:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
 D/ApiError: -------------------------------------------------------------------
 D/ApiError: safeApiCall: Failed resolution of: Landroid/webkit/CookieManager;
 java.lang.NoClassDefFoundError: Failed resolution of: Landroid/webkit/CookieManager;
@@ -11,13 +11,14 @@ java.lang.NoClassDefFoundError: Failed resolution of: Landroid/webkit/CookieMana
 	at com.lagradost.cloudstream3.network.CloudflareKiller.<init>(CloudflareKiller.kt:35)
 	at com.cncverse.TamilDhoolProvider.<init>(TamilDhoolProvider.kt:32)
 	at com.cncverse.TamilDhoolProviderPlugin.load(TamilDhoolProviderPlugin.kt:13)
-	at org.csweb.loader.Main.run(Main.java:104)
-	at org.csweb.loader.Main.main(Main.java:64)
+	at org.csweb.loader.Main.loadPlugin(Main.java:155)
+	at org.csweb.loader.Main.run(Main.java:89)
+	at org.csweb.loader.Main.main(Main.java:65)
 Caused by: java.lang.ClassNotFoundException: android.webkit.CookieManager
-	... 8 more
+	... 9 more
 D/ApiError: -------------------------------------------------------------------
 I/PluginInstance: Adding TamilDhool (https://www.tamildhool.tech) MainAPI
 I/PluginInstance: Adding YouTube (https://www.youtube.com) ExtractorApi
 I/PluginInstance: Adding Dailymotion (https://www.dailymotion.com) ExtractorApi
 I/PluginInstance: Adding TeamsToday (https://teamstoday.com) ExtractorApi
-dalvikvm I 10-18 20:36:29   653   653 OpenjdkJvm.cc:314] System.exit called, status: 0
+dalvikvm I 10-18 21:15:12   682   682 OpenjdkJvm.cc:314] System.exit called, status: 0

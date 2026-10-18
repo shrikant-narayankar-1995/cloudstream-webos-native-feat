@@ -1,4 +1,6 @@
 {"event":"plugin","name":"CricifyProvider","version":71,"class":"com.cncverse.CricifyPlugin","base":"Plugin","requiresResources":true,"sha256":"c36b78630420569a3fdeb912963c9de47f5df1fe2b99a5a2bd7db51e8822d6ec"}
 {"event":"unsupported","api":"Plugin.resources (requiresResources)","stage":"load"}
-{"event":"error","stage":"lifecycle","type":"java.lang.ClassCastException","message":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity","rootType":"java.lang.ClassCastException","rootMessage":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity"}
-{"event":"done","ok":false,"elapsed_ms":1697}
+{"event":"compat","context":"headless-activity","type":"androidx.appcompat.app.AppCompatActivity","reason":"load(Context) casts its context to an Activity"}
+{"event":"unsupported","api":"Plugin.openSettings (Android settings screen)","stage":"load"}
+{"event":"provider","name":"⚡Cricify Live Events","mainUrl":"https://cfyhljddgbkkufh82.top","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Live]"}
+{"event":"done","ok":true,"elapsed_ms":1880}

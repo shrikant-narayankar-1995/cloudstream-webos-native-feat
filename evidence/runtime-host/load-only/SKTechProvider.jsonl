@@ -6,5 +6,13 @@ SKTech: Fetched encrypted categories data: 39936 chars
 [ERROR] Legacy decryption failed: pad block corrupted
 SKLiveCrypto: ✓ decryptFallbackB succeeded (22373 chars)
 SKTech: Decrypted categories successfully: 22373 chars
-{"event":"error","stage":"lifecycle","type":"java.lang.ClassCastException","message":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity","rootType":"java.lang.ClassCastException","rootMessage":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity"}
-{"event":"done","ok":false,"elapsed_ms":1863}
+{"event":"compat","context":"headless-activity","type":"androidx.appcompat.app.AppCompatActivity","reason":"load(Context) casts its context to an Activity"}
+SKTech: Fetched encrypted categories data: 39936 chars
+[ERROR] Legacy decryption failed: pad block corrupted
+[ERROR] Legacy decryption failed: bad base-64
+[ERROR] Legacy decryption failed: pad block corrupted
+SKLiveCrypto: ✓ decryptFallbackB succeeded (22373 chars)
+SKTech: Decrypted categories successfully: 22373 chars
+{"event":"unsupported","api":"Plugin.openSettings (Android settings screen)","stage":"load"}
+{"event":"provider","name":"⚡SKTech Live Events","mainUrl":"https://welalagaa.site","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Live]"}
+{"event":"done","ok":true,"elapsed_ms":1681}

@@ -1,6 +1,6 @@
 E/AsynchronousCloseMonitor(  174): setting blocked thread signal handler failed: Invalid argument
-dalvikvm W 10-18 20:36:13   174   174 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*3204466331])
+dalvikvm W 10-18 21:14:51   174   174 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*521514852])
 I/wolfssljni(  174): Unable to set FIPS callback without wolfCrypt FIPS code
-dalvikvm W 10-18 20:36:13   174   174 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*3204466331:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+dalvikvm W 10-18 21:14:51   174   174 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*521514852:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
 I/PluginInstance: Adding Dailymotion (https://api.dailymotion.com) MainAPI
-dalvikvm I 10-18 20:36:13   174   174 OpenjdkJvm.cc:314] System.exit called, status: 0
+dalvikvm I 10-18 21:14:52   174   174 OpenjdkJvm.cc:314] System.exit called, status: 0

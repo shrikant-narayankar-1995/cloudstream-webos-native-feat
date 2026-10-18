@@ -1,3 +1,3 @@
 {"event":"plugin","name":"InternetArchiveProvider","version":1,"class":"recloudstream.InternetArchivePlugin","base":"BasePlugin","requiresResources":false,"sha256":"54f3de560bebeff2e4a10d1163f6146313c59061d21c3a230125611f01b531eb"}
 {"event":"provider","name":"Internet Archive","mainUrl":"https://archive.org","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Others]"}
-{"event":"done","ok":true,"elapsed_ms":133}
+{"event":"done","ok":true,"elapsed_ms":120}

@@ -1,7 +1,7 @@
 E/AsynchronousCloseMonitor(  471): setting blocked thread signal handler failed: Invalid argument
-dalvikvm W 10-18 20:36:20   471   471 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*3204466331])
+dalvikvm W 10-18 21:15:00   471   471 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*521514852])
 I/wolfssljni(  471): Unable to set FIPS callback without wolfCrypt FIPS code
-dalvikvm W 10-18 20:36:20   471   471 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*3204466331:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+dalvikvm W 10-18 21:15:00   471   471 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*521514852:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
 I/PluginInstance: Adding ⚡PlayZTV Live Events (https://adsflw.xyz) MainAPI
 STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
@@ -10,49 +10,99 @@ D/PlayZTVCrypto: Native: B1=67244B rev=67244B B2=67244B B3=50432B
 D/PlayZTVCrypto: Native decrypt success (50420 bytes)
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+D/PlayZTVCrypto: Raw payload: len=2328
+E/PlayZTVCrypto: Native decrypt failed: bad base-64
+E/PlayZTVCrypto: Primary decrypt failed: bad base-64
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
 D/PlayZTVCrypto: Raw payload: len=4504
 E/PlayZTVCrypto: Native decrypt failed: bad base-64
 E/PlayZTVCrypto: Primary decrypt failed: bad base-64
 STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
 STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
-STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
-D/PlayZTVCrypto: Raw payload: len=3672
-D/PlayZTVCrypto: Native: B1=2752B rev=2752B B2=2752B B3=783B
-D/PlayZTVCrypto: Raw payload: len=4736
-E/PlayZTVCrypto: Native decrypt failed: bad base-64
-E/PlayZTVCrypto: Primary decrypt failed: bad base-64
-D/PlayZTVCrypto: Raw payload: len=2220
-D/PlayZTVCrypto: Native: B1=1664B rev=1664B B2=1664B B3=1248B
-D/PlayZTVCrypto: Native decrypt success (1241 bytes)
+D/PlayZTVCrypto: Raw payload: len=3304
+D/PlayZTVCrypto: Native: B1=2476B rev=2476B B2=2476B B3=700B
 D/PlayZTVCrypto: Raw payload: len=35072
 D/PlayZTVCrypto: Native: B1=26304B rev=26304B B2=26304B B3=19728B
 D/PlayZTVCrypto: Native decrypt success (19718 bytes)
-java.lang.ClassCastException: org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity
-	at com.cncverse.PlayZTVPlugin.load(PlayZTVPlugin.kt:61)
-	at org.csweb.loader.Main.run(Main.java:104)
-	at org.csweb.loader.Main.main(Main.java:64)
-dalvikvm I 10-18 20:36:23   471   471 OpenjdkJvm.cc:314] System.exit called, status: 2
+D/PlayZTVCrypto: Raw payload: len=8960
+D/PlayZTVCrypto: Native: B1=6720B rev=6720B B2=6720B B3=5040B
+D/PlayZTVCrypto: Native decrypt success (5028 bytes)
+dalvikvm W 10-18 21:15:02   471   471 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*521514852:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+I/PluginInstance: Adding ⚡PlayZTV Live Events (https://adsflw.xyz) MainAPI
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+D/PlayZTVCrypto: Raw payload: len=89660
+D/PlayZTVCrypto: Native: B1=67244B rev=67244B B2=67244B B3=50432B
+D/PlayZTVCrypto: Native decrypt success (50420 bytes)
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+D/PlayZTVCrypto: Raw payload: len=8312
+D/PlayZTVCrypto: Native: B1=6232B rev=6232B B2=6232B B3=4672B
+D/PlayZTVCrypto: Native decrypt success (4658 bytes)
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x39, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+D/PlayZTVCrypto: Raw payload: len=17552
+D/PlayZTVCrypto: Native: B1=13164B rev=13164B B2=13164B B3=3615B
+STRAWTOGRASP: GetFieldID(0x35, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+STRAWTOGRASP: GetFieldID(0x31, delegate, Ljava/net/SocketImpl;) returning NULL
+D/PlayZTVCrypto: Raw payload: len=3672
+D/PlayZTVCrypto: Native: B1=2752B rev=2752B B2=2752B B3=783B
+D/PlayZTVCrypto: Raw payload: len=8960
+D/PlayZTVCrypto: Native: B1=6720B rev=6720B B2=6720B B3=5040B
+D/PlayZTVCrypto: Native decrypt success (5028 bytes)
+D/PlayZTVCrypto: Raw payload: len=15960
+E/PlayZTVCrypto: Native decrypt failed: bad base-64
+E/PlayZTVCrypto: Primary decrypt failed: bad base-64
+D/PlayZTVCrypto: Raw payload: len=4504
+E/PlayZTVCrypto: Native decrypt failed: bad base-64
+E/PlayZTVCrypto: Primary decrypt failed: bad base-64
+D/PlayZTVCrypto: Raw payload: len=20856
+D/PlayZTVCrypto: Native: B1=15640B rev=15640B B2=15640B B3=11728B
+D/PlayZTVCrypto: Native decrypt success (11727 bytes)
+dalvikvm I 10-18 21:15:05   471   471 OpenjdkJvm.cc:314] System.exit called, status: 0

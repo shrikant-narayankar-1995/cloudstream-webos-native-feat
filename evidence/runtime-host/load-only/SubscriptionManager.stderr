@@ -1,9 +1,6 @@
-E/AsynchronousCloseMonitor(  638): setting blocked thread signal handler failed: Invalid argument
-dalvikvm W 10-18 20:36:29   638   638 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*3204466331])
-I/wolfssljni(  638): Unable to set FIPS callback without wolfCrypt FIPS code
-dalvikvm W 10-18 20:36:29   638   638 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*3204466331:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
-java.lang.ClassCastException: org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity
-	at com.cncverse.SubscriptionManagerPlugin.load(SubscriptionManagerPlugin.kt:24)
-	at org.csweb.loader.Main.run(Main.java:104)
-	at org.csweb.loader.Main.main(Main.java:64)
-dalvikvm I 10-18 20:36:29   638   638 OpenjdkJvm.cc:314] System.exit called, status: 2
+E/AsynchronousCloseMonitor(  667): setting blocked thread signal handler failed: Invalid argument
+dalvikvm W 10-18 21:15:12   667   667 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*521514852])
+I/wolfssljni(  667): Unable to set FIPS callback without wolfCrypt FIPS code
+dalvikvm W 10-18 21:15:12   667   667 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*521514852:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+dalvikvm W 10-18 21:15:12   667   667 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*521514852:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+dalvikvm I 10-18 21:15:12   667   667 OpenjdkJvm.cc:314] System.exit called, status: 2

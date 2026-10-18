@@ -9,6 +9,7 @@ import com.lagradost.cloudstream3.plugins.Plugin;
 
 import dalvik.system.PathClassLoader;
 
+import org.csweb.compat.HeadlessActivities;
 import org.csweb.compat.HeadlessContext;
 import org.csweb.compat.MiniJson;
 import org.csweb.compat.Unsupported;
@@ -85,37 +86,8 @@ public final class Main {
         }
 
         // --- PluginManager.loadPlugin, step by step -------------------------------------------------
-        PathClassLoader loader = new PathClassLoader(file.getAbsolutePath(), Main.class.getClassLoader());
-        String manifestText;
-        try (InputStream in = loader.getResourceAsStream("manifest.json")) {
-            if (in == null) {
-                emit(event("error", "stage", "manifest", "type", "MissingManifest", "message", "No manifest found"));
-                return false;
-            }
-            manifestText = new String(readAll(in, 64 * 1024), StandardCharsets.UTF_8);
-        }
-        BasePlugin.Manifest manifest = MainAPIKt.getMapper().readValue(manifestText, BasePlugin.Manifest.class);
-        Class<?> pluginClass = loader.loadClass(manifest.getPluginClassName());
-        BasePlugin plugin = (BasePlugin) pluginClass.getDeclaredConstructor().newInstance();
-        plugin.setFilename(file.getAbsolutePath());
-        emit(event("plugin", "name", manifest.getName(), "version", manifest.getVersion(),
-                "class", manifest.getPluginClassName(), "base", plugin instanceof Plugin ? "Plugin" : "BasePlugin",
-                "requiresResources", manifest.getRequiresResources(), "sha256", hashBefore));
-        if (manifest.getRequiresResources()) {
-            // Upstream builds Resources from the .cs3 with AssetManager.addAssetPath. No Android resource
-            // system exists here; the plugin keeps resources == null and fails only if it uses them.
-            emit(event("unsupported", "api", "Plugin.resources (requiresResources)", "stage", "load"));
-        }
-        try {
-            if (plugin instanceof Plugin) {
-                ((Plugin) plugin).load(new HeadlessContext(data, "com.lagradost.cloudstream3"));
-            } else {
-                plugin.load();
-            }
-        } catch (Throwable t) {
-            error("lifecycle", t);
-            return false;
-        }
+        BasePlugin plugin = loadPlugin(file, data, hashBefore, null);
+        if (plugin == null) return false;
 
         List<MainAPI> providers = new ArrayList<>();
         for (MainAPI api : APIHolder.INSTANCE.getAllProviders()) {
@@ -144,6 +116,96 @@ public final class Main {
             return false;
         }
         return ok;
+    }
+
+    /**
+     * One pass of CloudStream's loadPlugin. Plugins get the headless application context, as plugins that
+     * check `context is Activity` before showing UI must not see an Activity. A plugin whose load() casts the
+     * context to an Activity type is unloaded the way PluginManager.unloadPlugin does it and loaded again,
+     * in a fresh class loader, with a headless instance of exactly that type (CloudStream passes its
+     * MainActivity on Android).
+     */
+    private static BasePlugin loadPlugin(File file, File data, String hash, Class<?> activityType) throws Exception {
+        PathClassLoader loader = new PathClassLoader(file.getAbsolutePath(), Main.class.getClassLoader());
+        String manifestText;
+        try (InputStream in = loader.getResourceAsStream("manifest.json")) {
+            if (in == null) {
+                emit(event("error", "stage", "manifest", "type", "MissingManifest", "message", "No manifest found"));
+                return null;
+            }
+            manifestText = new String(readAll(in, 64 * 1024), StandardCharsets.UTF_8);
+        }
+        BasePlugin.Manifest manifest = MainAPIKt.getMapper().readValue(manifestText, BasePlugin.Manifest.class);
+        Class<?> pluginClass = loader.loadClass(manifest.getPluginClassName());
+        BasePlugin plugin = (BasePlugin) pluginClass.getDeclaredConstructor().newInstance();
+        plugin.setFilename(file.getAbsolutePath());
+        if (activityType == null) {
+            emit(event("plugin", "name", manifest.getName(), "version", manifest.getVersion(),
+                    "class", manifest.getPluginClassName(), "base", plugin instanceof Plugin ? "Plugin" : "BasePlugin",
+                    "requiresResources", manifest.getRequiresResources(), "sha256", hash));
+            if (manifest.getRequiresResources()) {
+                // Upstream builds Resources from the .cs3 with AssetManager.addAssetPath. No Android resource
+                // system exists here; the plugin keeps resources == null and fails only if it uses them.
+                emit(event("unsupported", "api", "Plugin.resources (requiresResources)", "stage", "load"));
+            }
+        }
+        HeadlessContext app = new HeadlessContext(data, "com.lagradost.cloudstream3");
+        try {
+            if (plugin instanceof Plugin) {
+                ((Plugin) plugin).load(activityType == null ? app : HeadlessActivities.create(activityType, app));
+            } else {
+                plugin.load();
+            }
+        } catch (ClassCastException e) {
+            Class<?> wanted = activityTypeFrom(e, loader);
+            if (activityType != null || wanted == null) {
+                error("lifecycle", e);
+                return null;
+            }
+            unload(plugin);
+            emit(event("compat", "context", "headless-activity", "type", wanted.getName(),
+                    "reason", "load(Context) casts its context to an Activity"));
+            return loadPlugin(file, data, hash, wanted);
+        } catch (Throwable t) {
+            error("lifecycle", t);
+            return null;
+        }
+        if (plugin instanceof Plugin && ((Plugin) plugin).getOpenSettings() != null) {
+            emit(event("unsupported", "api", "Plugin.openSettings (Android settings screen)", "stage", "load"));
+        }
+        return plugin;
+    }
+
+    /** The Activity class named by "X cannot be cast to <class>", if it is one. */
+    private static Class<?> activityTypeFrom(ClassCastException e, ClassLoader loader) {
+        String m = String.valueOf(e.getMessage());
+        int at = m.indexOf("cannot be cast to ");
+        if (at < 0 || !m.startsWith(HeadlessContext.class.getName())) return null;
+        try {
+            Class<?> c = Class.forName(m.substring(at + "cannot be cast to ".length()).trim(), false, loader);
+            return android.app.Activity.class.isAssignableFrom(c) ? c : null;
+        } catch (ClassNotFoundException notFound) {
+            return null;
+        }
+    }
+
+    /** PluginManager.unloadPlugin: beforeUnload, then drop the APIs and extractors the plugin registered. */
+    private static void unload(BasePlugin plugin) {
+        try {
+            plugin.beforeUnload();
+        } catch (Throwable t) {
+            error("beforeUnload", t);
+        }
+        String source = plugin.getFilename();
+        List<MainAPI> mine = new ArrayList<>();
+        for (MainAPI api : APIHolder.INSTANCE.getAllProviders()) if (source.equals(api.getSourcePlugin())) mine.add(api);
+        for (MainAPI api : mine) APIHolder.INSTANCE.removePluginMapping(api);
+        APIHolder.INSTANCE.getAllProviders().removeAll(mine);
+        List<com.lagradost.cloudstream3.utils.ExtractorApi> ext = new ArrayList<>();
+        for (com.lagradost.cloudstream3.utils.ExtractorApi x : com.lagradost.cloudstream3.utils.ExtractorApiKt.getExtractorApis()) {
+            if (source.equals(x.getSourcePlugin())) ext.add(x);
+        }
+        com.lagradost.cloudstream3.utils.ExtractorApiKt.getExtractorApis().removeAll(ext);
     }
 
     // --- provider operations --------------------------------------------------------------------

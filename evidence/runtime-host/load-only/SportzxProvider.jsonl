@@ -1,5 +1,9 @@
 {"event":"plugin","name":"SportzxProvider","version":26,"class":"com.cncverse.SportzxPlugin","base":"Plugin","requiresResources":true,"sha256":"62d24fa711dd5a9c0dec3e60b67ae5eaf2e3f7d71e6b5687039b65e70367b451"}
 {"event":"unsupported","api":"Plugin.resources (requiresResources)","stage":"load"}
 Sportzx: Fetching categories from https://us.bandspx.com/cats.json
-{"event":"error","stage":"lifecycle","type":"java.lang.ClassCastException","message":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity","rootType":"java.lang.ClassCastException","rootMessage":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity"}
-{"event":"done","ok":false,"elapsed_ms":2883}
+{"event":"compat","context":"headless-activity","type":"androidx.appcompat.app.AppCompatActivity","reason":"load(Context) casts its context to an Activity"}
+Sportzx: Fetching categories from https://us.bandspx.com/cats.json
+{"event":"unsupported","api":"Plugin.openSettings (Android settings screen)","stage":"load"}
+{"event":"provider","name":"⚡SportzX Live Events","mainUrl":"https://sportzx.live","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Live]"}
+{"event":"provider","name":"🎬SportzX Highlights","mainUrl":"https://sportzx.live","lang":"ta","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Live]"}
+{"event":"done","ok":true,"elapsed_ms":4574}

@@ -1,7 +1,7 @@
 E/AsynchronousCloseMonitor(   78): setting blocked thread signal handler failed: Invalid argument
-dalvikvm W 10-18 20:36:10    78    78 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*3204466331])
+dalvikvm W 10-18 21:14:49    78    78 class_loader_context.cc:1180] ClassLoaderContext classpath size mismatch. expected=0, found=1 (PCL[] | PCL[/rt/csweb-host.dex*521514852])
 I/wolfssljni(   78): Unable to set FIPS callback without wolfCrypt FIPS code
-dalvikvm W 10-18 20:36:10    78    78 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*3204466331:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+dalvikvm W 10-18 21:14:49    78    78 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*521514852:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
 I/PluginInstance: Adding Netflix (https://net52.cc) MainAPI
 I/PluginInstance: Adding Prime Video (https://net52.cc) MainAPI
 I/PluginInstance: Adding Hotstar (https://net52.cc) MainAPI
@@ -9,8 +9,12 @@ I/PluginInstance: Adding Disney (https://net52.cc) MainAPI
 I/PluginInstance: Adding Marvel (https://net52.cc) MainAPI
 I/PluginInstance: Adding Star Wars (https://net52.cc) MainAPI
 I/PluginInstance: Adding Pixar (https://net52.cc) MainAPI
-java.lang.ClassCastException: org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity
-	at com.horis.cncverse.CNCVersePlugin.load(CNCVersePlugin.kt:41)
-	at org.csweb.loader.Main.run(Main.java:104)
-	at org.csweb.loader.Main.main(Main.java:64)
-dalvikvm I 10-18 20:36:10    78    78 OpenjdkJvm.cc:314] System.exit called, status: 2
+dalvikvm W 10-18 21:14:49    78    78 class_loader_context.cc:1276] ClassLoaderContext parent mismatch.  (PCL[] | PCL[];PCL[/rt/csweb-host.dex*521514852:/cs/app-prerelease-release.apk*2008052203:/cs/app-prerelease-release.apk!classes2.dex*1444163449:/cs/app-prerelease-release.apk!classes3.dex*1150342614:/cs/app-prerelease-release.apk!classes4.dex*3209195693:/cs/app-prerelease-release.apk!classes5.dex*332945797:/cs/app-prerelease-release.apk!classes6.dex*2211741785:/cs/app-prerelease-release.apk!classes7.dex*556869192:/cs/app-prerelease-release.apk!classes8.dex*4275361463])
+I/PluginInstance: Adding Netflix (https://net52.cc) MainAPI
+I/PluginInstance: Adding Prime Video (https://net52.cc) MainAPI
+I/PluginInstance: Adding Hotstar (https://net52.cc) MainAPI
+I/PluginInstance: Adding Disney (https://net52.cc) MainAPI
+I/PluginInstance: Adding Marvel (https://net52.cc) MainAPI
+I/PluginInstance: Adding Star Wars (https://net52.cc) MainAPI
+I/PluginInstance: Adding Pixar (https://net52.cc) MainAPI
+dalvikvm I 10-18 21:14:49    78    78 OpenjdkJvm.cc:314] System.exit called, status: 0

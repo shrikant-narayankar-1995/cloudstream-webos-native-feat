@@ -1,4 +1,6 @@
 {"event":"plugin","name":"SubscriptionManager","version":16,"class":"com.cncverse.SubscriptionManagerPlugin","base":"Plugin","requiresResources":true,"sha256":"58acb879f321174d067d01e80c4300455de6f3d8c82edabe4bacbbf5c21a4b90"}
 {"event":"unsupported","api":"Plugin.resources (requiresResources)","stage":"load"}
-{"event":"error","stage":"lifecycle","type":"java.lang.ClassCastException","message":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity","rootType":"java.lang.ClassCastException","rootMessage":"org.csweb.compat.HeadlessContext cannot be cast to androidx.appcompat.app.AppCompatActivity"}
-{"event":"done","ok":false,"elapsed_ms":128}
+{"event":"compat","context":"headless-activity","type":"androidx.appcompat.app.AppCompatActivity","reason":"load(Context) casts its context to an Activity"}
+{"event":"unsupported","api":"Plugin.openSettings (Android settings screen)","stage":"load"}
+{"event":"error","stage":"register","type":"NoProvider","message":"plugin registered no MainAPI"}
+{"event":"done","ok":false,"elapsed_ms":131}

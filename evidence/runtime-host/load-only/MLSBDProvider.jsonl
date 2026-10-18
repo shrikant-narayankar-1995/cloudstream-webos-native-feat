@@ -1,3 +1,3 @@
 {"event":"plugin","name":"MLSBDProvider","version":35,"class":"com.cncverse.MlsbdPlugin","base":"Plugin","requiresResources":false,"sha256":"b60688cf38355217b36df162ae4d5cd1376451cdb22333608ec14413a18dd227"}
 {"event":"provider","name":"Mlsbd","mainUrl":"https://mlsbd.co","lang":"bn","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Movie, TvSeries, AsianDrama, AnimeMovie]"}
-{"event":"done","ok":true,"elapsed_ms":135}
+{"event":"done","ok":true,"elapsed_ms":157}
