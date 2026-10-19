@@ -1,0 +1,189 @@
+         0 INFO  [app] (8658) start app_id=org.csweb.tv platform=webos params={"@system_native_app":true,"nid":"org.csweb.tv","storeCaller":"home"}
+         1 INFO  [device] (8658) webos OLED65C1PTB webOS 6.5.3 (kisscurl-koli) firmware 03.53.45 board O20_DVB ram 3 GB kernel 4.4.84-229.kcl4tv.6 aarch64
+         2 INFO  [crash] (8658) handler installed: /tmp/org.csweb.tv/crash.log, version 0.1.0, build id db8edff41fd3ae5b40d26325cd3b00874b8b6621
+         2 INFO  [lifecycle] (8658) Created -> Initialising (Start)
+       109 INFO  [gamepad] (8658) uid 6860 gid 5000 groups [29,44,505,509,777]; /dev/input event files readable 32 of 32
+       109 INFO  [gamepad] (8658) at start: 0 joystick(s)
+       109 INFO  [screensaver] (8658) allowed (default)
+       109 INFO  [app] (8658) video driver wayland, display mode 1920x1080 @0 Hz
+       248 INFO  [gl] (8658) ARM / Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       251 INFO  [i18n] (8658) locale en-AU (formats en-US) from settingsservice; 0 catalog file(s), 0 entries
+       273 INFO  [caps] (8658) diagnostics.crash_record   supported   /tmp/org.csweb.tv/crash.log
+       273 INFO  [caps] (8658) i18n.system_locale         supported   en-AU
+       273 INFO  [caps] (8658) display.gles2              supported   Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       273 INFO  [caps] (8658) display.fragment_highp     supported   
+       273 INFO  [caps] (8658) display.max_texture_size   supported   8192
+       273 INFO  [caps] (8658) display.mode               supported   1920x1080 @0 Hz
+       273 INFO  [caps] (8658) display.panel              supported   3840x2160
+       273 INFO  [caps] (8658) display.refresh_rate       supported   120 Hz
+       273 INFO  [caps] (8658) storage.kv                 supported   db8
+       273 INFO  [caps] (8658) net.http                   supported   libcurl/7.61.0 OpenSSL/1.1.1t
+       273 INFO  [caps] (8658) audio.output               unknown     not requested by the app
+       273 INFO  [caps] (8658) images.decode              supported   PNG, JPEG, GIF, BMP, WebP, SVG
+       273 INFO  [caps] (8658) input.pointer              unknown     no pointer event yet
+       274 INFO  [caps] (8658) lifecycle.background       unknown     no background event yet
+       274 INFO  [caps] (8658) lifecycle.relaunch_params  supported   SDL_webOSTakeRelaunchMessage
+       274 INFO  [caps] (8658) media.playback             unknown     not implemented in the kit yet
+       285 INFO  [csweb] (8658) csweb: app /media/developer/apps/usr/palm/applications/org.csweb.tv, runtime /media/developer/apps/usr/palm/applications/org.csweb.tv/runtime-aarch64, tmp /tmp/org.csweb.tv
+       288 INFO  [csweb] (8658) plugin data: 1 files restored
+       291 INFO  [csweb] (8658) runtime: launching (AOT: ok)
+       294 INFO  [lifecycle] (8658) Initialising -> Running (Started)
+       641 INFO  [window] (8658) shown
+       641 INFO  [speech] (8658) Audio Guidance setting: off
+       641 INFO  [caps] (8658) accessibility.audio_guidance now supported: off
+       641 INFO  [csweb] (8658) device media: hevc yes, uhd yes, 120 Hz, hdr yes, dv yes, atmos yes, dts no, soc O20N
+       641 INFO  [csweb] (8658) plugins: 2 repositories, 3 installed
+       641 INFO  [network] (8658) online (Wi-Fi)
+       641 INFO  [caps] (8658) network.status now supported: online (Wi-Fi)
+       644 INFO  [focus] (8658) focus nav.Home
+       707 INFO  [app] (8658) first frame: drawable 1920x1080
+       707 INFO  [csweb] (8658) runtime: ready
+       760 INFO  [lifecycle] (8658) SDL WILLENTERFOREGROUND
+       761 INFO  [lifecycle] (8658) SDL DIDENTERFOREGROUND
+       761 INFO  [window] (8658) focus gained
+       761 INFO  [caps] (8658) input.pointer now supported: first event: move
+       761 DEBUG [pointer] (8658) move px=(1681,976) logical=(1681,976) button=1 wheel=0.0 hit=0
+       847 INFO  [focus] (8658) focus #57
+       894 INFO  [fonts] (8658) 90 font files under the system font directories
+       894 INFO  [fonts] (8658) system fallback font /usr/share/fonts/LG_Display-Regular.ttf (search 240 ms)
+      1056 INFO  [focus] (8658) focus #61
+      2721 INFO  [csweb] (8658) home: YouTube, 6 sections
+      3176 DEBUG [pointer] (8658) move px=(1470,734) logical=(1470,734) button=1 wheel=0.0 hit=0
+      3509 WARN  [csweb] (8658) home: section failed: failed
+      4177 DEBUG [pointer] (8658) move px=(1483,1074) logical=(1483,1074) button=1 wheel=0.0 hit=0
+      5159 INFO  [focus] (8658) focus #73
+      5178 DEBUG [pointer] (8658) move px=(1084,946) logical=(1084,946) button=1 wheel=0.0 hit=1
+      5179 INFO  [focus] (8658) focus #77
+      5227 INFO  [focus] (8658) focus #61
+      5389 INFO  [focus] (8658) focus nav.Settings
+      5628 INFO  [focus] (8658) focus #53
+      5661 INFO  [focus] (8658) focus #73
+      5687 INFO  [focus] (8658) focus #77
+      6201 DEBUG [pointer] (8658) move px=(795,781) logical=(795,781) button=1 wheel=0.0 hit=0
+      6218 INFO  [fonts] (8658) system fallback font /usr/share/fonts/NotoEmoji-Regular.ttf (search 955 ms)
+      6233 INFO  [focus] (8658) focus #73
+      6249 DEBUG [pointer] (8658) wheel px=(0,0) logical=(814,804) button=1 wheel=-1.0 hit=1
+      6301 DEBUG [pointer] (8658) wheel px=(0,0) logical=(814,804) button=1 wheel=-1.0 hit=1
+      6301 DEBUG [pointer] (8658) wheel px=(0,0) logical=(814,804) button=1 wheel=-1.0 hit=1
+      6319 DEBUG [pointer] (8658) wheel px=(0,0) logical=(814,804) button=1 wheel=-1.0 hit=1
+      6358 DEBUG [pointer] (8658) wheel px=(0,0) logical=(814,804) button=1 wheel=-1.0 hit=1
+      6358 DEBUG [pointer] (8658) wheel px=(0,0) logical=(814,804) button=1 wheel=-1.0 hit=1
+      6397 DEBUG [pointer] (8658) wheel px=(0,0) logical=(814,804) button=1 wheel=-1.0 hit=1
+      6398 INFO  [focus] (8658) focus #95
+      6418 DEBUG [pointer] (8658) wheel px=(0,0) logical=(814,804) button=1 wheel=-2.0 hit=1
+      6456 INFO  [focus] (8658) focus #117
+      6559 INFO  [focus] (8658) focus #139
+      6740 DEBUG [pointer] (8658) wheel px=(0,0) logical=(756,711) button=1 wheel=-1.0 hit=1
+      6759 DEBUG [pointer] (8658) wheel px=(0,0) logical=(756,711) button=1 wheel=-2.0 hit=1
+      6780 DEBUG [pointer] (8658) wheel px=(0,0) logical=(756,711) button=1 wheel=-1.0 hit=1
+      6800 DEBUG [pointer] (8658) wheel px=(0,0) logical=(756,711) button=1 wheel=-2.0 hit=1
+      6821 DEBUG [pointer] (8658) wheel px=(0,0) logical=(756,711) button=1 wheel=-1.0 hit=1
+      6838 DEBUG [pointer] (8658) wheel px=(0,0) logical=(756,711) button=1 wheel=-1.0 hit=1
+      6857 DEBUG [pointer] (8658) wheel px=(0,0) logical=(756,711) button=1 wheel=-1.0 hit=1
+      6877 DEBUG [pointer] (8658) wheel px=(0,0) logical=(756,711) button=1 wheel=-1.0 hit=1
+      6898 DEBUG [pointer] (8658) wheel px=(0,0) logical=(756,711) button=1 wheel=-2.0 hit=1
+      7118 DEBUG [pointer] (8658) wheel px=(0,0) logical=(789,571) button=1 wheel=1.0 hit=1
+     13381 INFO  [focus] (8658) focus #117
+     13394 DEBUG [pointer] (8658) wheel px=(0,0) logical=(789,571) button=1 wheel=1.0 hit=1
+     13394 DEBUG [pointer] (8658) wheel px=(0,0) logical=(789,571) button=1 wheel=1.0 hit=1
+     13394 DEBUG [pointer] (8658) wheel px=(0,0) logical=(789,571) button=1 wheel=1.0 hit=1
+     13395 DEBUG [pointer] (8658) wheel px=(0,0) logical=(789,571) button=1 wheel=1.0 hit=1
+     13395 DEBUG [pointer] (8658) wheel px=(0,0) logical=(789,571) button=1 wheel=2.0 hit=1
+     13395 DEBUG [pointer] (8658) wheel px=(0,0) logical=(789,571) button=1 wheel=2.0 hit=1
+     13395 DEBUG [pointer] (8658) wheel px=(0,0) logical=(789,571) button=1 wheel=1.0 hit=1
+     13396 DEBUG [pointer] (8658) wheel px=(0,0) logical=(789,571) button=1 wheel=1.0 hit=1
+     13396 DEBUG [pointer] (8658) wheel px=(0,0) logical=(789,571) button=1 wheel=1.0 hit=1
+     13396 DEBUG [pointer] (8658) move px=(790,568) logical=(790,568) button=1 wheel=0.0 hit=1
+     13397 DEBUG [pointer] (8658) wheel px=(0,0) logical=(838,517) button=1 wheel=1.0 hit=1
+     13397 DEBUG [pointer] (8658) wheel px=(0,0) logical=(838,517) button=1 wheel=1.0 hit=1
+     13397 DEBUG [pointer] (8658) wheel px=(0,0) logical=(838,517) button=1 wheel=1.0 hit=1
+     13398 DEBUG [pointer] (8658) wheel px=(0,0) logical=(838,517) button=1 wheel=1.0 hit=1
+     13398 DEBUG [pointer] (8658) wheel px=(0,0) logical=(838,517) button=1 wheel=1.0 hit=1
+     13398 DEBUG [pointer] (8658) wheel px=(0,0) logical=(838,517) button=1 wheel=1.0 hit=1
+     13398 DEBUG [pointer] (8658) wheel px=(0,0) logical=(838,517) button=1 wheel=1.0 hit=1
+     13399 DEBUG [pointer] (8658) wheel px=(0,0) logical=(841,488) button=1 wheel=1.0 hit=1
+     13399 DEBUG [pointer] (8658) wheel px=(0,0) logical=(841,488) button=1 wheel=1.0 hit=1
+     13399 DEBUG [pointer] (8658) wheel px=(0,0) logical=(841,488) button=1 wheel=1.0 hit=1
+     13401 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13402 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13402 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13402 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13402 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13402 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13402 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13402 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13403 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13403 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13403 DEBUG [pointer] (8658) wheel px=(0,0) logical=(967,61) button=1 wheel=1.0 hit=0
+     13417 DEBUG [key] (8658) down sc=82 kc=0x40000052 repeat=0 action=Up pointer=1
+     13417 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=1.0 hit=1
+     13417 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=1.0 hit=1
+     13418 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=1.0 hit=1
+     13418 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=1.0 hit=1
+     13418 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=1.0 hit=1
+     13418 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=1.0 hit=1
+     13419 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     13419 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     13419 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=-2.0 hit=1
+     13419 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     13420 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=-2.0 hit=1
+     13420 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     13420 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     13420 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     13421 DEBUG [pointer] (8658) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     13421 DEBUG [pointer] (8658) wheel px=(0,0) logical=(808,275) button=1 wheel=1.0 hit=1
+     13422 DEBUG [pointer] (8658) wheel px=(0,0) logical=(598,45) button=1 wheel=1.0 hit=0
+     13422 DEBUG [pointer] (8658) wheel px=(0,0) logical=(384,0) button=1 wheel=1.0 hit=0
+     13422 DEBUG [pointer] (8658) wheel px=(0,0) logical=(384,0) button=1 wheel=1.0 hit=0
+     13422 DEBUG [pointer] (8658) wheel px=(0,0) logical=(384,0) button=1 wheel=1.0 hit=0
+     13423 INFO  [focus] (8658) focus #91
+     13437 DEBUG [pointer] (8658) wheel px=(0,0) logical=(384,0) button=1 wheel=1.0 hit=0
+     13437 DEBUG [pointer] (8658) wheel px=(0,0) logical=(384,0) button=1 wheel=2.0 hit=0
+     13437 DEBUG [pointer] (8658) wheel px=(0,0) logical=(384,0) button=1 wheel=1.0 hit=0
+     13437 DEBUG [pointer] (8658) wheel px=(0,0) logical=(384,0) button=1 wheel=1.0 hit=0
+     13438 DEBUG [pointer] (8658) wheel px=(0,0) logical=(536,20) button=1 wheel=1.0 hit=0
+     13439 DEBUG [pointer] (8658) wheel px=(0,0) logical=(759,153) button=1 wheel=-1.0 hit=1
+     13439 DEBUG [pointer] (8658) wheel px=(0,0) logical=(759,153) button=1 wheel=-1.0 hit=1
+     13439 DEBUG [pointer] (8658) wheel px=(0,0) logical=(759,153) button=1 wheel=-1.0 hit=1
+     13440 DEBUG [pointer] (8658) wheel px=(0,0) logical=(759,153) button=1 wheel=-1.0 hit=1
+     13440 DEBUG [pointer] (8658) wheel px=(0,0) logical=(759,153) button=1 wheel=-1.0 hit=1
+     13440 DEBUG [pointer] (8658) wheel px=(0,0) logical=(759,153) button=1 wheel=-1.0 hit=1
+     13440 DEBUG [pointer] (8658) wheel px=(0,0) logical=(759,153) button=1 wheel=-1.0 hit=1
+     13441 DEBUG [pointer] (8658) wheel px=(0,0) logical=(759,153) button=1 wheel=-1.0 hit=1
+     13442 INFO  [focus] (8658) focus #99
+     13453 INFO  [focus] (8658) focus #103
+     14018 INFO  [focus] (8658) focus #125
+     14097 INFO  [focus] (8658) focus #135
+     14398 DEBUG [pointer] (8658) move px=(532,573) logical=(532,573) button=1 wheel=0.0 hit=0
+     14418 INFO  [focus] (8658) focus #139
+     14698 DEBUG [pointer] (8658) wheel px=(0,0) logical=(669,519) button=1 wheel=1.0 hit=1
+     14718 DEBUG [pointer] (8658) wheel px=(0,0) logical=(669,519) button=1 wheel=1.0 hit=1
+     14738 DEBUG [pointer] (8658) wheel px=(0,0) logical=(669,519) button=1 wheel=1.0 hit=1
+     14758 DEBUG [pointer] (8658) wheel px=(0,0) logical=(669,519) button=1 wheel=1.0 hit=1
+     14759 DEBUG [pointer] (8658) wheel px=(0,0) logical=(669,519) button=1 wheel=1.0 hit=1
+     14778 DEBUG [pointer] (8658) wheel px=(0,0) logical=(669,519) button=1 wheel=1.0 hit=1
+     14798 DEBUG [pointer] (8658) wheel px=(0,0) logical=(669,519) button=1 wheel=1.0 hit=1
+     14818 DEBUG [pointer] (8658) wheel px=(0,0) logical=(669,519) button=1 wheel=1.0 hit=1
+     14819 INFO  [focus] (8658) focus #117
+     14878 INFO  [focus] (8658) focus #95
+     14999 INFO  [focus] (8658) focus #73
+     15317 DEBUG [pointer] (8658) wheel px=(0,0) logical=(729,516) button=1 wheel=1.0 hit=1
+     15338 DEBUG [pointer] (8658) wheel px=(0,0) logical=(729,516) button=1 wheel=1.0 hit=1
+     15359 DEBUG [pointer] (8658) wheel px=(0,0) logical=(729,516) button=1 wheel=1.0 hit=1
+     15398 DEBUG [pointer] (8658) wheel px=(0,0) logical=(729,516) button=1 wheel=1.0 hit=1
+     15418 DEBUG [pointer] (8658) wheel px=(0,0) logical=(729,516) button=1 wheel=1.0 hit=1
+     15438 DEBUG [pointer] (8658) wheel px=(0,0) logical=(729,516) button=1 wheel=1.0 hit=1
+     15438 INFO  [focus] (8658) focus #53
+     15478 DEBUG [pointer] (8658) wheel px=(0,0) logical=(729,516) button=1 wheel=1.0 hit=1
+     15738 INFO  [perf] (8658) frames 300 presented of 404 drawn: interval avg 46.34 median 19.93 p95 26.32 max 6304.58 ms, late 8; max ms events 29.85 update 6263.70 draw 36.84 finish 1.21 swap 4.49; draw calls 77, quads 1371, textures 36, views 174, rss 86.0 MB
+     15998 DEBUG [pointer] (8658) move px=(729,517) logical=(729,517) button=1 wheel=0.0 hit=0
+     16097 DEBUG [pointer] (8658) wheel px=(0,0) logical=(719,525) button=1 wheel=-1.0 hit=1
+     16117 DEBUG [pointer] (8658) wheel px=(0,0) logical=(719,525) button=1 wheel=-1.0 hit=1
+     16138 DEBUG [pointer] (8658) wheel px=(0,0) logical=(719,525) button=1 wheel=-1.0 hit=1
+     16160 DEBUG [pointer] (8658) wheel px=(0,0) logical=(719,525) button=1 wheel=-1.0 hit=1
+     16179 DEBUG [pointer] (8658) wheel px=(0,0) logical=(719,525) button=1 wheel=-1.0 hit=1
+     16339 INFO  [focus] (8658) focus #73
+     17026 DEBUG [pointer] (8658) move px=(710,526) logical=(710,526) button=1 wheel=0.0 hit=1
+     17254 DEBUG [pointer] (8658) press px=(700,529) logical=(700,529) button=1 wheel=0.0 hit=1
+     26060 DEBUG [pointer] (8658) release px=(700,529) logical=(700,529) button=1 wheel=0.0 hit=1
+     26060 DEBUG [pointer] (8658) move px=(700,530) logical=(700,530) button=1 wheel=0.0 hit=0

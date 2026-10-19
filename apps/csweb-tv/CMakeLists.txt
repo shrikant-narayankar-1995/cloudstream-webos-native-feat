@@ -14,6 +14,7 @@ add_library(csweb_core STATIC
         src/core/child_process.cpp
         src/core/dir_snapshot.cpp
         src/core/sha256.cpp
+        src/core/stall_sampler.cpp
         src/core/zip_check.cpp
         src/library/library.cpp
         src/library/library_store.cpp

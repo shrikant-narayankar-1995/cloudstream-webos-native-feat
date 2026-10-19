@@ -12,6 +12,7 @@
 
 #include "app/router.hpp"
 #include "app/services.hpp"
+#include "core/stall_sampler.hpp"
 #include "ui/dialogs/plugin_dialog_host.hpp"
 
 #include "wnk/app/app.hpp"
@@ -40,6 +41,7 @@ class Application : public wnk::app::Delegate {
     std::unique_ptr<wnk::net::HttpClient> http_;
     std::unique_ptr<Router> router_;
     std::unique_ptr<ui::PluginDialogHost> dialogs_;
+    std::unique_ptr<core::StallSampler> stalls_;
     void open_link(wnk::ui::Ui &ui, const std::string &params_json);
     void run_pending_search(wnk::ui::Ui &ui);
     void add_repository_from_link(wnk::ui::Ui &ui, const std::string &url);

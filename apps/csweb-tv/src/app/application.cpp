@@ -45,6 +45,7 @@ void Application::on_start(wnk::app::Context &ctx) {
     std::string tmp = ctx.runtime_dir();
     if (tmp.empty()) tmp = "/tmp/org.csweb.tv";
     make_dir(tmp);
+    stalls_ = std::make_unique<core::StallSampler>(ctx.dispatcher(), tmp + "/stalls.log");
     const std::string plugin_dir = tmp + "/plugins", data_dir = tmp + "/plugin-data";
     make_dir(plugin_dir);
     make_dir(data_dir);
@@ -220,6 +221,7 @@ void Application::on_lifecycle(wnk::app::Context &ctx, const wnk::app::Lifecycle
 }
 
 void Application::on_stop(wnk::app::Context &ctx) {
+    stalls_.reset();  // the dispatcher stops running pings during shutdown
     wnk::ui::Ui &ui = ctx.ui();
     while (wnk::ui::Dialog *d = ui.top_dialog()) ui.dismiss_dialog(d);
     // The shell destroys the delegate before the Ui, and every screen refers to the services: take

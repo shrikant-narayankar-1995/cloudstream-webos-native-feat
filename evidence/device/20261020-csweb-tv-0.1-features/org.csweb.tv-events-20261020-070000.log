@@ -1,0 +1,664 @@
+         0 INFO  [app] (10982) start app_id=org.csweb.tv platform=webos params={"@system_native_app":true,"nid":"org.csweb.tv"}
+         1 INFO  [device] (10982) webos OLED65C1PTB webOS 6.5.3 (kisscurl-koli) firmware 03.53.45 board O20_DVB ram 3 GB kernel 4.4.84-229.kcl4tv.6 aarch64
+         1 INFO  [crash] (10982) handler installed: /tmp/org.csweb.tv/crash.log, version 0.1.0, build id 8c9faa663943baaf460d8cce1202108d11e709bd
+         1 INFO  [lifecycle] (10982) Created -> Initialising (Start)
+       116 INFO  [gamepad] (10982) uid 6860 gid 5000 groups [29,44,505,509,777]; /dev/input event files readable 32 of 32
+       116 INFO  [gamepad] (10982) at start: 0 joystick(s)
+       116 INFO  [screensaver] (10982) allowed (default)
+       116 INFO  [app] (10982) video driver wayland, display mode 1920x1080 @0 Hz
+       299 INFO  [gl] (10982) ARM / Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       302 INFO  [i18n] (10982) locale en-AU (formats en-US) from settingsservice; 0 catalog file(s), 0 entries
+       331 INFO  [caps] (10982) diagnostics.crash_record   supported   /tmp/org.csweb.tv/crash.log
+       331 INFO  [caps] (10982) i18n.system_locale         supported   en-AU
+       331 INFO  [caps] (10982) display.gles2              supported   Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       331 INFO  [caps] (10982) display.fragment_highp     supported   
+       331 INFO  [caps] (10982) display.max_texture_size   supported   8192
+       331 INFO  [caps] (10982) display.mode               supported   1920x1080 @0 Hz
+       331 INFO  [caps] (10982) display.panel              supported   3840x2160
+       331 INFO  [caps] (10982) display.refresh_rate       supported   120 Hz
+       331 INFO  [caps] (10982) storage.kv                 supported   db8
+       331 INFO  [caps] (10982) net.http                   supported   libcurl/7.61.0 OpenSSL/1.1.1t
+       331 INFO  [caps] (10982) audio.output               unknown     not requested by the app
+       331 INFO  [caps] (10982) images.decode              supported   PNG, JPEG, GIF, BMP, WebP, SVG
+       331 INFO  [caps] (10982) input.pointer              unknown     no pointer event yet
+       331 INFO  [caps] (10982) lifecycle.background       unknown     no background event yet
+       331 INFO  [caps] (10982) lifecycle.relaunch_params  supported   SDL_webOSTakeRelaunchMessage
+       331 INFO  [caps] (10982) media.playback             unknown     not implemented in the kit yet
+       343 INFO  [csweb] (10982) csweb: app /media/developer/apps/usr/palm/applications/org.csweb.tv, runtime /media/developer/apps/usr/palm/applications/org.csweb.tv/runtime-aarch64, tmp /tmp/org.csweb.tv
+       346 INFO  [csweb] (10982) plugin data: 1 files restored
+       348 INFO  [csweb] (10982) runtime: launching (AOT: ok)
+       351 INFO  [lifecycle] (10982) Initialising -> Running (Started)
+       700 INFO  [window] (10982) shown
+       700 INFO  [speech] (10982) Audio Guidance setting: off
+       700 INFO  [caps] (10982) accessibility.audio_guidance now supported: off
+       700 INFO  [csweb] (10982) device media: hevc yes, uhd yes, 120 Hz, hdr yes, dv yes, atmos yes, dts no, soc O20N
+       700 INFO  [csweb] (10982) plugins: 2 repositories, 3 installed
+       700 INFO  [network] (10982) online (Wi-Fi)
+       700 INFO  [caps] (10982) network.status now supported: online (Wi-Fi)
+       703 INFO  [focus] (10982) focus nav.Home
+       766 INFO  [app] (10982) first frame: drawable 1920x1080
+       821 INFO  [csweb] (10982) runtime: ready
+       847 INFO  [lifecycle] (10982) SDL WILLENTERFOREGROUND
+       847 INFO  [lifecycle] (10982) SDL DIDENTERFOREGROUND
+       847 INFO  [window] (10982) focus gained
+      1010 INFO  [fonts] (10982) 90 font files under the system font directories
+      1010 INFO  [fonts] (10982) system fallback font /usr/share/fonts/LG_Display-Regular.ttf (search 297 ms)
+      2723 INFO  [csweb] (10982) home: YouTube, 6 sections
+      3522 WARN  [csweb] (10982) home: section failed: failed
+     11518 INFO  [caps] (10982) input.pointer now supported: first event: move
+     11518 DEBUG [pointer] (10982) move px=(960,540) logical=(960,540) button=1 wheel=0.0 hit=0
+     11518 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     11544 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     11578 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     11692 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     11712 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     11772 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     11973 INFO  [focus] (10982) focus #73
+     12054 DEBUG [pointer] (10982) wheel px=(0,0) logical=(747,572) button=1 wheel=-2.0 hit=1
+     12077 DEBUG [pointer] (10982) wheel px=(0,0) logical=(747,572) button=1 wheel=-1.0 hit=1
+     12078 DEBUG [pointer] (10982) wheel px=(0,0) logical=(747,572) button=1 wheel=-2.0 hit=1
+     12095 DEBUG [pointer] (10982) wheel px=(0,0) logical=(747,572) button=1 wheel=-1.0 hit=1
+     12113 DEBUG [pointer] (10982) wheel px=(0,0) logical=(747,572) button=1 wheel=-2.0 hit=1
+     12113 INFO  [focus] (10982) focus #95
+     12133 DEBUG [pointer] (10982) wheel px=(0,0) logical=(747,572) button=1 wheel=-1.0 hit=1
+     12153 DEBUG [pointer] (10982) wheel px=(0,0) logical=(747,572) button=1 wheel=-1.0 hit=1
+     12174 DEBUG [pointer] (10982) wheel px=(0,0) logical=(747,572) button=1 wheel=-1.0 hit=1
+     12174 INFO  [focus] (10982) focus #117
+     12194 DEBUG [pointer] (10982) wheel px=(0,0) logical=(747,572) button=1 wheel=-1.0 hit=1
+     12253 INFO  [focus] (10982) focus #139
+     12412 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-2.0 hit=1
+     12436 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-1.0 hit=1
+     12453 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-1.0 hit=1
+     12472 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-1.0 hit=1
+     12473 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-1.0 hit=1
+     12495 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-2.0 hit=1
+     12496 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-1.0 hit=1
+     12514 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-1.0 hit=1
+     12515 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-1.0 hit=1
+     12533 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-1.0 hit=1
+     12553 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-1.0 hit=1
+     12553 DEBUG [pointer] (10982) wheel px=(0,0) logical=(748,571) button=1 wheel=-1.0 hit=1
+     12733 DEBUG [pointer] (10982) move px=(749,571) logical=(749,571) button=1 wheel=0.0 hit=1
+     12793 DEBUG [pointer] (10982) wheel px=(0,0) logical=(752,570) button=1 wheel=-1.0 hit=1
+     12813 DEBUG [pointer] (10982) wheel px=(0,0) logical=(752,570) button=1 wheel=-2.0 hit=1
+     12834 DEBUG [pointer] (10982) wheel px=(0,0) logical=(752,570) button=1 wheel=-1.0 hit=1
+     12834 DEBUG [pointer] (10982) wheel px=(0,0) logical=(752,570) button=1 wheel=-1.0 hit=1
+     12853 DEBUG [pointer] (10982) wheel px=(0,0) logical=(752,570) button=1 wheel=-2.0 hit=1
+     12874 DEBUG [pointer] (10982) wheel px=(0,0) logical=(752,570) button=1 wheel=-1.0 hit=1
+     12894 DEBUG [pointer] (10982) wheel px=(0,0) logical=(752,570) button=1 wheel=-1.0 hit=1
+     12913 DEBUG [pointer] (10982) wheel px=(0,0) logical=(752,570) button=1 wheel=-2.0 hit=1
+     12931 DEBUG [pointer] (10982) wheel px=(0,0) logical=(752,570) button=1 wheel=-1.0 hit=1
+     13195 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=1.0 hit=1
+     13215 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=1.0 hit=1
+     13274 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=1.0 hit=1
+     13297 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=1.0 hit=1
+     13297 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=1.0 hit=1
+     13314 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=2.0 hit=1
+     13334 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=1.0 hit=1
+     13334 INFO  [focus] (10982) focus #117
+     13354 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=1.0 hit=1
+     13373 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=1.0 hit=1
+     13393 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=1.0 hit=1
+     13393 INFO  [focus] (10982) focus #95
+     13413 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,544) button=1 wheel=1.0 hit=1
+     13454 INFO  [focus] (10982) focus #73
+     13533 INFO  [focus] (10982) focus #53
+     13733 DEBUG [pointer] (10982) wheel px=(0,0) logical=(807,538) button=1 wheel=1.0 hit=1
+     13753 DEBUG [pointer] (10982) wheel px=(0,0) logical=(807,538) button=1 wheel=1.0 hit=1
+     13772 DEBUG [pointer] (10982) wheel px=(0,0) logical=(807,538) button=1 wheel=2.0 hit=1
+     13793 DEBUG [pointer] (10982) wheel px=(0,0) logical=(807,538) button=1 wheel=1.0 hit=1
+     13813 DEBUG [pointer] (10982) wheel px=(0,0) logical=(807,538) button=1 wheel=1.0 hit=1
+     13813 DEBUG [pointer] (10982) wheel px=(0,0) logical=(807,538) button=1 wheel=1.0 hit=1
+     13832 DEBUG [pointer] (10982) wheel px=(0,0) logical=(807,538) button=1 wheel=1.0 hit=1
+     13833 DEBUG [pointer] (10982) wheel px=(0,0) logical=(807,538) button=1 wheel=1.0 hit=1
+     13853 DEBUG [pointer] (10982) wheel px=(0,0) logical=(807,538) button=1 wheel=1.0 hit=1
+     13873 DEBUG [pointer] (10982) wheel px=(0,0) logical=(807,538) button=1 wheel=1.0 hit=1
+     13913 DEBUG [pointer] (10982) move px=(792,511) logical=(792,511) button=1 wheel=0.0 hit=0
+     13973 DEBUG [pointer] (10982) wheel px=(0,0) logical=(717,265) button=1 wheel=-1.0 hit=1
+     13994 DEBUG [pointer] (10982) wheel px=(0,0) logical=(717,265) button=1 wheel=-1.0 hit=1
+     14013 DEBUG [pointer] (10982) wheel px=(0,0) logical=(674,184) button=1 wheel=-2.0 hit=1
+     14032 DEBUG [pointer] (10982) wheel px=(0,0) logical=(674,184) button=1 wheel=-1.0 hit=1
+     14073 DEBUG [pointer] (10982) wheel px=(0,0) logical=(556,0) button=1 wheel=-1.0 hit=0
+     14073 DEBUG [pointer] (10982) wheel px=(0,0) logical=(556,0) button=1 wheel=-1.0 hit=0
+     14092 DEBUG [pointer] (10982) wheel px=(0,0) logical=(556,0) button=1 wheel=-1.0 hit=0
+     14092 DEBUG [pointer] (10982) wheel px=(0,0) logical=(556,0) button=1 wheel=-1.0 hit=0
+     14112 DEBUG [pointer] (10982) wheel px=(0,0) logical=(556,0) button=1 wheel=-1.0 hit=0
+     14173 INFO  [focus] (10982) focus nav.Home
+     14298 INFO  [focus] (10982) focus nav.Search
+     14304 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=1.0 hit=1
+     14319 INFO  [perf] (10982) frames 300 presented of 515 drawn: interval avg 20.67 median 19.93 p95 23.86 max 165.53 ms, late 4; max ms events 1.54 update 85.28 draw 38.66 finish 0.27 swap 6.92; draw calls 77, quads 1404, textures 37, views 174, rss 85.6 MB
+     14319 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=1.0 hit=1
+     14333 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=2.0 hit=1
+     14354 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=1.0 hit=1
+     14373 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=2.0 hit=1
+     14394 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=1.0 hit=1
+     14414 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=1.0 hit=1
+     14496 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=-1.0 hit=1
+     14514 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=-2.0 hit=1
+     14533 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=-1.0 hit=1
+     14556 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=-2.0 hit=1
+     14556 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=-1.0 hit=1
+     14574 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=-2.0 hit=1
+     14574 DEBUG [pointer] (10982) wheel px=(0,0) logical=(829,155) button=1 wheel=-1.0 hit=1
+     14634 INFO  [focus] (10982) focus #53
+     14747 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,160) button=1 wheel=2.0 hit=1
+     14747 INFO  [focus] (10982) focus #73
+     14760 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,160) button=1 wheel=1.0 hit=1
+     14780 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,160) button=1 wheel=1.0 hit=1
+     14796 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,160) button=1 wheel=1.0 hit=1
+     14893 INFO  [focus] (10982) focus #53
+     14912 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,160) button=1 wheel=1.0 hit=1
+     14933 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,160) button=1 wheel=-1.0 hit=1
+     14955 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,160) button=1 wheel=-1.0 hit=1
+     14955 DEBUG [pointer] (10982) wheel px=(0,0) logical=(804,160) button=1 wheel=-1.0 hit=1
+     14996 DEBUG [pointer] (10982) move px=(776,153) logical=(776,153) button=1 wheel=0.0 hit=1
+     15154 INFO  [focus] (10982) focus nav.Home
+     15295 INFO  [focus] (10982) focus #73
+     15319 DEBUG [pointer] (10982) wheel px=(0,0) logical=(757,231) button=1 wheel=-1.0 hit=1
+     15319 DEBUG [pointer] (10982) wheel px=(0,0) logical=(757,231) button=1 wheel=-1.0 hit=1
+     15333 DEBUG [pointer] (10982) wheel px=(0,0) logical=(757,231) button=1 wheel=-1.0 hit=1
+     15374 DEBUG [pointer] (10982) wheel px=(0,0) logical=(750,325) button=1 wheel=-2.0 hit=1
+     15393 DEBUG [pointer] (10982) wheel px=(0,0) logical=(750,325) button=1 wheel=-1.0 hit=1
+     15393 DEBUG [pointer] (10982) wheel px=(0,0) logical=(750,325) button=1 wheel=-1.0 hit=1
+     15394 INFO  [focus] (10982) focus #95
+     15413 DEBUG [pointer] (10982) wheel px=(0,0) logical=(750,325) button=1 wheel=-2.0 hit=1
+     15473 INFO  [focus] (10982) focus #117
+     15613 INFO  [focus] (10982) focus #139
+     15713 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     15733 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     15753 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     15753 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-2.0 hit=1
+     15773 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     15774 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-2.0 hit=1
+     15793 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     15794 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-2.0 hit=1
+     15814 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     15833 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-2.0 hit=1
+     16095 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16134 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16157 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16157 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16175 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16194 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16194 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16212 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16212 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16217 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16225 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-2.0 hit=1
+     16234 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=-1.0 hit=1
+     16526 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=2.0 hit=1
+     16546 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=2.0 hit=1
+     16560 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=1.0 hit=1
+     16574 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=2.0 hit=1
+     16594 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=1.0 hit=1
+     16594 INFO  [focus] (10982) focus #117
+     16633 DEBUG [pointer] (10982) wheel px=(0,0) logical=(745,423) button=1 wheel=1.0 hit=1
+     16653 INFO  [focus] (10982) focus #95
+     16734 INFO  [focus] (10982) focus #73
+     16861 DEBUG [pointer] (10982) move px=(743,423) logical=(743,423) button=1 wheel=0.0 hit=0
+     16936 DEBUG [pointer] (10982) wheel px=(0,0) logical=(704,414) button=1 wheel=1.0 hit=1
+     16973 DEBUG [pointer] (10982) wheel px=(0,0) logical=(704,414) button=1 wheel=1.0 hit=1
+     16973 INFO  [focus] (10982) focus #53
+     16993 DEBUG [pointer] (10982) wheel px=(0,0) logical=(704,414) button=1 wheel=1.0 hit=1
+     17013 DEBUG [pointer] (10982) wheel px=(0,0) logical=(704,414) button=1 wheel=2.0 hit=1
+     17013 DEBUG [pointer] (10982) wheel px=(0,0) logical=(704,414) button=1 wheel=1.0 hit=1
+     17033 DEBUG [pointer] (10982) wheel px=(0,0) logical=(704,414) button=1 wheel=1.0 hit=1
+     17053 DEBUG [pointer] (10982) wheel px=(0,0) logical=(704,414) button=1 wheel=1.0 hit=1
+     17093 DEBUG [pointer] (10982) wheel px=(0,0) logical=(704,414) button=1 wheel=1.0 hit=1
+     17113 DEBUG [pointer] (10982) wheel px=(0,0) logical=(704,414) button=1 wheel=1.0 hit=1
+     17693 DEBUG [pointer] (10982) wheel px=(0,0) logical=(271,604) button=1 wheel=-1.0 hit=1
+     17713 DEBUG [pointer] (10982) wheel px=(0,0) logical=(271,604) button=1 wheel=-1.0 hit=1
+     17733 DEBUG [pointer] (10982) wheel px=(0,0) logical=(271,604) button=1 wheel=-1.0 hit=1
+     17753 DEBUG [pointer] (10982) wheel px=(0,0) logical=(271,604) button=1 wheel=-1.0 hit=1
+     17753 DEBUG [pointer] (10982) wheel px=(0,0) logical=(271,604) button=1 wheel=-1.0 hit=1
+     17753 INFO  [focus] (10982) focus home.hero.open
+     17793 DEBUG [pointer] (10982) wheel px=(0,0) logical=(271,604) button=1 wheel=-1.0 hit=1
+     17793 INFO  [focus] (10982) focus #49
+     17814 DEBUG [pointer] (10982) wheel px=(0,0) logical=(271,604) button=1 wheel=-1.0 hit=1
+     17873 INFO  [focus] (10982) focus #69
+     18056 INFO  [focus] (10982) focus #91
+     18134 DEBUG [pointer] (10982) move px=(272,604) logical=(272,604) button=1 wheel=0.0 hit=1
+     18254 DEBUG [pointer] (10982) wheel px=(0,0) logical=(253,552) button=1 wheel=1.0 hit=1
+     18292 DEBUG [pointer] (10982) wheel px=(0,0) logical=(253,552) button=1 wheel=1.0 hit=1
+     18314 DEBUG [pointer] (10982) wheel px=(0,0) logical=(253,552) button=1 wheel=1.0 hit=1
+     18334 DEBUG [pointer] (10982) wheel px=(0,0) logical=(253,552) button=1 wheel=1.0 hit=1
+     18335 INFO  [focus] (10982) focus #69
+     18493 INFO  [focus] (10982) focus #49
+     19073 DEBUG [pointer] (10982) wheel px=(0,0) logical=(262,560) button=1 wheel=-1.0 hit=1
+     19092 DEBUG [pointer] (10982) wheel px=(0,0) logical=(262,560) button=1 wheel=-1.0 hit=1
+     19136 DEBUG [pointer] (10982) wheel px=(0,0) logical=(262,560) button=1 wheel=-2.0 hit=1
+     19173 INFO  [focus] (10982) focus #69
+     19573 DEBUG [pointer] (10982) move px=(263,560) logical=(263,560) button=1 wheel=0.0 hit=0
+     20323 DEBUG [pointer] (10982) press px=(272,278) logical=(272,278) button=1 wheel=0.0 hit=1
+     20682 DEBUG [pointer] (10982) release px=(272,278) logical=(272,278) button=1 wheel=0.0 hit=1
+     20746 INFO  [focus] (10982) focus details.bookmark
+     20751 DEBUG [pointer] (10982) move px=(272,279) logical=(272,279) button=1 wheel=0.0 hit=0
+     21765 DEBUG [pointer] (10982) move px=(598,587) logical=(598,587) button=1 wheel=0.0 hit=0
+     22775 DEBUG [pointer] (10982) move px=(576,546) logical=(576,546) button=1 wheel=0.0 hit=0
+     22967 INFO  [csweb] (10982) details: Others, 0 episodes in 0 groups, 0 recommendations
+     23058 INFO  [focus] (10982) focus details.play
+     23705 DEBUG [pointer] (10982) wheel px=(0,0) logical=(379,454) button=1 wheel=-1.0 hit=1
+     23756 DEBUG [pointer] (10982) wheel px=(0,0) logical=(339,547) button=1 wheel=-2.0 hit=1
+     23844 INFO  [focus] (10982) focus details.bookmark
+     23847 DEBUG [pointer] (10982) wheel px=(0,0) logical=(325,598) button=1 wheel=-1.0 hit=1
+     23847 DEBUG [pointer] (10982) move px=(321,618) logical=(321,618) button=1 wheel=0.0 hit=1
+     23848 DEBUG [pointer] (10982) wheel px=(0,0) logical=(321,618) button=1 wheel=-2.0 hit=1
+     23848 DEBUG [pointer] (10982) wheel px=(0,0) logical=(321,618) button=1 wheel=-1.0 hit=1
+     23849 DEBUG [pointer] (10982) wheel px=(0,0) logical=(321,618) button=1 wheel=-2.0 hit=1
+     23891 DEBUG [pointer] (10982) wheel px=(0,0) logical=(321,618) button=1 wheel=-1.0 hit=1
+     24455 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=-2.0 hit=1
+     24485 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=-1.0 hit=1
+     24514 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=-2.0 hit=1
+     24535 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=-1.0 hit=1
+     24554 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=-1.0 hit=1
+     24564 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=-1.0 hit=1
+     24575 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=-1.0 hit=1
+     24595 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=-1.0 hit=1
+     24605 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=-1.0 hit=1
+     24626 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=-1.0 hit=1
+     24877 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     24880 INFO  [perf] (10982) frames 600 presented of 1043 drawn: interval avg 20.42 median 19.92 p95 22.92 max 96.66 ms, late 6; max ms events 2.24 update 87.43 draw 36.74 finish 0.06 swap 4.86; draw calls 8, quads 562, textures 41, views 207, rss 95.3 MB
+     24894 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     24927 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     24943 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     24952 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     24972 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     24991 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     25011 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     25030 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     25052 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     25070 DEBUG [pointer] (10982) wheel px=(0,0) logical=(446,707) button=1 wheel=1.0 hit=1
+     25131 DEBUG [pointer] (10982) move px=(444,701) logical=(444,701) button=1 wheel=0.0 hit=0
+     25651 INFO  [focus] (10982) focus details.play
+     25741 INFO  [focus] (10982) focus details.bookmark
+     25889 INFO  [focus] (10982) focus details.play
+     26155 DEBUG [pointer] (10982) move px=(112,649) logical=(112,649) button=1 wheel=0.0 hit=1
+     26415 DEBUG [pointer] (10982) press px=(147,628) logical=(147,628) button=1 wheel=0.0 hit=1
+     26778 DEBUG [pointer] (10982) release px=(150,627) logical=(150,627) button=1 wheel=0.0 hit=1
+     26778 INFO  [focus] (10982) focus <none>
+     27170 DEBUG [pointer] (10982) move px=(185,632) logical=(185,632) button=1 wheel=0.0 hit=0
+     28490 DEBUG [pointer] (10982) move px=(214,617) logical=(214,617) button=1 wheel=0.0 hit=0
+     29090 DEBUG [csweb] (10982) link: YouTube H264 1080p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29266 INFO  [focus] (10982) focus player.skip
+     29269 DEBUG [csweb] (10982) link: YouTube VP9 1080p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29270 DEBUG [csweb] (10982) link: YouTube H264 720p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29270 DEBUG [csweb] (10982) link: YouTube VP9 720p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29270 DEBUG [csweb] (10982) link: YouTube H264 480p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29271 DEBUG [csweb] (10982) link: YouTube VP9 480p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29271 DEBUG [csweb] (10982) link: YouTube H264 360p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29271 DEBUG [csweb] (10982) link: YouTube VP9 360p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29271 DEBUG [csweb] (10982) link: YouTube H264 240p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29272 DEBUG [csweb] (10982) link: YouTube VP9 240p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29272 DEBUG [csweb] (10982) link: YouTube H264 144p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29272 DEBUG [csweb] (10982) link: YouTube VP9 144p VIDEO from rr4---sn-uxanug5-hxae6.googlevideo.com
+     29272 INFO  [csweb] (10982) links loaded: 12 links, 1 subtitles
+     29272 INFO  [csweb] (10982) playing link 0: YouTube H264 1080p (ffmpeg)
+     29474 INFO  [starfish] (10982) decoder H264: 4096x2304@60
+     29475 INFO  [starfish] (10982) decoder H265: 4096x2304@120
+     29490 INFO  [starfish] (10982) decoder VP9: 4096x2304@60
+     29490 INFO  [starfish] (10982) decoder AV1: 4096x2304@60
+     29511 INFO  [starfish] (10982) exported window _Window_Id_11
+     29511 INFO  [starfish] (10982) place 1920x1080 -> 0,0 1920x1080 rv=1
+     29511 INFO  [media] (11167) Idle -> Opening
+     29598 INFO  [screensaver] (10982) blocked (video playing)
+     29681 INFO  [focus] (10982) focus #229
+     29688 DEBUG [pointer] (10982) move px=(208,616) logical=(208,616) button=1 wheel=0.0 hit=0
+     29689 INFO  [csweb] (10982) player Idle -> Opening
+     29722 INFO  [http.stream] (11175) https://rr4---sn-uxanug5-hxae6.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 2600569 bytes
+     29734 INFO  [http.stream] (11176) https://rr4---sn-uxanug5-hxae6.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 945827 bytes
+     29747 INFO  [http.stream] (11177) https://rr4---sn-uxanug5-hxae6.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 2467528 bytes
+     29749 INFO  [http.stream] (11173) https://rr4---sn-uxanug5-hxae6.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 39632820 bytes
+     29784 INFO  [http.stream] (11178) https://rr4---sn-uxanug5-hxae6.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 1252100 bytes
+     29797 INFO  [http.stream] (11174) https://rr4---sn-uxanug5-hxae6.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 980951 bytes
+     30138 INFO  [csweb] (11167) merged source: 5 of 5 audio stream(s) open
+     30138 INFO  [media] (11167) https://rr4---sn-uxanug5-hxae6.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> using starfish
+     30139 INFO  [media.ff] (11167) audio opus 2 ch 48000 Hz re-encoded to AC-3 2 ch 48000 Hz 256 kb/s
+     30139 INFO  [media] (11167) opened https://rr4---sn-uxanug5-hxae6.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> mov,mp4,m4a,3gp,3g2,mj2, 160.6 s, video h264 1920x1080, audio ac3 48000 Hz x2
+     30140 INFO  [starfish] (11167) Load {"args":[{"mediaTransportType":"BUFFERSTREAM","option":{"appId":"org.csweb.tv","windowId":"_Window_Id_11","externalStreamingInfo":{"contents":{"codec":{"video":"H264","audio":"AC3"},"esInfo":{"pauseAtDecodeTime":false,"ptsToDecode":0,"seperatedPTS":true,"videoFpsValue":24,"videoFpsScale":1},"format":"RAW","provider":"wnk"},"streamQualityInfo":true,"streamQualityInfoNonFlushable":true,"audioSync":true,"restartStreaming":false,"bufferingCtrInfo":{"bufferMaxLevel":0,"bufferMinLevel":0,"preBufferByte":0,"qBufferLevelAudio":0,"qBufferLevelVideo":0,"srcBufferLevelAudio":{"minimum":1,"maximum":1048576},"srcBufferLevelVideo":{"minimum":1,"maximum":8388608}}},"needAudio":true,"queryPosition":false,"lowDelayMode":false,"transmission":{"contentsType":"LIVE"},"adaptiveStreaming":{"audioOnly":false,"adaptiveResolution":true,"maxWidth":1920,"maxHeight":1080,"maxFrameRate":24}}}]}
+     30214 INFO  [starfish] (11167) event type=13 num=1 
+     30214 INFO  [starfish] (11167) event type=14 num=0 1
+     30219 INFO  [starfish] (11167) event type=5 num=0 0 video/x-h264 (null) (null) 1920 1080 (null) 24.000000 0 0 0
+     30219 INFO  [starfish] (11167) event type=15 num=0 1
+     30219 INFO  [starfish] (11167) event type=8 num=0 audio/x-ac3 (null) (null) 0.000000 0 (null) 0 0 0 0 ac3 0 (null) 0 
+     30295 INFO  [starfish] (11181) event type=37 num=1 
+     30296 INFO  [starfish] (11181) event type=22 num=0 true
+     30367 INFO  [starfish] (11167) event type=17 num=0 {"context":"_f1kPvl4BScKgZe","resourceList":[{"type":"VDEC","portNumber":2},{"type":"ADEC","portNumber":1}]}
+
+     30369 INFO  [starfish] (11167) Load -> 1 (208.1 ms)
+     30369 INFO  [media] (11167) Opening -> Ready
+     30369 INFO  [media] (11167) Ready -> Playing
+     30385 INFO  [csweb] (10982) player Opening -> Ready
+     30385 INFO  [starfish] (10982) place 1920x1080 -> 0,0 1920x1080 rv=1
+     30385 INFO  [csweb] (10982) subtitles: auto-selecting file 0 (en)
+     30385 INFO  [csweb] (10982) player Ready -> Playing
+     30424 INFO  [starfish] (11167) splice: first video pts 0.000 s -> 0.100 s (key)
+     30424 INFO  [starfish] (11167) splice: video pts 0.000 s -> 0.100 s (decoder clock -1.000 s, shift +0.100 s)
+     30426 INFO  [starfish] (11167) Play -> 1
+     30487 INFO  [starfish] (11181) event type=7 num=0 {"track":-1,"dualMono":false,"immersive":"none"}
+
+     30509 INFO  [starfish] (11181) event type=44 num=0 Де_ъ
+     30511 INFO  [starfish] (11181) event type=4 num=0 {"context":"_f1kPvl4BScKgZe","content":"movie","video":{"frameRate":24,"scanType":"VIDEO_PROGRESSIVE","width":1920,"height":1080,"bitRate":0,"adaptive":true,"path":"network","afd":16,"rotation":0,"data3D":{"originalPattern":"check_board","currentPattern":"check_board","typeLR":"LR"},"hdrType":"none"
+     30519 INFO  [starfish] (11181) event type=26 num=0 true
+     30561 INFO  [starfish] (11184) event type=10001 num=0 {"serviceType":"all","videoSinkType":"main_video","audioSinkType":"main_sound"}
+
+     30570 INFO  [starfish] (11181) sink: 0 displayed, 0 dropped, 1 FRAMEREADY in 5 s (presented pts 0.100 s)
+     30570 INFO  [starfish] (11181) first frame presented (pts 100000000 ns)
+     30589 INFO  [starfish] (11198) event type=46 num=0 
+     30591 DEBUG [pointer] (10982) move px=(146,398) logical=(146,398) button=1 wheel=0.0 hit=0
+     30813 DEBUG [http] (11010) GET https://www.youtube.com/api/timedtext?v=<redacted>&ei=<redacted>&opi=<redacted>&xoaf=<redacted>&xowf=<redacted>&xospf=<redacted>&hl=<redacted>&ip=<redacted>&ipbits=<redacted>&expire=<redacted>&sparams=<redacted>&signature=<redacted>&key=<redacted>&lang=<redacted>&fmt=<redacted> -> none 200 (attempt 1, 427 ms)
+     30815 WARN  [csweb] (10982) subtitle file 0: no cues
+     31660 DEBUG [pointer] (10982) move px=(146,397) logical=(146,397) button=1 wheel=0.0 hit=0
+     32746 DEBUG [pointer] (10982) move px=(156,384) logical=(156,384) button=1 wheel=0.0 hit=0
+     34279 DEBUG [pointer] (10982) move px=(3,0) logical=(3,0) button=1 wheel=0.0 hit=0
+     35284 DEBUG [pointer] (10982) move px=(138,0) logical=(138,0) button=1 wheel=0.0 hit=0
+     35413 INFO  [media.ff] (11167) AC-3 re-encode: 16.3 ms CPU per s of audio (1.6% of a core)
+     35586 INFO  [starfish] (11181) sink: 107 displayed, 0 dropped, 23 FRAMEREADY in 5 s (presented pts 4.642 s)
+     36284 DEBUG [pointer] (10982) move px=(145,13) logical=(145,13) button=1 wheel=0.0 hit=0
+     37301 DEBUG [pointer] (10982) move px=(207,2) logical=(207,2) button=1 wheel=0.0 hit=0
+     38302 DEBUG [pointer] (10982) move px=(207,1) logical=(207,1) button=1 wheel=0.0 hit=0
+     39306 DEBUG [pointer] (10982) move px=(1914,825) logical=(1914,825) button=1 wheel=0.0 hit=0
+     40315 DEBUG [pointer] (10982) move px=(1914,401) logical=(1914,401) button=1 wheel=0.0 hit=0
+     40598 INFO  [starfish] (11181) sink: 121 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 9.683 s)
+     41320 DEBUG [pointer] (10982) move px=(4,412) logical=(4,412) button=1 wheel=0.0 hit=0
+     42335 DEBUG [pointer] (10982) move px=(571,370) logical=(571,370) button=1 wheel=0.0 hit=0
+     43367 DEBUG [key] (10982) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+     43392 INFO  [starfish] (11184) event type=10002 num=0 {"serviceType":"all","videoSinkType":"main_video","audioSinkType":"main_sound","code":8}
+
+     43437 INFO  [starfish] (11167) event type=23 num=0 true
+     43450 INFO  [starfish] (11167) Unload -> 1, destroyed (81.6 ms)
+     43450 INFO  [media] (11167) Playing -> Stopped
+     43485 INFO  [screensaver] (10982) allowed (video playing)
+     43668 INFO  [focus] (10982) focus #206
+     43711 DEBUG [pointer] (10982) move px=(622,497) logical=(622,497) button=1 wheel=0.0 hit=0
+     44341 DEBUG [key] (10982) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+     44597 INFO  [focus] (10982) focus #69
+     44776 INFO  [perf] (10982) frames 900 presented of 1980 drawn: interval avg 23.28 median 19.03 p95 25.45 max 328.97 ms, late 11; max ms events 180.83 update 169.48 draw 94.46 finish 1.20 swap 11.38; draw calls 79, quads 1439, textures 47, views 178, rss 114.0 MB
+     44793 DEBUG [pointer] (10982) move px=(627,502) logical=(627,502) button=1 wheel=0.0 hit=0
+     44945 INFO  [focus] (10982) focus #73
+     45011 INFO  [focus] (10982) focus #301
+     45027 INFO  [focus] (10982) focus #305
+     45060 INFO  [focus] (10982) focus #309
+     45161 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1914,0) button=1 wheel=1.0 hit=0
+     45176 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1914,0) button=1 wheel=1.0 hit=0
+     45194 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1914,0) button=1 wheel=1.0 hit=0
+     45227 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1914,0) button=1 wheel=1.0 hit=0
+     45244 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1914,0) button=1 wheel=1.0 hit=0
+     45260 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1914,0) button=1 wheel=1.0 hit=0
+     45327 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1914,0) button=1 wheel=1.0 hit=0
+     45477 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1861,47) button=1 wheel=-2.0 hit=0
+     45493 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1861,47) button=1 wheel=-1.0 hit=0
+     45511 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1861,47) button=1 wheel=-1.0 hit=0
+     45527 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1861,47) button=1 wheel=-1.0 hit=0
+     45544 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1861,47) button=1 wheel=-1.0 hit=0
+     45576 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1861,47) button=1 wheel=-2.0 hit=0
+     45695 INFO  [focus] (10982) focus #81
+     45809 DEBUG [pointer] (10982) move px=(1498,568) logical=(1498,568) button=1 wheel=0.0 hit=1
+     45810 INFO  [focus] (10982) focus #103
+     45844 INFO  [focus] (10982) focus #99
+     45859 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1364,722) button=1 wheel=-1.0 hit=1
+     45893 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1346,737) button=1 wheel=-2.0 hit=1
+     45910 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1346,737) button=1 wheel=-1.0 hit=1
+     45926 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1346,737) button=1 wheel=-1.0 hit=1
+     45942 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1346,737) button=1 wheel=-1.0 hit=1
+     45960 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1346,737) button=1 wheel=-1.0 hit=1
+     45960 INFO  [focus] (10982) focus #121
+     45977 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1346,737) button=1 wheel=-2.0 hit=1
+     46011 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1346,737) button=1 wheel=-1.0 hit=1
+     46027 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1346,737) button=1 wheel=-2.0 hit=1
+     46027 INFO  [focus] (10982) focus #143
+     46326 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=-1.0 hit=1
+     46342 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=-2.0 hit=1
+     46359 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=-1.0 hit=1
+     46376 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=-2.0 hit=1
+     46377 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=-1.0 hit=1
+     46410 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=-2.0 hit=1
+     46426 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=-1.0 hit=1
+     46459 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=-1.0 hit=1
+     46476 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=-1.0 hit=1
+     46676 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     46709 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=2.0 hit=1
+     46726 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     46727 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     46744 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     46760 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     46776 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     46794 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     46811 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     46811 INFO  [focus] (10982) focus #121
+     46860 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     46860 INFO  [focus] (10982) focus #99
+     46927 INFO  [focus] (10982) focus #77
+     47109 INFO  [focus] (10982) focus #305
+     47126 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     47159 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     47177 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     47192 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     47210 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     47226 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     47244 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     47244 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1319,658) button=1 wheel=1.0 hit=1
+     47475 DEBUG [pointer] (10982) move px=(1319,659) logical=(1319,659) button=1 wheel=0.0 hit=0
+     47676 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1407,672) button=1 wheel=1.0 hit=1
+     47710 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1407,672) button=1 wheel=1.0 hit=1
+     47727 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1407,672) button=1 wheel=1.0 hit=1
+     47743 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1407,672) button=1 wheel=1.0 hit=1
+     47760 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1407,672) button=1 wheel=2.0 hit=1
+     47777 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1407,672) button=1 wheel=2.0 hit=1
+     47793 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1407,672) button=1 wheel=1.0 hit=1
+     47810 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1407,672) button=1 wheel=1.0 hit=1
+     48484 DEBUG [pointer] (10982) move px=(975,539) logical=(975,539) button=1 wheel=0.0 hit=0
+     48755 DEBUG [pointer] (10982) wheel px=(0,0) logical=(389,0) button=1 wheel=1.0 hit=0
+     49125 DEBUG [pointer] (10982) wheel px=(0,0) logical=(1388,312) button=1 wheel=-1.0 hit=1
+     49161 DEBUG [pointer] (10982) wheel px=(0,0) logical=(880,194) button=1 wheel=-2.0 hit=1
+     49193 DEBUG [pointer] (10982) wheel px=(0,0) logical=(380,19) button=1 wheel=-1.0 hit=0
+     49226 DEBUG [pointer] (10982) wheel px=(0,0) logical=(170,0) button=1 wheel=-1.0 hit=0
+     49242 DEBUG [pointer] (10982) wheel px=(0,0) logical=(170,0) button=1 wheel=-1.0 hit=0
+     49277 DEBUG [pointer] (10982) wheel px=(0,0) logical=(287,0) button=1 wheel=-1.0 hit=0
+     49377 INFO  [focus] (10982) focus #77
+     49509 DEBUG [pointer] (10982) move px=(1375,785) logical=(1375,785) button=1 wheel=0.0 hit=0
+     49594 INFO  [focus] (10982) focus #81
+     49627 INFO  [focus] (10982) focus #77
+     49760 INFO  [focus] (10982) focus #297
+     49906 DEBUG [pointer] (10982) wheel px=(0,0) logical=(0,192) button=1 wheel=1.0 hit=1
+     49926 DEBUG [pointer] (10982) wheel px=(0,0) logical=(0,192) button=1 wheel=1.0 hit=1
+     49942 DEBUG [pointer] (10982) wheel px=(0,0) logical=(0,192) button=1 wheel=1.0 hit=1
+     49942 DEBUG [pointer] (10982) wheel px=(0,0) logical=(0,192) button=1 wheel=2.0 hit=1
+     49959 DEBUG [pointer] (10982) wheel px=(0,0) logical=(0,192) button=1 wheel=1.0 hit=1
+     49981 DEBUG [pointer] (10982) wheel px=(0,0) logical=(0,192) button=1 wheel=1.0 hit=1
+     49992 DEBUG [pointer] (10982) wheel px=(0,0) logical=(0,192) button=1 wheel=1.0 hit=1
+     50509 DEBUG [pointer] (10982) move px=(268,474) logical=(268,474) button=1 wheel=0.0 hit=0
+     51065 INFO  [focus] (10982) focus home.hero.open
+     51535 DEBUG [pointer] (10982) move px=(120,729) logical=(120,729) button=1 wheel=0.0 hit=1
+     51925 DEBUG [pointer] (10982) press px=(141,720) logical=(141,720) button=1 wheel=0.0 hit=1
+     52271 DEBUG [pointer] (10982) release px=(142,717) logical=(142,717) button=1 wheel=0.0 hit=1
+     52337 INFO  [focus] (10982) focus details.bookmark
+     52390 INFO  [perf] (10982) frames 1200 presented of 2411 drawn: interval avg 16.73 median 16.57 p95 18.00 max 70.34 ms, late 2; max ms events 5.71 update 1.23 draw 30.46 finish 0.15 swap 2.29; draw calls 3, quads 107, textures 47, views 207, rss 114.0 MB
+     52574 DEBUG [pointer] (10982) move px=(153,711) logical=(153,711) button=1 wheel=0.0 hit=0
+     53594 DEBUG [pointer] (10982) move px=(233,574) logical=(233,574) button=1 wheel=0.0 hit=1
+     54445 INFO  [csweb] (10982) details: Others, 0 episodes in 0 groups, 0 recommendations
+     54544 INFO  [focus] (10982) focus details.play
+     54734 DEBUG [pointer] (10982) move px=(140,482) logical=(140,482) button=1 wheel=0.0 hit=0
+     55815 DEBUG [pointer] (10982) move px=(101,576) logical=(101,576) button=1 wheel=0.0 hit=1
+     56305 DEBUG [pointer] (10982) press px=(119,565) logical=(119,565) button=1 wheel=0.0 hit=1
+     56701 DEBUG [pointer] (10982) release px=(119,565) logical=(119,565) button=1 wheel=0.0 hit=1
+     56701 INFO  [focus] (10982) focus <none>
+     56824 DEBUG [pointer] (10982) move px=(122,561) logical=(122,561) button=1 wheel=0.0 hit=0
+     57956 DEBUG [pointer] (10982) move px=(198,572) logical=(198,572) button=1 wheel=0.0 hit=0
+     58756 DEBUG [csweb] (10982) link: YouTube VP9 1920p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58927 INFO  [focus] (10982) focus player.skip
+     58930 DEBUG [csweb] (10982) link: YouTube VP9 1280p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58930 DEBUG [csweb] (10982) link: YouTube H264 960p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58931 DEBUG [csweb] (10982) link: YouTube VP9 960p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58931 DEBUG [csweb] (10982) link: YouTube H264 640p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58931 DEBUG [csweb] (10982) link: YouTube VP9 640p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58932 DEBUG [csweb] (10982) link: YouTube H264 428p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58932 DEBUG [csweb] (10982) link: YouTube VP9 428p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58932 DEBUG [csweb] (10982) link: YouTube H264 320p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58933 DEBUG [csweb] (10982) link: YouTube VP9 320p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58933 DEBUG [csweb] (10982) link: YouTube H264 214p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58933 DEBUG [csweb] (10982) link: YouTube VP9 214p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58934 DEBUG [csweb] (10982) link: YouTube H264 128p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     58934 DEBUG [csweb] (10982) link: YouTube VP9 128p VIDEO from rr2---sn-uxanug5-hxael.googlevideo.com
+     59020 DEBUG [pointer] (10982) move px=(227,545) logical=(227,545) button=1 wheel=0.0 hit=0
+     59020 INFO  [csweb] (10982) links loaded: 14 links, 1 subtitles
+     59020 INFO  [csweb] (10982) playing link 0: YouTube VP9 1920p (ffmpeg)
+     59020 INFO  [starfish] (10982) decoder H264: 4096x2304@60
+     59020 INFO  [starfish] (10982) decoder H265: 4096x2304@120
+     59020 INFO  [starfish] (10982) decoder VP9: 4096x2304@60
+     59020 INFO  [starfish] (10982) decoder AV1: 4096x2304@60
+     59041 INFO  [starfish] (10982) exported window _Window_Id_12
+     59041 INFO  [starfish] (10982) place 1920x1080 -> 0,0 1920x1080 rv=1
+     59041 INFO  [media] (11211) Idle -> Opening
+     59126 INFO  [screensaver] (10982) blocked (video playing)
+     59209 INFO  [focus] (10982) focus #369
+     59213 INFO  [csweb] (10982) player Idle -> Opening
+     59256 INFO  [http.stream] (11219) https://rr2---sn-uxanug5-hxael.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&gcr=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 2582051 bytes
+     59257 INFO  [http.stream] (11217) https://rr2---sn-uxanug5-hxael.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&gcr=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 316412139 bytes
+     59259 INFO  [http.stream] (11220) https://rr2---sn-uxanug5-hxael.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&gcr=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 1386126 bytes
+     59306 INFO  [http.stream] (11221) https://rr2---sn-uxanug5-hxael.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&gcr=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 1141750 bytes
+     59309 INFO  [http.stream] (11222) https://rr2---sn-uxanug5-hxael.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&gcr=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 3276968 bytes
+     59659 INFO  [http.stream] (11218) https://rr2---sn-uxanug5-hxael.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&gcr=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> seekable, 1235868 bytes
+     59663 INFO  [csweb] (11211) merged source: 5 of 5 audio stream(s) open
+     59663 INFO  [media] (11211) https://rr2---sn-uxanug5-hxael.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&gcr=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> using starfish
+     59665 INFO  [media.ff] (11211) audio opus 2 ch 48000 Hz re-encoded to AC-3 2 ch 48000 Hz 256 kb/s
+     59665 INFO  [media] (11211) opened https://rr2---sn-uxanug5-hxael.googlevideo.com/videoplayback?expire=<redacted>&ei=<redacted>&ip=<redacted>&id=<redacted>&itag=<redacted>&source=<redacted>&requiressl=<redacted>&xpc=<redacted>&cps=<redacted>&met=<redacted>&mh=<redacted>&mm=<redacted>&mn=<redacted>&ms=<redacted>&mv=<redacted>&mvi=<redacted>&pl=<redacted>&rms=<redacted>&gcr=<redacted>&initcwndbps=<redacted>&bui=<redacted>&spc=<redacted>&vprv=<redacted>&svpuc=<redacted>&mime=<redacted>&rqh=<redacted>&gir=<redacted>&clen=<redacted>&dur=<redacted>&lmt=<redacted>&mt=<redacted>&fvip=<redacted>&keepalive=<redacted>&fexp=<redacted>&c=<redacted>&txp=<redacted>&sparams=<redacted>&sig=<redacted>&lsparams=<redacted>&lsig=<redacted>&cpn=<redacted> matroska,webm, 202.4 s, video vp9 3840x1920, audio ac3 48000 Hz x2
+     59665 INFO  [starfish] (11211) Load {"args":[{"mediaTransportType":"BUFFERSTREAM","option":{"appId":"org.csweb.tv","windowId":"_Window_Id_12","externalStreamingInfo":{"contents":{"codec":{"video":"VP9","audio":"AC3"},"esInfo":{"pauseAtDecodeTime":false,"ptsToDecode":0,"seperatedPTS":true,"videoFpsValue":24000,"videoFpsScale":1001},"format":"RAW","provider":"wnk"},"streamQualityInfo":true,"streamQualityInfoNonFlushable":true,"audioSync":true,"restartStreaming":false,"bufferingCtrInfo":{"bufferMaxLevel":0,"bufferMinLevel":0,"preBufferByte":0,"qBufferLevelAudio":0,"qBufferLevelVideo":0,"srcBufferLevelAudio":{"minimum":1,"maximum":1048576},"srcBufferLevelVideo":{"minimum":1,"maximum":8388608}}},"needAudio":true,"queryPosition":false,"lowDelayMode":false,"transmission":{"contentsType":"LIVE"},"adaptiveStreaming":{"audioOnly":false,"adaptiveResolution":true,"maxWidth":3840,"maxHeight":2160,"maxFrameRate":60}}}]}
+     59717 INFO  [starfish] (11211) event type=13 num=1 
+     59717 INFO  [starfish] (11211) event type=14 num=0 1
+     59717 INFO  [starfish] (11211) event type=5 num=0 0 video/x-vp9 (null) (null) 3840 2160 (null) 60.000000 0 0 0
+     59717 INFO  [starfish] (11211) event type=15 num=0 1
+     59717 INFO  [starfish] (11211) event type=8 num=0 audio/x-ac3 (null) (null) 0.000000 0 (null) 0 0 0 0 ac3 0 (null) 0 
+     59760 INFO  [starfish] (11225) event type=37 num=1 
+     59761 INFO  [starfish] (11225) event type=22 num=0 true
+     59780 INFO  [starfish] (11211) event type=17 num=0 {"context":"_fgqjQmVyAabMm6","resourceList":[{"type":"VDEC","portNumber":2},{"type":"ADEC","portNumber":1}]}
+
+     59780 INFO  [starfish] (11211) Load -> 1 (81.9 ms)
+     59780 INFO  [media] (11211) Opening -> Ready
+     59780 INFO  [media] (11211) Ready -> Playing
+     59821 INFO  [csweb] (10982) player Opening -> Ready
+     59821 INFO  [starfish] (10982) place 3840x1920 -> 0,0 1920x1080 rv=1
+     59821 INFO  [csweb] (10982) subtitles: auto-selecting file 0 (en)
+     59821 INFO  [csweb] (10982) player Ready -> Playing
+     59830 INFO  [starfish] (11211) splice: first video pts 0.000 s -> 0.100 s (key)
+     59830 INFO  [starfish] (11211) splice: video pts 0.000 s -> 0.100 s (decoder clock -1.000 s, shift +0.100 s)
+     59832 INFO  [starfish] (11211) Play -> 1
+     59869 INFO  [starfish] (11225) event type=44 num=0 Де_ъ
+     59871 INFO  [starfish] (11225) event type=4 num=0 {"context":"_fgqjQmVyAabMm6","content":"movie","video":{"frameRate":23.9760246,"scanType":"VIDEO_PROGRESSIVE","width":3840,"height":1920,"bitRate":0,"adaptive":true,"path":"network","afd":16,"rotation":0,"data3D":{"originalPattern":"check_board","currentPattern":"check_board","typeLR":"LR"},"hdrType
+     59915 INFO  [starfish] (11225) event type=7 num=0 {"track":-1,"dualMono":false,"immersive":"none"}
+
+     59918 INFO  [starfish] (11228) event type=10001 num=0 {"serviceType":"all","videoSinkType":"main_video","audioSinkType":"main_sound"}
+
+     59961 INFO  [starfish] (11225) event type=26 num=0 true
+     59981 INFO  [starfish] (11225) sink: 0 displayed, 0 dropped, 1 FRAMEREADY in 5 s (presented pts 0.100 s)
+     59981 INFO  [starfish] (11225) first frame presented (pts 100000000 ns)
+     60008 INFO  [heartbeat] (10982) uptime 60 s, Running, rss 174.1 MB, presented 1373, drawn 2746, views 258
+     60021 DEBUG [http] (11010) GET https://www.youtube.com/api/timedtext?v=<redacted>&ei=<redacted>&caps=<redacted>&opi=<redacted>&xoaf=<redacted>&xowf=<redacted>&xospf=<redacted>&hl=<redacted>&ip=<redacted>&ipbits=<redacted>&expire=<redacted>&sparams=<redacted>&signature=<redacted>&key=<redacted>&kind=<redacted>&lang=<redacted>&fmt=<redacted> -> none 200 (attempt 1, 199 ms)
+     60027 WARN  [csweb] (10982) subtitle file 0: no cues
+     60166 DEBUG [pointer] (10982) move px=(226,548) logical=(226,548) button=1 wheel=0.0 hit=0
+     60557 INFO  [starfish] (11225) event type=44 num=0 Де_ъ
+     60559 INFO  [starfish] (11225) event type=4 num=0 {"context":"_fgqjQmVyAabMm6","content":"movie","video":{"frameRate":25,"scanType":"VIDEO_PROGRESSIVE","width":3840,"height":1920,"bitRate":0,"adaptive":true,"path":"network","afd":16,"rotation":0,"data3D":{"originalPattern":"check_board","currentPattern":"check_board","typeLR":"LR"},"hdrType":"none"
+     61241 DEBUG [pointer] (10982) move px=(233,550) logical=(233,550) button=1 wheel=0.0 hit=0
+     62255 DEBUG [pointer] (10982) move px=(228,544) logical=(228,544) button=1 wheel=0.0 hit=0
+     63255 DEBUG [pointer] (10982) move px=(750,586) logical=(750,586) button=1 wheel=0.0 hit=0
+     64265 DEBUG [pointer] (10982) move px=(707,645) logical=(707,645) button=1 wheel=0.0 hit=0
+     64818 INFO  [media.ff] (11211) AC-3 re-encode: 17.1 ms CPU per s of audio (1.7% of a core)
+     64991 INFO  [starfish] (11225) sink: 107 displayed, 0 dropped, 23 FRAMEREADY in 5 s (presented pts 4.646 s)
+     65426 DEBUG [pointer] (10982) move px=(715,646) logical=(715,646) button=1 wheel=0.0 hit=0
+     66606 DEBUG [pointer] (10982) move px=(711,646) logical=(711,646) button=1 wheel=0.0 hit=0
+     67636 DEBUG [pointer] (10982) move px=(716,647) logical=(716,647) button=1 wheel=0.0 hit=0
+     68666 DEBUG [pointer] (10982) move px=(720,647) logical=(720,647) button=1 wheel=0.0 hit=0
+     69916 DEBUG [pointer] (10982) move px=(719,648) logical=(719,648) button=1 wheel=0.0 hit=0
+     70001 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 9.652 s)
+     70925 DEBUG [pointer] (10982) move px=(763,666) logical=(763,666) button=1 wheel=0.0 hit=0
+     72055 DEBUG [pointer] (10982) move px=(793,659) logical=(793,659) button=1 wheel=0.0 hit=0
+     73126 DEBUG [pointer] (10982) move px=(793,661) logical=(793,661) button=1 wheel=0.0 hit=0
+     74385 DEBUG [pointer] (10982) move px=(793,663) logical=(793,663) button=1 wheel=0.0 hit=0
+     74834 INFO  [media.ff] (11211) AC-3 re-encode: 17.7 ms CPU per s of audio (1.8% of a core)
+     75011 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 14.656 s)
+     80021 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 19.661 s)
+     84849 INFO  [media.ff] (11211) AC-3 re-encode: 18.0 ms CPU per s of audio (1.8% of a core)
+     85030 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 24.667 s)
+     90039 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 29.671 s)
+     94870 INFO  [media.ff] (11211) AC-3 re-encode: 17.8 ms CPU per s of audio (1.8% of a core)
+     95048 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 34.677 s)
+    100058 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 39.681 s)
+    104882 INFO  [media.ff] (11211) AC-3 re-encode: 17.9 ms CPU per s of audio (1.8% of a core)
+    105069 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 44.686 s)
+    110080 INFO  [starfish] (11225) sink: 121 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 49.733 s)
+    114897 INFO  [media.ff] (11211) AC-3 re-encode: 18.0 ms CPU per s of audio (1.8% of a core)
+    115090 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 54.737 s)
+    120080 INFO  [heartbeat] (10982) uptime 120 s, Running, rss 187.9 MB, presented 1464, drawn 3757, views 258
+    120101 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 59.743 s)
+    124913 INFO  [media.ff] (11211) AC-3 re-encode: 18.2 ms CPU per s of audio (1.8% of a core)
+    125109 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 64.748 s)
+    130118 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 69.753 s)
+    134930 INFO  [media.ff] (11211) AC-3 re-encode: 18.1 ms CPU per s of audio (1.8% of a core)
+    135126 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 74.758 s)
+    140136 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 79.763 s)
+    144946 INFO  [media.ff] (11211) AC-3 re-encode: 17.4 ms CPU per s of audio (1.7% of a core)
+    145145 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 84.768 s)
+    150154 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 89.773 s)
+    154962 INFO  [media.ff] (11211) AC-3 re-encode: 17.7 ms CPU per s of audio (1.8% of a core)
+    155163 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 94.778 s)
+    160172 INFO  [starfish] (11225) sink: 121 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 99.825 s)
+    164982 INFO  [media.ff] (11211) AC-3 re-encode: 17.7 ms CPU per s of audio (1.8% of a core)
+    165180 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 104.829 s)
+    170189 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 109.834 s)
+    174993 INFO  [media.ff] (11211) AC-3 re-encode: 17.8 ms CPU per s of audio (1.8% of a core)
+    175198 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 114.839 s)
+    180081 INFO  [heartbeat] (10982) uptime 180 s, Running, rss 187.5 MB, presented 1494, drawn 4473, views 258
+    180208 INFO  [starfish] (11225) sink: 120 displayed, 0 dropped, 25 FRAMEREADY in 5 s (presented pts 119.844 s)
+    181380 DEBUG [key] (10982) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+    181411 INFO  [starfish] (11228) event type=10002 num=0 {"serviceType":"all","videoSinkType":"main_video","audioSinkType":"main_sound","code":8}
+
+    181457 INFO  [starfish] (11211) event type=23 num=0 true
+    181468 INFO  [starfish] (11211) Unload -> 1, destroyed (86.0 ms)
+    181468 INFO  [media] (11211) Playing -> Stopped
+    181496 INFO  [screensaver] (10982) allowed (video playing)
+    181681 INFO  [focus] (10982) focus #346
+    181758 INFO  [perf] (10982) frames 1500 presented of 4495 drawn: interval avg 20.04 median 16.55 p95 31.87 max 171.79 ms, late 13; max ms events 3.19 update 168.52 draw 31.93 finish 1.81 swap 10.04; draw calls 9, quads 432, textures 48, views 211, rss 134.0 MB
+    182223 DEBUG [key] (10982) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+    182496 INFO  [focus] (10982) focus home.hero.open
+    183496 DEBUG [pointer] (10982) move px=(960,540) logical=(960,540) button=1 wheel=0.0 hit=0
+    183496 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+    183558 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+    183809 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+    183826 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+    183842 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+    183859 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-2.0 hit=1
+    183878 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+    183892 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-2.0 hit=1
+    183909 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+    183909 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-2.0 hit=1
+    183925 DEBUG [pointer] (10982) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+    184228 DEBUG [pointer] (10982) wheel px=(0,0) logical=(961,466) button=1 wheel=2.0 hit=1
+    184241 DEBUG [pointer] (10982) wheel px=(0,0) logical=(961,466) button=1 wheel=1.0 hit=1
+    184261 DEBUG [pointer] (10982) wheel px=(0,0) logical=(961,466) button=1 wheel=1.0 hit=1
+    184276 DEBUG [pointer] (10982) wheel px=(0,0) logical=(961,466) button=1 wheel=1.0 hit=1
+    184293 DEBUG [pointer] (10982) wheel px=(0,0) logical=(961,466) button=1 wheel=1.0 hit=1
+    184311 DEBUG [pointer] (10982) wheel px=(0,0) logical=(961,466) button=1 wheel=2.0 hit=1
+    184327 DEBUG [pointer] (10982) wheel px=(0,0) logical=(961,466) button=1 wheel=1.0 hit=1
+    184343 DEBUG [pointer] (10982) wheel px=(0,0) logical=(961,466) button=1 wheel=1.0 hit=1
+    184392 INFO  [focus] (10982) focus #95
+    184428 INFO  [focus] (10982) focus #73
+    184510 DEBUG [pointer] (10982) move px=(883,373) logical=(883,373) button=1 wheel=0.0 hit=0
+    184510 INFO  [focus] (10982) focus #621
+    184527 DEBUG [pointer] (10982) wheel px=(0,0) logical=(883,373) button=1 wheel=-1.0 hit=1
+    184560 DEBUG [pointer] (10982) wheel px=(0,0) logical=(883,373) button=1 wheel=-2.0 hit=1
+    184576 DEBUG [pointer] (10982) wheel px=(0,0) logical=(883,373) button=1 wheel=-1.0 hit=1
+    184592 DEBUG [pointer] (10982) wheel px=(0,0) logical=(883,373) button=1 wheel=-2.0 hit=1
+    184610 DEBUG [pointer] (10982) wheel px=(0,0) logical=(883,373) button=1 wheel=-1.0 hit=1
+    184629 INFO  [focus] (10982) focus #73
+    184693 INFO  [focus] (10982) focus #95
+    184811 INFO  [focus] (10982) focus #99
+    184992 DEBUG [pointer] (10982) wheel px=(0,0) logical=(935,271) button=1 wheel=-2.0 hit=1
+    185009 DEBUG [pointer] (10982) wheel px=(0,0) logical=(935,271) button=1 wheel=-1.0 hit=1
+    185009 INFO  [focus] (10982) focus #117
+    185025 DEBUG [pointer] (10982) wheel px=(0,0) logical=(906,393) button=1 wheel=-1.0 hit=1
+    185043 DEBUG [pointer] (10982) wheel px=(0,0) logical=(906,393) button=1 wheel=-2.0 hit=1
+    185159 INFO  [focus] (10982) focus #139
+    185510 DEBUG [pointer] (10982) move px=(1018,362) logical=(1018,362) button=1 wheel=0.0 hit=1
+    185510 INFO  [focus] (10982) focus #143
+    185559 INFO  [focus] (10982) focus #125
+    186547 DEBUG [pointer] (10982) move px=(1914,767) logical=(1914,767) button=1 wheel=0.0 hit=0
+    187567 DEBUG [pointer] (10982) move px=(1900,764) logical=(1900,764) button=1 wheel=0.0 hit=0

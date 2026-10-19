@@ -1,0 +1,841 @@
+00010000-00313000 r-xp 00000000 b3:38 139395                             /media/developer/apps/usr/palm/applications/org.csweb.tv/csweb-tv
+eeb86000-eed0f000 r-xp 00000000 b3:1b 17729                              /usr/openssl-1.1/lib/libcrypto.so.1.1
+f079c000-f07e8000 r-xp 00000000 b3:1b 17730                              /usr/openssl-1.1/lib/libssl.so.1.1
+f0928000-f096e000 r-xp 00000000 b3:1b 7414                               /usr/lib/libcurl.so.4.5.0
+f130e000-f1325000 r-xp 00000000 b3:1b 7930                               /usr/lib/libnghttp2.so.14.14.0
+f1511000-f151c000 r-xp 00000000 b3:1b 7396                               /usr/lib/libcares.so.2.2.0
+f500b000-f500c000 r-xp 00000000 b3:1c 217                                /usr/lib/libEGL.so.1.4
+f501d000-f5022000 r-xp 00000000 b3:1b 4600                               /lib/libuuid.so.1.3.0
+f5033000-f5062000 r-xp 00000000 b3:1b 4539                               /lib/libblkid.so.1.1.0
+f5076000-f50ac000 r-xp 00000000 b3:1b 4560                               /lib/libmount.so.1.1.0
+f50c0000-f50ee000 r-xp 00000000 b3:1b 8261                               /usr/lib/libxkbcommon.so.0.0.0
+f5204000-f521b000 r-xp 00000000 b3:1b 4594                               /lib/libudev.so.1.6.11
+f523f000-f5242000 r-xp 00000000 b3:1b 8218                               /usr/lib/libwayland-cursor.so.0.0.0
+f5256000-f5257000 r-xp 00000000 b3:1c 361                                /usr/lib/libwayland-egl.so.0.1
+f5a69000-f5a89000 r-xp 00000000 b3:1b 7996                               /usr/lib/libpng16.so.16.36.0
+f5a9a000-f5aa6000 r-xp 00000000 b3:1b 7964                               /usr/lib/libpbnjson_cpp.so.2.15.0
+f5ab8000-f5aec000 r-xp 00000000 b3:1b 7872                               /usr/lib/libluna-service2.so.3.21.2
+f5afe000-f5b09000 r-xp 00000000 b3:1b 7765                               /usr/lib/libhelpers.so.2.0.0
+f5c26000-f5c4c000 r-xp 00000000 b3:1b 7593                               /usr/lib/libgmp.so.3.4.1
+f5c5e000-f5c6f000 r-xp 00000000 b3:1b 8187                               /usr/lib/liburiparser.so.1.0.26
+f5c80000-f5c85000 r-xp 00000000 b3:1b 8269                               /usr/lib/libyajl.so.2.1.0
+f5c96000-f5cc9000 r-xp 00000000 b3:1b 7968                               /usr/lib/libpcre.so.1.2.10
+f5cda000-f5cf9000 r-xp 00000000 b3:1b 7962                               /usr/lib/libpbnjson_c.so.2.15.0
+f5d11000-f5de2000 r-xp 00000000 b3:1b 7583                               /usr/lib/libglib-2.0.so.0.5800.0
+f5df3000-f5df8000 r-xp 00000000 b3:1b 7020                               /usr/lib/libPmLogLib.so.3.3.0
+f5e13000-f5e18000 r-xp 00000000 b3:1b 7544                               /usr/lib/libffi.so.6.0.4
+f5e29000-f5f1d000 r-xp 00000000 b3:1b 8115                               /usr/lib/libstdc++.so.6.0.25
+f5f35000-f5f3c000 r-xp 00000000 b3:1b 8216                               /usr/lib/libwayland-client.so.0.3.0
+f5f4e000-f5f57000 r-xp 00000000 b3:1b 8222                               /usr/lib/libwayland-server.so.0.1.0
+f5f69000-f5f71000 r-xp 00000000 b3:1b 8185                               /usr/lib/libunwind.so.8.0.1
+f5fa7000-f6d22000 r-xp 00000000 b3:1c 352                                /usr/lib/libmali.so.0.1
+f6da0000-f6daf000 r-xp 00000000 b3:1b 4604                               /lib/libz.so.1.2.11
+f6dc1000-f6dda000 r-xp 00000000 b3:1b 4556                               /lib/libgcc_s.so.1
+f6deb000-f6df6000 r-xp 00000000 b3:1b 8177                               /usr/lib/libunwind-arm.so.8.0.1
+f6e2d000-f6e32000 r-xp 00000000 b3:1b 4583                               /lib/librt-2.28.so
+f6e43000-f6f25000 r-xp 00000000 b3:1b 4540                               /lib/libc-2.28.so
+f6f3b000-f6fa7000 r-xp 00000000 b3:1b 4557                               /lib/libm-2.28.so
+f6fb8000-f6fbb000 r-xp 00000000 b3:1b 4546                               /lib/libdl-2.28.so
+f6fcc000-f6fde000 r-xp 00000000 b3:1b 4579                               /lib/libpthread-2.28.so
+f6fff000-f7138000 r-xp 00000000 b3:38 163875                             /media/developer/apps/usr/palm/applications/org.csweb.tv/lib/libSDL2-2.0.so.0
+f7158000-f7159000 r-xp 00000000 b3:1c 223                                /usr/lib/libGLESv2.so.2.0
+f716a000-f71ca000 r-xp 00000000 b3:38 163878                             /media/developer/apps/usr/palm/applications/org.csweb.tv/lib/libavutil-wnk.so.61
+f72e2000-f72f2000 r-xp 00000000 b3:38 163879                             /media/developer/apps/usr/palm/applications/org.csweb.tv/lib/libswresample-wnk.so.7
+f7303000-f7424000 r-xp 00000000 b3:38 163876                             /media/developer/apps/usr/palm/applications/org.csweb.tv/lib/libavcodec-wnk.so.63
+f74d2000-f7545000 r-xp 00000000 b3:38 163877                             /media/developer/apps/usr/palm/applications/org.csweb.tv/lib/libavformat-wnk.so.63
+f7563000-f7566000 r-xp 00000000 b3:1b 4530                               /lib/libSegFault.so
+f7577000-f758f000 r-xp 00000000 b3:1b 4526                               /lib/ld-2.28.so
+f759e000-f759f000 r-xp 00000000 00:00 0                                  [vdso]
+ffff0000-ffff1000 r-xp 00000000 00:00 0                                  [kuserhelpers]
+== stall 1502 ms (sample 1)
+-- main thread
+pc 0x259c70
+lr 0x1
+st 0x1e7b14
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23a908
+st 0x234c68
+st 0x23a8a0
+st 0x234c68
+st 0x23a908
+st 0x23a908
+st 0x234c68
+st 0x23a8a0
+st 0x234c68
+st 0x234d0c
+st 0x23ab34
+st 0x234d64
+st 0x23aacc
+st 0x234c68
+st 0x234d64
+st 0x234d0c
+st 0x234c68
+st 0x234f5c
+st 0x235170
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+== stall 2002 ms (sample 2)
+-- main thread
+pc 0x256168
+lr 0x7fc
+st 0x1e78d4
+st 0x1e7b48
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23a908
+st 0x234c68
+st 0x23a8a0
+st 0x234c68
+st 0x23a908
+st 0x23a908
+st 0x234c68
+st 0x23a8a0
+st 0x234c68
+st 0x234d0c
+st 0x23ab34
+st 0x234d64
+st 0x23aacc
+st 0x234c68
+st 0x234d64
+st 0x234d0c
+st 0x234c68
+st 0x234f5c
+st 0x235170
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+== stall 2503 ms (sample 3)
+-- main thread
+pc 0x259dfc
+lr 0x10
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23a908
+st 0x234c68
+st 0x23a8a0
+st 0x234c68
+st 0x23a908
+st 0x23a908
+st 0x234c68
+st 0x23a8a0
+st 0x234c68
+st 0x234d0c
+st 0x23ab34
+st 0x234d64
+st 0x23aacc
+st 0x234c68
+st 0x234d64
+st 0x234d0c
+st 0x234c68
+st 0x234f5c
+st 0x235170
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+== stall 3004 ms (sample 4)
+-- main thread
+pc 0x1e7b78
+lr 0x47b7a0
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23a908
+st 0x234c68
+st 0x23a8a0
+st 0x234c68
+st 0x23a908
+st 0x23a908
+st 0x234c68
+st 0x23a8a0
+st 0x234c68
+st 0x234d0c
+st 0x23ab34
+st 0x234d64
+st 0x23aacc
+st 0x234c68
+st 0x234f5c
+st 0x235170
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+== stall 3505 ms (sample 5)
+-- main thread
+pc 0x254bf8
+lr 0x13
+st 0x25a0a8
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23a908
+st 0x234c68
+st 0x23a8a0
+st 0x234c68
+st 0x23a908
+st 0x23a908
+st 0x234c68
+st 0x23a8a0
+st 0x234c68
+st 0x234d0c
+st 0x23ab34
+st 0x234d64
+st 0x23aacc
+st 0x234c68
+st 0x234f5c
+st 0x235170
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+== stall 4005 ms (sample 6)
+-- main thread
+pc 0x259d50
+lr 0x47b7a0
+st 0x1e78d4
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23a908
+st 0x23a8a0
+st 0x234c68
+st 0x23a908
+st 0x23a8a0
+st 0x23a8a0
+st 0x234c68
+st 0x23ad50
+st 0x23aacc
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+== stall 4506 ms (sample 7)
+-- main thread
+pc 0x25a130
+lr 0x27
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23a908
+st 0x23a8a0
+st 0x234c68
+st 0x23a908
+st 0x23a8a0
+st 0x23a8a0
+st 0x234c68
+st 0x23ad50
+st 0x23aacc
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+st 0x138a7c
+== stall 5007 ms (sample 8)
+-- main thread
+pc 0x259f3c
+lr 0x3
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23a908
+st 0x23a8a0
+st 0x234c68
+st 0x23a908
+st 0x23a8a0
+st 0x23a8a0
+st 0x234c68
+st 0x23ad50
+st 0x23aacc
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+st 0x138a7c
+== stall 5508 ms (sample 9)
+-- main thread
+pc 0x259df4
+lr 0x47b7a0
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23f258
+st 0x23a908
+st 0x23a8a0
+st 0x234c68
+st 0x23bc38
+st 0x234c68
+st 0x23a908
+st 0x23bb24
+st 0x2351a0
+st 0x23ada0
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+== stall 6008 ms (sample 10)
+-- main thread
+pc 0x259fc4
+lr 0xf
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23f258
+st 0x23a908
+st 0x23a8a0
+st 0x234c68
+st 0x23bc38
+st 0x234c68
+st 0x23a908
+st 0x23bb24
+st 0x2351a0
+st 0x23ada0
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+== stall 6509 ms (sample 11)
+-- main thread
+pc 0x25a0fc
+lr 0xd
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23f258
+st 0x23a908
+st 0x23a8a0
+st 0x234c68
+st 0x23bc38
+st 0x234c68
+st 0x23a908
+st 0x23bb24
+st 0x2351a0
+st 0x23ada0
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+== stall 7010 ms (sample 12)
+-- main thread
+pc 0x25a1c0
+lr 0xf17a99d6
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x1e7a24
+st 0x23a908
+st 0x23a8a0
+st 0x234c68
+st 0x2351a0
+st 0x23bf3c
+st 0x23a908
+st 0x23bb24
+st 0x2351a0
+st 0x23ada0
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+== stall 7510 ms (sample 13)
+-- main thread
+pc 0x259f30
+lr 0xa
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x1e7a24
+st 0x23a908
+st 0x23a8a0
+st 0x234c68
+st 0x2351a0
+st 0x23bf3c
+st 0x23a908
+st 0x23bb24
+st 0x2351a0
+st 0x23ada0
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+== stall 8011 ms (sample 14)
+-- main thread
+pc 0x259ff8
+lr 0x17
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x1e7a24
+st 0x23a908
+st 0x23a8a0
+st 0x234c68
+st 0x2351a0
+st 0x23bf3c
+st 0x23a908
+st 0x23bb24
+st 0x2351a0
+st 0x23ada0
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+== stall 8512 ms (sample 15)
+-- main thread
+pc 0x259d48
+lr 0x47b7a0
+st 0x1e7b78
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23bc38
+st 0x1e7a24
+st 0x23a908
+st 0x23bb24
+st 0x2351a0
+st 0x23bd5c
+st 0x23bb24
+st 0x2351a0
+st 0x23ada0
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+st 0x138a7c
+== stall 9013 ms (sample 16)
+-- main thread
+pc 0x25600c
+lr 0x1e78d4
+st 0x1e78d4
+st 0x1e7b48
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f0b4
+st 0x234c68
+st 0x23bc38
+st 0x1e7a24
+st 0x23a908
+st 0x23bb24
+st 0x2351a0
+st 0x23bd5c
+st 0x23bb24
+st 0x2351a0
+st 0x23ada0
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+== stall 9513 ms (sample 17)
+-- main thread
+pc 0x256158
+lr 0x832
+st 0x1e78d4
+st 0x1e7b48
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f410
+st 0x23f0b4
+st 0x234c68
+st 0x2351a0
+st 0x23bf3c
+st 0x23bb24
+st 0x2351a0
+st 0x23bd5c
+st 0x23bb24
+st 0x2351a0
+st 0x23ada0
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4
+== stall 10014 ms (sample 18)
+-- main thread
+pc 0x2561e0
+lr 0xe
+st 0x1e78d4
+st 0x1e7b48
+st 0x1e7a24
+st 0x2cec34
+st 0x23e550
+st 0x2e5990
+st 0x1e7ba0
+st 0x23f124
+st 0x23f410
+st 0x23f0b4
+st 0x234c68
+st 0x2351a0
+st 0x23bf3c
+st 0x23bb24
+st 0x2351a0
+st 0x23bd5c
+st 0x23bb24
+st 0x2351a0
+st 0x23ada0
+st 0x23acf4
+st 0x2351a0
+st 0x235180
+st 0x235180
+st 0x235180
+st 0x2386ac
+st 0x4c348
+st 0x16b18
+st 0xf9554
+st 0x229664
+st 0x23914c
+st 0x134600
+st 0x2d85f0
+st 0x228688
+st 0x2d85e0
+st 0x2d85f0
+st 0x25f300
+st 0x2e609c
+st 0x2cd288
+st 0x2e609c
+st 0x25f2d4

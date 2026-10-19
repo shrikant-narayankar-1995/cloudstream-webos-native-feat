@@ -1,0 +1,72 @@
+diff --git a/tests/unit/test_ui.cpp b/tests/unit/test_ui.cpp
+index cebe093..ee87c4b 100644
+--- a/tests/unit/test_ui.cpp
++++ b/tests/unit/test_ui.cpp
+@@ -65,8 +65,10 @@ class FakeRenderer : public render::Renderer {
+         return measure_text(s, t);
+     }
+     float measure_text(const render::TextStyle &s, std::string_view t) const override {
++        ++measured;
+         return static_cast<float>(render::decode_utf8(t).size()) * s.size * 0.5f;
+     }
++    mutable int measured = 0;
+     float line_height(const render::TextStyle &s) const override { return s.size * 1.25f; }
+     float ascent(const render::TextStyle &s) const override { return s.size; }
+     void end_frame() override {}
+@@ -213,6 +215,24 @@ TEST("label: wraps on spaces, breaks long words, ellipsises the last line") {
+     CHECK(Label::wrap(r, s, "x", 0, 2).empty());
+ }
+ 
++TEST("label: ellipsising a long paragraph measures about one line, not the whole paragraph") {
++    FakeRenderer r;
++    render::TextStyle s{1, 20, render::kWhite};
++    std::string text;
++    for (int i = 0; i < 2000; i++) text += "word ";  // a long video description
++    r.measured = 0;
++    auto lines = Label::wrap(r, s, text, 300, 3);
++    REQUIRE(lines.size() == 3);
++    CHECK_EQ(lines[2], std::string("word word word word word word\xE2\x80\xA6"));  // 30 code points
++    CHECK(r.measured < 100);
++    std::string word(5000, 'x');  // one unbreakable word
++    r.measured = 0;
++    lines = Label::wrap(r, s, word, 300, 2);
++    REQUIRE(lines.size() == 2);
++    CHECK_EQ(lines[1], std::string(29, 'x') + "\xE2\x80\xA6");
++    CHECK(r.measured < 200);
++}
++
+ TEST("label: single line measures at natural width and draws at its baseline") {
+     Env env;
+     auto &l = env.ui.root().add<Label>("Hello");  // body size 32 → 16 per code point
+diff --git a/ui/src/widgets.cpp b/ui/src/widgets.cpp
+index 45b05c1..b41bac4 100644
+--- a/ui/src/widgets.cpp
++++ b/ui/src/widgets.cpp
+@@ -329,7 +329,8 @@ std::vector<std::string> Label::wrap(const render::Renderer &r, const render::Te
+             scan = word_end;
+             while (scan < para_end && text[scan] == ' ') ++scan;
+         }
+-        if (end == pos) {
++        const bool broken = end == pos;
++        if (broken) {
+             // A single word wider than the line: break it at a code point boundary.
+             size_t cut = next_boundary(text, pos);
+             while (cut < para_end && fits(text.substr(pos, next_boundary(text, cut) - pos))) cut = next_boundary(text, cut);
+@@ -339,7 +340,16 @@ std::vector<std::string> Label::wrap(const render::Renderer &r, const render::Te
+         const bool more = end < para_end || (para_end < n && text.find_first_not_of(" \n", para_end) != std::string::npos);
+         if (last && more) {
+             // Whatever remains of this paragraph goes on the last line, shortened with an ellipsis.
+-            out.push_back(ellipsize(text.substr(pos, para_end - pos)));
++            // Nothing past the next word can fit (end is the longest run of whole words that does),
++            // so shorten from there: the rest of a long paragraph would be measured once per code point.
++            size_t cut = end;
++            if (broken) {
++                cut = std::min(next_boundary(text, end), para_end);
++            } else {
++                while (cut < para_end && text[cut] == ' ') ++cut;
++                cut = std::min(text.find(' ', cut), para_end);
++            }
++            out.push_back(ellipsize(text.substr(pos, cut - pos)));
+             break;
+         }
+         out.push_back(trim_right(text.substr(pos, end - pos)));
