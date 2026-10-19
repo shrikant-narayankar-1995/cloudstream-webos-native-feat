@@ -42,9 +42,11 @@ class Application : public wnk::app::Delegate {
     std::unique_ptr<ui::PluginDialogHost> dialogs_;
     void open_link(wnk::ui::Ui &ui, const std::string &params_json);
     void run_pending_search(wnk::ui::Ui &ui);
+    void add_repository_from_link(wnk::ui::Ui &ui, const std::string &url);
 
     wnk::ui::Navigator *nav_ = nullptr;
     std::string pending_search_;  // a cloudstreamsearch:// query waiting for the plugins to load
+    std::string pending_repo_;    // a repository link waiting for the stored repositories to be read
     core::Signal::Subscription plugins_sub_;
     double since_data_save_s_ = 0;
     wnk::async::Lifetime life_;

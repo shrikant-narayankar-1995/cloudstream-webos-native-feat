@@ -146,31 +146,44 @@ void Application::open_link(wnk::ui::Ui &ui, const std::string &params_json) {
         pending_search_ = link.value;
         run_pending_search(ui);
     } else if (link.kind == DeepLink::Kind::Repository) {
-        WNK_LOGI(kCat, "link: add repository");
-        const std::string url = link.value;
-        plugins_->add_repository(url, [this, &ui, url](bool ok, const std::string &error) {
-            if (!ok) {
-                ui.toast(error, 4000);
-                return;
-            }
-            const plugins::RepositoryData *repo = nullptr;
-            for (const auto &r : plugins_->repositories()) {
-                if (r.url == url) repo = &r;
-            }
-            if (!repo || !nav_) return;
-            const plugins::RepositoryData data = *repo;
-            auto d = std::make_unique<wnk::ui::Dialog>("Repository added", data.name.empty() ? data.url : data.name);
-            d->add_button("Close");
-            d->add_button("Open repository", [this, data](wnk::ui::Ui &u) {
-                router_->open_extensions(u);
-                router_->open_repository(u, data);
-            }).name = "link.open";
-            ui.show_dialog(std::move(d));
-        });
+        pending_repo_ = link.value;
+        run_pending_search(ui);
     }
 }
 
+void Application::add_repository_from_link(wnk::ui::Ui &ui, const std::string &url) {
+    WNK_LOGI(kCat, "link: add repository");
+    plugins_->add_repository(url, [this, &ui, url](bool ok, const std::string &error) {
+        if (!ok) {
+            WNK_LOGW(kCat, "link: repository not added: %s", error.c_str());
+            ui.toast(error, 4000);
+            return;
+        }
+        const plugins::RepositoryData *repo = nullptr;
+        for (const auto &r : plugins_->repositories()) {
+            if (r.url == url) repo = &r;
+        }
+        if (!repo || !nav_) return;
+        WNK_LOGI(kCat, "link: repository added");
+        const plugins::RepositoryData data = *repo;
+        auto d = std::make_unique<wnk::ui::Dialog>("Repository added", data.name.empty() ? data.url : data.name);
+        d->add_button("Close");
+        d->add_button("Open repository", [this, data](wnk::ui::Ui &u) {
+            router_->open_extensions(u);
+            router_->open_repository(u, data);
+        }).name = "link.open";
+        ui.show_dialog(std::move(d));
+    });
+}
+
+// Links wait for what they need: a repository for the stored list to be read (or the add would be
+// overwritten), a search for the plugins to load.
 void Application::run_pending_search(wnk::ui::Ui &ui) {
+    if (!pending_repo_.empty() && plugins_->started()) {
+        const std::string url = std::move(pending_repo_);
+        pending_repo_.clear();
+        add_repository_from_link(ui, url);
+    }
     if (pending_search_.empty() || plugins_->loading() || !router_) return;
     const std::string q = std::move(pending_search_);
     pending_search_.clear();

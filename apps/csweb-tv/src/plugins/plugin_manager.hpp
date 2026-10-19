@@ -59,6 +59,8 @@ class PluginManager {
     const std::map<std::string, std::string> &load_errors() const { return load_errors_; }
     // True until every enabled plugin has been loaded or has failed (also while the runtime starts).
     bool loading() const;
+    // The stored repositories and plugins have been read (start() is asynchronous).
+    bool started() const { return started_; }
 
     void add_repository(const std::string &typed, Done done);
     void remove_repository(const std::string &url, Done done);
