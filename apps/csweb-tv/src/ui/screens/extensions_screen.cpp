@@ -281,9 +281,13 @@ void RepositoryScreen::open_settings(Ui &ui, const plugins::InstalledPlugin &p) 
                         },
                         core::guarded(life_.weak(), [this, opened, id](bool ok, const std::string &error) {
                             Ui *u = this->ui();
+                            WNK_LOGI(kCat, "plugin settings ended: %s%s", ok ? "ok" : "failed: ", ok ? "" : error.c_str());
                             if (!ok && u) u->toast("Settings: " + error, 4000);
                             else if (!*opened && u) u->toast("This plugin has no settings.");
-                            if (*opened) s_.plugins->reload(id);
+                            if (*opened) {
+                                s_.plugins->reload(id);
+                                s_.plugin_data->save(s_.ctx->pool());
+                            }
                         }));
     ui.toast("Opening settings…", 1200);
 }

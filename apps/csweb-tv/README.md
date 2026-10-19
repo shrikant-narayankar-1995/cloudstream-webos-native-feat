@@ -67,8 +67,15 @@ the comment at the top of each screen names the classes. Known differences:
   sources and quality profiles are not built yet. Torrent and magnet links are listed but cannot
   play (CloudStream's torrent server is not available).
 - Plugin settings take effect by reloading the plugin when its settings dialog ends.
-- Plugin data (SharedPreferences) lives on tmpfs and is lost at reboot; settings, repositories and
-  plugins are in DB8.
+- Plugin data (SharedPreferences, files) lives on tmpfs while the runtime runs and is copied to
+  DB8 (blob "plugin-data", 2 MiB at most) and restored before the runtime starts. Plugin caches are
+  not kept. Settings, library, repositories and plugins are in DB8.
+
+## Kit notes
+
+- `Dialog::add_button` dismisses the dialog before its handler runs (navigation.hpp says the
+  opposite). Dialogs that must tell an answer from a dismissal (plugin dialogs) use their own
+  buttons.
 
 ## Host test runs
 

@@ -6,8 +6,8 @@
 //   runtime   <app dir>/runtime-aarch64 on the TV (the package's private runtime), else
 //             $CSWEB_RUNTIME_DIR or the repository's runtime/dist/runtime-<arch> (host runs);
 //   plugins   <tmpfs>/plugins, written out from the store (DB8) at every start;
-//   data      <tmpfs>/plugin-data, the plugins' SharedPreferences (lost at reboot: only /tmp is
-//             writable for a Dev Mode app besides DB8).
+//   data      <tmpfs>/plugin-data, the plugins' SharedPreferences and files, copied to DB8 and back
+//             (PluginDataStore: only /tmp is writable for a Dev Mode app besides DB8).
 #pragma once
 
 #include "app/router.hpp"
@@ -27,6 +27,7 @@ class Application : public wnk::app::Delegate {
     void on_start(wnk::app::Context &ctx) override;
     void on_lifecycle(wnk::app::Context &ctx, const wnk::app::Lifecycle::Transition &t) override;
     void on_relaunch(wnk::app::Context &ctx, const std::string &params_json) override;
+    void on_frame(wnk::app::Context &ctx, float dt) override;
     void on_stop(wnk::app::Context &ctx) override;
 
  private:
@@ -35,6 +36,7 @@ class Application : public wnk::app::Delegate {
     std::unique_ptr<library::LibraryStore> library_;
     std::unique_ptr<runtime::RuntimeClient> runtime_;
     std::unique_ptr<plugins::PluginManager> plugins_;
+    std::unique_ptr<plugins::PluginDataStore> plugin_data_;
     std::unique_ptr<wnk::net::HttpClient> http_;
     std::unique_ptr<Router> router_;
     std::unique_ptr<ui::PluginDialogHost> dialogs_;
@@ -44,6 +46,7 @@ class Application : public wnk::app::Delegate {
     wnk::ui::Navigator *nav_ = nullptr;
     std::string pending_search_;  // a cloudstreamsearch:// query waiting for the plugins to load
     core::Signal::Subscription plugins_sub_;
+    double since_data_save_s_ = 0;
     wnk::async::Lifetime life_;
 };
 

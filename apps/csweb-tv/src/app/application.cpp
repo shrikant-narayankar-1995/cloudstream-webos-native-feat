@@ -37,6 +37,7 @@ Application::Application() = default;
 Application::~Application() {
     // on_stop has taken the screens down; stop the runtime so no answer arrives for a dead manager.
     if (runtime_) runtime_->stop();
+    if (plugin_data_) plugin_data_->save_now();
 }
 
 void Application::on_start(wnk::app::Context &ctx) {
@@ -90,6 +91,10 @@ void Application::on_start(wnk::app::Context &ctx) {
     services_.plugins = plugins_.get();
     plugins_->on_changed = [this] { services_.plugins_changed.emit(); };
 
+    plugin_data_ = std::make_unique<plugins::PluginDataStore>(ctx.store(), data_dir);
+    plugin_data_->restore();
+    services_.plugin_data = plugin_data_.get();
+
     runtime_->on_ready = [this] { plugins_->on_runtime_ready(); };
     runtime_->on_state = [this](runtime::RuntimeClient::State) {
         services_.runtime_changed.emit();
@@ -119,6 +124,13 @@ void Application::on_start(wnk::app::Context &ctx) {
     runtime_->start();
     plugins_sub_ = services_.plugins_changed.subscribe([this, &ctx] { run_pending_search(ctx.ui()); });
     open_link(ui, ctx.launch().params_json);
+}
+
+void Application::on_frame(wnk::app::Context &ctx, float dt) {
+    since_data_save_s_ += dt;
+    if (since_data_save_s_ < 300) return;
+    since_data_save_s_ = 0;
+    if (plugin_data_) plugin_data_->save(ctx.pool());
 }
 
 void Application::on_relaunch(wnk::app::Context &ctx, const std::string &params_json) {
@@ -165,9 +177,10 @@ void Application::run_pending_search(wnk::ui::Ui &ui) {
     router_->open_search(ui, q);
 }
 
-void Application::on_lifecycle(wnk::app::Context &, const wnk::app::Lifecycle::Transition &t) {
+void Application::on_lifecycle(wnk::app::Context &ctx, const wnk::app::Lifecycle::Transition &t) {
     auto *player = nav_ ? dynamic_cast<ui::PlayerScreen *>(nav_->top()) : nullptr;
     if (t.to == wnk::app::State::Suspended) {
+        if (plugin_data_) plugin_data_->save(ctx.pool());  // the TV may end a background app without notice
         if (player) player->pause_for_background();
         if (wnk::platform::kIsWebOS) wnk::media::NdlBackend::set_app_foreground(false);
     } else if (t.to == wnk::app::State::Resuming && wnk::platform::kIsWebOS) {
@@ -188,6 +201,7 @@ void Application::on_stop(wnk::app::Context &ctx) {
         screens.reset();
     }
     if (runtime_) runtime_->stop();
+    if (plugin_data_) plugin_data_->save_now();
 }
 
 }  // namespace csweb::app

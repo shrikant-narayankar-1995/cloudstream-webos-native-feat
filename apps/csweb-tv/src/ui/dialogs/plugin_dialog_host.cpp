@@ -53,6 +53,9 @@ void PluginDialogHost::answer(int dialog, json extra) {
         if (f.changed && !f.changed()) continue;
         fields[f.key] = f.value();
     }
+    // What was done, never what was typed.
+    WNK_LOGI("csweb", "plugin dialog %d answered: %s, %zu fields", dialog,
+             a.contains("button") ? a["button"].get<std::string>().c_str() : a.contains("click") ? "click" : "item", fields.size());
     if (!fields.empty()) a["fields"] = std::move(fields);
     answered_ = true;
     runtime_.answer_dialog(dialog, std::move(a));
@@ -91,13 +94,21 @@ void PluginDialogHost::show(Ui &ui, const json &d) {
         }
     }
     scroll.set_height(Dim::fixed(560));
+    // The plugin's buttons answer, then close. Not Dialog::add_button: it dismisses before its handler
+    // runs, and a dismissal not preceded by an answer is a cancel.
     if (auto b = d.find("buttons"); b != d.end() && b->is_object()) {
+        auto &row = dlg->body().add<wnk::ui::Row>(16);
+        row.set_padding({0, 16, 0, 0});
         for (const char *which : {"negative", "neutral", "positive"}) {
             const std::string text = text_of(*b, which);
             if (text.empty()) continue;
             const std::string button = which;
-            dlg->add_button(text, [this, id, button](Ui &) { answer(id, {{"button", button}}); }).name =
-                std::string("plugin.dialog.") + which;
+            auto &pb = row.add<PillButton>(text, "", std::string(which) == "positive" ? PillButton::Style::Primary : PillButton::Style::Glass,
+                                           [this, id, button, dlg](Ui &u) {
+                                               answer(id, {{"button", button}});
+                                               dlg->dismiss(u);
+                                           }, 60);
+            pb.name = std::string("plugin.dialog.") + which;
         }
     }
     dlg->on_dismiss = [this, id, cancelable, dlg](Ui &) {

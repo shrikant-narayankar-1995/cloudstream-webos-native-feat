@@ -6,6 +6,7 @@
 
 #include "core/signal.hpp"
 #include "library/library_store.hpp"
+#include "plugins/plugin_data.hpp"
 #include "plugins/plugin_manager.hpp"
 #include "runtime/runtime_client.hpp"
 #include "settings/settings_store.hpp"
@@ -22,6 +23,7 @@ struct Services {
     wnk::app::Context *ctx = nullptr;
     runtime::RuntimeClient *runtime = nullptr;
     plugins::PluginManager *plugins = nullptr;
+    plugins::PluginDataStore *plugin_data = nullptr;
     settings::SettingsStore *settings = nullptr;
     library::LibraryStore *library = nullptr;
     Router *router = nullptr;
