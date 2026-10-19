@@ -187,4 +187,45 @@ float visual_progress(const Position &p) {
     return static_cast<float>(p.position_ms) / static_cast<float>(p.duration_ms);
 }
 
+const std::vector<ListSorting> &local_sortings() {
+    static const std::vector<ListSorting> v = {ListSorting::AlphabeticalA, ListSorting::AlphabeticalZ, ListSorting::UpdatedNew,
+                                               ListSorting::UpdatedOld,    ListSorting::ReleaseDateNew, ListSorting::ReleaseDateOld};
+    return v;
+}
+
+const char *sorting_label(ListSorting s) {
+    switch (s) {
+        case ListSorting::Query: return "None";
+        case ListSorting::RatingHigh: return "Rating (high to low)";
+        case ListSorting::RatingLow: return "Rating (low to high)";
+        case ListSorting::UpdatedNew: return "Updated (new to old)";
+        case ListSorting::UpdatedOld: return "Updated (old to new)";
+        case ListSorting::AlphabeticalA: return "Alphabetical (A-Z)";
+        case ListSorting::AlphabeticalZ: return "Alphabetical (Z-A)";
+        case ListSorting::ReleaseDateNew: return "Release date (new to old)";
+        case ListSorting::ReleaseDateOld: return "Release date (old to new)";
+    }
+    return "";
+}
+
+void sort_bookmarks(std::vector<Bookmark> &items, ListSorting method) {
+    auto by = [&items](auto key) {
+        std::stable_sort(items.begin(), items.end(), [&key](const Bookmark &a, const Bookmark &b) { return key(a) < key(b); });
+    };
+    switch (method) {
+        case ListSorting::AlphabeticalA: by([](const Bookmark &b) { return b.show.name; }); break;
+        case ListSorting::AlphabeticalZ:  // sortedBy { name }.reversed()
+            by([](const Bookmark &b) { return b.show.name; });
+            std::reverse(items.begin(), items.end());
+            break;
+        case ListSorting::UpdatedNew: by([](const Bookmark &b) { return -b.updated_ms; }); break;
+        case ListSorting::UpdatedOld: by([](const Bookmark &b) { return b.updated_ms; }); break;
+        case ListSorting::ReleaseDateNew:  // sortedByDescending
+            std::stable_sort(items.begin(), items.end(), [](const Bookmark &a, const Bookmark &b) { return a.show.year > b.show.year; });
+            break;
+        case ListSorting::ReleaseDateOld: by([](const Bookmark &b) { return b.show.year; }); break;
+        default: break;
+    }
+}
+
 }  // namespace csweb::library

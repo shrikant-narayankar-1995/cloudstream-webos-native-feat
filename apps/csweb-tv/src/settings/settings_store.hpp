@@ -58,6 +58,7 @@ inline constexpr const char *kHomeProvider = "home_api_used";
 inline constexpr const char *kNoneProvider = "NONE";      // APIRepository.noneApi
 inline constexpr const char *kRandomProvider = "Random";  // APIRepository.randomApi
 inline constexpr const char *kSearchHistory = "search_history";
+inline constexpr const char *kLibrarySorting = "library_sorting_mode";  // ListSorting ordinal, A-Z by default
 inline constexpr const char *kProfiles = "profiles";  // profiles::Profiles (shared)
 inline constexpr const char *kSkipProfileSelect = "skip_startup_account_select_key";
 // True for the values each profile keeps for itself (CloudStream's $currentAccount keys).

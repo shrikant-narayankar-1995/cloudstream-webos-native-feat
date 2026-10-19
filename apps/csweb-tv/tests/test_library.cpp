@@ -59,3 +59,33 @@ TEST("visual_progress") {
     CHECK_EQ(visual_progress({960, 1000, 0}), 1.0f);
     CHECK_EQ(visual_progress({500, 1000, 0}), 0.5f);
 }
+
+TEST("local_list_sortings") {
+    using namespace csweb::library;
+    auto bm = [](const std::string &name, int year, int64_t updated) {
+        Bookmark b;
+        b.show.name = name;
+        b.show.year = year;
+        b.updated_ms = updated;
+        return b;
+    };
+    const std::vector<Bookmark> base = {bm("beta", 2001, 30), bm("Alpha", 1999, 10), bm("Gamma", 2010, 20)};
+    auto names = [](const std::vector<Bookmark> &v) {
+        std::string s;
+        for (const auto &b : v) s += b.show.name + ",";
+        return s;
+    };
+    auto sorted = [&](ListSorting m) {
+        auto v = base;
+        sort_bookmarks(v, m);
+        return names(v);
+    };
+    CHECK_EQ(sorted(ListSorting::AlphabeticalA), std::string("Alpha,Gamma,beta,"));  // case-sensitive, as Kotlin
+    CHECK_EQ(sorted(ListSorting::AlphabeticalZ), std::string("beta,Gamma,Alpha,"));
+    CHECK_EQ(sorted(ListSorting::UpdatedNew), std::string("beta,Gamma,Alpha,"));
+    CHECK_EQ(sorted(ListSorting::UpdatedOld), std::string("Alpha,Gamma,beta,"));
+    CHECK_EQ(sorted(ListSorting::ReleaseDateNew), std::string("Gamma,beta,Alpha,"));
+    CHECK_EQ(sorted(ListSorting::ReleaseDateOld), std::string("Alpha,beta,Gamma,"));
+    CHECK_EQ(static_cast<int>(ListSorting::AlphabeticalA), 5);  // CloudStream's ordinal (the stored value)
+    CHECK_EQ(local_sortings().size(), size_t(6));
+}

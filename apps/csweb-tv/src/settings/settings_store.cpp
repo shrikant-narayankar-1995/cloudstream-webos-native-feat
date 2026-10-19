@@ -11,7 +11,8 @@ constexpr const char *kKey = "csweb.settings.v1";
 
 bool profile_key(const std::string &key) {
     // home_api_used, search history, and the type chips (UserPreferenceDelegate) are per account.
-    return key == kHomeProvider || key == kSearchHistory || key == "search_pref_tags" || key == "home_pref_homepage";
+    return key == kHomeProvider || key == kSearchHistory || key == "search_pref_tags" || key == "home_pref_homepage" ||
+           key == kLibrarySorting;
 }
 
 std::string SettingsStore::key_for(const std::string &key) const {

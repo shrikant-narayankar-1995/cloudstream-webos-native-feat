@@ -22,6 +22,13 @@ namespace csweb::library {
 
 enum class WatchType { Watching = 0, Completed = 1, OnHold = 2, Dropped = 3, PlanToWatch = 4, None = 5 };
 const char *watch_type_label(WatchType t);
+
+// LibraryViewModel's ListSorting, as numbered there (the stored library_sorting_mode is the ordinal);
+// the local list supports the alphabetical, updated and release date orders.
+enum class ListSorting { Query = 0, RatingHigh, RatingLow, UpdatedNew, UpdatedOld, AlphabeticalA, AlphabeticalZ,
+                         ReleaseDateNew, ReleaseDateOld };
+const std::vector<ListSorting> &local_sortings();
+const char *sorting_label(ListSorting s);
 // The lists in CloudStream's order (WatchType.entries without None).
 const std::vector<WatchType> &watch_types();
 
@@ -85,5 +92,9 @@ class Library {
 
 // PosDur.fixVisual: the fraction a progress bar shows (≤1 % → 0, ≤5 % → 5 %, ≥95 % → full).
 float visual_progress(const Position &p);
+
+// SyncAPI.Page.sort for the local list: names compared as CloudStream does (case-sensitive), the
+// release date being the show's year; ties keep the given order.
+void sort_bookmarks(std::vector<Bookmark> &items, ListSorting method);
 
 }  // namespace csweb::library
