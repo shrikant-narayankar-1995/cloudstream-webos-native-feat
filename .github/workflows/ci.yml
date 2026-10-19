@@ -1,0 +1,141 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Builds and tests the apps on every pull request and on every push to main (a merged pull request).
+#   host:  kit + apps built for Linux (host-debug and host-asan), all tests (kit, apps, project tools)
+#   webos: the TV package (org.csweb.tv ipk) with the webOS NDK, checked by the kit's check-package
+# The kit is checked out at the commit tools/fetch-kit.sh pins. The plugin runtime (runtime/dist) is
+# not built here yet, so the CI package cannot run plugins; it is for build and packaging checks only.
+# No downloaded plugin code is run: the app tests use their own fixtures.
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+env:
+  KIT: external/webos-native-app-kit
+
+jobs:
+  host:
+    name: Host (${{ matrix.preset }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        preset: [host-debug, host-asan]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends \
+            cmake g++ make pkg-config python3 git curl xz-utils \
+            libsdl2-dev libgles-dev libegl-dev libegl-mesa0 libgl1-mesa-dri libcurl4 openssl
+
+      - name: Check out the kit at the pinned commit
+        run: tools/fetch-kit.sh
+
+      - name: Cache the bundled FFmpeg
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.KIT }}/build/${{ matrix.preset }}/ffmpeg
+          key: ffmpeg-${{ matrix.preset }}-${{ hashFiles('tools/fetch-kit.sh') }}
+
+      - name: Configure
+        working-directory: ${{ env.KIT }}
+        run: |
+          cmake --preset ${{ matrix.preset }} \
+            -DWNK_EXTRA_APP_DIRS="$GITHUB_WORKSPACE/apps/runtime-probe;$GITHUB_WORKSPACE/apps/csweb-tv"
+
+      - name: Build
+        working-directory: ${{ env.KIT }}
+        run: cmake --build --preset ${{ matrix.preset }} -j"$(nproc)"
+
+      - name: Test (kit and apps)
+        working-directory: ${{ env.KIT }}
+        run: ctest --preset ${{ matrix.preset }} -j"$(nproc)"
+
+      - name: Test (project tools)
+        if: matrix.preset == 'host-debug'
+        run: python3 -m unittest discover -s tests -v
+
+      - name: Keep test logs
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs-${{ matrix.preset }}
+          path: ${{ env.KIT }}/build/${{ matrix.preset }}/Testing/Temporary/
+          retention-days: 7
+
+  webos:
+    name: webOS package
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      # openlgtv/buildroot-nc4 release webos-d7ed7ee: arm-webos-linux-gnueabi gcc 12.2.0, the NDK
+      # recorded in docs/STATUS.md. GitHub publishes no digest for it; this one was taken on 2026-10-20.
+      NDK_URL: https://github.com/openlgtv/buildroot-nc4/releases/download/webos-d7ed7ee/arm-webos-linux-gnueabi_sdk-buildroot.tar.gz
+      NDK_SHA256: 32816626e99fb34922a49d0c639f7c8a30356fffb222372d4823027f1382f640
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends cmake make pkg-config python3 git curl xz-utils
+
+      - name: Check out the kit at the pinned commit
+        run: tools/fetch-kit.sh
+
+      - name: Cache the webOS NDK
+        id: ndk-cache
+        uses: actions/cache@v4
+        with:
+          path: ~/ndk.tar.gz
+          key: webos-ndk-${{ env.NDK_SHA256 }}
+
+      - name: Download the webOS NDK
+        if: steps.ndk-cache.outputs.cache-hit != 'true'
+        run: curl -fsSL --retry 3 -o ~/ndk.tar.gz "$NDK_URL"
+
+      - name: Verify and install the webOS NDK
+        run: |
+          echo "$NDK_SHA256  $HOME/ndk.tar.gz" | sha256sum -c -
+          mkdir -p ~/webos-ndk
+          tar -xzf ~/ndk.tar.gz -C ~/webos-ndk
+          (cd ~/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot && ./relocate-sdk.sh)
+          echo "WEBOS_NDK=$HOME/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot" >> "$GITHUB_ENV"
+
+      - name: Cache the bundled FFmpeg
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.KIT }}/build/webos-release/ffmpeg
+          key: ffmpeg-webos-release-${{ hashFiles('tools/fetch-kit.sh') }}-${{ env.NDK_SHA256 }}
+
+      - name: Configure
+        working-directory: ${{ env.KIT }}
+        run: |
+          cmake --preset webos-release \
+            -DWNK_EXTRA_APP_DIRS="$GITHUB_WORKSPACE/apps/runtime-probe;$GITHUB_WORKSPACE/apps/csweb-tv"
+
+      - name: Build and check the package
+        working-directory: ${{ env.KIT }}
+        run: cmake --build --preset webos-release -j"$(nproc)" --target csweb-tv-ipk
+
+      - name: Upload the package (no plugin runtime)
+        uses: actions/upload-artifact@v4
+        with:
+          name: org.csweb.tv-ipk-no-runtime
+          path: ${{ env.KIT }}/build/webos-release/dist/org.csweb.tv_*_arm.ipk
+          retention-days: 14
