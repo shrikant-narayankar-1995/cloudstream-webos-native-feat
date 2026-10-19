@@ -151,6 +151,19 @@ Link parse_link(const json &e) {
             if (h.value().is_string()) l.headers[h.key()] = h.value().get<std::string>();
         }
     }
+    if (auto it = e.find("audioTracks"); it != e.end() && it->is_array()) {
+        for (const auto &t : *it) {
+            if (!t.is_object() || str(t, "url").empty()) continue;
+            AudioTrack a;
+            a.url = str(t, "url");
+            if (auto h = t.find("headers"); h != t.end() && h->is_object()) {
+                for (auto v = h->begin(); v != h->end(); ++v) {
+                    if (v.value().is_string()) a.headers[v.key()] = v.value().get<std::string>();
+                }
+            }
+            l.audio_tracks.push_back(std::move(a));
+        }
+    }
     return l;
 }
 

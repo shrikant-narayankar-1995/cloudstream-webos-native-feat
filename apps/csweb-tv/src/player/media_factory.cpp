@@ -2,6 +2,7 @@
 #include "player/media_factory.hpp"
 
 #include "player/link_priority.hpp"
+#include "player/merged_source.hpp"
 
 #include "wnk/log.hpp"
 #include "wnk/media/adaptive_source.hpp"
@@ -50,9 +51,24 @@ std::unique_ptr<MediaSource> make_source(const runtime::Link &link, std::shared_
         return std::make_unique<AdaptiveSource>(o);
     }
     FfmpegSourceOptions o;
-    o.http = std::move(http);
+    o.http = http;
     o.http_stream.headers = std::move(headers);
-    return std::make_unique<FfmpegSource>(std::move(o));
+    auto video = std::make_unique<FfmpegSource>(std::move(o));
+    if (link.audio_tracks.empty()) return video;
+    // CS3IPlayer.getAudioSources: each AudioFile with its own headers (CloudStream's user agent unless
+    // they name one), merged with the video.
+    std::vector<std::string> uris;
+    std::vector<std::unique_ptr<MediaSource>> audio;
+    for (const runtime::AudioTrack &a : link.audio_tracks) {
+        runtime::Link only;
+        only.headers = a.headers;
+        FfmpegSourceOptions ao;
+        ao.http = http;
+        for (auto &h : link_headers(only)) ao.http_stream.headers.push_back(std::move(h));
+        uris.push_back(a.url);
+        audio.push_back(std::make_unique<FfmpegSource>(std::move(ao)));
+    }
+    return std::make_unique<MergedSource>(std::move(video), std::move(uris), std::move(audio));
 }
 
 }  // namespace csweb::player

@@ -42,6 +42,12 @@ TEST("links_and_quality") {
     CHECK_EQ(l.quality, 1080);
     CHECK_EQ(l.headers.at("User-Agent"), std::string("ua"));
     CHECK_EQ(parse_link(json::parse(R"J({"name":"x"})J")).quality, 400);
+    CHECK(l.audio_tracks.empty());
+    auto v = parse_link(json::parse(R"J({"name":"YouTube H264","url":"https://v/video","quality":720,
+        "audioTracks":[{"url":"https://v/a1","headers":{"Referer":"r"}},{"url":""},"bad",{"url":"https://v/a2"}]})J"));
+    CHECK_EQ(v.audio_tracks.size(), size_t(2));
+    CHECK_EQ(v.audio_tracks[0].headers.at("Referer"), std::string("r"));
+    CHECK_EQ(v.audio_tracks[1].url, std::string("https://v/a2"));
     CHECK_EQ(quality_label(1080), std::string("1080p"));
     CHECK_EQ(quality_label(2160), std::string("4K"));
     CHECK_EQ(quality_label(400), std::string());

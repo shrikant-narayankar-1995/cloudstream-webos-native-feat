@@ -267,12 +267,14 @@ void HomeScreen::rebuild_row(Row &row) {
 
 void HomeScreen::request_section(Ui &, int index) {
     const std::string provider = provider_;
-    struct Acc {
+    // One request answers one MainPageData; its HomePageResponse may hold several HomePageLists, each
+    // a row of its own (a "section" event starts each).
+    struct List {
         std::string name;
         bool horizontal = false;
         std::vector<runtime::SearchResult> items;
     };
-    auto acc = std::make_shared<Acc>();
+    auto acc = std::make_shared<std::vector<List>>();
     const runtime::Provider *p = s_.plugins->provider(provider);
     nlohmann::json req = {{"op", "mainpage"}, {"provider", provider}, {"section", index}, {"page", 1}, {"limit", 60}};
     if (p && p->main_page_timeout_ms > 0) req["timeout"] = (p->main_page_timeout_ms + 999) / 1000;
@@ -282,24 +284,30 @@ void HomeScreen::request_section(Ui &, int index) {
         [acc](const nlohmann::json &e) {
             const std::string ev = e.value("event", "");
             if (ev == "section") {
-                acc->name = e.value("name", "");
-                acc->horizontal = e.contains("horizontal") && e["horizontal"].is_boolean() && e["horizontal"].get<bool>();
+                List l;
+                l.name = e.value("name", "");
+                l.horizontal = e.contains("horizontal") && e["horizontal"].is_boolean() && e["horizontal"].get<bool>();
+                acc->push_back(std::move(l));
             } else if (ev == "result") {
-                acc->items.push_back(runtime::parse_search_result(e));
+                if (acc->empty()) acc->emplace_back();
+                acc->back().items.push_back(runtime::parse_search_result(e));
             }
         },
         core::guarded(life_.weak(), [this, acc, provider, id](bool ok, const std::string &error) {
             requests_.erase(std::remove(requests_.begin(), requests_.end(), *id), requests_.end());
             if (provider != provider_) return;
-            if (!ok && acc->items.empty()) {
+            size_t items = 0;
+            for (const List &l : *acc) items += l.items.size();
+            if (!ok && items == 0) {
                 WNK_LOGW(kCat, "home: section failed: %s", error.c_str());
             }
-            if (!acc->items.empty()) {
-                Row &row = row_for(acc->name, acc->horizontal);
-                for (auto &it : acc->items) row.items.push_back(std::move(it));
+            for (List &l : *acc) {
+                if (l.items.empty()) continue;
+                Row &row = row_for(l.name, l.horizontal);
+                for (auto &it : l.items) row.items.push_back(std::move(it));
                 rebuild_row(row);
-                if (!hero_set_) pick_hero();
             }
+            if (items > 0 && !hero_set_) pick_hero();
             if (requests_.empty() && pending_.empty()) {
                 set_state_text(rows_.empty() ? provider_ + " returned nothing. Try again later or choose another source." : "",
                                rows_.empty() ? StateAction::ChooseSource : StateAction::None);

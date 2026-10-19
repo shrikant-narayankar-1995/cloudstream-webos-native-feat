@@ -52,6 +52,7 @@ endif ()
 add_library(csweb_player STATIC
         src/player/link_priority.cpp
         src/player/media_factory.cpp
+        src/player/merged_source.cpp
         src/player/subtitle_file.cpp)
 target_link_libraries(csweb_player PUBLIC csweb_core wnk_media wnk_media_ffmpeg wnk_media_ndl wnk_media_starfish)
 
@@ -117,7 +118,7 @@ wnk_add_webos_package(
         PRIVATE_RUNTIMES ${_csweb_runtimes})
 
 if (WNK_BUILD_TESTS)
-    foreach (t link_priority subtitle_file)
+    foreach (t link_priority merged_source subtitle_file)
         add_executable(csweb_test_${t} tests/test_${t}.cpp)
         target_include_directories(csweb_test_${t} PRIVATE "${PROJECT_SOURCE_DIR}/tests/unit")
         target_link_libraries(csweb_test_${t} PRIVATE csweb_player)

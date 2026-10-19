@@ -57,6 +57,7 @@ final class Service {
         Thread.setDefaultUncaughtExceptionHandler((thread, t) -> Main.error("thread:" + thread.getName(), t));
         UiHost.install(new Main.LoaderUi());
         Main.answers = Service::nextAnswer;
+        Main.initApp();
         ExecutorService admin = Executors.newSingleThreadExecutor(daemon("csweb-admin"));
         ExecutorService ops = Executors.newFixedThreadPool(workers, daemon("csweb-op"));
         ScheduledExecutorService timers = Executors.newSingleThreadScheduledExecutor(daemon("csweb-timer"));

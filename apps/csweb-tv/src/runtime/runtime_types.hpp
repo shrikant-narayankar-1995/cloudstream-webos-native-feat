@@ -59,10 +59,17 @@ struct Details {
     bool is_episodic() const { return !episodes.empty() || data_url.empty(); }
 };
 
+// ExtractorLink.audioTracks entry (AudioFile): an audio stream played together with the link's video.
+struct AudioTrack {
+    std::string url;
+    std::map<std::string, std::string> headers;  // only with withHeaders; never logged
+};
+
 struct Link {
     std::string name, source, url, referer, link_type;  // link_type: VIDEO, M3U8, DASH, TORRENT, MAGNET
     int quality = 400;                                   // CloudStream Qualities value (400 unknown, 0 auto, 1080...)
     std::map<std::string, std::string> headers;          // only with withHeaders; never logged
+    std::vector<AudioTrack> audio_tracks;                // separate audio (e.g. YouTube's video-only streams)
 };
 
 struct Subtitle {

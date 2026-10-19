@@ -116,6 +116,7 @@ public final class Main {
             return false;
         }
 
+        initApp();
         // --- PluginManager.loadPlugin, step by step -------------------------------------------------
         BasePlugin plugin = loadPlugin(file, data, hashBefore, null);
         if (plugin == null) return false;
@@ -157,6 +158,23 @@ public final class Main {
             return false;
         }
         return ok;
+    }
+
+    /**
+     * The parts of CommonActivity.init that plugins rely on: NewPipe gets CloudStream's OkHttp downloader
+     * (YouTube plugins search and load through NewPipe). Reflection, as these classes are not on the
+     * loader's compile classpath.
+     */
+    static void initApp() {
+        try {
+            Class<?> impl = Class.forName("com.lagradost.cloudstream3.DownloaderTestImpl");
+            Object companion = impl.getField("Companion").get(null);
+            Object downloader = companion.getClass().getMethod("getInstance").invoke(companion);
+            Class<?> type = Class.forName("org.schabi.newpipe.extractor.downloader.Downloader");
+            Class.forName("org.schabi.newpipe.extractor.NewPipe").getMethod("init", type).invoke(null, downloader);
+        } catch (Throwable t) {
+            error("init:newpipe", t);
+        }
     }
 
     /**
@@ -580,6 +598,29 @@ public final class Main {
             for (Map.Entry<?, ?> e : ((Map<?, ?>) headers).entrySet()) h.put(String.valueOf(e.getKey()), String.valueOf(e.getValue()));
             m.remove("headerNames");
             m.put("headers", h);
+        }
+        // ExtractorLink.audioTracks: separate audio streams the player merges with the video (CS3IPlayer).
+        Object tracks = tryBean(l, "getAudioTracks");
+        if (tracks instanceof List && !((List<?>) tracks).isEmpty()) {
+            List<Object> a = new ArrayList<>();
+            for (Object t : (List<?>) tracks) {
+                Object url = tryBean(t, "getUrl");
+                if (url == null) continue;
+                Map<String, Object> x = new LinkedHashMap<>();
+                x.put("url", String.valueOf(url));
+                Object th = tryBean(t, "getHeaders");
+                if (th instanceof Map) {
+                    if (withHeaders) {
+                        Map<String, Object> h = new LinkedHashMap<>();
+                        for (Map.Entry<?, ?> e : ((Map<?, ?>) th).entrySet()) h.put(String.valueOf(e.getKey()), String.valueOf(e.getValue()));
+                        x.put("headers", h);
+                    } else {
+                        x.put("headerNames", new ArrayList<>(((Map<?, ?>) th).keySet()));
+                    }
+                }
+                a.add(x);
+            }
+            m.put("audioTracks", a);
         }
         return m;
     }
