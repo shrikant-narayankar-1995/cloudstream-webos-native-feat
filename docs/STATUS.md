@@ -2,7 +2,7 @@
 
 Date/time: 2026-10-19
 Branch/commit: `main` (project repository; see `git log`)
-Native App Kit commit: `e10f35ecd6e27987cc866b28caea6be66a023fcc` + `docs/kit-patches/0001`, `0002`, `0003`
+Native App Kit commit: `e10f35ecd6e27987cc866b28caea6be66a023fcc` + `docs/kit-patches/0001` to `0006`
 CloudStream: source `eb962b4fb7b1387b8de42ec58000cee0a01fe741`; pre-release APK sha256 `add4b760…6d83`
 Runtime: Alpine art_standalone 0_git20251009-r3 (aarch64 on the TV, x86_64 on the host), wolfSSL 5.9.4
 rebuilt with `WOLFSSL_ASN_ALLOW_0_SERIAL` (docs/runtime/tls.md)
@@ -36,6 +36,16 @@ Runtime feasibility: **PASS** (scoped; see docs/FEASIBILITY_DECISION.md)
     PIN (stored as a digest); picker at start.
   - Deep links: cloudstreamrepo://, https://cs.repo?…, cloudstreamsearch://.
 - Kit patch 0003: every URL query value redacted in logs (stream tokens).
+- Kit patch 0004: long labels (YouTube descriptions) no longer stall the UI (found on the TV with the
+  app's stall sampler, `/tmp/<app>/stalls.log`).
+- Kit patch 0005: DASH with several Periods; WebM DASH (VP9, Opus) indexed by its Cues.
+- Kit patch 0006: the player's HTTP transport keeps cookies (Set-Cookie on a playlist, checked on
+  segments), as CloudStream's Cronet source does; link headers reach every request.
+- YouTube: NewPipe set up as in CloudStream; separate audio tracks merged (MergedSource); plays on
+  the TV (4K VP9, no dropped frames).
+- ClearKey DRM links (DrmExtractorLink) for DASH and MP4; Widevine/PlayReady listed as unsupported.
+- Subtitle headers (SubtitleFile.headers) sent as CloudStream does.
+- `csweb-media-probe`: host tool, a URL through the player's source.
 - Conformance fixture v2 (own test plugin): adds a two-season series with actors.
 
 ## Commands executed (latest session)
@@ -67,6 +77,8 @@ Runtime feasibility: **PASS** (scoped; see docs/FEASIBILITY_DECISION.md)
   OpenSubtitles search, playback speed (the kit's PlaybackController has no rate control), NSFW toggle
   (the runtime keeps CloudStream's default, adult off), pinned providers, backup/restore.
 - Plugins needing a WebView, custom/AndroidX views or fragments are unsupported.
+- MainAPI.getVideoInterceptor (OkHttp interceptors on video requests) is not applied: the player's
+  requests are native. Hierarchical sidx DASH, TTML subtitles and Widevine/PlayReady do not play.
 - Licence audit of the bundled runtime still metadata-only (needed before any redistribution).
 - Package 78 MB; the AOT boot image is tied to the app id through /tmp/<app id>/rt.
 

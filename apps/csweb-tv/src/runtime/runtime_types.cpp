@@ -202,7 +202,15 @@ const char *drm_name(const std::string &uuid) {
 
 bool Drm::clearkey() const { return std::string(drm_name(uuid)) == "ClearKey"; }
 
-Subtitle parse_subtitle(const json &e) { return {str(e, "lang"), str(e, "url")}; }
+Subtitle parse_subtitle(const json &e) {
+    Subtitle s{str(e, "lang"), str(e, "url"), {}};
+    if (auto it = e.find("headers"); it != e.end() && it->is_object()) {
+        for (auto h = it->begin(); h != it->end(); ++h) {
+            if (h.value().is_string()) s.headers[h.key()] = h.value().get<std::string>();
+        }
+    }
+    return s;
+}
 
 std::string quality_label(int quality) {
     if (quality == 0) return "Auto";

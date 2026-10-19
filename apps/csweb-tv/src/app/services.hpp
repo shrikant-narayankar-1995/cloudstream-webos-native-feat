@@ -29,6 +29,9 @@ struct Services {
     library::LibraryStore *library = nullptr;
     Router *router = nullptr;
     wnk::net::HttpClient *http = nullptr;     // null without a network stack
+    // The player's own transport: it keeps the cookies streaming servers set (Set-Cookie on a
+    // playlist, checked on segments), as CloudStream's player (Cronet) does. Null: the app's.
+    std::shared_ptr<wnk::net::HttpTransport> player_http;
     wnk::media::DeviceMediaCaps device;       // what the TV's decoders take (filled at start on the TV)
     core::Signal plugins_changed;  // providers, installed plugins or repositories changed
     core::Signal runtime_changed;  // the runtime started, stopped or failed

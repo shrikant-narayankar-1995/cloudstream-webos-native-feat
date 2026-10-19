@@ -2,6 +2,7 @@
 #include "app/application.hpp"
 
 #include "app/deep_link.hpp"
+#include "player/link_priority.hpp"
 #include "runtime/runtime_launcher.hpp"
 #include "ui/screens/home_screen.hpp"
 #include "ui/screens/player_screen.hpp"
@@ -67,6 +68,10 @@ void Application::on_start(wnk::app::Context &ctx) {
     if (auto transport = ctx.http()) {
         http_ = std::make_unique<wnk::net::HttpClient>(transport, ctx.pool(), ctx.dispatcher());
         services_.http = http_.get();
+        wnk::net::CurlOptions po;
+        po.cookies = true;
+        po.user_agent = player::kCloudStreamUserAgent;
+        services_.player_http = wnk::net::make_curl_transport(po);
     }
 
     const std::string rt_dir = runtime_dir(app_dir);

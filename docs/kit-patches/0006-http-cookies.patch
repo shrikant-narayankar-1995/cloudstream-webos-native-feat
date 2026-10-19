@@ -1,0 +1,205 @@
+diff --git a/net/include/wnk/net/http.hpp b/net/include/wnk/net/http.hpp
+index 32b5bfe..33ae75b 100644
+--- a/net/include/wnk/net/http.hpp
++++ b/net/include/wnk/net/http.hpp
+@@ -105,6 +105,11 @@ class HttpTransport {
+ struct CurlOptions {
+     std::string ca_bundle;   // extra CA file (PEM) used instead of the system store when set
+     std::string user_agent = "wnk/0.1";
++    // Keep the cookies servers set (Set-Cookie, also on redirects) in memory and send them back on
++    // later requests of this transport, as a browser or ExoPlayer's Cronet source does: streaming
++    // servers that set a cookie on the playlist and check it on segments and keys. Never logged, never
++    // written to disk; gone with the transport. A request's own Cookie header is sent as well.
++    bool cookies = false;
+ };
+ 
+ // nullptr with *error set if libcurl.so.4 cannot be loaded.
+diff --git a/net/src/curl_api.cpp b/net/src/curl_api.cpp
+index c2aed48..84400e0 100644
+--- a/net/src/curl_api.cpp
++++ b/net/src/curl_api.cpp
+@@ -43,6 +43,9 @@ const CurlApi &api() {
+         sym(c.easy_perform, "curl_easy_perform");
+         sym(c.easy_send, "curl_easy_send");
+         sym(c.easy_recv, "curl_easy_recv");
++        c.share_init = reinterpret_cast<decltype(c.share_init)>(dlsym(lib, "curl_share_init"));
++        c.share_setopt = reinterpret_cast<decltype(c.share_setopt)>(dlsym(lib, "curl_share_setopt"));
++        c.share_cleanup = reinterpret_cast<decltype(c.share_cleanup)>(dlsym(lib, "curl_share_cleanup"));
+         if (!ok) {
+             c.easy_init = nullptr;
+             return c;
+diff --git a/net/src/curl_api.hpp b/net/src/curl_api.hpp
+index 20dfee4..4166a01 100644
+--- a/net/src/curl_api.hpp
++++ b/net/src/curl_api.hpp
+@@ -34,6 +34,10 @@ struct CurlApi {
+     CURLcode (*easy_perform)(CURL *) = nullptr;
+     CURLcode (*easy_send)(CURL *, const void *, size_t, size_t *) = nullptr;
+     CURLcode (*easy_recv)(CURL *, void *, size_t, size_t *) = nullptr;
++    // Optional (cookie sharing, 7.10): null when missing; CurlOptions::cookies is then ignored.
++    CURLSH *(*share_init)() = nullptr;
++    CURLSHcode (*share_setopt)(CURLSH *, CURLSHoption, ...) = nullptr;
++    CURLSHcode (*share_cleanup)(CURLSH *) = nullptr;
+     std::string error;
+     std::string version;
+ };
+diff --git a/net/src/curl_transport.cpp b/net/src/curl_transport.cpp
+index 77066c2..d6ea0e6 100644
+--- a/net/src/curl_transport.cpp
++++ b/net/src/curl_transport.cpp
+@@ -109,11 +109,34 @@ NetError map_error(CURLcode code, bool too_large, bool cancelled) {
+ }
+ 
+ class CurlTransport final : public HttpTransport {
++    // libcurl's share interface: one lock per data kind it shares (only cookies here).
++    static void lock(CURL *, curl_lock_data data, curl_lock_access, void *user) {
++        static_cast<CurlTransport *>(user)->share_locks_[static_cast<size_t>(data) % kLocks].lock();
++    }
++    static void unlock(CURL *, curl_lock_data data, void *user) {
++        static_cast<CurlTransport *>(user)->share_locks_[static_cast<size_t>(data) % kLocks].unlock();
++    }
++    static constexpr size_t kLocks = 8;
++    CURLSH *share_ = nullptr;
++    std::mutex share_locks_[kLocks];
++
+  public:
+-    explicit CurlTransport(CurlOptions options) : options_(std::move(options)) {}
++    explicit CurlTransport(CurlOptions options) : options_(std::move(options)) {
++        const CurlApi &c = api();
++        if (options_.cookies && c.share_init != nullptr && c.share_setopt != nullptr) {
++            share_ = c.share_init();
++            if (share_ != nullptr) {
++                c.share_setopt(share_, CURLSHOPT_LOCKFUNC, &CurlTransport::lock);
++                c.share_setopt(share_, CURLSHOPT_UNLOCKFUNC, &CurlTransport::unlock);
++                c.share_setopt(share_, CURLSHOPT_USERDATA, this);
++                c.share_setopt(share_, CURLSHOPT_SHARE, CURL_LOCK_DATA_COOKIE);
++            }
++        }
++    }
+ 
+     ~CurlTransport() override {
+         for (CURLM *m : idle_) api().multi_cleanup(m);
++        if (share_ != nullptr && api().share_cleanup != nullptr) api().share_cleanup(share_);
+     }
+ 
+     std::string describe() const override { return api().version; }
+@@ -188,6 +211,10 @@ class CurlTransport final : public HttpTransport {
+         c.easy_setopt(h, CURLOPT_HEADERFUNCTION, &on_header);
+         c.easy_setopt(h, CURLOPT_HEADERDATA, &t);
+         c.easy_setopt(h, CURLOPT_HTTPHEADER, headers);
++        if (share_ != nullptr) {
++            c.easy_setopt(h, CURLOPT_SHARE, share_);
++            c.easy_setopt(h, CURLOPT_COOKIEFILE, "");  // the cookie engine on, nothing read from disk
++        }
+         if (req.method == "GET") {
+             c.easy_setopt(h, CURLOPT_HTTPGET, 1L);
+         } else if (req.method == "HEAD") {
+diff --git a/tests/integration/http_server.py b/tests/integration/http_server.py
+index 81beea5..c46b1ee 100644
+--- a/tests/integration/http_server.py
++++ b/tests/integration/http_server.py
+@@ -347,6 +347,34 @@ class Handler(http.server.BaseHTTPRequestHandler):
+             self.send_header("Content-Length", "0")
+             self.end_headers()
+             return
++        if url.path == "/cookie/set":
++            # The cookie arrives on a redirect, as login and token pages often set it.
++            self.send_response(302)
++            self.send_header("Set-Cookie", "session=abc123; Path=/")
++            self.send_header("Location", "/cookie/check")
++            self.send_header("Content-Length", "0")
++            self.end_headers()
++            return
++        if url.path == "/cookie/check":
++            ok = "session=abc123" in (self.headers.get("Cookie") or "")
++            return self._send(200 if ok else 403, b"cookie ok" if ok else b"no cookie")
++        if url.path.startswith("/guard/") and FILES_DIR["path"]:
++            # A stream behind its site's headers: Referer and Origin on every request, and the cookie
++            # the playlist response sets on every segment.
++            name = urllib.parse.unquote(url.path[len("/guard/"):])
++            path = os.path.join(FILES_DIR["path"], name)
++            if "/" in name or name.startswith(".") or not os.path.isfile(path):
++                return self._send(404, b"not found")
++            if (self.headers.get("Referer") != "https://site.example/" or
++                    self.headers.get("Origin") != "https://site.example"):
++                return self._send(403, b"wrong referer or origin")
++            playlist = name.endswith(".m3u8")
++            if not playlist and "gate=open" not in (self.headers.get("Cookie") or ""):
++                return self._send(403, b"no cookie")
++            with open(path, "rb") as f:
++                data = f.read()
++            extra = {"Set-Cookie": "gate=open; Path=/guard"} if playlist else {}
++            return self._send(200, data, extra)
+         if url.path == "/echo":
+             info = {"method": self.command, "body": body.decode("utf-8", "replace"),
+                     "x_test": self.headers.get("X-Test", ""), "expect": self.headers.get("Expect", "")}
+diff --git a/tests/integration/test_http_curl.cpp b/tests/integration/test_http_curl.cpp
+index 40de36a..81b861f 100644
+--- a/tests/integration/test_http_curl.cpp
++++ b/tests/integration/test_http_curl.cpp
+@@ -125,6 +125,27 @@ TEST("redirects are followed unless disabled") {
+     CHECK_EQ(t->perform(no, {}).status, 302L);
+ }
+ 
++TEST("cookies: kept across requests (also when set on a redirect) only when the transport asks") {
++    NEED_SERVER();
++    CurlOptions o;
++    o.cookies = true;
++    auto jar = make_curl_transport(o);
++    REQUIRE(jar);
++    HttpResponse r = jar->perform(get(kHttp + "/cookie/set"), {});
++    CHECK_EQ(r.status, 200L);  // the redirect's own Set-Cookie is sent to its target
++    CHECK_EQ(r.body, std::string("cookie ok"));
++    CHECK_EQ(jar->perform(get(kHttp + "/cookie/check"), {}).status, 200L);  // and to later requests
++    auto plain = transport();
++    REQUIRE(plain);
++    CHECK_EQ(plain->perform(get(kHttp + "/cookie/set"), {}).status, 403L);
++    CHECK_EQ(plain->perform(get(kHttp + "/cookie/check"), {}).status, 403L);
++    HttpRequest own = get(kHttp + "/cookie/check");
++    own.headers.emplace_back("Cookie", "session=abc123");  // a request's own Cookie header still works
++    CHECK_EQ(plain->perform(own, {}).status, 200L);
++    auto fresh = make_curl_transport(o);  // each transport has its own cookies
++    CHECK_EQ(fresh->perform(get(kHttp + "/cookie/check"), {}).status, 403L);
++}
++
+ TEST("POST, PUT and custom headers reach the server; no Expect header") {
+     NEED_SERVER();
+     auto t = transport();
+diff --git a/tests/integration/test_adaptive_source.cpp b/tests/integration/test_adaptive_source.cpp
+--- a/tests/integration/test_adaptive_source.cpp	2026-10-20 07:35:07.061769814 +1100
++++ b/tests/integration/test_adaptive_source.cpp	2026-10-20 07:35:07.062982169 +1100
+@@ -439,6 +439,34 @@
+     check_seek("mp.mpd", 3000000, 2000000);  // back in the first
+ }
+ 
++TEST("adaptive source: HLS behind Referer, Origin and a cookie the playlist sets") {
++    SKIP_UNLESS_READY();
++    // ts.m3u8 at /guard/: every request needs the site's Referer and Origin, every segment the
++    // cookie set with the playlist (as ExoPlayer's Cronet source keeps it).
++    auto run = [](bool cookies, bool headers, std::string *err) {
++        net::CurlOptions co;
++        co.cookies = cookies;
++        AdaptiveSourceOptions o = options();
++        o.http = std::shared_ptr<net::HttpTransport>(net::make_curl_transport(co));
++        if (headers) o.headers = {{"Referer", "https://site.example/"}, {"Origin", "https://site.example"}};
++        AdaptiveSource s(o);
++        if (!s.open(env("WNK_TEST_HTTP_BASE") + "/guard/ts.m3u8", err)) return size_t{0};
++        StreamFormat f;
++        if (!s.select(0, s.info().best(TrackType::Audio) ? s.info().best(TrackType::Audio)->index : -1, starfish_like(),
++                      &f, err)) {
++            return size_t{0};
++        }
++        return drain(s).video.size();
++    };
++    std::string err;
++    CHECK_EQ(run(true, true, &err), size_t{250});
++    CHECK_EQ(run(false, true, &err), size_t{0});  // the segments are refused without the cookie
++    CHECK(err.find("403") != std::string::npos);
++    err.clear();
++    CHECK_EQ(run(true, false, &err), size_t{0});  // and the playlist without the headers
++    CHECK(err.find("403") != std::string::npos);
++}
++
+ TEST("adaptive source: WebM DASH (VP9, Opus) indexed by its Cues") {
+     SKIP_UNLESS_READY();
+     const std::string d = env("WNK_TEST_FILES_DIR");

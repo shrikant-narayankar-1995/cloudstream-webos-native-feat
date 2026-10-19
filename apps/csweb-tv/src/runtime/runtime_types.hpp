@@ -85,6 +85,7 @@ struct Link {
 
 struct Subtitle {
     std::string lang, url;
+    std::map<std::string, std::string> headers;  // SubtitleFile.headers (withHeaders); never logged
 };
 
 Provider parse_provider(const nlohmann::json &e);

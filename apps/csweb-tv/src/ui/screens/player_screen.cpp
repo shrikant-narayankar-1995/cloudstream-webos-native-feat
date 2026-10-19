@@ -15,6 +15,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <strings.h>
 
 namespace csweb::ui {
 
@@ -259,7 +260,7 @@ void PlayerScreen::play_link(Ui &ui, size_t index) {
     bar_->set_visible(true);
     source_->set_text(link_label(link));
     ui.set_clear_color(wnk::render::kTransparent);
-    auto http = s_.ctx->http();
+    auto http = s_.player_http ? s_.player_http : s_.ctx->http();
     controller_ = std::make_unique<PlaybackController>(player::make_source(link, http, s_.device, settings::preferred_max_height(*s_.settings)),
                                                        player::make_backend(s_.device),
                                                        s_.ctx->dispatcher(), PlaybackOptions{});
@@ -477,7 +478,15 @@ void PlayerScreen::select_external_subtitle(Ui &ui, size_t index) {
     req.url = subtitles_[index].url;
     req.max_response_bytes = 8u << 20;
     req.timeout_ms = 30000;
-    req.headers = {{"User-Agent", player::kCloudStreamUserAgent}};
+    // CS3IPlayer.createOnlineSource(sub.headers): CloudStream's user agent unless the plugin's
+    // headers name one, then those headers.
+    req.headers.clear();
+    bool own_agent = false;
+    for (const auto &[k, v] : subtitles_[index].headers) {
+        own_agent = own_agent || strcasecmp(k.c_str(), "User-Agent") == 0;
+        req.headers.emplace_back(k, v);
+    }
+    if (!own_agent) req.headers.emplace_back("User-Agent", player::kCloudStreamUserAgent);
     ui.toast("Loading subtitles…", 1500);
     s_.http->send(req, {}, life_.weak(), [this, index](wnk::net::HttpResponse res) {
         Ui *u = this->ui();

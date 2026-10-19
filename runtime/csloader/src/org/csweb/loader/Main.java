@@ -487,7 +487,7 @@ public final class Main {
                     String data = required(p, "url");
                     int[] n = {0};
                     Object r = await(c -> api.loadLinks(data, false,
-                            sub -> { emit(describe("subtitle", sub)); return Unit.INSTANCE; },
+                            sub -> { emit(subtitle(sub, "true".equals(p.get("withHeaders")))); return Unit.INSTANCE; },
                             link -> { n[0]++; emit(link(link, "true".equals(p.get("withHeaders")))); return Unit.INSTANCE; }, c));
                     emit(event("links_returned", "value", String.valueOf(r), "count", n[0]));
                     return n[0] > 0;
@@ -648,6 +648,19 @@ public final class Main {
                 a.add(x);
             }
             m.put("audioTracks", a);
+        }
+        return m;
+    }
+
+    /** A SubtitleFile; its header values (newSubtitleFile headers) go only to the app, as for links. */
+    private static Map<String, Object> subtitle(Object sub, boolean withHeaders) {
+        Map<String, Object> m = describe("subtitle", sub);
+        Object headers = tryBean(sub, "getHeaders");
+        if (withHeaders && headers instanceof Map) {
+            Map<String, Object> h = new LinkedHashMap<>();
+            for (Map.Entry<?, ?> e : ((Map<?, ?>) headers).entrySet()) h.put(String.valueOf(e.getKey()), String.valueOf(e.getValue()));
+            m.remove("headerNames");
+            m.put("headers", h);
         }
         return m;
     }

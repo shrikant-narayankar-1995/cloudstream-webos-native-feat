@@ -59,6 +59,9 @@ TEST("links_and_quality") {
     CHECK_EQ(d.drm->key_request_parameters.at("a"), std::string("b"));
     CHECK_EQ(std::string(drm_name("EDEF8BA9-79D6-4ACE-A3C8-27DCD51D21ED")), std::string("Widevine"));
     CHECK_EQ(std::string(drm_name("9a04f079-9840-4286-ab92-e65be0885f95")), std::string("PlayReady"));
+    auto sub = parse_subtitle(json::parse(R"J({"lang":"English","url":"https://s/en.vtt","headers":{"Referer":"https://site/"}})J"));
+    CHECK_EQ(sub.headers.at("Referer"), std::string("https://site/"));
+    CHECK(parse_subtitle(json::parse(R"J({"lang":"x","url":"u","headerNames":["Referer"]})J")).headers.empty());
     CHECK_EQ(quality_label(1080), std::string("1080p"));
     CHECK_EQ(quality_label(2160), std::string("4K"));
     CHECK_EQ(quality_label(400), std::string());
