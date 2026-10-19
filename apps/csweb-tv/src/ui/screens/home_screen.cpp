@@ -2,16 +2,20 @@
 #include "ui/screens/home_screen.hpp"
 
 #include "core/guard.hpp"
+#include "settings/preferences.hpp"
 #include "ui/theme/theme.hpp"
 #include "ui/widgets/art.hpp"
 #include "ui/widgets/pill_button.hpp"
 #include "ui/widgets/top_bar.hpp"
+#include "ui/widgets/type_chips.hpp"
 
 #include "wnk/log.hpp"
 
 #include <algorithm>
 #include <cctype>
 #include <ctime>
+#include <functional>
+#include <memory>
 #include <set>
 
 namespace csweb::ui {
@@ -139,10 +143,10 @@ std::string HomeScreen::chosen_provider() const {
 }
 
 std::string HomeScreen::random_provider() const {
+    // HomeViewModel: a random provider among those the settings allow on Home.
     std::vector<std::string> with_home;
-    for (const auto &p : s_.plugins->providers()) {
-        if (p.has_main_page) with_home.push_back(p.name);
-    }
+    for (const auto &p : settings::preferred_providers(s_.plugins->providers(), settings::read_filters(*s_.settings), true))
+        with_home.push_back(p.name);
     if (with_home.empty()) return {};
     return with_home[std::uniform_int_distribution<size_t>(0, with_home.size() - 1)(rng_)];
 }
@@ -353,9 +357,19 @@ void HomeScreen::show_hero(const runtime::Details &d) {
 void HomeScreen::open_provider_picker(Ui &ui) {
     auto dialog = std::make_unique<Dialog>("Choose a source", "The home page shows one source at a time.");
     Dialog *dlg = dialog.get();
+    // HomeFragment.selectHomepage: the providers left by the language and media settings, the type
+    // chips (home_pref_homepage) narrowing the list.
+    const auto valid = settings::preferred_providers(s_.plugins->providers(), settings::read_filters(*s_.settings), true);
+    auto *list = static_cast<Column *>(nullptr);
+    auto fill = std::make_shared<std::function<void(const std::set<std::string> &)>>();
+    auto &chips = dlg->body().add<TypeChips>(5, [this, fill](Ui &, const std::set<std::string> &types) {
+        settings::put_set(*s_.settings, settings::kHomeTypes, types);
+        (*fill)(types);
+    });
+    chips.set_width(Dim::fixed(1100));
     auto &scroll = dlg->body().add<ScrollView>();
-    scroll.set_height(Dim::fixed(560));
-    auto &list = scroll.add<Column>(8);
+    scroll.set_height(Dim::fixed(460));
+    list = &scroll.add<Column>(8);
     // As HomeViewModel.loadAndCancel(fromUI = true): None and a provider are stored as chosen; Random
     // picks one now and stores that provider.
     auto choose = [this, dlg](const std::string &value) {
@@ -366,23 +380,19 @@ void HomeScreen::open_provider_picker(Ui &ui) {
             load(ui, chosen_provider());
         };
     };
-    list.add<PillButton>("None", "", PillButton::Style::Glass, choose(kNoneProvider), 60);
-    list.add<PillButton>("Random", "refresh", PillButton::Style::Glass, choose(kRandomProvider), 60);
-    // HomeFragment's list: None and Random, then the providers with a home page by lower-case name.
-    // (CloudStream also filters them by the media-type chips and puts pinned ones first; not built yet.)
-    std::vector<runtime::Provider> sorted = s_.plugins->providers();
-    std::stable_sort(sorted.begin(), sorted.end(), [](const auto &a, const auto &b) {
-        auto lower = [](std::string x) {
-            std::transform(x.begin(), x.end(), x.begin(), [](unsigned char c) { return std::tolower(c); });
-            return x;
-        };
-        return lower(a.name) < lower(b.name);
-    });
-    for (const auto &p : sorted) {
-        if (!p.has_main_page) continue;
-        auto &b = list.add<PillButton>(p.name, p.name == provider_ ? "check" : "", PillButton::Style::Glass, choose(p.name), 60);
-        b.name = "provider." + p.name;
-    }
+    *fill = [this, list, valid, choose](const std::set<std::string> &types) {
+        list->clear_children();
+        list->add<PillButton>("None", "", PillButton::Style::Glass, choose(kNoneProvider), 60);
+        list->add<PillButton>("Random", "refresh", PillButton::Style::Glass, choose(kRandomProvider), 60);
+        // None and Random, then the providers by lower-case name (pinned providers are not built).
+        for (const auto &p : settings::home_providers(valid, types)) {
+            auto &b = list->add<PillButton>(p.name, p.name == provider_ ? "check" : "", PillButton::Style::Glass, choose(p.name), 60);
+            b.name = "provider." + p.name;
+        }
+    };
+    const auto types = settings::get_set(*s_.settings, settings::kHomeTypes, settings::default_chip_types());
+    chips.set(valid, types);
+    (*fill)(types);
     dlg->add_button("Close");
     ui.show_dialog(std::move(dialog));
 }

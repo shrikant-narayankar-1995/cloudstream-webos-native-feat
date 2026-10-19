@@ -9,7 +9,10 @@
 //   - Sources, Subtitles (the plugin's subtitle files and the stream's own tracks) and Audio are
 //     chosen from the controls;
 //   - it starts where the viewer stopped (getPos), saves the position as it plays
-//     (setViewPosAndResume), and plays the next episode when one ends.
+//     (setViewPosAndResume), and plays the next episode when one ends (autoplay_next_key);
+//   - subtitles in the chosen language turn on by themselves (autoSelectSubtitles), can be delayed
+//     or advanced (subtitle offset), and use the size and style from Settings;
+//   - Left/Right seek by the times set for controls shown and hidden (FullScreenPlayer).
 // Playback is the kit's: PlaybackController with the TV's decoder under a transparent UI.
 #pragma once
 
@@ -61,6 +64,9 @@ class PlayerScreen : public wnk::ui::Screen {
     void open_subtitles(wnk::ui::Ui &ui);
     void open_audio(wnk::ui::Ui &ui);
     void select_external_subtitle(wnk::ui::Ui &ui, size_t index);
+    void auto_select_subtitles();
+    void open_subtitle_delay(wnk::ui::Ui &ui);
+    int64_t seek_us(bool controls_hidden) const;
     void save_position();
     void play_next(wnk::ui::Ui &ui);
     std::string link_label(const runtime::Link &l) const;
@@ -80,6 +86,8 @@ class PlayerScreen : public wnk::ui::Screen {
     std::vector<wnk::media::TrackInfo> tracks_;
     int external_sub_ = -1;  // index into subtitles_ when a plugin subtitle file is shown
     std::vector<std::shared_ptr<const wnk::media::SubtitleCue>> external_cues_;
+    int64_t sub_delay_us_ = 0;     // positive: subtitles later
+    bool subs_auto_done_ = false;  // auto-select ran (once per player)
     int64_t position_us_ = wnk::media::kNoTime;
     bool resume_on_return_ = false;
     bool next_pending_ = false;  // the playing link failed: try the next one

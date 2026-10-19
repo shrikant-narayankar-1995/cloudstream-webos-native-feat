@@ -2,9 +2,11 @@
 #include "ui/screens/search_screen.hpp"
 
 #include "core/guard.hpp"
+#include "settings/preferences.hpp"
 #include "ui/theme/theme.hpp"
 #include "ui/widgets/pill_button.hpp"
 #include "ui/widgets/top_bar.hpp"
+#include "ui/widgets/type_chips.hpp"
 
 #include <algorithm>
 
@@ -30,6 +32,13 @@ SearchScreen::SearchScreen(app::Services &s) : Screen("Search"), s_(s) {
     field_->name = "search.field";
     field_->set_max_length(120);
     field_->set_on_submit([this](Ui &ui, const std::string &q) { search(ui, q); });
+    chips_ = &left.add<TypeChips>(3, [this](Ui &ui, const std::set<std::string> &types) {
+        settings::put_set(*s_.settings, settings::kSearchTypes, types);
+        if (!query_.empty()) search(ui, query_);
+    });
+    chips_->set_width(Dim::fill());
+    refresh_chips();
+    plugins_sub_ = s_.plugins_changed.subscribe([this] { refresh_chips(); });
     left.add<Label>("Recent", TextRole::Small).set_muted(true).set_padding({0, 20, 0, 0});
     history_ = &left.add<wnk::ui::Row>(10);
     show_history();
@@ -47,6 +56,10 @@ SearchScreen::SearchScreen(app::Services &s) : Screen("Search"), s_(s) {
 
 void SearchScreen::on_show(Ui &ui) {
     Screen::on_show(ui);
+    if (shown_) {  // the filters or the history may have changed in Settings
+        refresh_chips();
+        show_history();
+    }
     if (!shown_) ui.focus(field_);  // opened from the nav bar: straight to typing
     shown_ = true;
 }
@@ -57,6 +70,12 @@ void SearchScreen::start_query(Ui &ui, const std::string &query) {
 }
 
 SearchScreen::~SearchScreen() { cancel(); }
+
+void SearchScreen::refresh_chips() {
+    // The chips of the providers left after the language and media filters (SearchFragment.reloadRepos).
+    const auto valid = settings::preferred_providers(s_.plugins->providers(), settings::read_filters(*s_.settings), false);
+    chips_->set(valid, settings::get_set(*s_.settings, settings::kSearchTypes, settings::default_chip_types()));
+}
 
 void SearchScreen::cancel() {
     for (auto &kv : running_) s_.runtime->cancel(kv.first);
@@ -127,8 +146,9 @@ void SearchScreen::search(Ui &, const std::string &raw) {
     s_.settings->set(kHistoryKey, next.dump());
     show_history();
 
-    for (const auto &p : s_.plugins->providers()) {
-        const std::string provider = p.name;
+    const auto active = settings::search_providers(s_.plugins->providers(), settings::read_filters(*s_.settings),
+                                                   chips_->selected());
+    for (const std::string &provider : active) {
         auto items = std::make_shared<std::vector<runtime::SearchResult>>();
         auto empty = std::make_shared<bool>(false);  // answered with no results (the runtime's "empty")
         auto id = std::make_shared<runtime::RuntimeClient::RequestId>(0);
@@ -169,6 +189,10 @@ void SearchScreen::search(Ui &, const std::string &raw) {
     }
     if (s_.plugins->providers().empty()) {
         status_->set_text("No sources are loaded. Install plugins in Settings › Extensions.");
+        return;
+    }
+    if (active.empty()) {
+        status_->set_text("No source matches the provider languages and media types chosen in Settings.");
         return;
     }
     update_status();

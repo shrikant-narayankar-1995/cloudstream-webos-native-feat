@@ -32,6 +32,11 @@ long long SettingsStore::get_int(const std::string &key, long long def) const {
     return it != values_.end() && it->is_number_integer() ? it->get<long long>() : def;
 }
 
+nlohmann::json SettingsStore::get(const std::string &key) const {
+    auto it = values_.find(key);
+    return it != values_.end() ? *it : nlohmann::json();
+}
+
 void SettingsStore::set(const std::string &key, nlohmann::json value) {
     if (values_.contains(key) && values_[key] == value) return;
     values_[key] = std::move(value);

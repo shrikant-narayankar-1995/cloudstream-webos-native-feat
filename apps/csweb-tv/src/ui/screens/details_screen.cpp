@@ -2,6 +2,7 @@
 #include "ui/screens/details_screen.hpp"
 
 #include "core/guard.hpp"
+#include "settings/preferences.hpp"
 #include "ui/theme/theme.hpp"
 #include "ui/widgets/art.hpp"
 #include "ui/widgets/episode_row.hpp"
@@ -101,6 +102,23 @@ void DetailsScreen::on_show(Ui &ui) {
 }
 
 void DetailsScreen::load(Ui &) {
+    // Opened before the plugins have loaded (Continue watching, the library, a link at start): wait
+    // for the provider instead of failing with "no loaded provider".
+    if (s_.plugins->provider(provider_) == nullptr && s_.plugins->loading()) {
+        status_->set_text("Loading " + provider_ + "…");
+        if (!waiting_plugins_) {
+            waiting_plugins_ = true;
+            plugins_sub_ = s_.plugins_changed.subscribe([this] {
+                if (s_.plugins->provider(provider_) == nullptr && s_.plugins->loading()) return;
+                if (Ui *u = this->ui(); u != nullptr && !loaded_ && request_ == 0) load(*u);
+            });
+        }
+        return;
+    }
+    if (s_.plugins->provider(provider_) == nullptr) {
+        status_->set_text(provider_ + " is not loaded. Install or enable its plugin in Settings › Extensions.");
+        return;
+    }
     auto details = std::make_shared<runtime::Details>();
     auto episodes = std::make_shared<std::vector<runtime::Episode>>();
     auto got = std::make_shared<bool>(false);
@@ -187,8 +205,10 @@ void DetailsScreen::show(Ui &ui) {
         show_group(group_, 0);
     }
 
-    cast_title_->set_visible(!d.actors.empty());
-    cast_->set_visible(!d.actors.empty());
+    // ResultFragmentTv: the cast only when show_cast_in_details_key is on (the default).
+    const bool show_cast = s_.settings->get_bool(settings::kShowCast, true) && !d.actors.empty();
+    cast_title_->set_visible(show_cast);
+    cast_->set_visible(show_cast);
     std::string cast;
     for (const auto &a : d.actors) {
         if (!present(a.name)) continue;

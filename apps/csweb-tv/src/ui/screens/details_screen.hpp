@@ -61,6 +61,8 @@ class DetailsScreen : public wnk::ui::Screen {
     wnk::ui::Label *title_ = nullptr, *meta_ = nullptr, *tags_ = nullptr, *plot_ = nullptr, *status_ = nullptr;
     PillButton *play_ = nullptr, *resume_ = nullptr, *bookmark_ = nullptr;
     core::Signal::Subscription library_sub_;
+    core::Signal::Subscription plugins_sub_;  // waiting for the provider's plugin to load
+    bool waiting_plugins_ = false;
     wnk::ui::Row *group_row_ = nullptr, *range_row_ = nullptr;
     wnk::ui::Column *episodes_ = nullptr;
     wnk::ui::Label *cast_title_ = nullptr, *cast_ = nullptr, *more_title_ = nullptr;

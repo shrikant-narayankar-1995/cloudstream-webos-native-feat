@@ -26,6 +26,8 @@ class SettingsStore {
     std::string get_string(const std::string &key, const std::string &def = {}) const;
     bool get_bool(const std::string &key, bool def) const;
     long long get_int(const std::string &key, long long def) const;
+    // The stored value, null when unset.
+    nlohmann::json get(const std::string &key) const;
     void set(const std::string &key, nlohmann::json value);
 
  private:

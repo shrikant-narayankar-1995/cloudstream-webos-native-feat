@@ -21,6 +21,7 @@ add_library(csweb_core STATIC
         src/plugins/plugin_manager.cpp
         src/plugins/plugin_store.cpp
         src/plugins/repository.cpp
+        src/settings/preferences.cpp
         src/settings/settings_store.cpp
         src/runtime/episode_groups.cpp
         src/runtime/runtime_client.cpp
@@ -32,7 +33,7 @@ target_link_libraries(csweb_core PUBLIC wnk_storage wnk_logging wnk_net wnk_asyn
 
 # ---- tests (host) -----------------------------------------------------------------------------------
 if (WNK_BUILD_TESTS)
-    foreach (t sha256 zip_check repository runtime_types plugin_store runtime_client episode_groups redact deep_link library dir_snapshot)
+    foreach (t sha256 zip_check repository runtime_types plugin_store runtime_client episode_groups redact deep_link library dir_snapshot preferences)
         add_executable(csweb_test_${t} tests/test_${t}.cpp)
         target_include_directories(csweb_test_${t} PRIVATE "${PROJECT_SOURCE_DIR}/tests/unit")
         target_compile_definitions(csweb_test_${t} PRIVATE CSWEB_FIXTURES="${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures")
@@ -57,6 +58,7 @@ add_executable(csweb-tv
         src/main.cpp
         src/app/application.cpp
         src/app/router.cpp
+        src/ui/dialogs/multi_select.cpp
         src/ui/dialogs/plugin_dialog_host.cpp
         src/ui/screens/details_screen.cpp
         src/ui/screens/extensions_screen.cpp
@@ -71,7 +73,8 @@ add_executable(csweb-tv
         src/ui/widgets/icons.cpp
         src/ui/widgets/nav_bar.cpp
         src/ui/widgets/pill_button.cpp
-        src/ui/widgets/top_bar.cpp)
+        src/ui/widgets/top_bar.cpp
+        src/ui/widgets/type_chips.cpp)
 target_link_libraries(csweb-tv PRIVATE csweb_core csweb_player wnk_app wnk_media_ui)
 target_compile_definitions(csweb-tv PRIVATE CSWEB_VERSION="${CSWEB_VERSION}")
 # Host runs find the runtime in the repository (runtime/make_dist.py); the TV uses the packaged one.

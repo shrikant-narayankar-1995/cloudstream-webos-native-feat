@@ -3,7 +3,8 @@
 // Search (design 02), like CloudStream's SearchFragment/SearchViewModel: the query goes to every
 // loaded provider at once, results are grouped by provider as each answers, providers still
 // searching and the ones that failed are named, and recent queries are kept (search history).
-// Typing uses LG's on-screen keyboard through the kit's TextField.
+// Typing uses LG's on-screen keyboard through the kit's TextField. The type chips choose which
+// providers are asked (SearchFragment.search with the language and preferred-media settings).
 #pragma once
 
 #include "app/router.hpp"
@@ -17,6 +18,8 @@
 #include <vector>
 
 namespace csweb::ui {
+
+class TypeChips;
 
 class SearchScreen : public wnk::ui::Screen {
  public:
@@ -37,10 +40,13 @@ class SearchScreen : public wnk::ui::Screen {
     void show_history();
     void update_status();
     void cancel();
+    void refresh_chips();
 
     app::Services &s_;
     wnk::ui::TextField *field_ = nullptr;
     wnk::ui::Row *history_ = nullptr;
+    TypeChips *chips_ = nullptr;
+    core::Signal::Subscription plugins_sub_;
     wnk::ui::Column *results_ = nullptr;
     wnk::ui::Label *status_ = nullptr;
     std::vector<std::unique_ptr<Group>> groups_;

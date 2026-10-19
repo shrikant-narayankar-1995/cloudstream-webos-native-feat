@@ -5,12 +5,15 @@
 #include "core/redact.hpp"
 #include "player/link_priority.hpp"
 #include "player/media_factory.hpp"
+#include "settings/preferences.hpp"
 #include "ui/theme/theme.hpp"
 #include "ui/widgets/pill_button.hpp"
 
 #include "wnk/log.hpp"
+#include "wnk/ui/forms.hpp"
 
 #include <algorithm>
+#include <cmath>
 #include <cstdio>
 
 namespace csweb::ui {
@@ -22,7 +25,6 @@ using wnk::input::Phase;
 
 namespace {
 constexpr const char *kCat = "csweb";
-constexpr int64_t kSeekUs = 10000000;
 
 std::string clock_text(int64_t us) {
     if (us == kNoTime || us < 0) return "--:--";
@@ -59,9 +61,17 @@ PlayerScreen::PlayerScreen(app::Services &s, app::PlayTarget target)
     subs_view_ = &add<SubtitleView>();
     subs_view_->set_width(Dim::fill()).set_height(Dim::fill());
     subs_view_->set_provider([this]() -> SubtitleView::Cues {
-        if (external_sub_ >= 0) return player::cues_at(external_cues_, position_us_);
-        return controller_ ? controller_->subtitles_now() : SubtitleView::Cues{};
+        const int64_t at = position_us_ == kNoTime ? kNoTime : position_us_ - sub_delay_us_;
+        if (external_sub_ >= 0) return player::cues_at(external_cues_, at);
+        if (!controller_) return {};
+        if (sub_delay_us_ == 0 || at == kNoTime) return controller_->subtitles_now();
+        const int track = controller_->subtitle_track();
+        return track < 0 ? SubtitleView::Cues{} : controller_->subtitle_store().active(track, at);
     });
+    const long long size = s_.settings->get_int(settings::kSubtitleSize, 100);
+    subs_view_->set_text_scale(0.055f * static_cast<float>(size > 0 && size <= 300 ? size : 100) / 100.0f);
+    subs_view_->set_text_style(s_.settings->get_bool(settings::kSubtitleBox, false) ? SubtitleView::TextStyle::Box
+                                                                                      : SubtitleView::TextStyle::Outline);
 
     // Controls: a dark band at the bottom.
     bar_ = &add<Column>(16);
@@ -87,16 +97,16 @@ PlayerScreen::PlayerScreen(app::Services &s, app::PlayTarget target)
     auto &buttons = bar_->add<wnk::ui::Row>(16);
     buttons.set_focus_scope();
     buttons.add<PillButton>("", "replay", PillButton::Style::Glass, [this](Ui &) {
-        if (controller_) controller_->seek_relative(-kSeekUs);
-    }, 64).accessible_label = "Back 10 seconds";
+        if (controller_) controller_->seek_relative(-seek_us(false));
+    }, 64).accessible_label = "Back";
     pause_ = &buttons.add<PillButton>("", "pause", PillButton::Style::Glass, [this](Ui &) {
         if (controller_) controller_->toggle_pause();
     }, 64);
     pause_->accessible_label = "Play or pause";
     pause_->name = "player.pause";
     buttons.add<PillButton>("", "skip", PillButton::Style::Glass, [this](Ui &) {
-        if (controller_) controller_->seek_relative(kSeekUs);
-    }, 64).accessible_label = "Forward 10 seconds";
+        if (controller_) controller_->seek_relative(seek_us(false));
+    }, 64).accessible_label = "Forward";
     auto &src = buttons.add<PillButton>("Sources", "play", PillButton::Style::Glass, [this](Ui &ui) { open_sources(ui); }, 64);
     src.name = "player.sources";
     buttons.add<PillButton>("Subtitles", "subtitles", PillButton::Style::Glass, [this](Ui &ui) { open_subtitles(ui); }, 64)
@@ -246,7 +256,8 @@ void PlayerScreen::play_link(Ui &ui, size_t index) {
     source_->set_text(link_label(link));
     ui.set_clear_color(wnk::render::kTransparent);
     auto http = s_.ctx->http();
-    controller_ = std::make_unique<PlaybackController>(player::make_source(link, http, s_.device), player::make_backend(s_.device),
+    controller_ = std::make_unique<PlaybackController>(player::make_source(link, http, s_.device, settings::preferred_max_height(*s_.settings)),
+                                                       player::make_backend(s_.device),
                                                        s_.ctx->dispatcher(), PlaybackOptions{});
     controller_->set_state_callback(core::guarded(life_.weak(), [this](PlayState from, PlayState to, const PlaybackSnapshot &snap) {
         const std::string error = core::redact_queries(snap.error);
@@ -264,12 +275,15 @@ void PlayerScreen::play_link(Ui &ui, size_t index) {
                 }
             }
             tracks_ = snap.info.tracks;
-            for (const TrackInfo &t : tracks_) {
-                if (t.type == TrackType::Subtitle && t.subtitle != SubtitleKind::None && t.is_default) {
-                    controller_->set_subtitle_track(t.index);
-                    break;
+            if (external_sub_ < 0) {
+                for (const TrackInfo &t : tracks_) {
+                    if (t.type == TrackType::Subtitle && t.subtitle != SubtitleKind::None && t.is_default) {
+                        controller_->set_subtitle_track(t.index);
+                        break;
+                    }
                 }
             }
+            auto_select_subtitles();
         } else if (to == PlayState::Ended) {
             ended_pending_ = true;
         } else if (to == PlayState::Paused) {
@@ -322,19 +336,19 @@ bool PlayerScreen::on_action(Ui &ui, const wnk::input::ActionEvent &e) {
             return true;
         case Action::Play: controller_->play(); return true;
         case Action::Pause: controller_->pause(); return true;
-        case Action::Rewind: controller_->seek_relative(-kSeekUs); return true;
-        case Action::FastForward: controller_->seek_relative(kSeekUs); return true;
+        case Action::Rewind: controller_->seek_relative(-seek_us(hidden)); return true;
+        case Action::FastForward: controller_->seek_relative(seek_us(hidden)); return true;
         case Action::Confirm:
             if (!hidden) return false;
             if (e.phase == Phase::Press) controller_->toggle_pause();
             return true;
         case Action::Left:
             if (!hidden) return false;
-            controller_->seek_relative(-kSeekUs);
+            controller_->seek_relative(-seek_us(true));
             return true;
         case Action::Right:
             if (!hidden) return false;
-            controller_->seek_relative(kSeekUs);
+            controller_->seek_relative(seek_us(true));
             return true;
         case Action::Up:
         case Action::Down:
@@ -355,7 +369,8 @@ void PlayerScreen::update(Ui &ui, float dt) {
         ended_pending_ = false;
         if (duration_us_ != kNoTime) position_us_ = duration_us_;
         save_position();
-        if (!target_.queue.empty()) {
+        // PlayerView: the next episode starts by itself only with autoplay_next_key on (the default).
+        if (!target_.queue.empty() && s_.settings->get_bool(settings::kAutoplayNext, true)) {
             play_next(ui);
             return;
         }
@@ -447,6 +462,7 @@ void PlayerScreen::open_subtitles(Ui &ui) {
                              }, 60)
             .name = "subs.track." + std::to_string(index);
     }
+    d->add_button("Sync", [this](Ui &u) { open_subtitle_delay(u); });
     d->add_button("Close");
     ui.show_dialog(std::move(d));
 }
@@ -478,6 +494,56 @@ void PlayerScreen::select_external_subtitle(Ui &ui, size_t index) {
         if (controller_) controller_->set_subtitle_track(-1);
         WNK_LOGI(kCat, "subtitle file %zu: %zu cues", index, external_cues_.size());
     });
+}
+
+void PlayerScreen::auto_select_subtitles() {
+    // GeneratorPlayer.autoSelectFromSettings: the first subtitle (by name) in the chosen language,
+    // the plugin's files first, then the stream's own tracks. Once per player; "None" turns nothing on.
+    if (subs_auto_done_ || !controller_) return;
+    subs_auto_done_ = true;
+    const std::string tag = settings::subtitle_language(*s_.settings);
+    if (tag.empty()) return;
+    std::vector<size_t> order(subtitles_.size());
+    for (size_t i = 0; i < order.size(); i++) order[i] = i;
+    std::stable_sort(order.begin(), order.end(), [this](size_t a, size_t b) { return subtitles_[a].lang < subtitles_[b].lang; });
+    for (size_t i : order) {
+        if (!settings::subtitle_matches(subtitles_[i].lang, tag)) continue;
+        WNK_LOGI(kCat, "subtitles: auto-selecting file %zu (%s)", i, tag.c_str());
+        if (Ui *u = this->ui()) select_external_subtitle(*u, i);
+        return;
+    }
+    for (const TrackInfo &t : tracks_) {
+        if (t.type != TrackType::Subtitle || t.subtitle == SubtitleKind::None) continue;
+        if (settings::subtitle_matches(t.language, tag) || settings::subtitle_matches(t.title, tag)) {
+            WNK_LOGI(kCat, "subtitles: auto-selecting track %d (%s)", t.index, tag.c_str());
+            controller_->set_subtitle_track(t.index);
+            return;
+        }
+    }
+}
+
+void PlayerScreen::open_subtitle_delay(Ui &ui) {
+    // CloudStream's subtitle offset: positive shows each line later, negative earlier.
+    auto d = std::make_unique<Dialog>("Subtitle sync", "Left and Right move the subtitles by a tenth of a second: positive shows them later, negative earlier.");
+    auto &slider = d->body().add<Slider>("Delay", -10.0f, 10.0f, 0.1f, static_cast<float>(sub_delay_us_) / 1e6f,
+                                         [this](Ui &, float v) { sub_delay_us_ = std::llround(v * 10.0f) * 100000; });
+    slider.set_format([](float v) {
+        char buf[32];
+        std::snprintf(buf, sizeof buf, "%+.1f s", v);
+        return std::string(buf);
+    });
+    slider.set_width(Dim::fixed(900));
+    slider.name = "subs.delay";
+    Slider *sp = &slider;
+    d->add_button("Reset", [this](Ui &) { sub_delay_us_ = 0; });
+    d->add_button("Done");
+    ui.show_dialog(std::move(d));
+    ui.focus(sp);
+}
+
+int64_t PlayerScreen::seek_us(bool controls_hidden) const {
+    const long long s = s_.settings->get_int(controls_hidden ? settings::kSeekOff : settings::kSeekOn, 10);
+    return (s > 0 && s <= 600 ? s : 10) * 1000000LL;
 }
 
 void PlayerScreen::open_audio(Ui &ui) {

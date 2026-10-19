@@ -36,7 +36,7 @@ bool is_adaptive(const runtime::Link &link) {
 }
 
 std::unique_ptr<MediaSource> make_source(const runtime::Link &link, std::shared_ptr<wnk::net::HttpTransport> http,
-                                         const DeviceMediaCaps &device) {
+                                         const DeviceMediaCaps &device, int max_height) {
     wnk::net::Headers headers;
     for (auto &h : link_headers(link)) headers.push_back(std::move(h));
     if (is_adaptive(link)) {
@@ -45,6 +45,7 @@ std::unique_ptr<MediaSource> make_source(const runtime::Link &link, std::shared_
         o.headers = std::move(headers);
         if (device.hevc == false) o.video_codecs = {CodecId::H264};
         if (device.uhd_panel != true) o.max_height = 1080;
+        if (max_height > 0 && max_height < o.max_height) o.max_height = max_height;
         o.dolby_vision = device.dolby_vision == true;
         return std::make_unique<AdaptiveSource>(o);
     }
