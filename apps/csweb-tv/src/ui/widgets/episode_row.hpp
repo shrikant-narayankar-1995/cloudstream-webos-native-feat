@@ -14,16 +14,20 @@ class EpisodeRow : public wnk::ui::View {
  public:
     EpisodeRow(const runtime::Episode &ep, std::string fallback_image, wnk::ui::ClickHandler on_click);
     std::string accessible_text() const override;
+    // Watched fraction drawn under the still (library::visual_progress); 0 hides it.
+    void set_progress(float fraction) { progress_ = fraction; }
 
  protected:
     void layout_content(wnk::ui::Ui &ui, const wnk::Rect &content) override;
     bool on_action(wnk::ui::Ui &ui, const wnk::input::ActionEvent &e) override;
     void draw(wnk::ui::Ui &ui) override;
+    void draw_over(wnk::ui::Ui &ui) override;
 
  private:
     wnk::ui::ImageView *still_;
     wnk::ui::Label *title_, *meta_, *plot_;
     wnk::ui::ClickHandler on_click_;
+    float progress_ = 0;
 };
 
 }  // namespace csweb::ui

@@ -58,8 +58,9 @@ apps/csweb-tv/
 Each screen follows the CloudStream source it corresponds to (external/cloudstream, commit eb962b4);
 the comment at the top of each screen names the classes. Known differences:
 
-- Navigation: Home, Search, Library, Downloads, Settings (CloudStream's destinations), not the
-  mockups' Movies/Series/Anime/Live tabs. Library and Downloads are not built yet and say so.
+- Navigation: Home, Search, Library, Settings (CloudStream's destinations), not the mockups'
+  Movies/Series/Anime/Live tabs. No Downloads: a Developer Mode TV can write only to RAM (tmpfs)
+  and to DB8, neither of which can hold video.
 - Home's source picker lists every provider with a home page; CloudStream also filters by the
   media-type chips and puts pinned providers first.
 - Links are ordered with CloudStream's default quality profile; per-profile priorities, hidden

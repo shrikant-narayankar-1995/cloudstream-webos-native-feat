@@ -7,7 +7,9 @@
 //     or one after another with the provider's delay when it sets sequentialMainPage;
 //   - each section is a row; the hero shows an item picked from the shuffled, de-duplicated items,
 //     with its full details loaded (CloudStream's preview: backdrop, plot);
-//   - no provider or no plugins: an empty state that leads to Extensions.
+//   - no provider or no plugins: an empty state that leads to Extensions;
+//   - above the provider's rows, Continue watching (HomeViewModel.getResumeWatching): the shows with
+//     an episode to resume, most recent first; choosing one opens it and resumes.
 #pragma once
 
 #include "app/router.hpp"
@@ -62,6 +64,7 @@ class HomeScreen : public wnk::ui::Screen {
     enum class StateAction { None, Extensions, ChooseSource };
     void set_state_text(const std::string &text, StateAction action);
     void cancel_requests();
+    void rebuild_resume();
 
     app::Services &s_;
     std::string provider_;  // shown provider name ("" when none)
@@ -86,6 +89,10 @@ class HomeScreen : public wnk::ui::Screen {
     PillButton *state_button_ = nullptr;
     StateAction state_action_ = StateAction::None;
     wnk::ui::Column *rows_box_ = nullptr;
+    wnk::ui::Label *resume_title_ = nullptr;
+    wnk::ui::CollectionView *resume_rail_ = nullptr;
+    std::vector<library::Resume> resume_;
+    core::Signal::Subscription library_sub_;
     core::Signal::Subscription plugins_sub_;
     double last_clock_ms_ = -1e9;
     wnk::async::Lifetime life_;  // destroyed first: late runtime answers find the screen gone

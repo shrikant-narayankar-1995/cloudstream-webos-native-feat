@@ -53,6 +53,9 @@ void Application::on_start(wnk::app::Context &ctx) {
     settings_ = std::make_unique<settings::SettingsStore>(ctx.store(), ctx.pool());
     settings_->load();
     services_.settings = settings_.get();
+    library_ = std::make_unique<library::LibraryStore>(ctx.store(), ctx.pool());
+    library_->load();
+    services_.library = library_.get();
 
     if (auto transport = ctx.http()) {
         http_ = std::make_unique<wnk::net::HttpClient>(transport, ctx.pool(), ctx.dispatcher());

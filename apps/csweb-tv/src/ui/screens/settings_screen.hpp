@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
 // Settings (design 09): the CloudStream settings this app has so far — Extensions, the source shown
-// on Home — and what is running (app version, plugin runtime state). PendingTabScreen stands in for
-// the tabs not built yet (Library, Downloads) and says so.
+// on Home — and what is running (app version, plugin runtime state).
 #pragma once
 
 #include "app/router.hpp"
@@ -25,9 +24,5 @@ class SettingsScreen : public wnk::ui::Screen {
     core::Signal::Subscription sub_;
 };
 
-class PendingTabScreen : public wnk::ui::Screen {
- public:
-    PendingTabScreen(app::Services &s, app::Router::Tab tab, std::string title, std::string text);
-};
 
 }  // namespace csweb::ui

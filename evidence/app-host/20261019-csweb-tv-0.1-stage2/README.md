@@ -24,3 +24,7 @@ Playing; frames at 16 ms with the player on screen.
 Not working here, not attributed to the app: Dailymotion's HLS manifest answers 403 (`x-error-code: E005`)
 to any client tried (curl with CloudStream's user agent too); Internet Archive and Invidious searches did
 not answer (Internet Archive: the runtime's known archive.org TLS problem; Invidious: public instance).
+
+Library (later the same day): `t_library.png` (the conformance item bookmarked as Watching),
+`u_home_continue.png` (Continue watching after playing it); replaying it logged
+`player: resuming at 17 s` and seeked there.

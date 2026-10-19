@@ -30,7 +30,6 @@ void draw_ramp(Ui &ui, const wnk::Rect &r, wnk::render::Color c, float a0, float
 
 Backdrop::Backdrop(std::string url) {
     image_ = &add<ImageView>(url);
-    image_->set_width(wnk::ui::Dim::fill()).set_height(wnk::ui::Dim::fill());
     image_->set_fit(ImageFit::Cover);
     image_->set_visible(!url.empty());  // no artwork: the screen background, not a placeholder
 }
@@ -39,6 +38,8 @@ void Backdrop::set_url(const std::string &url) {
     if (image_->url() != url) image_->set_url(url);
     image_->set_visible(!url.empty());
 }
+
+void Backdrop::layout_content(Ui &ui, const wnk::Rect &content) { image_->layout(ui, content); }
 
 void Backdrop::draw_over(Ui &ui) {
     const wnk::Rect f = frame();

@@ -27,7 +27,6 @@ TopBar::TopBar(app::Router &router, Tab current) : Row(0) {
     const Item items[] = {{"Home", "", Tab::Home},
                           {"Search", "search", Tab::Search},
                           {"Library", "bookmark", Tab::Library},
-                          {"Downloads", "download", Tab::Downloads},
                           {"Settings", "settings", Tab::Settings}};
     for (const auto &it : items) {
         const Tab tab = it.tab;

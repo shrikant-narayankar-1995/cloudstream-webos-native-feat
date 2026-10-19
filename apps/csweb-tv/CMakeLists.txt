@@ -14,6 +14,8 @@ add_library(csweb_core STATIC
         src/core/child_process.cpp
         src/core/sha256.cpp
         src/core/zip_check.cpp
+        src/library/library.cpp
+        src/library/library_store.cpp
         src/plugins/plugin_manager.cpp
         src/plugins/plugin_store.cpp
         src/plugins/repository.cpp
@@ -28,7 +30,7 @@ target_link_libraries(csweb_core PUBLIC wnk_storage wnk_logging wnk_net wnk_asyn
 
 # ---- tests (host) -----------------------------------------------------------------------------------
 if (WNK_BUILD_TESTS)
-    foreach (t sha256 zip_check repository runtime_types plugin_store runtime_client episode_groups redact deep_link)
+    foreach (t sha256 zip_check repository runtime_types plugin_store runtime_client episode_groups redact deep_link library)
         add_executable(csweb_test_${t} tests/test_${t}.cpp)
         target_include_directories(csweb_test_${t} PRIVATE "${PROJECT_SOURCE_DIR}/tests/unit")
         target_compile_definitions(csweb_test_${t} PRIVATE CSWEB_FIXTURES="${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures")
@@ -57,6 +59,7 @@ add_executable(csweb-tv
         src/ui/screens/details_screen.cpp
         src/ui/screens/extensions_screen.cpp
         src/ui/screens/home_screen.cpp
+        src/ui/screens/library_screen.cpp
         src/ui/screens/player_screen.cpp
         src/ui/screens/search_screen.cpp
         src/ui/screens/settings_screen.cpp

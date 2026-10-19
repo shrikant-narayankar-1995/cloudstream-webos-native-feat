@@ -56,4 +56,12 @@ void EpisodeRow::draw(Ui &ui) {
     if (ui.is_focused(this)) ui.renderer().fill_rect(frame(), ui.fade(theme::kSurfaceRaised), radius_);
 }
 
+void EpisodeRow::draw_over(Ui &ui) {
+    if (progress_ <= 0) return;
+    const wnk::Rect s = still_->frame();
+    const wnk::Rect track{s.x + 10, s.y + s.h - 14, s.w - 20, 6};
+    ui.renderer().fill_rect(track, ui.fade(theme::Color::hex(0x000000A0)), 3);
+    ui.renderer().fill_rect({track.x, track.y, track.w * progress_, track.h}, ui.fade(theme::kAccent), 3);
+}
+
 }  // namespace csweb::ui

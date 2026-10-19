@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
 // The floating glass navigation pill at the top of the main screens (PlxNative's layout), holding
-// CloudStream's main destinations: Home, Search, Library, Downloads, Settings. A focus scope that
+// CloudStream's main destinations except Downloads (a Developer Mode TV has no storage for video):
+// Home, Search, Library, Settings. A focus scope that
 // remembers its tab, so Up from the content returns to the tab that was used.
 #pragma once
 

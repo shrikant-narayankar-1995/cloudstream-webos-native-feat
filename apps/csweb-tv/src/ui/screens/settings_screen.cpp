@@ -63,11 +63,5 @@ void SettingsScreen::refresh() {
                        " providers loaded");
 }
 
-PendingTabScreen::PendingTabScreen(app::Services &s, app::Router::Tab tab, std::string title, std::string text)
-    : Screen(title) {
-    name = "tab." + title;
-    auto &col = tab_page(*this, s, tab, title);
-    col.add<Label>(std::move(text)).set_muted(true);
-}
 
 }  // namespace csweb::ui

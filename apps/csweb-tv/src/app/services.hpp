@@ -5,6 +5,7 @@
 #pragma once
 
 #include "core/signal.hpp"
+#include "library/library_store.hpp"
 #include "plugins/plugin_manager.hpp"
 #include "runtime/runtime_client.hpp"
 #include "settings/settings_store.hpp"
@@ -22,6 +23,7 @@ struct Services {
     runtime::RuntimeClient *runtime = nullptr;
     plugins::PluginManager *plugins = nullptr;
     settings::SettingsStore *settings = nullptr;
+    library::LibraryStore *library = nullptr;
     Router *router = nullptr;
     wnk::net::HttpClient *http = nullptr;     // null without a network stack
     wnk::media::DeviceMediaCaps device;       // what the TV's decoders take (filled at start on the TV)

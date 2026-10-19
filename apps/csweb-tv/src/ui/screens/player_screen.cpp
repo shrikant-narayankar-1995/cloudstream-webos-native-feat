@@ -103,6 +103,9 @@ PlayerScreen::PlayerScreen(app::Services &s, app::PlayTarget target)
         .name = "player.subtitles";
     buttons.add<PillButton>("Audio", "audio", PillButton::Style::Glass, [this](Ui &ui) { open_audio(ui); }, 64).name =
         "player.audio";
+    next_ = &buttons.add<PillButton>("Next episode", "skip", PillButton::Style::Glass, [this](Ui &ui) { play_next(ui); }, 64);
+    next_->name = "player.next";
+    next_->set_visible(!target_.queue.empty());
     bar_->set_visible(false);
 
     spinner_ = &add<Spinner>(96);
@@ -129,6 +132,7 @@ PlayerScreen::PlayerScreen(app::Services &s, app::PlayTarget target)
 
 PlayerScreen::~PlayerScreen() {
     if (request_ != 0) s_.runtime->cancel(request_);
+    save_position();
     stop_playback();
 }
 
@@ -144,6 +148,7 @@ void PlayerScreen::on_hide(Ui &ui) {
 }
 
 bool PlayerScreen::on_back(Ui &) {
+    save_position();
     stop_playback();
     return false;
 }
@@ -249,6 +254,15 @@ void PlayerScreen::play_link(Ui &ui, size_t index) {
                  error.c_str());
         if (to == PlayState::Ready) {
             controller_->set_video_area({0, 0, 1920, 1080});
+            // GeneratorPlayer.getPos: continue where the viewer stopped (not past 95 %).
+            if (!resumed_) {
+                resumed_ = true;
+                const int64_t start = s_.library->get().start_position_ms(target_.provider, target_.data);
+                if (start > 0) {
+                    WNK_LOGI(kCat, "player: resuming at %lld s", static_cast<long long>(start / 1000));
+                    controller_->seek(start * 1000);
+                }
+            }
             tracks_ = snap.info.tracks;
             for (const TrackInfo &t : tracks_) {
                 if (t.type == TrackType::Subtitle && t.subtitle != SubtitleKind::None && t.is_default) {
@@ -256,6 +270,10 @@ void PlayerScreen::play_link(Ui &ui, size_t index) {
                     break;
                 }
             }
+        } else if (to == PlayState::Ended) {
+            ended_pending_ = true;
+        } else if (to == PlayState::Paused) {
+            save_position();
         } else if (to == PlayState::Error) {
             // The next link is opened from update(): this controller must not be destroyed inside
             // its own callback.
@@ -333,9 +351,23 @@ void PlayerScreen::update(Ui &ui, float dt) {
         next_pending_ = false;
         next_mirror(ui);
     }
+    if (ended_pending_) {
+        ended_pending_ = false;
+        if (duration_us_ != kNoTime) position_us_ = duration_us_;
+        save_position();
+        if (!target_.queue.empty()) {
+            play_next(ui);
+            return;
+        }
+    }
     if (!controller_) return;
     const PlaybackSnapshot s = controller_->snapshot();
     position_us_ = s.position_us;
+    if (s.duration_us > 0) duration_us_ = s.duration_us;
+    if (s.state == PlayState::Playing && ui.now_ms() - last_save_ms_ > 10000) {
+        last_save_ms_ = ui.now_ms();
+        save_position();
+    }
     const bool busy = s.state == PlayState::Opening || s.state == PlayState::Seeking;
     if (busy || s.state == PlayState::Playing) {
         if (!screen_on_.held()) screen_on_ = s_.ctx->keep_screen_on("video playing");
@@ -469,7 +501,35 @@ void PlayerScreen::open_audio(Ui &ui) {
     ui.show_dialog(std::move(d));
 }
 
+void PlayerScreen::save_position() {
+    // Only real progress of a known length (live streams have none).
+    if (!started_ || position_us_ == kNoTime || duration_us_ == kNoTime || duration_us_ <= 0 || position_us_ < 0) return;
+    if (target_.show.url.empty()) return;
+    library::EpisodeRef cur{target_.data, target_.subtitle, target_.season, target_.episode};
+    std::optional<library::EpisodeRef> next;
+    if (!target_.queue.empty()) next = target_.queue.front();
+    const int64_t pos = position_us_ / 1000, dur = duration_us_ / 1000;
+    s_.library->update([&](library::Library &lib) {
+        lib.set_view_pos_and_resume(target_.show, cur, next, pos, dur, library::now_ms());
+    });
+}
+
+void PlayerScreen::play_next(Ui &ui) {
+    if (target_.queue.empty()) return;
+    save_position();
+    app::PlayTarget t = target_;
+    const library::EpisodeRef n = t.queue.front();
+    t.queue.erase(t.queue.begin());
+    t.data = n.data;
+    t.subtitle = n.name;
+    t.season = n.season;
+    t.episode = n.episode;
+    WNK_LOGI(kCat, "player: next episode");
+    s_.router->replace_player(ui, t);
+}
+
 void PlayerScreen::pause_for_background() {
+    save_position();
     if (!controller_) return;
     const PlayState st = controller_->state();
     resume_on_return_ = st == PlayState::Playing || st == PlayState::Seeking;

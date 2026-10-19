@@ -7,7 +7,9 @@
 //     link (player/link_priority.hpp);
 //   - a link that fails is marked and the next one is tried (nextMirror); none left: "No links found";
 //   - Sources, Subtitles (the plugin's subtitle files and the stream's own tracks) and Audio are
-//     chosen from the controls.
+//     chosen from the controls;
+//   - it starts where the viewer stopped (getPos), saves the position as it plays
+//     (setViewPosAndResume), and plays the next episode when one ends.
 // Playback is the kit's: PlaybackController with the TV's decoder under a transparent UI.
 #pragma once
 
@@ -59,6 +61,8 @@ class PlayerScreen : public wnk::ui::Screen {
     void open_subtitles(wnk::ui::Ui &ui);
     void open_audio(wnk::ui::Ui &ui);
     void select_external_subtitle(wnk::ui::Ui &ui, size_t index);
+    void save_position();
+    void play_next(wnk::ui::Ui &ui);
     std::string link_label(const runtime::Link &l) const;
 
     app::Services &s_;
@@ -79,6 +83,11 @@ class PlayerScreen : public wnk::ui::Screen {
     int64_t position_us_ = wnk::media::kNoTime;
     bool resume_on_return_ = false;
     bool next_pending_ = false;  // the playing link failed: try the next one
+    bool ended_pending_ = false;  // the episode ended: play the next one
+    bool resumed_ = false;        // the saved position was applied
+    double last_save_ms_ = 0;
+    int64_t duration_us_ = wnk::media::kNoTime;
+    PillButton *next_ = nullptr;
     wnk::app::WakeLock screen_on_;
 
     // Loading overlay

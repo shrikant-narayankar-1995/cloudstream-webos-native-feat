@@ -68,6 +68,27 @@ HomeScreen::HomeScreen(app::Services &s) : Screen("Home"), s_(s) {
     state_button_->name = "home.state.action";
     state_button_->set_visible(false);
 
+    resume_title_ = &content_->add<Label>("Continue watching");
+    resume_title_->set_bold(true).set_font_size(theme::kHeadline);
+    resume_rail_ = &content_->add<CollectionView>(Axis::Horizontal, 1, kStillCell, 28);
+    resume_rail_->set_width(Dim::fill());
+    resume_rail_->set_height(Dim::fixed(kStillCell.h + 40));
+    resume_rail_->name = "home.resume";
+    resume_rail_->on_activate = [this](Ui &ui, size_t i) {
+        if (i >= resume_.size()) return;
+        const auto &r = resume_[i];
+        runtime::SearchResult item;
+        item.name = r.show.name;
+        item.url = r.show.url;
+        item.api_name = r.show.provider;
+        item.type = r.show.type;
+        item.poster_url = r.show.poster_url;
+        item.year = r.show.year;
+        s_.router->open_details(ui, r.show.provider, item, true);
+    };
+    library_sub_ = s_.library->changed.subscribe([this] { rebuild_resume(); });
+    rebuild_resume();
+
     rows_box_ = &content_->add<Column>(26);
 
     top_ = &add<TopBar>(*s_.router, app::Router::Tab::Home);
@@ -87,6 +108,18 @@ HomeScreen::~HomeScreen() { cancel_requests(); }
 void HomeScreen::on_show(Ui &ui) {
     Screen::on_show(ui);
     refresh(ui);
+}
+
+void HomeScreen::rebuild_resume() {
+    resume_ = s_.library->get().resume_list();
+    resume_title_->set_visible(!resume_.empty());
+    resume_rail_->set_visible(!resume_.empty());
+    resume_rail_->set_items(resume_.size(), [this](Ui &, size_t i) {
+        const auto &r = resume_[i];
+        auto card = std::make_unique<Card>(r.show.name, r.show.poster_url, r.episode.name);
+        card->image_aspect = 9.0f / 16.0f;
+        return card;
+    });
 }
 
 void HomeScreen::cancel_requests() {

@@ -7,6 +7,8 @@
 #include "ui/widgets/episode_row.hpp"
 #include "ui/widgets/pill_button.hpp"
 
+#include "wnk/ui/forms.hpp"
+
 #include "wnk/log.hpp"
 
 
@@ -22,8 +24,8 @@ bool present(const std::string &s) { return !s.empty() && s != "null"; }
 
 // ---- screen -------------------------------------------------------------------------------------------
 
-DetailsScreen::DetailsScreen(app::Services &s, std::string provider, runtime::SearchResult item)
-    : Screen(item.name), s_(s), provider_(std::move(provider)), item_(std::move(item)) {
+DetailsScreen::DetailsScreen(app::Services &s, std::string provider, runtime::SearchResult item, bool resume)
+    : Screen(item.name), s_(s), provider_(std::move(provider)), item_(std::move(item)), resume_on_load_(resume) {
     name = "details";
     backdrop_ = &add<Backdrop>(item_.poster_url);
     backdrop_->set_width(Dim::fill()).set_height(Dim::fixed(1080));
@@ -57,6 +59,12 @@ DetailsScreen::DetailsScreen(app::Services &s, std::string provider, runtime::Se
     }, 72);
     play_->name = "details.play";
     play_->set_visible(false);
+    resume_ = &buttons.add<PillButton>("Resume", "play", PillButton::Style::Primary, [this](Ui &ui) { play_resume(ui); }, 72);
+    resume_->name = "details.resume";
+    resume_->set_visible(false);
+    bookmark_ = &buttons.add<PillButton>("Add to library", "bookmark", PillButton::Style::Glass, [this](Ui &ui) { choose_list(ui); }, 72);
+    bookmark_->name = "details.bookmark";
+    library_sub_ = s_.library->changed.subscribe([this] { refresh_library(); });
 
     group_row_ = &content_->add<wnk::ui::Row>(14);
     group_row_->set_focus_scope();
@@ -194,7 +202,17 @@ void DetailsScreen::show(Ui &ui) {
         const auto &it = details_.recommendations[i];
         return std::make_unique<Card>(it.name, it.poster_url, it.year > 0 ? std::to_string(it.year) : std::string());
     });
-    if (play_->visible()) ui.focus(play_);
+    refresh_library();
+    if (resume_on_load_) {
+        resume_on_load_ = false;
+        if (resume_->visible()) {
+            ui.focus(resume_);
+            play_resume(ui);
+            return;
+        }
+    }
+    if (resume_->visible()) ui.focus(resume_);
+    else if (play_->visible()) ui.focus(play_);
     WNK_LOGI(kCat, "details: %s, %zu episodes in %zu groups, %zu recommendations", d.type.c_str(), d.episodes.size(),
              groups_.size(), d.recommendations.size());
 }
@@ -218,6 +236,7 @@ void DetailsScreen::show_group(const runtime::EpisodeGroup &g, size_t range) {
         }
     }
     episodes_->clear_children();
+    rows_.clear();
     const runtime::EpisodeRange r = range < rs.size() ? rs[range] : runtime::EpisodeRange{0, eps.size(), 0, 0};
     const std::string fallback = !details_.background_url.empty() ? details_.background_url : details_.poster_url;
     for (size_t i = r.start; i < r.start + r.length && i < eps.size(); i++) {
@@ -228,6 +247,7 @@ void DetailsScreen::show_group(const runtime::EpisodeGroup &g, size_t range) {
         });
         row.set_width(Dim::fill()).set_height(Dim::fixed(200));
         row.name = "details.episode." + std::to_string(i);
+        rows_.emplace_back(&row, ep->data);
     }
     if (!eps.empty()) {
         const auto &first = eps[r.start];
@@ -235,6 +255,7 @@ void DetailsScreen::show_group(const runtime::EpisodeGroup &g, size_t range) {
                             ? "Play S" + std::to_string(first.season) + " E" + std::to_string(first.episode)
                             : "Play E" + std::to_string(first.episode));
     }
+    refresh_library();
 }
 
 void DetailsScreen::play(Ui &ui, const runtime::Episode *ep) {
@@ -243,7 +264,17 @@ void DetailsScreen::play(Ui &ui, const runtime::Episode *ep) {
     t.title = present(details_.name) ? details_.name : item_.name;
     t.poster_url = !details_.poster_url.empty() ? details_.poster_url : item_.poster_url;
     t.details_url = !details_.url.empty() ? details_.url : item_.url;
+    t.show = show_info();
     if (ep != nullptr) {
+        // The episodes after this one in its group (CloudStream's next episode).
+        const auto it = groups_.find(group_);
+        if (it != groups_.end()) {
+            bool after = false;
+            for (const auto &e : it->second) {
+                if (after) t.queue.push_back(episode_ref(e));
+                if (&e == ep || e.data == ep->data) after = true;
+            }
+        }
         t.data = ep->data;
         t.season = ep->season;
         t.episode = ep->episode;
@@ -257,6 +288,75 @@ void DetailsScreen::play(Ui &ui, const runtime::Episode *ep) {
         return;
     }
     s_.router->open_sources(ui, t);
+}
+
+library::Show DetailsScreen::show_info() const {
+    library::Show sh;
+    sh.provider = provider_;
+    sh.url = !details_.url.empty() ? details_.url : item_.url;
+    sh.name = present(details_.name) ? details_.name : item_.name;
+    sh.type = !details_.type.empty() ? details_.type : item_.type;
+    sh.poster_url = !details_.poster_url.empty() ? details_.poster_url : item_.poster_url;
+    sh.year = details_.year > 0 ? details_.year : item_.year;
+    return sh;
+}
+
+library::EpisodeRef DetailsScreen::episode_ref(const runtime::Episode &ep) {
+    std::string name = (ep.season > 0 ? "S" + std::to_string(ep.season) + " · " : std::string()) + "E" +
+                       std::to_string(ep.episode) + (present(ep.name) ? " " + ep.name : std::string());
+    return {ep.data, name, ep.season, ep.episode};
+}
+
+void DetailsScreen::refresh_library() {
+    const library::Library &lib = s_.library->get();
+    const library::Show sh = show_info();
+    const library::WatchType wt = lib.watch_type(sh.provider, sh.url);
+    bookmark_->set_text(wt == library::WatchType::None ? "Add to library" : library::watch_type_label(wt));
+    bookmark_->set_icon(wt == library::WatchType::None ? "bookmark" : "bookmark-filled");
+    // Resume: series only (a movie resumes inside the player from its saved position).
+    const auto r = loaded_ && !groups_.empty() ? lib.resume(sh.provider, sh.url) : std::nullopt;
+    resume_->set_visible(r.has_value());
+    if (r) resume_->set_text("Resume " + (r->episode.season > 0 ? "S" + std::to_string(r->episode.season) + " " : std::string()) +
+                             "E" + std::to_string(r->episode.episode));
+    for (auto &[row, data] : rows_) {
+        const auto p = lib.view_pos(provider_, data);
+        row->set_progress(p ? library::visual_progress(*p) : 0.0f);
+    }
+}
+
+void DetailsScreen::play_resume(Ui &ui) {
+    const auto r = s_.library->get().resume(provider_, show_info().url);
+    if (!r) return;
+    for (const auto &kv : groups_) {
+        for (const auto &e : kv.second) {
+            if (e.data != r->episode.data) continue;
+            group_ = kv.first;
+            play(ui, &e);
+            return;
+        }
+    }
+    ui.toast("That episode is no longer listed by " + provider_ + ".");
+}
+
+void DetailsScreen::choose_list(Ui &ui) {
+    // CloudStream's bookmark menu: every WatchType, the current one marked, None removes it.
+    auto d = std::make_unique<Dialog>("Library");
+    Dialog *dlg = d.get();
+    const library::Show sh = show_info();
+    const library::WatchType cur = s_.library->get().watch_type(sh.provider, sh.url);
+    std::vector<library::WatchType> types = library::watch_types();
+    types.push_back(library::WatchType::None);
+    for (library::WatchType t : types) {
+        const std::string text = t == library::WatchType::None ? "Remove from library" : library::watch_type_label(t);
+        auto &b = d->body().add<PillButton>(text, t == cur ? "check" : "", PillButton::Style::Glass, [this, dlg, sh, t](Ui &u) {
+            s_.library->update([&](library::Library &lib) { lib.set_watch_type(sh, t, library::now_ms()); });
+            dlg->dismiss(u);
+        }, 60);
+        b.name = "library.type." + std::to_string(static_cast<int>(t));
+        if (t == library::WatchType::None) b.set_visible(cur != library::WatchType::None);
+    }
+    d->add_button("Close");
+    ui.show_dialog(std::move(d));
 }
 
 }  // namespace csweb::ui

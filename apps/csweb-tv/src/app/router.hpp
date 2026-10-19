@@ -8,6 +8,7 @@
 #pragma once
 
 #include "app/services.hpp"
+#include "library/library.hpp"
 #include "runtime/runtime_types.hpp"
 
 #include "wnk/ui/navigation.hpp"
@@ -17,8 +18,12 @@
 
 namespace csweb::app {
 
-// What to play: the provider and the data for loadLinks (an episode's data or a movie's dataUrl).
+// What to play: the provider and the data for loadLinks (an episode's data or a movie's dataUrl),
+// the show it belongs to (for resume and bookmarks) and the episodes after it, in order (the player
+// plays the next one when this one ends, and resume moves to it past 90 %).
 struct PlayTarget {
+    library::Show show;
+    std::vector<library::EpisodeRef> queue;
     std::string provider;
     std::string data;
     std::string title;      // the show or movie
@@ -32,12 +37,15 @@ class Router {
  public:
     Router(Services &services, wnk::ui::Navigator &nav);
 
-    enum class Tab { Home, Search, Library, Downloads, Settings };
+    enum class Tab { Home, Search, Library, Settings };
     void open_tab(wnk::ui::Ui &ui, Tab tab);
     void open_search(wnk::ui::Ui &ui, const std::string &query);
-    void open_details(wnk::ui::Ui &ui, const std::string &provider, const runtime::SearchResult &item);
+    // `resume`: play the show's resume episode once the details have loaded (Continue watching).
+    void open_details(wnk::ui::Ui &ui, const std::string &provider, const runtime::SearchResult &item, bool resume = false);
     // The player, which loads the target's links itself (GeneratorPlayer).
     void open_sources(wnk::ui::Ui &ui, const PlayTarget &target);
+    // From the player: replaces it with a player for `target` (the next episode).
+    void replace_player(wnk::ui::Ui &ui, const PlayTarget &target);
     void open_extensions(wnk::ui::Ui &ui);
     void open_repository(wnk::ui::Ui &ui, const plugins::RepositoryData &repo);
     void back(wnk::ui::Ui &ui);

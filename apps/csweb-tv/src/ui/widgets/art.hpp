@@ -21,6 +21,7 @@ class Backdrop : public wnk::ui::View {
     bool fade_to_background = true;  // bottom ramp ends in the screen background colour
 
  protected:
+    void layout_content(wnk::ui::Ui &ui, const wnk::Rect &content) override;  // the image fills the view
     void draw_over(wnk::ui::Ui &ui) override;
 
  private:

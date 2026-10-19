@@ -32,6 +32,7 @@ class Application : public wnk::app::Delegate {
  private:
     Services services_;
     std::unique_ptr<settings::SettingsStore> settings_;
+    std::unique_ptr<library::LibraryStore> library_;
     std::unique_ptr<runtime::RuntimeClient> runtime_;
     std::unique_ptr<plugins::PluginManager> plugins_;
     std::unique_ptr<wnk::net::HttpClient> http_;
