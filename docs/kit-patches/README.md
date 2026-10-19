@@ -27,3 +27,11 @@ path checks, 0002's CMake comment is more precise, and every one has more tests.
 
 A future kit change goes here again as `NNNN-name.md` + `NNNN-name.patch` against the commit above,
 and upstream as a pull request.
+
+## Offered upstream, not carried here
+
+| Change | Upstream pull request |
+|---|---|
+| `HttpClient::send` and `auth::Session::send` are `[[nodiscard]]` (a refused request never calls back; the app's plugin install waited for ever on a URL with a space, fixed in the app in `0d8f40e`) | https://github.com/Native-Webos/webos-native-app-kit/pull/7 |
+
+The app already checks every `send` result, so it needs no patch while this is open.
