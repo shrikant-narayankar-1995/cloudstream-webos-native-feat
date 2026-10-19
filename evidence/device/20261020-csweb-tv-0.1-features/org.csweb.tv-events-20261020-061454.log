@@ -1,0 +1,45 @@
+         1 INFO  [app] (6060) start app_id=org.csweb.tv platform=webos params={"@system_native_app":true,"nid":"org.csweb.tv"}
+         6 INFO  [device] (6060) webos OLED65C1PTB webOS 6.5.3 (kisscurl-koli) firmware 03.53.45 board O20_DVB ram 3 GB kernel 4.4.84-229.kcl4tv.6 aarch64
+         9 INFO  [crash] (6060) handler installed: /tmp/org.csweb.tv/crash.log, version 0.1.0, build id bf80be4e0462bec8f3c60230144bdfb257332376
+        11 INFO  [lifecycle] (6060) Created -> Initialising (Start)
+       168 INFO  [gamepad] (6060) uid 6860 gid 5000 groups [29,44,505,509,777]; /dev/input event files readable 32 of 32
+       169 INFO  [gamepad] (6060) at start: 0 joystick(s)
+       169 INFO  [screensaver] (6060) allowed (default)
+       169 INFO  [app] (6060) video driver wayland, display mode 1920x1080 @0 Hz
+       300 INFO  [gl] (6060) ARM / Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       305 INFO  [i18n] (6060) locale en-AU (formats en-US) from settingsservice; 0 catalog file(s), 0 entries
+       334 INFO  [caps] (6060) diagnostics.crash_record   supported   /tmp/org.csweb.tv/crash.log
+       334 INFO  [caps] (6060) i18n.system_locale         supported   en-AU
+       334 INFO  [caps] (6060) display.gles2              supported   Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       334 INFO  [caps] (6060) display.fragment_highp     supported   
+       334 INFO  [caps] (6060) display.max_texture_size   supported   8192
+       334 INFO  [caps] (6060) display.mode               supported   1920x1080 @0 Hz
+       334 INFO  [caps] (6060) display.panel              supported   3840x2160
+       334 INFO  [caps] (6060) display.refresh_rate       supported   120 Hz
+       334 INFO  [caps] (6060) storage.kv                 supported   db8
+       334 INFO  [caps] (6060) net.http                   supported   libcurl/7.61.0 OpenSSL/1.1.1t
+       334 INFO  [caps] (6060) audio.output               unknown     not requested by the app
+       334 INFO  [caps] (6060) images.decode              supported   PNG, JPEG, GIF, BMP, WebP, SVG
+       334 INFO  [caps] (6060) input.pointer              unknown     no pointer event yet
+       334 INFO  [caps] (6060) lifecycle.background       unknown     no background event yet
+       334 INFO  [caps] (6060) lifecycle.relaunch_params  supported   SDL_webOSTakeRelaunchMessage
+       334 INFO  [caps] (6060) media.playback             unknown     not implemented in the kit yet
+       343 INFO  [csweb] (6060) csweb: app /media/developer/apps/usr/palm/applications/org.csweb.tv, runtime /media/developer/apps/usr/palm/applications/org.csweb.tv/runtime-aarch64, tmp /tmp/org.csweb.tv
+       347 INFO  [csweb] (6060) plugin data: 1 files restored
+       352 INFO  [csweb] (6060) runtime: launching (AOT: ok)
+       354 INFO  [lifecycle] (6060) Initialising -> Running (Started)
+       669 INFO  [window] (6060) shown
+       669 INFO  [speech] (6060) Audio Guidance setting: off
+       669 INFO  [caps] (6060) accessibility.audio_guidance now supported: off
+       669 INFO  [csweb] (6060) device media: hevc yes, uhd yes, 120 Hz, hdr yes, dv yes, atmos yes, dts no, soc O20N
+       669 INFO  [csweb] (6060) plugins: 2 repositories, 4 installed
+       669 INFO  [network] (6060) online (Wi-Fi)
+       669 INFO  [caps] (6060) network.status now supported: online (Wi-Fi)
+       669 INFO  [csweb] (6060) runtime: ready
+       671 INFO  [focus] (6060) focus nav.Home
+       735 INFO  [app] (6060) first frame: drawable 1920x1080
+       735 INFO  [fonts] (6060) 90 font files under the system font directories
+       736 INFO  [fonts] (6060) system fallback font /usr/share/fonts/LG_Display-Regular.ttf (search 52 ms)
+       804 INFO  [lifecycle] (6060) SDL WILLENTERFOREGROUND
+       805 INFO  [lifecycle] (6060) SDL DIDENTERFOREGROUND
+       805 INFO  [window] (6060) focus gained
