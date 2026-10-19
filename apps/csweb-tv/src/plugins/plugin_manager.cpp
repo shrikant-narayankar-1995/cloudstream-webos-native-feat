@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "plugins/plugin_manager.hpp"
 
+#include "core/http_url.hpp"
 #include "core/sha256.hpp"
 #include "core/zip_check.hpp"
 
@@ -181,11 +182,18 @@ void PluginManager::fetch(const std::string &url, size_t max_bytes, int max_redi
         return;
     }
     wnk::net::HttpRequest req;
-    req.url = url;
+    req.url = core::canonical_http_url(url);  // as OkHttp sends it: "My Plugin.cs3" -> "My%20Plugin.cs3"
     req.max_response_bytes = max_bytes;
     req.max_redirects = max_redirects;
     req.timeout_ms = 60000;
-    http_->send(req, {}, life_.weak(), std::move(done));
+    // send() does not call back for a request it refuses (a URL it cannot use); report that here so
+    // an install or a repository read never waits for ever.
+    auto shared = std::make_shared<std::function<void(wnk::net::HttpResponse)>>(std::move(done));
+    if (!http_->send(req, {}, life_.weak(), [shared](wnk::net::HttpResponse r) { (*shared)(std::move(r)); })) {
+        wnk::net::HttpResponse r;
+        r.error = wnk::net::NetError::InvalidRequest;
+        (*shared)(std::move(r));
+    }
 }
 
 void PluginManager::add_repository(const std::string &typed, Done done) {

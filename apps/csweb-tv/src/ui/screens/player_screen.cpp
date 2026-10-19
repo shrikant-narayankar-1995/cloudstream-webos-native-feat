@@ -2,6 +2,7 @@
 #include "ui/screens/player_screen.hpp"
 
 #include "core/guard.hpp"
+#include "core/http_url.hpp"
 #include "core/redact.hpp"
 #include "player/link_priority.hpp"
 #include "player/media_factory.hpp"
@@ -475,7 +476,7 @@ void PlayerScreen::open_subtitles(Ui &ui) {
 void PlayerScreen::select_external_subtitle(Ui &ui, size_t index) {
     if (index >= subtitles_.size() || !s_.http) return;
     wnk::net::HttpRequest req;
-    req.url = subtitles_[index].url;
+    req.url = core::canonical_http_url(subtitles_[index].url);
     req.max_response_bytes = 8u << 20;
     req.timeout_ms = 30000;
     // CS3IPlayer.createOnlineSource(sub.headers): CloudStream's user agent unless the plugin's
@@ -488,7 +489,7 @@ void PlayerScreen::select_external_subtitle(Ui &ui, size_t index) {
     }
     if (!own_agent) req.headers.emplace_back("User-Agent", player::kCloudStreamUserAgent);
     ui.toast("Loading subtitles…", 1500);
-    s_.http->send(req, {}, life_.weak(), [this, index](wnk::net::HttpResponse res) {
+    const bool sent = s_.http->send(req, {}, life_.weak(), [this, index](wnk::net::HttpResponse res) {
         Ui *u = this->ui();
         if (!res.ok()) {
             if (u) u->toast("Subtitles could not be downloaded.");
@@ -507,6 +508,7 @@ void PlayerScreen::select_external_subtitle(Ui &ui, size_t index) {
         if (controller_) controller_->set_subtitle_track(-1);
         WNK_LOGI(kCat, "subtitle file %zu: %zu cues", index, external_cues_.size());
     });
+    if (!sent) ui.toast("Subtitles could not be downloaded.");
 }
 
 void PlayerScreen::auto_select_subtitles() {

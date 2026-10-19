@@ -1,0 +1,10 @@
+s11.log:      6965 DEBUG [http] (417307) GET http://127.0.0.1:8765/repo.json -> none 200 (attempt 1, 1 ms)
+s11.log:      6984 DEBUG [http] (417306) GET http://127.0.0.1:8765/plugins.json -> none 200 (attempt 1, 1 ms)
+s11.log:      9060 DEBUG [http] (417308) GET http://127.0.0.1:8765/Csweb%20Conformance.cs3 -> none 200 (attempt 1, 1 ms)
+s11.log:      9095 INFO  [csweb] (417262) plugins: installed Csweb Conformance v2
+s10.log:      7589 DEBUG [http] (407889) GET http://127.0.0.1:8765/repo.json -> none 200 (attempt 1, 1 ms)
+s10.log:      7605 DEBUG [http] (407888) GET http://127.0.0.1:8765/plugins.json -> none 200 (attempt 1, 1 ms)
+s10.log:      9678 WARN  [http] (407843) rejected request: URL contains whitespace
+s12.log:      7638 DEBUG [http] (419029) GET http://127.0.0.1:8765/repo.json -> none 200 (attempt 1, 1 ms)
+s12.log:      7676 DEBUG [http] (419030) GET http://127.0.0.1:8765/plugins.json -> none 200 (attempt 1, 1 ms)
+s12.log:      9785 WARN  [http] (418985) rejected request: URL contains whitespace

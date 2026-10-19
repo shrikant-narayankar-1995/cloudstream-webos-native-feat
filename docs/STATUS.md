@@ -67,9 +67,9 @@ Runtime feasibility: **PASS** (scoped; see docs/FEASIBILITY_DECISION.md)
 | `tools/install.sh … --private-runtime runtime-aarch64` | 1 | TV unreachable (powered off) |
 
 ## Tests
-- Passed: kit host suite 108 (csweb: sha256, zip_check, repository, runtime_types, plugin_store,
+- Passed: kit host suite 109 (csweb: sha256, zip_check, repository, runtime_types, plugin_store,
   runtime_client, episode_groups, redact, deep_link, library, dir_snapshot, preferences, provider_test,
-  profiles, link_priority, subtitle_file, glass, merged_source); app suites under ThreadSanitizer; compat 165; scripted host UI runs (settings, chips, picker,
+  profiles, link_priority, subtitle_file, glass, merged_source, http_url); app suites under ThreadSanitizer; compat 165; scripted host UI runs (settings, chips, picker,
   subtitle sync, provider tests, profiles and PIN, library sort, series/episodes/cast).
 - Provider test on the host: Internet Archive passes; Dailymotion fails inside CloudStream's bundled
   Dailymotion extractor (the API now sends `subtitles.data` as an array); Invidious' public instance fails.
@@ -81,6 +81,10 @@ Runtime feasibility: **PASS** (scoped; see docs/FEASIBILITY_DECISION.md)
 - Host app: `evidence/app-host/20261019-csweb-tv-0.1-stage2/`; TLS: `evidence/runtime-host/tls/`.
 
 ## Risks/blockers
+- Fixed 2026-10-20: a plugin URL with a space ("builds/My Plugin.cs3") stayed on "Installing…" for
+  ever: the kit's HttpClient refuses whitespace without a callback and the app ignored that. URLs are
+  now sent as OkHttp sends them (%20) and a refused request ends in an error
+  (evidence/app-host/20261020-install-url-space). Not yet checked on the TV.
 - Fixed 2026-10-20: MergedSource opened its audio streams on separate threads that wrote one
   `std::vector<bool>` (shared bits), so an opened audio track could be recorded as failed and dropped
   (YouTube's separate audio). Found as a flaky test, confirmed by ThreadSanitizer.
