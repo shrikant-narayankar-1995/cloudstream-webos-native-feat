@@ -1,0 +1,21 @@
+        69 INFO  [csweb] (1118965) csweb: app /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/host-debug/extra-apps/csweb-tv, runtime /home/sostk/Desktop/cloudstream-webos-agent-pack/runtime/dist/runtime-x86_64, tmp /run/user/1000/org.csweb.tv
+        69 INFO  [csweb] (1118965) plugin data: 1 files restored
+        70 INFO  [csweb] (1118965) runtime: launching (AOT: no AOT.json)
+        72 INFO  [csweb] (1118965) plugins: 2 repositories, 4 installed
+       539 INFO  [csweb] (1118965) runtime: ready
+       984 INFO  [csweb] (1118965) home: Dailymotion, 1 sections
+     16231 INFO  [csweb] (1118965) details: Audio, 0 episodes in 0 groups, 0 recommendations
+     20209 INFO  [csweb] (1118965) links loaded: 183 links, 0 subtitles
+     20209 INFO  [csweb] (1118965) playing link 0: prideandprejudice_01_austen_64kb (mp3)  (ffmpeg)
+     20210 INFO  [media] (1120165) Idle -> Opening
+     20438 INFO  [csweb] (1118965) player Idle -> Opening
+     22212 INFO  [media] (1120165) opened https://archive.org/download/prideandprejudice_1107_librivox/prideandprejudice_01_austen_64kb.mp3: mp3, 391.2 s, video - 0x0, audio mp3 22050 Hz x1
+     22213 INFO  [media] (1120165) Opening -> Ready
+     22213 INFO  [media] (1120165) Ready -> Playing
+     22215 INFO  [csweb] (1118965) player Opening -> Ready
+     22215 INFO  [csweb] (1118965) player Ready -> Playing
+     52270 INFO  [media] (1120165) Playing -> Seeking
+     52271 INFO  [media] (1120165) Seeking -> Playing
+     52388 INFO  [csweb] (1118965) player Playing -> Seeking
+     52388 INFO  [csweb] (1118965) player Seeking -> Playing
+     54777 INFO  [media] (1120165) Playing -> Stopped

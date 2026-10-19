@@ -162,7 +162,7 @@ void PlayerScreen::load_links() {
             if (ev == "link") {
                 links_.push_back(runtime::parse_link(e));
                 const auto &l = links_.back();
-                WNK_LOGI(kCat, "link: %s %s %s from %s", l.name.c_str(), runtime::quality_label(l.quality).c_str(),
+                WNK_LOGD(kCat, "link: %s %s %s from %s", l.name.c_str(), runtime::quality_label(l.quality).c_str(),
                          l.link_type.c_str(), host_of(l.url).c_str());
                 links_changed();
             } else if (ev == "subtitle") {

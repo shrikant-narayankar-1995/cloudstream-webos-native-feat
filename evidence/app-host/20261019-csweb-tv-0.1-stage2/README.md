@@ -28,3 +28,7 @@ not answer (Internet Archive: the runtime's known archive.org TLS problem; Invid
 Library (later the same day): `t_library.png` (the conformance item bookmarked as Watching),
 `u_home_continue.png` (Continue watching after playing it); replaying it logged
 `player: resuming at 17 s` and seeked there.
+
+InternetArchive (after the runtime's wolfSSL fix, docs/runtime/tls.md): `z_internetarchive_play.log` —
+search "pride_and_prejudice_librivox" through a cloudstreamsearch:// link, the first result's details,
+183 links (one per chapter file), the first chapter (LibriVox, archive.org) opened `mp3, 391.2 s` and played.

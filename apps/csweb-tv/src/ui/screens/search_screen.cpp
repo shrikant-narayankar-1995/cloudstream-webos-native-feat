@@ -100,13 +100,21 @@ void SearchScreen::search(Ui &, const std::string &raw) {
     while (!q.empty() && q.back() == ' ') q.pop_back();
     if (q.empty()) return;
     cancel();
-    query_ = q;
     failed_.clear();
     for (auto &g : groups_) {
         results_->remove_child(g->title);
         results_->remove_child(g->rail);
     }
     groups_.clear();
+    // SearchViewModel.search: one character or less clears the results instead of searching.
+    size_t code_points = 0;
+    for (unsigned char c : q) code_points += (c & 0xC0) != 0x80;
+    if (code_points <= 1) {
+        query_.clear();
+        update_status();
+        return;
+    }
+    query_ = q;
 
     // History: most recent first, no duplicates (SearchHistoryAdaptor).
     auto hist = nlohmann::json::parse(s_.settings->get_string(kHistoryKey, "[]"), nullptr, false);
