@@ -1,5 +1,7 @@
 # Kit patch 0005: DASH with several Periods, WebM DASH
 
+> Merged upstream as https://github.com/Native-Webos/webos-native-app-kit/pull/5 (merge `febd6fa`, 2026-10-19); the project now uses kit `5f91c56` and no longer carries this patch. Kept as the record of why and how it was tested; the patch file is in git history.
+
 Applies to Native App Kit `e10f35ecd6e27987cc866b28caea6be66a023fcc` after patches 0001-0004.
 Patch: `0005-dash-periods-webm.patch` (media/include/wnk/media/manifest.hpp, adaptive_source.hpp,
 media/src/manifest.cpp, adaptive_source.cpp, tests/unit/test_manifest.cpp,

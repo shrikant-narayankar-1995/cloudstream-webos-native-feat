@@ -1,5 +1,7 @@
 # Kit patch 0002: private runtimes in packages
 
+> Merged upstream as https://github.com/Native-Webos/webos-native-app-kit/pull/2 (merge `0410e9c`, 2026-10-19); the project now uses kit `5f91c56` and no longer carries this patch. Kept as the record of why and how it was tested; the patch file is in git history.
+
 Applies to Native App Kit `e10f35ecd6e27987cc866b28caea6be66a023fcc` after patch 0001.
 Patch: `0002-private-runtimes.patch` (cmake/WebOSPackage.cmake, tools/check-package.py, tools/verify.sh, tools/install.sh,
 tests/tools/test_packaging.py).

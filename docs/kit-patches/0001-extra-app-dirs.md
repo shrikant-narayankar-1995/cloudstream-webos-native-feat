@@ -1,5 +1,7 @@
 # Kit patch 0001: `WNK_EXTRA_APP_DIRS`
 
+> Merged upstream as https://github.com/Native-Webos/webos-native-app-kit/pull/1 (merge `bb22abc`, 2026-10-19); the project now uses kit `5f91c56` and no longer carries this patch. Kept as the record of why and how it was tested; the patch file is in git history.
+
 Applies to Native App Kit `e10f35ecd6e27987cc866b28caea6be66a023fcc`. Patch: `0001-extra-app-dirs.patch`.
 
 ## What

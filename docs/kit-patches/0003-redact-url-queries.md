@@ -1,5 +1,7 @@
 # Kit patch 0003: redact every URL query value in logs
 
+> Merged upstream as https://github.com/Native-Webos/webos-native-app-kit/pull/3 (merge `68cc31f`, 2026-10-19); the project now uses kit `5f91c56` and no longer carries this patch. Kept as the record of why and how it was tested; the patch file is in git history.
+
 Applies to Native App Kit `e10f35ecd6e27987cc866b28caea6be66a023fcc` after patches 0001 and 0002.
 Patch: `0003-redact-url-queries.patch` (logging/src/log.cpp, logging/include/wnk/log.hpp,
 tests/unit/test_log.cpp).

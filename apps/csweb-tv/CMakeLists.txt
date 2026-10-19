@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # CSWeb TV, the native app (apps/csweb-tv/README.md). Built inside the kit's tree through
-# WNK_EXTRA_APP_DIRS (docs/kit-patches/0001-extra-app-dirs.md).
+# WNK_EXTRA_APP_DIRS (the kit's cmake/ExtraApps.cmake).
 
 set(CSWEB_APP_ID org.csweb.tv)
 set(CSWEB_TITLE "CSWeb TV")

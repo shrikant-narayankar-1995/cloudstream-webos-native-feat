@@ -1,5 +1,7 @@
 # Kit patch 0006: cookies kept across a transport's requests
 
+> Merged upstream as https://github.com/Native-Webos/webos-native-app-kit/pull/6 (merge `5f91c56`, 2026-10-19); the project now uses kit `5f91c56` and no longer carries this patch. Kept as the record of why and how it was tested; the patch file is in git history.
+
 Applies to Native App Kit `e10f35ecd6e27987cc866b28caea6be66a023fcc` after patches 0001-0005.
 Patch: `0006-http-cookies.patch` (net/include/wnk/net/http.hpp, net/src/curl_api.hpp, curl_api.cpp,
 curl_transport.cpp, tests/integration/http_server.py, test_http_curl.cpp, test_adaptive_source.cpp).

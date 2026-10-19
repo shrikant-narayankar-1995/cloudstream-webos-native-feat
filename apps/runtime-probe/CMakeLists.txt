@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Runtime feasibility probe for the CloudStream webOS project. Built inside the kit's tree through
-# WNK_EXTRA_APP_DIRS (docs/kit-patches/0001-extra-app-dirs.md).
+# WNK_EXTRA_APP_DIRS (the kit's cmake/ExtraApps.cmake).
 add_executable(wnk-csprobe main.cpp child_probe.cpp a64_elf.cpp)
 target_link_libraries(wnk-csprobe PRIVATE wnk_app)
 target_include_directories(wnk-csprobe SYSTEM PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
