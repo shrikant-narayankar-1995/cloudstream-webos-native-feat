@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Library</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#0B0D12;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.glass{background:rgba(22,25,33,.62);border:1px solid rgba(255,255,255,.14)}
+.pill{height:64px;padding:0 30px;border-radius:32px;display:flex;align-items:center;gap:12px;font-size:28px;font-weight:600;border:0;color:#F4F5F7;background:transparent;font-family:inherit}
+.tab{height:56px;padding:0 24px;border-radius:28px;border:0;background:transparent;color:#A7AEBB;font-size:26px;font-weight:700;font-family:inherit;display:flex;align-items:center;gap:10px}
+.n{font-size:20px;color:inherit;opacity:.7}
+.chip{height:52px;padding:0 22px;border-radius:26px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#D5D9E1;font-size:22px;font-weight:700;font-family:inherit}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;left:96px;top:44px;right:96px;display:flex;justify-content:center">
+    <nav class="glass" style="display:flex;align-items:center;gap:4px;padding:6px;border-radius:40px">
+      <button class="pill">Home</button><button class="pill">Movies</button><button class="pill">Series</button><button class="pill">Anime</button><button class="pill">Live</button>
+      <button class="pill" style="background:rgba(255,255,255,.18)">Library</button>
+      <button class="pill" aria-label="Search" style="padding:0 20px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
+    </nav>
+  </div>
+
+  <div style="position:absolute;left:96px;right:96px;top:170px;display:flex;align-items:center;gap:6px">
+    <button class="tab" style="background:#F4F5F7;color:#0B0D12">Watching <span class="n">12</span></button>
+    <button class="tab">Plan to watch <span class="n">30</span></button>
+    <button class="tab">On hold <span class="n">2</span></button>
+    <button class="tab">Completed <span class="n">48</span></button>
+    <button class="tab">Dropped <span class="n">3</span></button>
+    <button class="tab">Downloads</button>
+    <div style="flex:1"></div>
+    <button class="chip">List: This TV</button>
+    <button class="chip">Sort: recently watched</button>
+  </div>
+
+  <div style="position:absolute;left:96px;right:96px;top:270px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:30px 28px">
+    <sc-for list="{{items}}" as="p" hint-placeholder-count="14">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="height:330px;border-radius:14px;background:{{p.bg}};position:relative;overflow:hidden;{{p.st}}">
+          <div style="position:absolute;top:10px;right:10px;font-size:18px;font-weight:800;background:rgba(0,0,0,.65);border-radius:6px;padding:2px 8px">{{p.badge}}</div>
+          <div style="position:absolute;left:0;bottom:0;height:6px;width:{{p.p}};background:#7FB2FF"></div>
+        </div>
+        <div style="font-size:22px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{p.t}}</div>
+        <div style="font-size:20px;color:#A7AEBB;margin-top:-6px">{{p.s}}</div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const bgs = ['#2d3a4f', '#4a3b2b', '#2f2f2f', '#1f3b3a', '#40354f', '#4f3a2d', '#2d4f45', '#3b3b3b', '#2b2f45', '#45402b', '#3a1f2b', '#2b4530', '#3b4256', '#4a3646'];
+    const names = ['Metropolis', 'Pride and Prejudice', 'Sherlock Jr.', 'Harbour Lights', 'Nosferatu', 'The General', 'Detour', 'His Girl Friday', 'Charade', 'D.O.A.', 'The Kid', 'Night Crossing', 'Moby Dick (audio)', 'Apollo archive'];
+    return {
+      items: names.map((t, i) => ({
+        t, bg: bgs[i], p: (20 + (i * 13) % 70) + '%',
+        badge: i % 3 === 0 ? 'Ep ' + (i + 2) + '/10' : 'Movie',
+        s: i % 2 ? 'Internet Archive' : 'Dailymotion',
+        st: i === 0 ? 'transform:scale(1.07);box-shadow:0 0 0 4px #F4F5F7,0 24px 48px rgba(0,0,0,.6);' : ''
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>

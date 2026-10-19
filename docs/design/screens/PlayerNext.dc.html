@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Up next and episodes panel</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#000;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.pill{height:64px;padding:0 30px;border-radius:32px;display:flex;align-items:center;gap:12px;font-size:26px;font-weight:700;border:0;font-family:inherit}
+.tab{height:50px;padding:0 20px;border-radius:25px;border:0;background:transparent;color:#A7AEBB;font-size:22px;font-weight:700;font-family:inherit}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;inset:0;background:#1d2329;display:flex;align-items:center;justify-content:center;font-size:24px;color:rgba(255,255,255,.35)">[End credits]</div>
+
+  <div style="position:absolute;top:0;left:0;bottom:0;width:640px;background:rgba(18,21,28,.95);border-right:1px solid rgba(255,255,255,.12);padding:48px 40px;box-sizing:border-box;display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:34px;font-weight:800">Episodes</div>
+    <div style="display:flex;gap:4px"><button class="tab">Season 1</button><button class="tab" style="background:#F4F5F7;color:#0B0D12">Season 2</button><button class="tab">Season 3</button></div>
+    <sc-for list="{{eps}}" as="e" hint-placeholder-count="5">
+      <div style="display:flex;gap:18px;align-items:center;padding:10px;border-radius:16px;{{e.st}}">
+        <div style="flex:none;width:200px;height:112px;border-radius:10px;background:{{e.bg}};position:relative;overflow:hidden"><div style="position:absolute;left:0;bottom:0;height:5px;width:{{e.p}};background:#7FB2FF"></div></div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="font-size:20px;color:#A7AEBB;font-weight:700">{{e.n}}</div>
+          <div style="font-size:24px;font-weight:700">{{e.t}}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="position:absolute;right:80px;bottom:90px;width:760px;border-radius:26px;background:rgba(18,21,28,.92);border:1px solid rgba(255,255,255,.14);padding:28px;box-sizing:border-box;display:flex;gap:26px;box-shadow:0 30px 60px rgba(0,0,0,.6)">
+    <div style="flex:none;width:280px;height:158px;border-radius:14px;background:#4a3f36;position:relative">
+      <svg style="position:absolute;right:12px;top:12px" width="64" height="64" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="rgba(0,0,0,.55)" stroke="rgba(255,255,255,.25)" stroke-width="5"></circle><circle cx="32" cy="32" r="28" fill="none" stroke="#F4F5F7" stroke-width="5" stroke-dasharray="176" stroke-dashoffset="70" transform="rotate(-90 32 32)"></circle><text x="32" y="41" text-anchor="middle" font-size="24" font-weight="800" fill="#F4F5F7" font-family="Figtree">8</text></svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;min-width:0">
+      <div style="font-size:20px;color:#A7AEBB;font-weight:800;letter-spacing:2px">UP NEXT · S2 · E5</div>
+      <div style="font-size:32px;font-weight:800">Fog Signal</div>
+      <div style="display:flex;gap:12px;margin-top:auto">
+        <button class="pill" style="background:#F4F5F7;color:#0B0D12"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"></path></svg>Play now</button>
+        <button class="pill" style="background:rgba(255,255,255,.1);color:#F4F5F7">Watch credits</button>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;right:80px;top:64px;display:flex;flex-direction:column;align-items:flex-end;gap:10px">
+    <div style="font-size:20px;color:#A7AEBB">Shown mid-episode when an intro or recap is detected:</div>
+    <button class="pill" style="background:rgba(30,33,40,.8);color:#F4F5F7;border:1px solid rgba(255,255,255,.3)">Skip intro<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 5l8 7-8 7zM16 5v14"></path></svg></button>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      eps: [
+        { n: 'E2 · 43 min', t: 'Breakwater', bg: '#2f4a44', p: '100%', st: '' },
+        { n: 'E3 · 44 min', t: 'The Keeper\'s Log', bg: '#3b4256', p: '100%', st: '' },
+        { n: 'E4 · 42 min · playing', t: 'Low Tide', bg: '#40354f', p: '96%', st: 'background:rgba(255,255,255,.1);box-shadow:0 0 0 4px #F4F5F7;' },
+        { n: 'E5 · 45 min', t: 'Fog Signal', bg: '#4a3f36', p: '0%', st: '' },
+        { n: 'E6 · 41 min', t: 'Night Crossing', bg: '#2b2f45', p: '0%', st: '' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

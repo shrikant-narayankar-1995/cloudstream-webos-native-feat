@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>First-run setup</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#0B0D12;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.pill{height:68px;padding:0 40px;border-radius:34px;display:flex;align-items:center;gap:10px;font-size:26px;font-weight:700;border:0;font-family:inherit}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;left:96px;right:96px;top:72px;display:flex;align-items:center;gap:18px">
+    <sc-for list="{{steps}}" as="s" hint-placeholder-count="5">
+      <div style="display:flex;align-items:center;gap:14px">
+        <div style="width:44px;height:44px;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;{{s.st}}">{{s.n}}</div>
+        <div style="font-size:24px;font-weight:700;{{s.tst}}">{{s.l}}</div>
+        <div style="width:60px;height:2px;background:rgba(255,255,255,.18)"></div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="position:absolute;left:96px;top:230px;width:900px;display:flex;flex-direction:column;gap:26px">
+    <div style="font-size:72px;font-weight:800;line-height:1.05">Add your first repository</div>
+    <div style="font-size:28px;line-height:1.5;color:#D5D9E1">This app comes with no content of its own. Everything you browse comes from plugins in repositories you choose to add. Only add sources you trust and are allowed to use.</div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-top:10px">
+      <label for="ru" style="font-size:24px;font-weight:700;color:#A7AEBB">Repository URL or shortcode</label>
+      <input id="ru" placeholder="https://… or shortcode" style="height:80px;border-radius:18px;border:0;background:rgba(255,255,255,.1);color:#F4F5F7;font-size:30px;padding:0 26px;font-family:inherit;outline:none;box-shadow:0 0 0 4px #F4F5F7">
+    </div>
+    <div style="display:flex;gap:16px;margin-top:16px">
+      <button class="pill" style="background:#F4F5F7;color:#0B0D12">Continue</button>
+      <button class="pill" style="background:rgba(255,255,255,.08);color:#F4F5F7">Skip for now</button>
+    </div>
+  </div>
+
+  <div style="position:absolute;right:160px;top:260px;width:520px;display:flex;flex-direction:column;align-items:center;gap:26px;padding:48px;border-radius:30px;background:rgba(255,255,255,.05);box-sizing:border-box">
+    <div style="width:300px;height:300px;border-radius:20px;background:#F4F5F7;display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px;padding:22px;box-sizing:border-box">
+      <sc-for list="{{qr}}" as="q" hint-placeholder-count="81"><div style="background:{{q}}"></div></sc-for>
+    </div>
+    <div style="font-size:30px;font-weight:800">Or use your phone</div>
+    <div style="font-size:24px;color:#D5D9E1;text-align:center;line-height:1.45">Scan to open a page served by this TV on your network, paste the link there, and it appears here.</div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const done = 'background:#7FB2FF;color:#0B0D12';
+    const cur = 'background:#F4F5F7;color:#0B0D12';
+    const todo = 'background:rgba(255,255,255,.08);color:#A7AEBB';
+    const qr = []; for (let i = 0; i < 81; i++) qr.push(((i * 5 + (i >> 3)) % 3) ? '#0B0D12' : '#F4F5F7');
+    return {
+      qr,
+      steps: [
+        { n: '1', l: 'Language', st: done, tst: 'color:#A7AEBB' },
+        { n: '2', l: 'Content languages', st: done, tst: 'color:#A7AEBB' },
+        { n: '3', l: 'What you watch', st: done, tst: 'color:#A7AEBB' },
+        { n: '4', l: 'Repository', st: cur, tst: '' },
+        { n: '5', l: 'Look & layout', st: todo, tst: 'color:#A7AEBB' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

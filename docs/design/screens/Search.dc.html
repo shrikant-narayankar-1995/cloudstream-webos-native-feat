@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Search</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#0B0D12;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.glass{background:rgba(22,25,33,.62);border:1px solid rgba(255,255,255,.14)}
+.pill{height:64px;padding:0 30px;border-radius:32px;display:flex;align-items:center;gap:12px;font-size:28px;font-weight:600;border:0;color:#F4F5F7;background:transparent;font-family:inherit}
+.key{height:62px;border-radius:12px;border:0;background:rgba(255,255,255,.07);color:#F4F5F7;font-size:26px;font-weight:600;font-family:inherit}
+.chip{height:52px;padding:0 24px;border-radius:26px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#D5D9E1;font-size:24px;font-weight:600;font-family:inherit;display:flex;align-items:center;gap:10px}
+.poster{flex:none;width:200px;height:300px;border-radius:12px;position:relative;overflow:hidden;display:flex;align-items:flex-end}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;left:96px;top:44px;right:96px;display:flex;align-items:center;justify-content:center">
+    <nav class="glass" style="display:flex;align-items:center;gap:4px;padding:6px;border-radius:40px">
+      <button class="pill">Home</button><button class="pill">Movies</button><button class="pill">Series</button><button class="pill">Anime</button><button class="pill">Live</button><button class="pill">Library</button>
+      <button class="pill" aria-label="Search" style="padding:0 20px;background:rgba(255,255,255,.18)"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
+    </nav>
+  </div>
+
+  <div class="glass" style="position:absolute;left:96px;top:160px;width:560px;height:860px;border-radius:28px;padding:32px;box-sizing:border-box;display:flex;flex-direction:column;gap:22px">
+    <label for="q" style="font-size:22px;color:#A7AEBB;font-weight:600">Search all sources</label>
+    <div style="height:76px;border-radius:16px;background:rgba(255,255,255,.1);display:flex;align-items:center;padding:0 22px;gap:14px">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#A7AEBB" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg>
+      <input id="q" value="metropolis" style="flex:1;background:transparent;border:0;color:#F4F5F7;font-size:34px;font-weight:700;font-family:inherit;outline:none">
+      <div style="width:3px;height:40px;background:#7FB2FF"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px">
+      <sc-for list="{{keys}}" as="k" hint-placeholder-count="36"><button class="key" style="{{k.st}}">{{k.l}}</button></sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px">
+      <button class="key">Space</button><button class="key">Delete</button><button class="key">Clear</button>
+    </div>
+    <div style="font-size:22px;color:#A7AEBB;font-weight:600;margin-top:6px">Recent</div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px">
+      <button class="chip">nosferatu</button><button class="chip">buster keaton</button><button class="chip">apollo 11</button>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:720px;top:160px;right:0;display:flex;flex-direction:column;gap:26px">
+    <div style="display:flex;gap:12px">
+      <button class="chip" style="background:#F4F5F7;color:#0B0D12;border-color:#F4F5F7">All</button>
+      <button class="chip">Movies</button><button class="chip">Series</button><button class="chip">Anime</button><button class="chip">Documentary</button><button class="chip">Live</button><button class="chip">Audio</button>
+    </div>
+    <sc-for list="{{groups}}" as="g" hint-placeholder-count="2">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:baseline;gap:16px">
+          <div style="font-size:32px;font-weight:700">{{g.name}}</div>
+          <div style="font-size:24px;color:#A7AEBB">{{g.count}}</div>
+        </div>
+        <div style="display:flex;gap:24px">
+          <sc-for list="{{g.items}}" as="p" hint-placeholder-count="5">
+            <div class="poster" style="background:{{p.bg}};{{p.focus}}">
+              <div style="position:absolute;inset:auto 0 0 0;height:120px;background:linear-gradient(0deg,rgba(0,0,0,.85),rgba(0,0,0,0))"></div>
+              <div style="position:relative;padding:14px;font-size:22px;font-weight:700;line-height:1.2">{{p.t}}</div>
+              <sc-if value="{{p.badge}}" hint-placeholder-val="{{false}}"><div style="position:absolute;top:10px;left:10px;font-size:18px;font-weight:800;background:rgba(0,0,0,.6);border-radius:6px;padding:2px 8px">{{p.badge}}</div></sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <div style="display:flex;align-items:center;gap:16px;font-size:24px;color:#A7AEBB">
+      <div style="width:28px;height:28px;border-radius:14px;border:3px solid rgba(255,255,255,.2);border-top-color:#7FB2FF"></div>
+      Still searching: LibriVox · 1 source failed (show details)
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const letters = 'abcdefghijklmnopqrstuvwxyz1234567890'.split('');
+    const focus = 'transform:scale(1.08);box-shadow:0 0 0 4px #F4F5F7,0 24px 48px rgba(0,0,0,.6);';
+    return {
+      keys: letters.map((l) => ({ l, st: l === 'o' ? 'background:#F4F5F7;color:#0B0D12' : '' })),
+      groups: [
+        { name: 'Internet Archive', count: '24 results', items: [
+          { t: 'Metropolis', bg: '#2d3a4f', badge: 'HD', focus },
+          { t: 'Metropolis (restored)', bg: '#40354f', badge: '', focus: '' },
+          { t: 'Metropolis 1927 trailer', bg: '#3b3b3b', badge: '', focus: '' },
+          { t: 'Metropolitan Opera 1950', bg: '#4f3a2d', badge: '', focus: '' },
+          { t: 'Metropolis lecture', bg: '#2d4f45', badge: '', focus: '' }
+        ] },
+        { name: 'Dailymotion', count: '26 results', items: [
+          { t: 'Metropolis — city timelapse', bg: '#1f3b3a', badge: '', focus: '' },
+          { t: 'Inside Metropolis', bg: '#3a1f2b', badge: '', focus: '' },
+          { t: 'Metropolis score', bg: '#2b2f45', badge: '', focus: '' },
+          { t: 'Metropolis restored', bg: '#45402b', badge: '', focus: '' },
+          { t: 'Lang on Metropolis', bg: '#2b4530', badge: '', focus: '' }
+        ] }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

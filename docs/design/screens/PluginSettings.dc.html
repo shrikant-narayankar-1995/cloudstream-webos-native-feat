@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Plugin settings dialog</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#0B0D12;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.pill{height:68px;padding:0 40px;border-radius:34px;display:flex;align-items:center;gap:10px;font-size:26px;font-weight:700;border:0;font-family:inherit}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;inset:0;padding:64px 96px;box-sizing:border-box;opacity:.35">
+    <div style="font-size:56px;font-weight:800">Extensions</div>
+    <div style="margin-top:60px;display:flex;flex-direction:column;gap:20px">
+      <div style="height:96px;border-radius:18px;background:rgba(255,255,255,.08);width:1100px;margin-left:584px"></div>
+      <div style="height:96px;border-radius:18px;background:rgba(255,255,255,.08);width:1100px;margin-left:584px"></div>
+      <div style="height:96px;border-radius:18px;background:rgba(255,255,255,.08);width:1100px;margin-left:584px"></div>
+    </div>
+  </div>
+  <div style="position:absolute;inset:0;background:rgba(5,6,9,.6)"></div>
+
+  <div role="dialog" aria-labelledby="dt" style="position:absolute;left:560px;top:190px;width:800px;border-radius:30px;background:#171A22;border:1px solid rgba(255,255,255,.14);padding:48px;box-sizing:border-box;display:flex;flex-direction:column;gap:30px;box-shadow:0 40px 80px rgba(0,0,0,.7)">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="font-size:20px;color:#A7AEBB;font-weight:800;letter-spacing:2px">CSWEBCONFORMANCE · V1</div>
+      <div id="dt" style="font-size:40px;font-weight:800">Conformance settings</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <label for="dn" style="font-size:24px;font-weight:700;color:#D5D9E1">Display name</label>
+      <input id="dn" value="My Conformance" style="height:76px;border-radius:16px;border:0;background:rgba(255,255,255,.1);color:#F4F5F7;font-size:30px;font-weight:600;padding:0 24px;font-family:inherit;outline:none;box-shadow:0 0 0 4px #F4F5F7">
+      <div style="font-size:20px;color:#A7AEBB">OK opens the TV keyboard</div>
+    </div>
+    <label style="display:flex;align-items:center;gap:20px;font-size:28px;font-weight:600">
+      <input type="checkbox" checked style="width:40px;height:40px;accent-color:#7FB2FF;margin:0">
+      Show extra results
+    </label>
+    <div style="display:flex;gap:16px;justify-content:flex-end;margin-top:10px">
+      <button class="pill" style="background:rgba(255,255,255,.08);color:#F4F5F7">Cancel</button>
+      <button class="pill" style="background:#F4F5F7;color:#0B0D12">Save</button>
+    </div>
+  </div>
+  <div style="position:absolute;left:560px;top:880px;width:800px;font-size:22px;color:#A7AEBB;line-height:1.5;text-align:center">Saved settings apply when the plugin reloads, which happens automatically.</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

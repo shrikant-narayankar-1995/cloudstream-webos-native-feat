@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Series details and episodes</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#0B0D12;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.pill{height:64px;padding:0 30px;border-radius:32px;display:flex;align-items:center;gap:12px;font-size:26px;font-weight:700;border:0;font-family:inherit}
+.round{width:64px;height:64px;border-radius:32px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#F4F5F7}
+.tab{height:56px;padding:0 26px;border-radius:28px;border:0;background:transparent;color:#A7AEBB;font-size:26px;font-weight:700;font-family:inherit}
+.seg{display:flex;padding:4px;border-radius:30px;background:rgba(255,255,255,.08)}
+.segb{height:48px;padding:0 22px;border-radius:24px;border:0;background:transparent;color:#D5D9E1;font-size:22px;font-weight:700;font-family:inherit}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;inset:0 0 auto 0;height:420px;background:#2b3b35"></div>
+  <div style="position:absolute;inset:0 0 auto 0;height:420px;background:linear-gradient(0deg,#0B0D12 5%,rgba(11,13,18,.5) 60%,rgba(11,13,18,.3))"></div>
+
+  <div style="position:absolute;left:96px;top:80px;display:flex;flex-direction:column;gap:16px;width:1100px">
+    <div style="font-size:72px;font-weight:800;line-height:1">Harbour Lights</div>
+    <div style="display:flex;gap:16px;font-size:26px;color:#D5D9E1"><span>Series</span><span>·</span><span>2019–2023</span><span>·</span><span>3 seasons</span><span>·</span><span>Ongoing · next episode Fri 21:00</span></div>
+    <div style="display:flex;gap:16px;align-items:center;margin-top:12px">
+      <button class="pill" style="background:#F4F5F7;color:#0B0D12"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"></path></svg>Next: S2 · E4</button>
+      <button class="round" aria-label="Bookmark status"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+      <button class="round" aria-label="Notify me of new episodes"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4zM10 20h4"></path></svg></button>
+      <button class="round" aria-label="Download season"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg></button>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:96px;top:440px;right:96px;display:flex;align-items:center;gap:8px">
+    <button class="tab">Season 1</button>
+    <button class="tab" style="background:#F4F5F7;color:#0B0D12">Season 2</button>
+    <button class="tab">Season 3</button>
+    <button class="tab">Specials</button>
+    <div style="flex:1"></div>
+    <div class="seg"><button class="segb" style="background:#F4F5F7;color:#0B0D12">Sub</button><button class="segb">Dub</button></div>
+    <div class="seg"><button class="segb" style="background:rgba(255,255,255,.18)">1–50</button><button class="segb">51–100</button></div>
+  </div>
+
+  <div style="position:absolute;left:96px;top:530px;width:1100px;display:flex;flex-direction:column;gap:14px">
+    <sc-for list="{{eps}}" as="e" hint-placeholder-count="4">
+      <div style="display:flex;gap:26px;align-items:center;padding:14px;border-radius:20px;{{e.focus}}">
+        <div style="flex:none;width:300px;height:169px;border-radius:12px;background:{{e.bg}};position:relative;overflow:hidden">
+          <sc-if value="{{e.watched}}" hint-placeholder-val="{{false}}">
+            <div style="position:absolute;top:10px;right:10px;width:40px;height:40px;border-radius:20px;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F4F5F7" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></div>
+          </sc-if>
+          <div style="position:absolute;left:0;bottom:0;height:6px;width:{{e.p}};background:#7FB2FF"></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px;min-width:0">
+          <div style="display:flex;gap:14px;align-items:center">
+            <div style="font-size:24px;color:#A7AEBB;font-weight:700">E{{e.n}}</div>
+            <div style="font-size:28px;font-weight:700">{{e.t}}</div>
+            <sc-if value="{{e.filler}}" hint-placeholder-val="{{false}}"><span style="font-size:18px;font-weight:800;color:#0B0D12;background:#FFB866;border-radius:6px;padding:2px 8px">FILLER</span></sc-if>
+          </div>
+          <div style="font-size:22px;color:#A7AEBB">{{e.meta}}</div>
+          <div style="font-size:22px;color:#D5D9E1;line-height:1.4">{{e.d}}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="position:absolute;right:96px;top:540px;width:520px;display:flex;flex-direction:column;gap:18px">
+    <div style="font-size:24px;color:#A7AEBB;font-weight:700">ABOUT THE SERIES</div>
+    <div style="font-size:24px;line-height:1.5;color:#D5D9E1">A harbour-master's daughter keeps the old lighthouse running while the town around it changes. [Synopsis from the provider.]</div>
+    <div style="font-size:22px;color:#A7AEBB">Source <b style="color:#F4F5F7">[Provider]</b> · Tags <b style="color:#F4F5F7">Drama, Mystery</b></div>
+    <div style="display:flex;gap:12px;margin-top:8px">
+      <button class="pill" style="height:56px;font-size:22px;background:rgba(255,255,255,.08);color:#F4F5F7">Mark season watched</button>
+      <button class="pill" style="height:56px;font-size:22px;background:rgba(255,255,255,.08);color:#F4F5F7">Cast</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const focus = 'background:rgba(255,255,255,.1);box-shadow:0 0 0 4px #F4F5F7;';
+    return {
+      eps: [
+        { n: 3, t: 'The Keeper\'s Log', meta: '44 min · aired 12 Mar 2021', d: 'An entry in the old log points to a ship that never arrived.', bg: '#2f4a44', p: '100%', watched: true, filler: false, focus: '' },
+        { n: 4, t: 'Low Tide', meta: '42 min · aired 19 Mar 2021 · 18 min left', d: 'A storm strands half the town on the causeway.', bg: '#3b4256', p: '57%', watched: false, filler: false, focus },
+        { n: 5, t: 'Fog Signal', meta: '45 min · aired 26 Mar 2021', d: 'The fog horn sounds on a clear night.', bg: '#4a3f36', p: '0%', watched: false, filler: true, focus: '' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

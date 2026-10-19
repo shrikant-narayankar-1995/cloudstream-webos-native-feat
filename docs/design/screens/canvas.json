@@ -1,0 +1,33 @@
+{
+ "v": 3,
+ "createdOnFiles": {"v": 1, "at": "2026-10-19T11:45:00Z"},
+ "title": "CloudStream webOS — screen designs",
+ "launch": {"view": "canvas"},
+ "pages": [],
+ "boards": {
+  "Main.dc.html": {"x": 0, "y": 0, "w": 1920, "h": 1080, "title": "01 Home"},
+  "Search.dc.html": {"x": 2000, "y": 0, "w": 1920, "h": 1080, "title": "02 Search"},
+  "DetailsMovie.dc.html": {"x": 4000, "y": 0, "w": 1920, "h": 1080, "title": "03 Details — movie"},
+  "DetailsSeries.dc.html": {"x": 6000, "y": 0, "w": 1920, "h": 1080, "title": "04 Details — series & episodes"},
+  "Sources.dc.html": {"x": 8000, "y": 0, "w": 1920, "h": 1080, "title": "05 Source picker"},
+  "Player.dc.html": {"x": 0, "y": 1500, "w": 1920, "h": 1080, "title": "06 Player — controls"},
+  "PlayerTracks.dc.html": {"x": 2000, "y": 1500, "w": 1920, "h": 1080, "title": "07 Player — audio, subtitles, quality"},
+  "PlayerNext.dc.html": {"x": 4000, "y": 1500, "w": 1920, "h": 1080, "title": "08 Player — skip intro, episodes, up next"},
+  "Library.dc.html": {"x": 0, "y": 3000, "w": 1920, "h": 1080, "title": "09 Library"},
+  "Downloads.dc.html": {"x": 2000, "y": 3000, "w": 1920, "h": 1080, "title": "10 Downloads"},
+  "Extensions.dc.html": {"x": 4000, "y": 3000, "w": 1920, "h": 1080, "title": "11 Extensions — repositories & plugins"},
+  "PluginSettings.dc.html": {"x": 6000, "y": 3000, "w": 1920, "h": 1080, "title": "12 Plugin settings (rendered from the plugin)"},
+  "Profiles.dc.html": {"x": 0, "y": 4500, "w": 1920, "h": 1080, "title": "13 Profiles"},
+  "Setup.dc.html": {"x": 2000, "y": 4500, "w": 1920, "h": 1080, "title": "14 First-run setup"},
+  "Settings.dc.html": {"x": 4000, "y": 4500, "w": 1920, "h": 1080, "title": "15 Settings"},
+  "Accounts.dc.html": {"x": 6000, "y": 4500, "w": 1920, "h": 1080, "title": "16 Accounts & sync (QR sign-in)"}
+ },
+ "order": ["Main.dc.html", "Search.dc.html", "DetailsMovie.dc.html", "DetailsSeries.dc.html", "Sources.dc.html", "Player.dc.html", "PlayerTracks.dc.html", "PlayerNext.dc.html", "Library.dc.html", "Downloads.dc.html", "Extensions.dc.html", "PluginSettings.dc.html", "Profiles.dc.html", "Setup.dc.html", "Settings.dc.html", "Accounts.dc.html"],
+ "notes": {
+  "row1": {"x": 0, "y": -300, "text": "Browse: home, search, details, sources", "kind": "title1", "maxW": 9920},
+  "row2": {"x": 0, "y": 1200, "text": "Playback", "kind": "title1", "maxW": 5920},
+  "row3": {"x": 0, "y": 2700, "text": "Library, downloads, extensions", "kind": "title1", "maxW": 7920},
+  "row4": {"x": 0, "y": 4200, "text": "Profiles, setup, settings, accounts", "kind": "title1", "maxW": 7920}
+ },
+ "designSystems": []
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Profiles</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#0B0D12;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.key{width:96px;height:80px;border-radius:16px;border:0;background:rgba(255,255,255,.08);color:#F4F5F7;font-size:32px;font-weight:700;font-family:inherit}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;left:0;right:0;top:150px;text-align:center;font-size:56px;font-weight:800">Who's watching?</div>
+  <div style="position:absolute;left:0;right:0;top:290px;display:flex;justify-content:center;gap:64px">
+    <sc-for list="{{profiles}}" as="p" hint-placeholder-count="5">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:20px;width:220px">
+        <div style="width:200px;height:200px;border-radius:100px;background:{{p.bg}};display:flex;align-items:center;justify-content:center;font-size:72px;font-weight:800;position:relative;{{p.st}}">
+          {{p.i}}
+          <sc-if value="{{p.lock}}" hint-placeholder-val="{{false}}">
+            <div style="position:absolute;right:4px;bottom:4px;width:56px;height:56px;border-radius:28px;background:#0B0D12;display:flex;align-items:center;justify-content:center"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F4F5F7" stroke-width="2.2" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg></div>
+          </sc-if>
+        </div>
+        <div style="font-size:30px;font-weight:700">{{p.n}}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="position:absolute;left:0;right:0;top:640px;display:flex;flex-direction:column;align-items:center;gap:24px">
+    <div style="font-size:26px;color:#D5D9E1">Enter the PIN for Alex</div>
+    <div style="display:flex;gap:22px">
+      <div style="width:28px;height:28px;border-radius:14px;background:#F4F5F7"></div>
+      <div style="width:28px;height:28px;border-radius:14px;background:#F4F5F7"></div>
+      <div style="width:28px;height:28px;border-radius:14px;border:3px solid rgba(255,255,255,.5);box-sizing:border-box"></div>
+      <div style="width:28px;height:28px;border-radius:14px;border:3px solid rgba(255,255,255,.5);box-sizing:border-box"></div>
+    </div>
+    <div style="display:flex;gap:12px;margin-top:8px">
+      <sc-for list="{{digits}}" as="d" hint-placeholder-count="10"><button class="key" style="{{d.st}}">{{d.l}}</button></sc-for>
+    </div>
+    <div style="font-size:22px;color:#A7AEBB">Number keys on the remote work too</div>
+  </div>
+  <div style="position:absolute;right:96px;bottom:64px;font-size:24px;color:#A7AEBB">Manage profiles</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const focus = 'transform:scale(1.12);box-shadow:0 0 0 5px #F4F5F7,0 24px 48px rgba(0,0,0,.6);';
+    return {
+      profiles: [
+        { n: 'Sam', i: 'S', bg: '#5B6CFF', st: '', lock: false },
+        { n: 'Alex', i: 'A', bg: '#C2593F', st: focus, lock: true },
+        { n: 'Kids', i: 'K', bg: '#2F9E7A', st: '', lock: false },
+        { n: 'Guest', i: 'G', bg: '#6B7280', st: '', lock: false },
+        { n: 'Add', i: '+', bg: 'rgba(255,255,255,.08)', st: 'border:2px dashed rgba(255,255,255,.3);', lock: false }
+      ],
+      digits: '1234567890'.split('').map((l) => ({ l, st: l === '5' ? 'background:#F4F5F7;color:#0B0D12' : '' }))
+    };
+  }
+}
+</script>
+</body>
+</html>

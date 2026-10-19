@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Home</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#0B0D12;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.glass{background:rgba(22,25,33,.62);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(24px)}
+.pill{height:64px;padding:0 30px;border-radius:32px;display:flex;align-items:center;gap:12px;font-size:28px;font-weight:600;border:0;color:#F4F5F7;background:transparent;font-family:inherit}
+.round{width:64px;height:64px;border-radius:32px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#F4F5F7}
+.poster{flex:none;border-radius:14px;position:relative;overflow:hidden;display:flex;align-items:flex-end}
+.cap{font-size:24px;color:#A7AEBB}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;inset:0;background:#3a2a1f"></div>
+  <div style="position:absolute;right:120px;top:150px;width:900px;height:560px;border-radius:24px;border:2px dashed rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:24px;color:rgba(255,255,255,.55)">[Backdrop artwork from the provider]</div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,13,18,.92) 0%,rgba(11,13,18,.55) 45%,rgba(11,13,18,0) 75%)"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;height:520px;background:linear-gradient(0deg,#0B0D12 30%,rgba(11,13,18,0))"></div>
+
+  <div style="position:absolute;left:96px;top:44px;right:96px;display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:20px">
+      <div style="width:72px;height:72px;border-radius:36px;background:#5B6CFF;display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700">S</div>
+    </div>
+    <nav class="glass" style="display:flex;align-items:center;gap:4px;padding:6px;border-radius:40px">
+      <button class="pill" style="background:#F4F5F7;color:#0B0D12">Home</button>
+      <button class="pill">Movies</button>
+      <button class="pill">Series</button>
+      <button class="pill">Anime</button>
+      <button class="pill">Live</button>
+      <button class="pill">Library</button>
+      <button class="pill" aria-label="Search" style="padding:0 20px"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5"></path></svg></button>
+    </nav>
+    <div style="display:flex;align-items:center;gap:20px">
+      <button class="glass pill" style="height:60px;font-size:24px;font-weight:500">
+        <span style="color:#A7AEBB">Source</span> Internet Archive
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+      </button>
+      <div style="font-size:28px;font-weight:600">21:40</div>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:96px;top:330px;width:820px;display:flex;flex-direction:column;gap:18px">
+    <div style="font-size:24px;font-weight:700;letter-spacing:3px;color:#7FB2FF">FEATURED · INTERNET ARCHIVE</div>
+    <div style="font-size:96px;font-weight:800;line-height:1;letter-spacing:-1px">Nosferatu</div>
+    <div style="display:flex;gap:16px;align-items:center;font-size:28px;color:#D5D9E1">
+      <span>Movie</span><span>·</span><span>1922</span><span>·</span><span>94 min</span>
+      <span style="border:2px solid rgba(255,255,255,.5);border-radius:6px;padding:0 8px;font-size:22px;font-weight:700">HD</span>
+      <span style="display:flex;align-items:center;gap:6px"><svg width="22" height="22" viewBox="0 0 24 24" fill="#FFC857" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg>7.9</span>
+    </div>
+    <div style="font-size:26px;line-height:1.45;color:#D5D9E1">A real-estate agent travels to the mountains of Transylvania to close a sale with the reclusive Count Orlok, and brings something back with him.</div>
+    <div style="display:flex;gap:18px;align-items:center;margin-top:14px">
+      <button class="pill" style="background:#F4F5F7;color:#0B0D12;height:72px;padding:0 40px;font-size:30px;box-shadow:0 0 0 4px rgba(255,255,255,.35)">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"></path></svg>Play
+      </button>
+      <button class="round" aria-label="Add to bookmarks"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+      <button class="round" aria-label="More info"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 11v6M12 7.5v.5"></path></svg></button>
+    </div>
+  </div>
+  <div style="position:absolute;left:96px;top:806px;display:flex;gap:10px">
+    <div style="width:36px;height:8px;border-radius:4px;background:#F4F5F7"></div>
+    <sc-for list="{{dots}}" as="d" hint-placeholder-count="5"><div style="width:8px;height:8px;border-radius:4px;background:rgba(255,255,255,.4)"></div></sc-for>
+  </div>
+
+  <div style="position:absolute;left:96px;top:850px;font-size:32px;font-weight:700">Continue watching</div>
+  <div style="position:absolute;left:96px;top:910px;display:flex;gap:28px">
+    <sc-for list="{{cont}}" as="c" hint-placeholder-count="4">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="poster" style="width:400px;height:225px;background:{{c.bg}};{{c.focus}}">
+          <div style="position:absolute;inset:auto 0 0 0;height:110px;background:linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,0))"></div>
+          <div style="position:relative;padding:0 20px 22px;display:flex;flex-direction:column;gap:2px">
+            <div style="font-size:26px;font-weight:700">{{c.t}}</div>
+            <div style="font-size:22px;color:#D5D9E1">{{c.s}}</div>
+          </div>
+          <div style="position:absolute;left:0;bottom:0;height:6px;width:{{c.p}};background:#7FB2FF"></div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const focus = 'transform:scale(1.08);box-shadow:0 0 0 4px #F4F5F7,0 24px 48px rgba(0,0,0,.6);';
+    return {
+      dots: [1, 2, 3, 4, 5],
+      cont: [
+        { t: 'Metropolis', s: '1h 12m left · Internet Archive', bg: '#2d3a4f', p: '45%', focus },
+        { t: 'Pride and Prejudice', s: 'Ch. 4 of 61 · LibriVox', bg: '#4a3b2b', p: '8%', focus: '' },
+        { t: 'Sherlock Jr.', s: '22m left · Internet Archive', bg: '#2f2f2f', p: '60%', focus: '' },
+        { t: 'Space shuttle launch', s: '3m left · Dailymotion', bg: '#1f3b3a', p: '85%', focus: '' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

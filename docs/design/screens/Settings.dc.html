@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Settings</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#0B0D12;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.cat{display:flex;align-items:center;gap:18px;height:64px;padding:0 22px;border-radius:16px;font-size:26px;font-weight:600;color:#D5D9E1}
+.row{display:flex;align-items:center;gap:20px;min-height:88px;padding:0 28px;border-radius:18px}
+.lab{display:flex;flex-direction:column;gap:4px;flex:1}
+.val{font-size:24px;font-weight:700;color:#9CC3FF;display:flex;align-items:center;gap:8px}
+.sw{width:76px;height:42px;border-radius:21px;position:relative}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;left:96px;top:64px;font-size:56px;font-weight:800">Settings</div>
+  <div style="position:absolute;right:96px;top:76px;display:flex;padding:5px;border-radius:30px;background:rgba(255,255,255,.07)">
+    <div style="height:48px;padding:0 24px;border-radius:24px;display:flex;align-items:center;font-size:22px;font-weight:700;color:#A7AEBB">Essential</div>
+    <div style="height:48px;padding:0 24px;border-radius:24px;display:flex;align-items:center;font-size:22px;font-weight:700;background:#F4F5F7;color:#0B0D12">Advanced</div>
+  </div>
+
+  <div style="position:absolute;left:96px;top:180px;width:440px;display:flex;flex-direction:column;gap:4px">
+    <sc-for list="{{cats}}" as="c" hint-placeholder-count="10"><div class="cat" style="{{c.st}}">{{c.n}}</div></sc-for>
+  </div>
+
+  <div style="position:absolute;left:600px;right:96px;top:180px;display:flex;flex-direction:column;gap:8px">
+    <div style="font-size:22px;color:#A7AEBB;font-weight:800;letter-spacing:2px;margin:0 0 8px 28px">PLAYER</div>
+    <sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
+      <div class="row" style="{{r.st}}">
+        <div class="lab"><div style="font-size:27px;font-weight:700">{{r.t}}</div><div style="font-size:21px;color:#A7AEBB">{{r.d}}</div></div>
+        <sc-if value="{{r.toggle}}" hint-placeholder-val="{{false}}">
+          <div class="sw" style="background:{{r.swbg}}"><div style="position:absolute;top:5px;left:{{r.knob}};width:32px;height:32px;border-radius:16px;background:#F4F5F7"></div></div>
+        </sc-if>
+        <sc-if value="{{r.v}}" hint-placeholder-val="{{true}}">
+          <div class="val">{{r.v}}<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const sel = 'background:rgba(255,255,255,.12);color:#F4F5F7;';
+    const on = { toggle: true, swbg: '#7FB2FF', knob: '39px', v: '' };
+    const off = { toggle: true, swbg: 'rgba(255,255,255,.2)', knob: '5px', v: '' };
+    return {
+      cats: ['General', 'Player', 'Subtitles', 'Content & sources', 'Appearance', 'Extensions', 'Accounts & sync', 'Backup & updates', 'About & licences', 'Diagnostics']
+        .map((n) => ({ n, st: n === 'Player' ? sel : '' })),
+      rows: [
+        { t: 'Preferred quality', d: 'Picked first when a source offers several', v: '1080p', toggle: false, st: 'background:rgba(255,255,255,.1);box-shadow:0 0 0 4px #F4F5F7;' },
+        { t: 'Choose source automatically', d: 'Best match, first found, or always ask', v: 'Best match', toggle: false, st: '' },
+        Object.assign({ t: 'Play next episode automatically', d: 'Countdown at the end credits', st: '' }, on),
+        { t: 'Skip intros and recaps', d: 'Uses chapters and AniSkip data when available', v: 'Show a button', toggle: false, st: '' },
+        { t: 'Seek step', d: 'Left and Right on the remote', v: '10 s', toggle: false, st: '' },
+        Object.assign({ t: 'Show source and quality while paused', d: '', st: '' }, on),
+        { t: 'Buffer', d: 'Larger buffers use more of the TV’s memory', v: 'Standard (60 s)', toggle: false, st: '' },
+        Object.assign({ t: 'Play audio-only items with artwork', d: 'Audiobooks and radio', st: '' }, off)
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

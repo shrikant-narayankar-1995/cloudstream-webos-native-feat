@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Movie details</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#0B0D12;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.glass{background:rgba(22,25,33,.78);border:1px solid rgba(255,255,255,.14)}
+.pill{height:72px;padding:0 36px;border-radius:36px;display:flex;align-items:center;gap:12px;font-size:28px;font-weight:700;border:0;font-family:inherit}
+.round{width:72px;height:72px;border-radius:36px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#F4F5F7}
+.tag{font-size:22px;font-weight:600;color:#D5D9E1;border:1px solid rgba(255,255,255,.22);border-radius:20px;padding:4px 16px}
+.mi{display:flex;align-items:center;gap:16px;height:60px;padding:0 22px;border-radius:14px;font-size:26px;font-weight:600}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;inset:0;background:#2a3346"></div>
+  <div style="position:absolute;right:96px;top:96px;width:860px;height:480px;border-radius:24px;border:2px dashed rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:24px;color:rgba(255,255,255,.55)">[Backdrop, or trailer preview after 4 s]</div>
+  <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,13,18,.95) 0%,rgba(11,13,18,.6) 50%,rgba(11,13,18,.1) 80%)"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;height:480px;background:linear-gradient(0deg,#0B0D12 40%,rgba(11,13,18,0))"></div>
+
+  <div style="position:absolute;left:96px;top:64px;display:flex;align-items:center;gap:14px;font-size:24px;color:#A7AEBB">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+    Back · Home
+  </div>
+
+  <div style="position:absolute;left:96px;top:180px;width:900px;display:flex;flex-direction:column;gap:20px">
+    <div style="font-size:88px;font-weight:800;line-height:1;letter-spacing:-1px">Metropolis</div>
+    <div style="display:flex;gap:16px;align-items:center;font-size:28px;color:#D5D9E1">
+      <span>1927</span><span>·</span><span>2 h 33 min</span><span>·</span>
+      <span style="display:flex;align-items:center;gap:6px"><svg width="22" height="22" viewBox="0 0 24 24" fill="#FFC857" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"></path></svg>8.3</span>
+      <span style="border:2px solid rgba(255,255,255,.5);border-radius:6px;padding:0 8px;font-size:22px;font-weight:700">HD</span>
+      <span style="border:2px solid rgba(255,255,255,.5);border-radius:6px;padding:0 8px;font-size:22px;font-weight:700">CC</span>
+    </div>
+    <div style="display:flex;gap:10px"><span class="tag">Science fiction</span><span class="tag">Drama</span><span class="tag">Silent</span></div>
+    <div style="font-size:26px;line-height:1.45;color:#D5D9E1">In a futuristic city sharply divided between the working class and the city planners, the son of the city's mastermind falls in love with a working-class prophet who predicts the coming of a saviour.</div>
+    <div style="display:flex;gap:18px;align-items:center;margin-top:16px">
+      <button class="pill" style="background:#F4F5F7;color:#0B0D12"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4l13 8-13 8z"></path></svg>Resume 1:21:04</button>
+      <button class="round" aria-label="Play from start"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.4-5.7L4 8.6M4 4v4.6h4.6"></path></svg></button>
+      <button class="round" aria-label="Trailer"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M10 9l5 3-5 3z"></path></svg></button>
+      <button class="round" aria-label="Bookmark status: Watching" style="background:#F4F5F7;color:#0B0D12;box-shadow:0 0 0 4px rgba(255,255,255,.35)"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"></path></svg></button>
+      <button class="round" aria-label="Download"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"></path></svg></button>
+      <button class="round" aria-label="More actions"><svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg></button>
+    </div>
+    <div style="display:flex;gap:28px;font-size:22px;color:#A7AEBB;margin-top:6px">
+      <span>Source <b style="color:#F4F5F7">Internet Archive</b></span>
+      <span>AniList / MAL / Simkl <b style="color:#F4F5F7">not linked</b></span>
+    </div>
+  </div>
+
+  <div class="glass" style="position:absolute;left:520px;top:690px;width:420px;border-radius:22px;padding:14px;display:flex;flex-direction:column;gap:4px;box-shadow:0 30px 60px rgba(0,0,0,.6)">
+    <div style="font-size:20px;font-weight:700;color:#A7AEBB;padding:8px 22px">Bookmark as</div>
+    <div class="mi" style="background:#F4F5F7;color:#0B0D12">Watching<svg style="margin-left:auto" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg></div>
+    <div class="mi">Plan to watch</div>
+    <div class="mi">On hold</div>
+    <div class="mi">Completed</div>
+    <div class="mi">Dropped</div>
+    <div class="mi" style="color:#A7AEBB">Remove bookmark</div>
+  </div>
+
+  <div style="position:absolute;right:96px;top:640px;width:620px;display:flex;flex-direction:column;gap:18px">
+    <div style="font-size:28px;font-weight:700">Cast</div>
+    <div style="display:flex;gap:26px">
+      <sc-for list="{{cast}}" as="c" hint-placeholder-count="4">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:10px;width:130px">
+          <div style="width:120px;height:120px;border-radius:60px;background:{{c.bg}};display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700;color:rgba(255,255,255,.7)">{{c.i}}</div>
+          <div style="font-size:22px;font-weight:600;text-align:center">{{c.n}}</div>
+          <div style="font-size:20px;color:#A7AEBB;text-align:center">{{c.r}}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:96px;top:960px;font-size:30px;font-weight:700">More like this</div>
+  <div style="position:absolute;left:96px;top:1012px;display:flex;gap:24px">
+    <sc-for list="{{more}}" as="m" hint-placeholder-count="8"><div style="width:200px;height:300px;border-radius:12px;background:{{m}}"></div></sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      cast: [
+        { n: 'Brigitte Helm', r: 'Maria', i: 'BH', bg: '#3b4256' },
+        { n: 'Gustav Fröhlich', r: 'Freder', i: 'GF', bg: '#4a3f36' },
+        { n: 'Alfred Abel', r: 'Joh Fredersen', i: 'AA', bg: '#2f4a44' },
+        { n: 'Rudolf Klein-Rogge', r: 'Rotwang', i: 'RK', bg: '#4a3646' }
+      ],
+      more: ['#40354f', '#4f3a2d', '#2d4f45', '#3b3b3b', '#2b2f45', '#45402b', '#3a1f2b', '#1f3b3a']
+    };
+  }
+}
+</script>
+</body>
+</html>

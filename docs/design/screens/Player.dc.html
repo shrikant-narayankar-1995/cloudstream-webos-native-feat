@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Player controls</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.scr{width:1920px;height:1080px;position:relative;overflow:hidden;background:#000;color:#F4F5F7;font-family:'Figtree',sans-serif}
+.round{width:68px;height:68px;border-radius:34px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.22);background:rgba(30,33,40,.6);color:#F4F5F7}
+.chip{height:56px;padding:0 26px;border-radius:28px;border:1px solid rgba(255,255,255,.22);background:rgba(30,33,40,.6);color:#F4F5F7;font-size:24px;font-weight:700;font-family:inherit;display:flex;align-items:center;gap:10px}
+</style>
+</helmet>
+<div class="scr">
+  <div style="position:absolute;inset:0;background:#26313a;display:flex;align-items:center;justify-content:center;font-size:24px;color:rgba(255,255,255,.4)">[Video — hardware decoder plane]</div>
+  <div style="position:absolute;inset:0 0 auto 0;height:260px;background:linear-gradient(180deg,rgba(0,0,0,.75),rgba(0,0,0,0))"></div>
+  <div style="position:absolute;inset:auto 0 0 0;height:420px;background:linear-gradient(0deg,rgba(0,0,0,.85),rgba(0,0,0,0))"></div>
+
+  <div style="position:absolute;left:80px;top:56px;display:flex;flex-direction:column;gap:8px">
+    <div style="font-size:24px;font-weight:700;color:#D5D9E1">HARBOUR LIGHTS · S2 · E4</div>
+    <div style="font-size:52px;font-weight:800">Low Tide</div>
+  </div>
+  <div style="position:absolute;right:80px;top:64px;display:flex;flex-direction:column;align-items:flex-end;gap:6px">
+    <div style="font-size:30px;font-weight:700">21:42</div>
+    <div style="font-size:22px;color:#D5D9E1">Ends at 22:06</div>
+  </div>
+
+  <div style="position:absolute;left:80px;right:80px;bottom:200px;display:flex;align-items:flex-end;justify-content:space-between">
+    <div style="display:flex;gap:12px">
+      <button class="chip">Episodes</button>
+      <button class="chip">Sources</button>
+      <button class="chip">Skip intro</button>
+    </div>
+    <div style="display:flex;gap:14px">
+      <button class="round" aria-label="Subtitles"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"></rect><path d="M7 11h4M13 11h4M7 15h7"></path></svg></button>
+      <button class="round" aria-label="Audio"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"></path></svg></button>
+      <button class="round" aria-label="Speed"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 18a8 8 0 1 1 14 0M12 14l4-5"></path></svg></button>
+      <button class="round" aria-label="Picture size"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"></path></svg></button>
+      <button class="round" aria-label="More"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="2"></circle><circle cx="12" cy="12" r="2"></circle><circle cx="19" cy="12" r="2"></circle></svg></button>
+    </div>
+  </div>
+
+  <div style="position:absolute;left:840px;bottom:226px;width:300px;display:flex;flex-direction:column;align-items:center;gap:10px">
+    <div style="width:300px;height:169px;border-radius:12px;background:#3a4650;border:2px solid #F4F5F7"></div>
+    <div style="font-size:26px;font-weight:800;background:#F4F5F7;color:#0B0D12;border-radius:10px;padding:2px 12px">24:31</div>
+  </div>
+
+  <div style="position:absolute;left:80px;right:80px;bottom:150px;height:8px;border-radius:4px;background:rgba(255,255,255,.25)">
+    <div style="position:absolute;left:0;top:0;bottom:0;width:62%;border-radius:4px;background:rgba(255,255,255,.45)"></div>
+    <div style="position:absolute;left:0;top:0;bottom:0;width:55%;border-radius:4px;background:#F4F5F7"></div>
+    <div style="position:absolute;left:3%;top:0;bottom:0;width:5%;background:#FFB866"></div>
+    <div style="position:absolute;left:calc(55% - 14px);top:-10px;width:28px;height:28px;border-radius:14px;background:#F4F5F7;box-shadow:0 0 0 6px rgba(255,255,255,.3)"></div>
+  </div>
+  <div style="position:absolute;left:80px;right:80px;bottom:96px;display:flex;justify-content:space-between;font-size:26px;font-weight:600">
+    <span>23:10</span>
+    <span style="display:flex;gap:14px;align-items:center;color:#D5D9E1">
+      <span style="font-size:20px;font-weight:800;border:2px solid rgba(255,255,255,.4);border-radius:6px;padding:0 8px">1080p</span>
+      <span style="font-size:20px;font-weight:800;border:2px solid rgba(255,255,255,.4);border-radius:6px;padding:0 8px">HLS</span>
+      Vidstream · mirror 1
+    </span>
+    <span>-18:52</span>
+  </div>
+  <div style="position:absolute;left:80px;bottom:40px;font-size:20px;color:#A7AEBB">Left/Right seek 10 s · hold to scrub · Up for controls · OK play/pause · orange = intro (AniSkip / chapter)</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1920,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
