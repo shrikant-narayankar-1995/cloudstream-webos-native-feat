@@ -630,7 +630,8 @@ void PlayerScreen::open_episodes(Ui &ui) {
         const auto &e = target_.episodes[i];
         const auto p = s_.library->get().view_pos(target_.provider, e.data);
         std::string text = e.name;
-        if (p && p->duration_ms > 0) text += "  ·  " + std::to_string(static_cast<int>(library::visual_progress(*p) * 100)) + " %";
+        const int pct = p && p->duration_ms > 0 ? static_cast<int>(library::visual_progress(*p) * 100) : 0;
+        if (pct > 0) text += "  ·  " + std::to_string(pct) + " %";
         auto &b = list.add<PillButton>(text, i == target_.index ? "play" : "", PillButton::Style::Glass, [this, dlg, i](Ui &u) {
             dlg->dismiss(u);
             if (i != target_.index) play_episode(u, i);

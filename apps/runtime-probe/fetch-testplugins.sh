@@ -8,7 +8,7 @@ here=$(cd "$(dirname "$0")" && pwd); root=$(cd "$here/../.." && pwd)
 python3 -I - "$here/testplugins/tests.json" "$here/testplugins" "$root/evidence/plugins" "$root/test-plugins" <<'PY'
 import hashlib, json, os, shutil, sys
 spec, dst, *src_roots = sys.argv[1:]
-for t in {(t["plugin"], t["sha256"]) for t in json.load(open(spec))}:
+for t in {(t["plugin"], t["sha256"]) for t in json.load(open(spec)) if "plugin" in t}:  # service sessions name theirs in stdin
     name, want = t
     hits = [os.path.join(d, name) for r in src_roots for d, _, files in os.walk(r) if name in files]
     ok = [h for h in hits if hashlib.sha256(open(h, "rb").read()).hexdigest() == want]

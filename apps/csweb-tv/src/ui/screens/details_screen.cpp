@@ -77,9 +77,11 @@ DetailsScreen::DetailsScreen(app::Services &s, std::string provider, runtime::Se
 
     cast_title_ = &content_->add<Label>("Cast");
     cast_title_->set_bold(true).set_font_size(theme::kHeadline).set_visible(false);
-    cast_ = &content_->add<Label>("", TextRole::Small);
-    cast_->set_color(theme::kTextSecondary).set_max_lines(3).set_visible(false);
-    cast_->set_width(Dim::fixed(1500));
+    cast_ = &content_->add<CollectionView>(Axis::Horizontal, 1, wnk::Size{180, 180 + 84}, 24);
+    cast_->set_width(Dim::fill());
+    cast_->set_height(Dim::fixed(180 + 124));
+    cast_->set_visible(false);
+    cast_->name = "details.cast";
 
     more_title_ = &content_->add<Label>("More like this");
     more_title_->set_bold(true).set_font_size(theme::kHeadline).set_visible(false);
@@ -209,12 +211,12 @@ void DetailsScreen::show(Ui &ui) {
     const bool show_cast = s_.settings->get_bool(settings::kShowCast, true) && !d.actors.empty();
     cast_title_->set_visible(show_cast);
     cast_->set_visible(show_cast);
-    std::string cast;
-    for (const auto &a : d.actors) {
-        if (!present(a.name)) continue;
-        cast += (cast.empty() ? "" : "  ·  ") + a.name + (present(a.role) ? " (" + a.role + ")" : std::string());
-    }
-    cast_->set_text(cast);
+    cast_->set_items(show_cast ? d.actors.size() : 0, [this](Ui &, size_t i) {
+        const auto &a = details_.actors[i];
+        auto card = std::make_unique<Card>(a.name, a.image, present(a.role) ? a.role : std::string());
+        card->image_aspect = 1.0f;
+        return card;
+    });
 
     more_title_->set_visible(!d.recommendations.empty());
     more_->set_visible(!d.recommendations.empty());

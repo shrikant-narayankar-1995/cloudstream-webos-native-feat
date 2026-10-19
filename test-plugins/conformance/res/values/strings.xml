@@ -7,6 +7,7 @@
     <string name="label_enabled">Show extra results</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="series_title">Conformance Series</string>
     <string name="plot">Test fixture: this text comes from the plugin\'s resources.arsc.</string>
     <string-array name="titles">
         <item>Conformance Alpha</item>

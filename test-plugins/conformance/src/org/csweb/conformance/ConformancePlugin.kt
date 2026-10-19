@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 // Conformance TEST FIXTURE for the webOS plugin runtime. Not a content provider: it serves fixed data
-// from its own resources so requiresResources, settings screens and dialogs can be tested end to end.
+// from its own resources so requiresResources, settings screens and dialogs can be tested end to end,
+// plus one series (two seasons of three episodes, with actors) for the app's episode flows.
 // Written against CloudStream's plugin API exactly as third-party plugins are.
 package org.csweb.conformance
 
@@ -11,13 +12,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
+import com.lagradost.cloudstream3.Actor
 import com.lagradost.cloudstream3.LoadResponse
+import com.lagradost.cloudstream3.LoadResponse.Companion.addActors
 import com.lagradost.cloudstream3.MainAPI
 import com.lagradost.cloudstream3.SearchResponse
 import com.lagradost.cloudstream3.SubtitleFile
 import com.lagradost.cloudstream3.TvType
 import com.lagradost.cloudstream3.newMovieLoadResponse
 import com.lagradost.cloudstream3.newMovieSearchResponse
+import com.lagradost.cloudstream3.newEpisode
+import com.lagradost.cloudstream3.newTvSeriesLoadResponse
+import com.lagradost.cloudstream3.newTvSeriesSearchResponse
 import com.lagradost.cloudstream3.plugins.Plugin
 import com.lagradost.cloudstream3.utils.ExtractorLink
 import com.lagradost.cloudstream3.utils.newExtractorLink
@@ -65,19 +71,38 @@ class ConformanceProvider(
     override var name = displayName ?: res.getString(res.id("provider_name", "string"))
     override var mainUrl = "https://conformance.invalid"
     override var lang = "en"
-    override val supportedTypes = setOf(TvType.Others)
+    override val supportedTypes = setOf(TvType.Others, TvType.TvSeries)
 
     override suspend fun search(query: String): List<SearchResponse> {
         val titles = res.getStringArray(res.id("titles", "array")).toList()
         val shown = if (extra) titles else titles.take(2)
         val color = res.getColor(res.id("accent", "color"), null)
         val padding = res.getDimensionPixelSize(res.id("padding", "dimen"))
-        return shown.filter { it.contains(query, ignoreCase = true) || query == "*" }.mapIndexed { i, t ->
+        val items: List<SearchResponse> = shown.filter { it.contains(query, ignoreCase = true) || query == "*" }.mapIndexed { i, t ->
             newMovieSearchResponse(t, "$mainUrl/item/$i?color=${Integer.toHexString(color)}&padding=$padding", TvType.Others)
         }
+        val series = res.getString(res.id("series_title", "string"))
+        return if (series.contains(query, ignoreCase = true) || query == "*") {
+            items + newTvSeriesSearchResponse(series, "$mainUrl/series", TvType.TvSeries)
+        } else items
     }
 
     override suspend fun load(url: String): LoadResponse {
+        if (url.endsWith("/series")) {
+            val episodes = (1..2).flatMap { s ->
+                (1..3).map { e ->
+                    newEpisode("$mainUrl/episode/$s/$e") {
+                        name = "Chapter ${(s - 1) * 3 + e}"
+                        season = s
+                        episode = e
+                    }
+                }
+            }
+            return newTvSeriesLoadResponse(res.getString(res.id("series_title", "string")), url, TvType.TvSeries, episodes) {
+                plot = res.getString(res.id("plot", "string"))
+                addActors(listOf(Actor("Ada Reader") to "Narrator", Actor("Ben Reader") to "Mr. Darcy"))
+            }
+        }
         val i = url.substringAfter("/item/").substringBefore("?").toInt()
         val title = res.getStringArray(res.id("titles", "array"))[i]
         return newMovieLoadResponse(title, url, TvType.Others, "$i") {

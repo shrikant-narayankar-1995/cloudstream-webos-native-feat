@@ -65,7 +65,8 @@ class DetailsScreen : public wnk::ui::Screen {
     bool waiting_plugins_ = false;
     wnk::ui::Row *group_row_ = nullptr, *range_row_ = nullptr;
     wnk::ui::Column *episodes_ = nullptr;
-    wnk::ui::Label *cast_title_ = nullptr, *cast_ = nullptr, *more_title_ = nullptr;
+    wnk::ui::Label *cast_title_ = nullptr, *more_title_ = nullptr;
+    wnk::ui::CollectionView *cast_ = nullptr;  // ActorAdaptor: photo, name, role
     wnk::ui::CollectionView *more_ = nullptr;
     wnk::async::Lifetime life_;
 };
