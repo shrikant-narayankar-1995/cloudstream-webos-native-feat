@@ -247,6 +247,12 @@ public final class BinaryXmlParser implements XmlResourceParser {
         return table != null ? table.resolve(v) : v;
     }
 
+    /** The attribute's typed value with resource references followed (TypedArray.peekValue-like). */
+    public ResourceTable.Value getAttributeTypedValue(int index) { return typed(index); }
+
+    /** The plugin resource table attribute references resolve against; null for system XML. */
+    public ResourceTable resourceTable() { return table; }
+
     @Override public int getAttributeListValue(String ns, String attribute, String[] options, int def) {
         int i = find(ns, attribute);
         return i < 0 ? def : getAttributeListValue(i, options, def);

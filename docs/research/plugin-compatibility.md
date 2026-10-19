@@ -20,7 +20,7 @@ parent class path and `runtime/android-compat` providing the Android framework c
 | `Plugin` that casts the context to an Activity type in `load()` | supported (load) | after the cast fails on the application context, the plugin is unloaded as `PluginManager.unloadPlugin` does and loaded again with a headless instance of that exact class (`org.csweb.compat.HeadlessActivities`: real type, base context attached, no window/lifecycle; `isFinishing()`/`isDestroyed()` true). In all 8 surveyed cases the cast only captures the Activity for `openSettings`, after the providers are registered |
 | `requiresResources` (Android resources from the .cs3) | supported (values, arrays, layouts as XML) | loaded as upstream does (`AssetManager` + `addAssetPath` + `Resources`); `resources.arsc` and binary XML parsed by `org.csweb.compat.res`. Drawables and color state lists are reported unsupported (no graphics stack). Verified with the conformance test plugin |
 | Plugins whose operations use `android.webkit.WebView` (7 CNCVerse plugins reference it) | unsupported when reached | no browser engine in the runtime; would fail with `Unsupported` at that call |
-| Settings screens (`openSettings`) | unsupported | Android views; settings must be offered by the native app instead |
+| Settings screens (`openSettings`) with AlertDialog and framework widgets | supported (runtime; app rendering pending) | `--op settings`: dialogs are described to the native app and answered over stdin (docs/runtime/dialog-protocol.md). Custom/AndroidX views, fragments and bottom sheets are reported unsupported. Verified with the conformance test plugin |
 | Native `.so` in plugins | none seen | |
 
 ## Load-only pass (host): plugin's own `load()` and provider registration, no provider operations
@@ -75,7 +75,8 @@ Totals: LOADS 38, NO-PROVIDER 2 (of 40)
 M3UPlaylistPlayer creates providers only for playlists entered in its own (Android) settings, so with no
 configuration it correctly registers none. SubscriptionManager is a settings-only companion plugin: it
 loads (headless Activity) and registers no provider by design. `compat` events in the JSON lines mark
-plugins loaded with the headless Activity; `unsupported` events list `openSettings` and `requiresResources`.
+plugins loaded with the headless Activity; `unsupported` events list `openSettings` and `requiresResources`
+(this pass predates resources and settings support; it was not re-run for the unlicensed-content plugins).
 
 ## Provider operations
 
@@ -105,5 +106,5 @@ features no available legitimate plugin uses. Host ART results (`evidence/runtim
 |---|---|
 | `requiresResources`: strings, string-array, color, dimension (16dp -> 32 px at xhdpi) | search returns resource-derived titles, color and padding |
 | plot from `resources.arsc` (details), links | ok |
-| layout via `getLayout` (binary XML events and attributes) | ok in compat host tests (133 passed) |
-| `openSettings` with LayoutInflater + AlertDialog | not yet: reported unsupported (next: dialog/settings bridge) |
+| layout via `getLayout` (binary XML events and attributes) | ok in compat host tests (165 passed) |
+| `openSettings` with LayoutInflater + AlertDialog + SharedPreferences | ok: dialog described, answered over stdin, prefs saved by the plugin's listener; next load shows the new name and 3 results (`conformance-settings-answered.jsonl`, `conformance-search-after-settings.jsonl`) |

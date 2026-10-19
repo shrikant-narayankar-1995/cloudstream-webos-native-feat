@@ -132,8 +132,180 @@ public final class CompatTest {
         eq("flag attribute", "0x1", inputType);
     }
 
+    static final class TestUi extends org.csweb.compat.ui.UiHost {
+        final java.util.List<android.app.Dialog> shown = new java.util.ArrayList<>();
+        final java.util.List<String> toasts = new java.util.ArrayList<>();
+
+        @Override public void shown(android.app.Dialog d) { shown.add(d); }
+        @Override public void dismissed(android.app.Dialog d) { shown.remove(d); }
+        @Override public void toast(CharSequence text, int duration) { toasts.add(text + "/" + duration); }
+    }
+
+    @SuppressWarnings("unchecked")
+    static Map<String, Object> answer(String json) {
+        return (Map<String, Object>) MiniJson.decode(json);
+    }
+
+    static void ui() throws Exception {
+        File dir = Files.createTempDirectory("csweb-ui").toFile();
+        HeadlessContext ctx = new HeadlessContext(dir, "test.app");
+        boolean threw = false;
+        try {
+            new android.app.AlertDialog.Builder(ctx).setTitle("x").show();
+        } catch (org.csweb.compat.Unsupported e) {
+            threw = true;
+        }
+        eq("show without UI host is unsupported", true, threw);
+        TestUi ui = new TestUi();
+        org.csweb.compat.ui.UiHost.install(ui);
+
+        // programmatic view + dialog, as many plugin settings screens are written
+        android.widget.LinearLayout col = new android.widget.LinearLayout(ctx);
+        col.setOrientation(android.widget.LinearLayout.VERTICAL);
+        android.widget.EditText user = new android.widget.EditText(ctx);
+        user.setHint("User");
+        android.widget.EditText pass = new android.widget.EditText(ctx);
+        pass.setInputType(0x81);  // TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_PASSWORD
+        pass.setText("old-secret");
+        android.widget.Switch sw = new android.widget.Switch(ctx);
+        sw.setText("Enable");
+        final boolean[] changed = {false};
+        sw.setOnCheckedChangeListener((b, c) -> changed[0] = c);
+        android.widget.TextView gone = new android.widget.TextView(ctx);
+        gone.setVisibility(android.view.View.GONE);
+        col.addView(user);
+        col.addView(pass);
+        col.addView(sw);
+        col.addView(gone);
+        eq("findViewById none", null, col.findViewById(42));
+        user.setId(42);
+        eq("findViewById", user, col.findViewById(42));
+        final String[] saved = new String[3];
+        android.app.AlertDialog d = new android.app.AlertDialog.Builder(ctx)
+                .setTitle("Login").setMessage("Account").setView(col)
+                .setPositiveButton("Save", (dlg, which) -> {
+                    saved[0] = user.getText().toString();
+                    saved[1] = pass.getText().toString();
+                    saved[2] = String.valueOf(which);
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+        eq("shown", true, d.isShowing() && ui.shown.contains(d));
+        String desc = MiniJson.encode(org.csweb.compat.ui.DialogProtocol.describe(d));
+        eq("describe", "{\"title\":\"Login\",\"cancelable\":true,\"message\":\"Account\",\"buttons\":{\"positive\":\"Save\",\"negative\":\"Cancel\"},"
+                + "\"view\":{\"key\":\"v0\",\"type\":\"column\",\"children\":["
+                + "{\"key\":\"id42\",\"type\":\"text-field\",\"input\":\"text\",\"hint\":\"User\",\"value\":\"\"},"
+                + "{\"key\":\"v2\",\"type\":\"text-field\",\"input\":\"password\",\"hasValue\":true},"
+                + "{\"key\":\"v3\",\"type\":\"switch\",\"text\":\"Enable\",\"checked\":false}]}}", desc);
+        eq("password never described", false, desc.contains("old-secret"));
+        threw = false;
+        try {
+            org.csweb.compat.ui.DialogProtocol.answer(d, answer("{\"fields\":{\"v4\":\"x\"}}"));
+        } catch (IllegalArgumentException e) {
+            threw = true;
+        }
+        eq("hidden view not answerable", true, threw);
+        threw = false;
+        try {
+            org.csweb.compat.ui.DialogProtocol.answer(d, answer("{\"fields\":{\"v3\":\"yes\"}}"));
+        } catch (IllegalArgumentException e) {
+            threw = true;
+        }
+        eq("wrong value type rejected", true, threw);
+        org.csweb.compat.ui.DialogProtocol.answer(d, answer(
+                "{\"dialog\":1,\"fields\":{\"id42\":\"alice\",\"v2\":\"s3cret\",\"v3\":true},\"button\":\"positive\"}"));
+        eq("listener saw fields", "alice|s3cret|-1", saved[0] + "|" + saved[1] + "|" + saved[2]);
+        eq("checked listener fired", true, changed[0]);
+        eq("positive dismisses", false, d.isShowing() || ui.shown.contains(d));
+
+        // getButton() override keeps the dialog open, as plugins use it for validation
+        android.app.AlertDialog v = new android.app.AlertDialog.Builder(ctx).setPositiveButton("OK", null).create();
+        eq("getButton before create", null, v.getButton(android.content.DialogInterface.BUTTON_POSITIVE));
+        v.show();
+        final int[] clicks = {0};
+        v.getButton(android.content.DialogInterface.BUTTON_POSITIVE).setOnClickListener(b -> clicks[0]++);
+        org.csweb.compat.ui.DialogProtocol.answer(v, answer("{\"button\":\"positive\"}"));
+        eq("button override ran, dialog stays", "1 true", clicks[0] + " " + v.isShowing());
+        v.dismiss();
+
+        // lists
+        final java.util.List<String> events = new java.util.ArrayList<>();
+        android.app.AlertDialog items = new android.app.AlertDialog.Builder(ctx)
+                .setItems(new CharSequence[]{"a", "b"}, (dlg, w) -> events.add("item" + w))
+                .setOnDismissListener(dlg -> events.add("dismiss")).show();
+        eq("items described", true, MiniJson.encode(org.csweb.compat.ui.DialogProtocol.describe(items)).contains("\"items\":[\"a\",\"b\"],\"choice\":\"items\""));
+        org.csweb.compat.ui.DialogProtocol.answer(items, answer("{\"item\":1}"));
+        eq("item pick dismisses", Arrays.asList("item1", "dismiss"), events);
+        events.clear();
+        android.app.AlertDialog single = new android.app.AlertDialog.Builder(ctx)
+                .setSingleChoiceItems(new CharSequence[]{"x", "y", "z"}, 0, (dlg, w) -> events.add("single" + w))
+                .setPositiveButton("OK", (dlg, w) -> events.add("ok")).show();
+        org.csweb.compat.ui.DialogProtocol.answer(single, answer("{\"item\":2}"));
+        eq("single choice stays open", true, single.isShowing());
+        eq("single choice described", true, MiniJson.encode(org.csweb.compat.ui.DialogProtocol.describe(single)).contains("\"checkedItem\":2"));
+        org.csweb.compat.ui.DialogProtocol.answer(single, answer("{\"button\":\"positive\"}"));
+        eq("single then ok", Arrays.asList("single2", "ok"), events);
+        events.clear();
+        boolean[] flags = {true, false};
+        android.app.AlertDialog multi = new android.app.AlertDialog.Builder(ctx)
+                .setMultiChoiceItems(new CharSequence[]{"p", "q"}, flags, (dlg, w, c) -> events.add(w + "=" + c)).show();
+        org.csweb.compat.ui.DialogProtocol.answer(multi, answer("{\"item\":1}"));
+        eq("multi toggles", "[1=true] [true, true]", events + " " + Arrays.toString(flags));
+        eq("multi described", true, MiniJson.encode(org.csweb.compat.ui.DialogProtocol.describe(multi)).contains("\"checkedItems\":[0,1]"));
+        events.clear();
+        multi.setOnCancelListener(dlg -> events.add("cancel"));
+        multi.setOnDismissListener(dlg -> events.add("dismiss"));
+        org.csweb.compat.ui.DialogProtocol.answer(multi, answer("{\"button\":\"cancel\"}"));
+        eq("cancel then dismiss", Arrays.asList("cancel", "dismiss"), events);
+        android.app.AlertDialog fixed = new android.app.AlertDialog.Builder(ctx).setCancelable(false).show();
+        org.csweb.compat.ui.DialogProtocol.answer(fixed, answer("{\"button\":\"cancel\"}"));
+        eq("non-cancelable ignores cancel", true, fixed.isShowing());
+        fixed.dismiss();
+
+        android.widget.Toast.makeText(ctx, "hello", android.widget.Toast.LENGTH_LONG).show();
+        eq("toast", Arrays.asList("hello/1"), ui.toasts);
+        android.text.Editable e = new android.text.SpannableStringBuilder("abc");
+        e.append("d").insert(0, ">").delete(1, 2);
+        eq("editable", ">bcd", e.toString());
+
+        // the conformance plugin's compiled layout
+        java.io.File cs3 = new java.io.File(System.getProperty("conformance", ""));
+        if (!cs3.isFile()) {
+            System.out.println("SKIP layout inflation: conformance plugin not built");
+            return;
+        }
+        android.content.res.AssetManager am = android.content.res.AssetManager.class.getDeclaredConstructor().newInstance();
+        am.getClass().getMethod("addAssetPath", String.class).invoke(am, cs3.getPath());
+        android.content.res.Resources sys = android.content.res.Resources.getSystem();
+        android.content.res.Resources r = new android.content.res.Resources(am, sys.getDisplayMetrics(), sys.getConfiguration());
+        String pkg = "org.csweb.conformance";
+        android.view.View root = android.view.LayoutInflater.from(ctx).inflate(r.getLayout(r.getIdentifier("settings", "layout", pkg)), null, false);
+        eq("inflated root", android.widget.LinearLayout.class, root.getClass());
+        eq("vertical", android.widget.LinearLayout.VERTICAL, ((android.widget.LinearLayout) root).getOrientation());
+        eq("children", 3, ((android.view.ViewGroup) root).getChildCount());
+        android.widget.EditText name = root.findViewById(r.getIdentifier("name_field", "id", pkg));
+        eq("edit text by id", true, name != null);
+        android.widget.TextView label = root.findViewById(r.getIdentifier("label_name", "id", pkg));
+        eq("label text from @string", r.getString(r.getIdentifier("label_name", "string", pkg)), label.getText().toString());
+        android.app.AlertDialog s = new android.app.AlertDialog.Builder(ctx).setView(root).show();
+        String sd = MiniJson.encode(org.csweb.compat.ui.DialogProtocol.describe(s));
+        eq("keys are id names", true, sd.contains("\"key\":\"name_field\"") && sd.contains("\"key\":\"enabled_box\""));
+        org.csweb.compat.ui.DialogProtocol.answer(s, answer("{\"fields\":{\"name_field\":\"Mine\",\"enabled_box\":true}}"));
+        android.widget.CheckBox box = root.findViewById(r.getIdentifier("enabled_box", "id", pkg));
+        eq("answer applied by key", "Mine true", name.getText() + " " + box.isChecked());
+        s.dismiss();
+        threw = false;
+        try {
+            android.view.LayoutInflater.from(ctx).inflate(r.getIdentifier("settings", "layout", pkg), null);
+        } catch (android.content.res.Resources.NotFoundException ex) {
+            threw = true;
+        }
+        eq("plugin layout id via app context not found (as on Android)", true, threw);
+    }
+
     public static void main(String[] args) throws Exception {
         resources();
+        ui();
         base64();
         uri();
         json();

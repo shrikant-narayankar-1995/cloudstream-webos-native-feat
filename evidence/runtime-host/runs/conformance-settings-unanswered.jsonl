@@ -1,0 +1,5 @@
+{"event":"plugin","name":"CswebConformance","version":1,"class":"org.csweb.conformance.ConformancePlugin","base":"Plugin","requiresResources":true,"sha256":"579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632"}
+{"event":"resources","package":"org.csweb.conformance"}
+{"event":"settings","available":true}
+{"event":"dialog","dialog":1,"stage":"settings","answerable":false,"title":"Conformance settings","cancelable":true,"message":null,"buttons":{"positive":"Save","negative":"Cancel"},"view":{"key":"v0","type":"column","children":[{"key":"label_name","type":"label","text":"Display name"},{"key":"name_field","type":"text-field","input":"text","value":"My Conformance"},{"key":"enabled_box","type":"checkbox","text":"Show extra results","checked":true}]}}
+{"event":"done","ok":true,"elapsed_ms":80}

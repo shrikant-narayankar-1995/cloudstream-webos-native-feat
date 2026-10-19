@@ -7,6 +7,7 @@ import java.io.File;
 
 public abstract class Context {
     public static final int MODE_PRIVATE = 0;
+    public static final String LAYOUT_INFLATER_SERVICE = "layout_inflater";
 
     public abstract SharedPreferences getSharedPreferences(String name, int mode);
 
@@ -24,6 +25,10 @@ public abstract class Context {
         return getResources().getString(resId);
     }
 
+    public final CharSequence getText(int resId) {
+        return getResources().getText(resId);
+    }
+
     public android.content.res.Resources getResources() {
         return android.content.res.Resources.getSystem();
     }
@@ -33,6 +38,7 @@ public abstract class Context {
     }
 
     public Object getSystemService(String name) {
+        if (LAYOUT_INFLATER_SERVICE.equals(name)) return android.view.LayoutInflater.from(this);
         return null;  // Android returns null for unknown services
     }
 }

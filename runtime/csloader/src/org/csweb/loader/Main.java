@@ -13,6 +13,11 @@ import org.csweb.compat.HeadlessActivities;
 import org.csweb.compat.HeadlessContext;
 import org.csweb.compat.MiniJson;
 import org.csweb.compat.Unsupported;
+import org.csweb.compat.ui.DialogProtocol;
+import org.csweb.compat.ui.UiHost;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -36,16 +41,19 @@ import kotlinx.coroutines.BuildersKt;
  * Loads one unmodified CloudStream plugin (.cs3) the way CloudStream's PluginManager.loadPlugin does,
  * runs one provider operation, and reports on stdout as JSON lines:
  *
- *   csloader --plugin F.cs3 --data DIR --op load-only|search|mainpage|details|links [--query Q] [--url U]
- *            [--provider NAME] [--timeout SECONDS] [--limit N] [--sha256 HEX]
+ *   csloader --plugin F.cs3 --data DIR --op load-only|search|mainpage|details|links|settings [--query Q]
+ *            [--url U] [--provider NAME] [--timeout SECONDS] [--limit N] [--sha256 HEX] [--ui stdin]
  *
- * Events: plugin, provider, result, link, subtitle, unsupported, error, done. Diagnostics (plugin
- * logging) go to stderr. The process ends with Runtime.halt, because ART's shutdown thread aborts after
+ * Events: plugin, provider, result, link, subtitle, dialog, toast, unsupported, error, done. Diagnostics
+ * (plugin logging) go to stderr. With --ui stdin, every dialog the plugin shows is described in a
+ * "dialog" event and the runtime waits for the app's answer as one JSON line on stdin
+ * (org.csweb.compat.ui.DialogProtocol); without it dialogs are reported and left unanswered. The process ends with Runtime.halt, because ART's shutdown thread aborts after
  * main returns in this runtime build.
  */
 public final class Main {
     private static final PrintStream OUT = System.out;
     private static final Map<String, String> args = new LinkedHashMap<>();
+    private static HeadlessContext appContext;
 
     public static void main(String[] argv) {
         long start = System.currentTimeMillis();
@@ -62,6 +70,7 @@ public final class Main {
                 emit(event("done", "ok", false));
                 Runtime.getRuntime().halt(4);
             });
+            UiHost.install(new LoaderUi());
             code = run() ? 0 : 2;
         } catch (Throwable t) {
             error("startup", t);
@@ -88,6 +97,15 @@ public final class Main {
         // --- PluginManager.loadPlugin, step by step -------------------------------------------------
         BasePlugin plugin = loadPlugin(file, data, hashBefore, null);
         if (plugin == null) return false;
+        if (!answerDialogs("load")) return false;
+        if (op.equals("settings")) {
+            boolean ok = settings(plugin);
+            if (!sha256(file).equals(hashBefore)) {
+                emit(event("error", "stage", "integrity", "type", "PluginChanged", "message", "plugin file hash changed"));
+                return false;
+            }
+            return ok;
+        }
 
         List<MainAPI> providers = new ArrayList<>();
         for (MainAPI api : APIHolder.INSTANCE.getAllProviders()) {
@@ -110,6 +128,7 @@ public final class Main {
         }
 
         boolean ok = op.equals("load-only") || operation(api, op);
+        ok &= answerDialogs("operation:" + op);
         String hashAfter = sha256(file);
         if (!hashAfter.equals(hashBefore)) {
             emit(event("error", "stage", "integrity", "type", "PluginChanged", "message", "plugin file hash changed"));
@@ -145,6 +164,7 @@ public final class Main {
                     "requiresResources", manifest.getRequiresResources(), "sha256", hash));
         }
         HeadlessContext app = new HeadlessContext(data, "com.lagradost.cloudstream3");
+        appContext = app;
         if (manifest.getRequiresResources()) {
             // PluginManager.loadPlugin: AssetManager by reflection, addAssetPath(<.cs3>), then Resources over it.
             try {
@@ -186,7 +206,7 @@ public final class Main {
             return null;
         }
         if (plugin instanceof Plugin && ((Plugin) plugin).getOpenSettings() != null) {
-            emit(event("unsupported", "api", "Plugin.openSettings (Android settings screen)", "stage", "load"));
+            emit(event("settings", "available", true));
         }
         return plugin;
     }
@@ -221,6 +241,111 @@ public final class Main {
             if (source.equals(x.getSourcePlugin())) ext.add(x);
         }
         com.lagradost.cloudstream3.utils.ExtractorApiKt.getExtractorApis().removeAll(ext);
+    }
+
+    // --- plugin UI: settings and dialogs ---------------------------------------------------------
+
+    /**
+     * CloudStream's settings button: openSettings(context), then the dialogs it shows. CloudStream passes
+     * its Activity; the headless runtime passes the application context, so plugins that need an
+     * Activity's fragment manager or custom views fail with an unsupported report.
+     */
+    private static boolean settings(BasePlugin plugin) {
+        kotlin.jvm.functions.Function1<android.content.Context, Unit> open =
+                plugin instanceof Plugin ? ((Plugin) plugin).getOpenSettings() : null;
+        if (open == null) {
+            emit(event("unsupported", "api", "plugin has no settings (openSettings is null)", "stage", "settings"));
+            return false;
+        }
+        try {
+            open.invoke(appContext);
+        } catch (Throwable t) {
+            error("settings", t);
+            return false;
+        }
+        return answerDialogs("settings");
+    }
+
+    private static final class LoaderUi extends UiHost {
+        final List<android.app.Dialog> showing = new ArrayList<>();
+        final Map<android.app.Dialog, Integer> ids = new java.util.IdentityHashMap<>();
+        final java.util.Set<android.app.Dialog> reported =
+                java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<android.app.Dialog, Boolean>());
+        int next = 1;
+
+        @Override public synchronized void shown(android.app.Dialog d) {
+            if (!ids.containsKey(d)) ids.put(d, next++);
+            showing.add(d);
+        }
+
+        @Override public synchronized void dismissed(android.app.Dialog d) {
+            showing.remove(d);
+            emit(event("dialog_closed", "dialog", ids.get(d)));
+        }
+
+        @Override public void toast(CharSequence text, int duration) {
+            emit(event("toast", "text", String.valueOf(text), "long", duration != 0));
+        }
+
+        synchronized android.app.Dialog top() {
+            return showing.isEmpty() ? null : showing.get(showing.size() - 1);
+        }
+    }
+
+    private static BufferedReader uiInput;
+
+    /**
+     * Describe the topmost showing dialog, wait for the app's answer, apply it; repeat until no dialog is
+     * showing. Answers run on this (the plugin's main) thread, as dialog callbacks do on Android.
+     */
+    private static boolean answerDialogs(String stage) {
+        LoaderUi ui = (LoaderUi) UiHost.get("dialogs");
+        boolean interactive = "stdin".equals(args.get("ui"));
+        for (int round = 0; round < 200; round++) {
+            android.app.Dialog d = ui.top();
+            if (d == null) return true;
+            Map<String, Object> m = event("dialog", "dialog", ui.ids.get(d), "stage", stage);
+            try {
+                m.putAll(DialogProtocol.describe(d));
+            } catch (Throwable t) {
+                error("dialog", t);
+                return false;
+            }
+            if (!interactive) {
+                // Without an app attached the dialog is reported once and stays open, unanswered.
+                synchronized (ui) {
+                    for (android.app.Dialog open : ui.showing) {
+                        if (!ui.reported.add(open)) continue;
+                        Map<String, Object> o = event("dialog", "dialog", ui.ids.get(open), "stage", stage, "answerable", false);
+                        o.putAll(DialogProtocol.describe(open));
+                        emit(o);
+                    }
+                }
+                return true;
+            }
+            emit(m);
+            try {
+                if (uiInput == null) uiInput = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+                String line = uiInput.readLine();
+                if (line == null) {
+                    emit(event("error", "stage", "dialog", "type", "EndOfInput", "message", "the app closed the dialog channel"));
+                    return false;
+                }
+                if (line.length() > 1 << 20) throw new IllegalArgumentException("answer longer than 1 MiB");
+                Object parsed = MiniJson.decode(line);
+                if (!(parsed instanceof Map)) throw new IllegalArgumentException("answer is not a JSON object");
+                @SuppressWarnings("unchecked") Map<String, Object> answer = (Map<String, Object>) parsed;
+                if (!ui.ids.get(d).equals(answer.get("dialog"))) {
+                    throw new IllegalArgumentException("answer for dialog " + answer.get("dialog") + ", expected " + ui.ids.get(d));
+                }
+                DialogProtocol.answer(d, answer);  // answer contents (typed text, passwords) are never logged
+            } catch (Throwable t) {
+                error("dialog", t);
+                return false;
+            }
+        }
+        emit(event("error", "stage", "dialog", "type", "TooManyDialogs", "message", "more than 200 dialog rounds"));
+        return false;
     }
 
     // --- provider operations --------------------------------------------------------------------
