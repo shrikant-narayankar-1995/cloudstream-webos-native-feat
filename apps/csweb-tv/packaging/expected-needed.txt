@@ -1,0 +1,15 @@
+# Reviewed DT_NEEDED list for csweb-tv on webOS: the kit player example's list (Example D), since the
+# app plays through the same media pipeline. Adding a line is a review decision: the library must
+# exist under this SONAME on every targeted firmware (tools/fw-lib-matrix.py), or be bundled in lib/.
+ld-linux.so.3
+libc.so.6
+libm.so.6
+libdl.so.2              # dlopen of libNDL_directmedia.so.1, libcurl.so.4 and the Luna libraries (never DT_NEEDED)
+libpthread.so.0         # playback thread, worker pool, runtime reader thread
+librt.so.1
+libGLESv2.so.2          # firmware GLES2
+libSDL2-2.0.so.0        # bundled SDL-webOS, lib/ via RPATH $ORIGIN/lib
+libavformat-wnk.so.63   # bundled FFmpeg (tools/build-ffmpeg.sh), lib/; needs libz.so.1 from the firmware
+libavcodec-wnk.so.63    # bundled FFmpeg, lib/
+libavutil-wnk.so.61     # bundled FFmpeg, lib/
+libswresample-wnk.so.7  # bundled FFmpeg (AC-3 re-encoding), lib/

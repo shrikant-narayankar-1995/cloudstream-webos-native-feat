@@ -1,0 +1,101 @@
+         0 INFO  [app] (705909) start app_id=org.csweb.tv platform=host params=<none>
+         0 INFO  [device] (705909) host kernel 7.0.0-38-generic x86_64
+         0 INFO  [crash] (705909) handler installed: /run/user/1000/org.csweb.tv/crash.log, version ?… build id dff62fddd7c2d6f01d9a333570918b2dd75b5060
+         0 INFO  [lifecycle] (705909) Created -> Initialising (Start)
+        22 INFO  [gamepad] (705909) uid 1000 gid 1000 groups [4,24,27,30,46,100,114,124,1000]; /dev/input event files readable 0 of 17
+        22 INFO  [gamepad] (705909) at start: 0 joystick(s)
+        22 INFO  [screensaver] (705909) allowed (default)
+        22 INFO  [app] (705909) video driver x11, display mode 1280x720 @0 Hz
+ATTENTION: default value of option vblank_mode overridden by environment.
+        61 WARN  [gl] (705909) vsync unavailable: That operation is not supported
+        67 INFO  [gl] (705909) Mesa / llvmpipe (LLVM 20.1.2, 256 bits) / OpenGL ES 3.2 Mesa 25.2.8-0ubuntu0.24.04.3
+        67 INFO  [i18n] (705909) locale en-US (formats en-US) from LANG; 0 catalog file(s), 0 entries
+        70 INFO  [caps] (705909) diagnostics.crash_record   supported   /run/user/1000/org.csweb.tv/crash.log
+        70 INFO  [caps] (705909) display.gles2              supported   llvmpipe (LLVM 20.1.2, 256 bits) / OpenGL ES 3.2 Mesa 25.2.8-0ubuntu0.24.04.3
+        70 INFO  [caps] (705909) display.fragment_highp     supported   
+        70 INFO  [caps] (705909) display.max_texture_size   supported   16384
+        70 INFO  [caps] (705909) display.mode               supported   1280x720 @0 Hz
+        70 INFO  [caps] (705909) display.panel              unknown     SDL_webOSGetPanelResolution not exported
+        70 INFO  [caps] (705909) display.refresh_rate       unknown     SDL_webOSGetRefreshRate not exported
+        70 INFO  [caps] (705909) storage.kv                 supported   file
+        70 INFO  [caps] (705909) net.http                   supported   libcurl/8.5.0 OpenSSL/3.0.13
+        70 INFO  [caps] (705909) audio.output               unknown     not requested by the app
+        70 INFO  [caps] (705909) images.decode              supported   PNG, JPEG, GIF, BMP, WebP, SVG
+        70 INFO  [caps] (705909) input.pointer              unknown     no pointer event yet
+        70 INFO  [caps] (705909) lifecycle.background       unknown     no background event yet
+        70 INFO  [caps] (705909) lifecycle.relaunch_params  unsupported SDL build without the kit's relaunch patch
+        70 INFO  [caps] (705909) media.playback             unknown     not implemented in the kit yet
+        71 INFO  [network] (705909) online (wired)
+        71 INFO  [caps] (705909) network.status now supported: online (wired)
+        71 INFO  [csweb] (705909) csweb: app /home/sostk/Desktop/cloudstream-webos-agent-pack/external/webos-native-app-kit/build/host-debug/extra-apps/csweb-tv, runtime /home/sostk/Desktop/cloudstream-webos-agent-pack/runtime/dist/runtime-x86_64, tmp /run/user/1000/org.csweb.tv
+        72 INFO  [csweb] (705909) runtime: launching (AOT: no AOT.json)
+        73 INFO  [lifecycle] (705909) Initialising -> Running (Started)
+        74 INFO  [window] (705909) shown
+        74 INFO  [caps] (705909) input.pointer now supported: first event: move
+        74 DEBUG [pointer] (705909) move px=(640,360) logical=(640,360) button=1 wheel=0.0 hit=0
+        74 INFO  [window] (705909) focus gained
+        74 INFO  [csweb] (705909) plugins: 2 repositories, 4 installed
+        76 INFO  [focus] (705909) focus nav.Home
+        88 INFO  [app] (705909) first frame: drawable 1280x720
+       518 INFO  [csweb] (705909) runtime: ready
+       946 INFO  [csweb] (705909) home: Dailymotion, 1 sections
+      2234 DEBUG [key] (705909) down sc=79 kc=0x4000004f repeat=0 action=Right pointer=1
+      2241 INFO  [focus] (705909) focus nav.Search
+      2269 DEBUG [key] (705909) down sc=40 kc=0xd repeat=0 action=Confirm pointer=0
+      2290 INFO  [focus] (705909) focus search.field
+      3356 DEBUG [key] (705909) down sc=40 kc=0xd repeat=0 action=Confirm pointer=0
+      3356 INFO  [text] (705909) text input on for search.field (screen keyboard not supported)
+      4040 DEBUG [key] (705909) down sc=40 kc=0xd repeat=0 action=Confirm pointer=0
+      4046 INFO  [text] (705909) text input off
+      4749 INFO  [perf] (705909) frames 300 presented of 300 drawn: interval avg 15.57 median 16.23 p95 16.84 max 24.76 ms, late 1; max ms events 20.14 update 12.94 draw 3.39 finish 0.18 swap 4.72; draw calls 13, quads 168, textures 6, views 110, rss 147.4 MB
+      9638 INFO  [perf] (705909) frames 600 presented of 600 drawn: interval avg 16.35 median 16.21 p95 16.89 max 24.12 ms, late 0; max ms events 8.21 update 0.28 draw 0.84 finish 0.15 swap 1.54; draw calls 13, quads 132, textures 6, views 110, rss 147.4 MB
+     11954 DEBUG [pointer] (705909) move px=(558,300) logical=(837,450) button=1 wheel=0.0 hit=1
+     11954 DEBUG [pointer] (705909) press px=(558,300) logical=(837,450) button=1 wheel=0.0 hit=1
+     11964 DEBUG [pointer] (705909) release px=(558,300) logical=(837,450) button=1 wheel=0.0 hit=1
+     11970 INFO  [csweb] (705909) details: Others, 0 episodes in 0 groups, 0 recommendations
+     11975 INFO  [focus] (705909) focus details.play
+     14526 INFO  [perf] (705909) frames 900 presented of 900 drawn: interval avg 16.29 median 16.34 p95 16.81 max 32.52 ms, late 1; max ms events 10.15 update 5.46 draw 0.90 finish 0.01 swap 3.42; draw calls 3, quads 143, textures 7, views 133, rss 147.4 MB
+     16932 DEBUG [key] (705909) down sc=40 kc=0xd repeat=0 action=Confirm pointer=1
+     16944 INFO  [focus] (705909) focus <none>
+     16993 INFO  [csweb] (705909) link: Conformance  VIDEO from www.archive.org
+     17007 INFO  [focus] (705909) focus player.skip
+     17010 INFO  [csweb] (705909) links loaded: 1 links, 0 subtitles
+     17010 INFO  [csweb] (705909) playing link 0: Conformance  (ffmpeg)
+     17010 INFO  [media] (706935) Idle -> Opening
+     17018 INFO  [screensaver] (705909) blocked (video playing)
+     17026 INFO  [focus] (705909) focus #157
+     17027 INFO  [csweb] (705909) player Idle -> Opening
+     19361 INFO  [http.stream] (706936) https://www.archive.org/download/pride_and_prejudice_librivox/prideandprejudice_01-03_austen.mp3: seekable, 18129230 bytes
+     19412 INFO  [perf] (705909) frames 1200 presented of 1200 drawn: interval avg 16.31 median 16.19 p95 16.83 max 28.32 ms, late 2; max ms events 12.18 update 16.06 draw 0.76 finish 0.07 swap 2.84; draw calls 10, quads 93, textures 13, views 174, rss 160.6 MB
+     19573 WARN  [ffmpeg] (706935) [mp3 @ 0x7991d8001240] Estimating duration from bitrate, this may be inaccurate
+     19573 INFO  [media] (706935) opened https://www.archive.org/download/pride_and_prejudice_librivox/prideandprejudice_01-03_austen.mp3: mp3, 1133.0 s, video - 0x0, audio mp3 44100 Hz x2
+     19573 INFO  [media] (706935) Opening -> Ready
+     19573 INFO  [media] (706935) Ready -> Playing
+     19574 INFO  [csweb] (705909) player Opening -> Ready
+     19574 INFO  [csweb] (705909) player Ready -> Playing
+     24253 INFO  [perf] (705909) frames 1500 presented of 1500 drawn: interval avg 16.16 median 16.14 p95 16.83 max 16.94 ms, late 0; max ms events 0.09 update 9.81 draw 0.70 finish 0.04 swap 1.50; draw calls 10, quads 78, textures 13, views 174, rss 162.5 MB
+     29148 INFO  [perf] (705909) frames 1800 presented of 1800 drawn: interval avg 16.34 median 16.50 p95 16.86 max 16.96 ms, late 0; max ms events 0.07 update 6.19 draw 0.43 finish 0.11 swap 1.19; draw calls 0, quads 0, textures 13, views 174, rss 162.5 MB
+     31661 DEBUG [key] (705909) down sc=79 kc=0x4000004f repeat=0 action=Right pointer=1
+     31662 INFO  [media] (706935) Playing -> Seeking
+     31662 INFO  [csweb] (705909) player Playing -> Seeking
+     31662 INFO  [media] (706935) Seeking -> Playing
+     31670 INFO  [csweb] (705909) player Seeking -> Playing
+     34002 INFO  [perf] (705909) frames 2100 presented of 2100 drawn: interval avg 16.13 median 16.29 p95 16.85 max 16.98 ms, late 0; max ms events 0.38 update 9.08 draw 0.68 finish 0.02 swap 1.84; draw calls 10, quads 78, textures 13, views 174, rss 162.5 MB
+     34641 INFO  [script] (705909) screenshot saved to /tmp/claude-1000/-home-sostk-Desktop-cloudstream-webos-agent-pack/cde94c39-d747-46c2-9eb0-d5e10137424a/scratchpad/host/p_play.bmp (1280x720)
+     34642 INFO  [app] (705909) quit requested: script finished
+     34642 INFO  [app] (705909) main loop ended after 2139 frames presented, 2139 drawn
+     34642 INFO  [lifecycle] (705909) Running -> Stopping (Quit)
+     34642 INFO  [media] (706935) Playing -> Stopped
+     34644 INFO  [screensaver] (705909) allowed (video playing)
+     34648 INFO  [shutdown] (705909) delegate on_stop: 6.0 ms
+     34649 INFO  [shutdown] (705909) write capabilities: 0.3 ms
+     34649 INFO  [shutdown] (705909) close dispatcher: 0.0 ms
+     34649 INFO  [shutdown] (705909) join workers: 0.2 ms
+     34649 INFO  [shutdown] (705909) destroy UI: 0.1 ms
+     34654 INFO  [shutdown] (705909) release images: 5.2 ms
+     34654 INFO  [shutdown] (705909) destroy renderer: 0.1 ms
+     34663 INFO  [shutdown] (705909) destroy window: 8.7 ms
+     34664 INFO  [shutdown] (705909) SDL_Quit: 1.0 ms
+     34664 INFO  [lifecycle] (705909) Stopping -> Terminated (Stopped)
+     34664 INFO  [app] (705909) shutdown complete in 21.9 ms
+     34664 INFO  [app] (705909) exit 0

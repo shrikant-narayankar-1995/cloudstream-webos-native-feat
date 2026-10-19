@@ -18,6 +18,11 @@ struct Provider {
     bool has_main_page = false;
     std::vector<std::string> types;      // TvType names: Movie, TvSeries, Anime, Live, Others...
     std::vector<std::string> main_page;  // section names, in order (an index is a "section" request)
+    // APIRepository.getMainPage scheduling: sections one after another with a delay, or all at once.
+    bool sequential_main_page = false;
+    long long sequential_delay_ms = 0, sequential_scroll_delay_ms = 0;
+    long long main_page_timeout_ms = 0;  // 0: the app's default
+    bool uses_web_view = false, has_download_support = false, instant_link_loading = false;
 };
 
 struct SearchResult {

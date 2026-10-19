@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
+// What every screen may use, created once by the Application and alive until on_stop: the kit's
+// context, the plugin runtime, the plugin manager, settings, and the router that opens screens.
+#pragma once
+
+#include "core/signal.hpp"
+#include "plugins/plugin_manager.hpp"
+#include "runtime/runtime_client.hpp"
+#include "settings/settings_store.hpp"
+
+#include "wnk/app/app.hpp"
+#include "wnk/media/device_caps.hpp"
+#include "wnk/net/http.hpp"
+
+namespace csweb::app {
+
+class Router;
+
+struct Services {
+    wnk::app::Context *ctx = nullptr;
+    runtime::RuntimeClient *runtime = nullptr;
+    plugins::PluginManager *plugins = nullptr;
+    settings::SettingsStore *settings = nullptr;
+    Router *router = nullptr;
+    wnk::net::HttpClient *http = nullptr;     // null without a network stack
+    wnk::media::DeviceMediaCaps device;       // what the TV's decoders take (filled at start on the TV)
+    core::Signal plugins_changed;  // providers, installed plugins or repositories changed
+    core::Signal runtime_changed;  // the runtime started, stopped or failed
+};
+
+}  // namespace csweb::app

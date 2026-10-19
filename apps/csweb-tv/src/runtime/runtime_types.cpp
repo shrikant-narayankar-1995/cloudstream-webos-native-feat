@@ -29,6 +29,12 @@ long long num(const json &e, const char *key, long long def = 0) {
     return def;
 }
 
+// A boolean the runtime may send as null (an unset Kotlin property): absent or null is false.
+bool flag(const json &e, const char *key) {
+    auto it = e.find(key);
+    return it != e.end() && it->is_boolean() && it->get<bool>();
+}
+
 std::vector<std::string> strings(const json &e, const char *key) {
     std::vector<std::string> out;
     auto it = e.find(key);
@@ -47,9 +53,16 @@ Provider parse_provider(const json &e) {
     p.plugin = str(e, "plugin");
     p.main_url = str(e, "mainUrl");
     p.lang = str(e, "lang");
-    p.has_main_page = e.value("hasMainPage", false);
+    p.has_main_page = flag(e, "hasMainPage");
     p.types = strings(e, "supportedTypes");
     p.main_page = strings(e, "mainPage");
+    p.sequential_main_page = flag(e, "sequentialMainPage");
+    p.sequential_delay_ms = num(e, "sequentialMainPageDelay");
+    p.sequential_scroll_delay_ms = num(e, "sequentialMainPageScrollDelay");
+    p.main_page_timeout_ms = num(e, "mainPageTimeoutMs");
+    p.uses_web_view = flag(e, "usesWebView");
+    p.has_download_support = flag(e, "hasDownloadSupport");
+    p.instant_link_loading = flag(e, "instantLinkLoading");
     return p;
 }
 
@@ -96,7 +109,7 @@ Details parse_details(const json &e) {
     d.data_url = str(e, "dataUrl");
     d.year = static_cast<int>(num(e, "year"));
     d.duration = static_cast<int>(num(e, "duration"));
-    d.coming_soon = e.value("comingSoon", false);
+    d.coming_soon = flag(e, "comingSoon");
     d.tags = strings(e, "tags");
     if (auto it = e.find("trailers"); it != e.end() && it->is_array()) {
         for (const auto &t : *it) {

@@ -124,6 +124,7 @@ void RuntimeClient::handle_line(const std::string &line) {
     if (!j.is_object() || !j.contains("event")) return;  // not protocol output
     const std::string event = j.value("event", "");
     if (event == "ready") {
+        WNK_LOGI(kCat, "runtime: ready");
         restarts_ = 0;
         set_state(State::Ready);
         auto pending = std::move(queued_);
@@ -134,7 +135,7 @@ void RuntimeClient::handle_line(const std::string &line) {
         if (on_ready) on_ready();
         return;
     }
-    if (event == "dialog" && on_dialog) on_dialog(j);
+    if ((event == "dialog" || event == "dialog_closed" || event == "toast") && on_dialog) on_dialog(j);
     const std::string id = j.value("id", "");
     auto it = open_.find(id);
     if (it == open_.end()) {
