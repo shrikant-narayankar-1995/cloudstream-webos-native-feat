@@ -57,7 +57,8 @@ class PluginManager {
     const runtime::Provider *provider(const std::string &name) const;
     // Plugin load results: id -> error (empty when loaded).
     const std::map<std::string, std::string> &load_errors() const { return load_errors_; }
-    bool loading() const { return pending_loads_ > 0 || !started_; }
+    // True until every enabled plugin has been loaded or has failed (also while the runtime starts).
+    bool loading() const;
 
     void add_repository(const std::string &typed, Done done);
     void remove_repository(const std::string &url, Done done);

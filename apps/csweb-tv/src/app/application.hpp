@@ -26,6 +26,7 @@ class Application : public wnk::app::Delegate {
     ~Application() override;
     void on_start(wnk::app::Context &ctx) override;
     void on_lifecycle(wnk::app::Context &ctx, const wnk::app::Lifecycle::Transition &t) override;
+    void on_relaunch(wnk::app::Context &ctx, const std::string &params_json) override;
     void on_stop(wnk::app::Context &ctx) override;
 
  private:
@@ -36,7 +37,12 @@ class Application : public wnk::app::Delegate {
     std::unique_ptr<wnk::net::HttpClient> http_;
     std::unique_ptr<Router> router_;
     std::unique_ptr<ui::PluginDialogHost> dialogs_;
+    void open_link(wnk::ui::Ui &ui, const std::string &params_json);
+    void run_pending_search(wnk::ui::Ui &ui);
+
     wnk::ui::Navigator *nav_ = nullptr;
+    std::string pending_search_;  // a cloudstreamsearch:// query waiting for the plugins to load
+    core::Signal::Subscription plugins_sub_;
     wnk::async::Lifetime life_;
 };
 

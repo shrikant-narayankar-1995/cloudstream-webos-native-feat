@@ -136,6 +136,14 @@ void PluginManager::load_plugin(const InstalledPlugin &p) {
         });
 }
 
+bool PluginManager::loading() const {
+    if (!started_ || pending_loads_ > 0) return true;
+    if (runtime_ready_) return false;
+    // Plugins wait for the runtime, unless it has failed for good.
+    if (deps_.runtime && deps_.runtime->state() == runtime::RuntimeClient::State::Failed) return false;
+    return std::any_of(installed_.begin(), installed_.end(), [](const InstalledPlugin &p) { return p.enabled; });
+}
+
 void PluginManager::reload(const std::string &id) {
     for (const auto &p : installed_) {
         if (p.id != id || !p.enabled) continue;

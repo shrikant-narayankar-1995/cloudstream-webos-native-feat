@@ -51,6 +51,11 @@ void SearchScreen::on_show(Ui &ui) {
     shown_ = true;
 }
 
+void SearchScreen::start_query(Ui &ui, const std::string &query) {
+    field_->set_text(query);
+    search(ui, query);
+}
+
 SearchScreen::~SearchScreen() { cancel(); }
 
 void SearchScreen::cancel() {

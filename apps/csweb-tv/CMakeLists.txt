@@ -10,6 +10,7 @@ get_filename_component(_csweb_root "${CMAKE_CURRENT_SOURCE_DIR}/../.." ABSOLUTE)
 # ---- csweb_core: no UI; runtime client, plugins, persistence, utilities ---------------------------
 find_package(Threads REQUIRED)
 add_library(csweb_core STATIC
+        src/app/deep_link.cpp
         src/core/child_process.cpp
         src/core/sha256.cpp
         src/core/zip_check.cpp
@@ -27,7 +28,7 @@ target_link_libraries(csweb_core PUBLIC wnk_storage wnk_logging wnk_net wnk_asyn
 
 # ---- tests (host) -----------------------------------------------------------------------------------
 if (WNK_BUILD_TESTS)
-    foreach (t sha256 zip_check repository runtime_types plugin_store runtime_client episode_groups redact)
+    foreach (t sha256 zip_check repository runtime_types plugin_store runtime_client episode_groups redact deep_link)
         add_executable(csweb_test_${t} tests/test_${t}.cpp)
         target_include_directories(csweb_test_${t} PRIVATE "${PROJECT_SOURCE_DIR}/tests/unit")
         target_compile_definitions(csweb_test_${t} PRIVATE CSWEB_FIXTURES="${CMAKE_CURRENT_SOURCE_DIR}/tests/fixtures")
@@ -99,6 +100,7 @@ wnk_add_webos_package(
         ICON_COLOR "#0B0D12"
         EXPECTED_NEEDED "${CMAKE_CURRENT_SOURCE_DIR}/packaging/expected-needed.txt"
         EXTRA_DIRS "${_csweb_fonts}" "${_csweb_icons}"
+        REQUIRED_PERMISSIONS database.operation
         BUNDLED_LIBS ${WNK_FFMPEG_RUNTIME_LIBS}
         PRIVATE_RUNTIMES ${_csweb_runtimes})
 

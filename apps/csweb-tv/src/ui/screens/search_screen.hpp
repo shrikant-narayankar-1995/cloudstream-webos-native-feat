@@ -23,6 +23,8 @@ class SearchScreen : public wnk::ui::Screen {
     explicit SearchScreen(app::Services &s);
     ~SearchScreen() override;
     void on_show(wnk::ui::Ui &ui) override;
+    // A query from outside (a cloudstreamsearch:// link): typed into the field and searched.
+    void start_query(wnk::ui::Ui &ui, const std::string &query);
 
  private:
     struct Group {

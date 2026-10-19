@@ -28,6 +28,12 @@ void Router::open_tab(wnk::ui::Ui &ui, Tab tab) {
     }
 }
 
+void Router::open_search(wnk::ui::Ui &ui, const std::string &query) {
+    nav_.pop_to_root(ui);
+    auto &screen = static_cast<ui::SearchScreen &>(nav_.push(ui, std::make_unique<ui::SearchScreen>(s_)));
+    screen.start_query(ui, query);
+}
+
 void Router::open_details(wnk::ui::Ui &ui, const std::string &provider, const runtime::SearchResult &item) {
     nav_.push(ui, std::make_unique<ui::DetailsScreen>(s_, provider.empty() ? item.api_name : provider, item));
 }

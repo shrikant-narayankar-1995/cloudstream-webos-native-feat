@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "app/application.hpp"
 
+#include "app/deep_link.hpp"
 #include "runtime/runtime_launcher.hpp"
 #include "ui/screens/home_screen.hpp"
 #include "ui/screens/player_screen.hpp"
@@ -113,6 +114,52 @@ void Application::on_start(wnk::app::Context &ctx) {
 
     plugins_->start();
     runtime_->start();
+    plugins_sub_ = services_.plugins_changed.subscribe([this, &ctx] { run_pending_search(ctx.ui()); });
+    open_link(ui, ctx.launch().params_json);
+}
+
+void Application::on_relaunch(wnk::app::Context &ctx, const std::string &params_json) {
+    open_link(ctx.ui(), params_json);
+}
+
+// MainActivity.handleAppIntentUrl: a repository link adds the repository at once (loadRepository),
+// then offers to open it (addRepositoryDialog); a search link opens Search with the query once the
+// plugins have loaded.
+void Application::open_link(wnk::ui::Ui &ui, const std::string &params_json) {
+    const DeepLink link = parse_deep_link(params_json);
+    if (link.kind == DeepLink::Kind::Search) {
+        pending_search_ = link.value;
+        run_pending_search(ui);
+    } else if (link.kind == DeepLink::Kind::Repository) {
+        WNK_LOGI(kCat, "link: add repository");
+        const std::string url = link.value;
+        plugins_->add_repository(url, [this, &ui, url](bool ok, const std::string &error) {
+            if (!ok) {
+                ui.toast(error, 4000);
+                return;
+            }
+            const plugins::RepositoryData *repo = nullptr;
+            for (const auto &r : plugins_->repositories()) {
+                if (r.url == url) repo = &r;
+            }
+            if (!repo || !nav_) return;
+            const plugins::RepositoryData data = *repo;
+            auto d = std::make_unique<wnk::ui::Dialog>("Repository added", data.name.empty() ? data.url : data.name);
+            d->add_button("Close");
+            d->add_button("Open repository", [this, data](wnk::ui::Ui &u) {
+                router_->open_extensions(u);
+                router_->open_repository(u, data);
+            }).name = "link.open";
+            ui.show_dialog(std::move(d));
+        });
+    }
+}
+
+void Application::run_pending_search(wnk::ui::Ui &ui) {
+    if (pending_search_.empty() || plugins_->loading() || !router_) return;
+    const std::string q = std::move(pending_search_);
+    pending_search_.clear();
+    router_->open_search(ui, q);
 }
 
 void Application::on_lifecycle(wnk::app::Context &, const wnk::app::Lifecycle::Transition &t) {

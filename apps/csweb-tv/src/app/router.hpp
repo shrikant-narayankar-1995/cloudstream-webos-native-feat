@@ -34,6 +34,7 @@ class Router {
 
     enum class Tab { Home, Search, Library, Downloads, Settings };
     void open_tab(wnk::ui::Ui &ui, Tab tab);
+    void open_search(wnk::ui::Ui &ui, const std::string &query);
     void open_details(wnk::ui::Ui &ui, const std::string &provider, const runtime::SearchResult &item);
     // The player, which loads the target's links itself (GeneratorPlayer).
     void open_sources(wnk::ui::Ui &ui, const PlayTarget &target);
