@@ -53,7 +53,9 @@ TEST("avatar_colour_is_kept_and_bounded") {
     CHECK(!p.set_image(k, kAvatarColours));
     CHECK(!p.set_image(k, -1));
     CHECK(!p.set_image(99, 1));
-    CHECK_EQ(Profiles::from_json(p.to_json()).find(k)->image_index, 4);
+    const Profiles back = Profiles::from_json(p.to_json());  // CHECK_EQ keeps a reference: not into a temporary
+    REQUIRE(back.find(k) != nullptr);
+    CHECK_EQ(back.find(k)->image_index, 4);
 }
 
 TEST("pins_are_four_digits_and_stored_as_digests") {

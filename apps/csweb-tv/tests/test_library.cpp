@@ -48,8 +48,9 @@ TEST("json_round_trip") {
     Library back = Library::from_json(nlohmann::json::parse(lib.to_json().dump()));
     CHECK(back.watch_type("Prov", "https://s/1") == WatchType::Completed);
     CHECK_EQ(back.start_position_ms("Prov", "data3"), int64_t(100000));
-    REQUIRE(back.resume_list().size() == 1);
-    CHECK_EQ(back.resume_list()[0].episode.data, std::string("data3"));
+    const auto resume = back.resume_list();  // CHECK_EQ keeps a reference: not into a temporary
+    REQUIRE(resume.size() == 1);
+    CHECK_EQ(resume[0].episode.data, std::string("data3"));
     CHECK(Library::from_json(nlohmann::json("garbage")).resume_list().empty());
 }
 

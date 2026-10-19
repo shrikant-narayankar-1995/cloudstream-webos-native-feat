@@ -11,6 +11,7 @@
 
 #include "wnk/media/media.hpp"
 
+#include <cstdint>
 #include <deque>
 #include <memory>
 #include <optional>
@@ -47,7 +48,7 @@ class MergedSource : public wnk::media::MediaSource {
     std::unique_ptr<wnk::media::MediaSource> video_;
     std::vector<std::string> audio_uris_;
     std::vector<std::unique_ptr<wnk::media::MediaSource>> audio_;
-    std::vector<bool> audio_open_;
+    std::vector<uint8_t> audio_open_;  // not vector<bool>: open() sets the entries from separate threads
     wnk::media::MediaInfo info_;
     Lane video_lane_;
     Lane audio_lane_;  // src null: no audio selected

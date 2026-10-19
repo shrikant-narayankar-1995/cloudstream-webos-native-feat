@@ -15,7 +15,7 @@ int64_t when(const Packet &p) { return p.dts_us != kNoTime ? p.dts_us : p.pts_us
 
 MergedSource::MergedSource(std::unique_ptr<MediaSource> video, std::vector<std::string> audio_uris,
                            std::vector<std::unique_ptr<MediaSource>> audio)
-    : video_(std::move(video)), audio_uris_(std::move(audio_uris)), audio_(std::move(audio)), audio_open_(audio_.size(), false) {}
+    : video_(std::move(video)), audio_uris_(std::move(audio_uris)), audio_(std::move(audio)), audio_open_(audio_.size(), 0) {}
 
 bool MergedSource::open(const std::string &uri, std::string *error) {
     std::vector<std::thread> threads;
