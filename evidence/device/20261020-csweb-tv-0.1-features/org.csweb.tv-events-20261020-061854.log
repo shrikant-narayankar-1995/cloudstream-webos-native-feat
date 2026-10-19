@@ -1,0 +1,817 @@
+         1 INFO  [app] (6060) start app_id=org.csweb.tv platform=webos params={"@system_native_app":true,"nid":"org.csweb.tv"}
+         6 INFO  [device] (6060) webos OLED65C1PTB webOS 6.5.3 (kisscurl-koli) firmware 03.53.45 board O20_DVB ram 3 GB kernel 4.4.84-229.kcl4tv.6 aarch64
+         9 INFO  [crash] (6060) handler installed: /tmp/org.csweb.tv/crash.log, version 0.1.0, build id bf80be4e0462bec8f3c60230144bdfb257332376
+        11 INFO  [lifecycle] (6060) Created -> Initialising (Start)
+       168 INFO  [gamepad] (6060) uid 6860 gid 5000 groups [29,44,505,509,777]; /dev/input event files readable 32 of 32
+       169 INFO  [gamepad] (6060) at start: 0 joystick(s)
+       169 INFO  [screensaver] (6060) allowed (default)
+       169 INFO  [app] (6060) video driver wayland, display mode 1920x1080 @0 Hz
+       300 INFO  [gl] (6060) ARM / Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       305 INFO  [i18n] (6060) locale en-AU (formats en-US) from settingsservice; 0 catalog file(s), 0 entries
+       334 INFO  [caps] (6060) diagnostics.crash_record   supported   /tmp/org.csweb.tv/crash.log
+       334 INFO  [caps] (6060) i18n.system_locale         supported   en-AU
+       334 INFO  [caps] (6060) display.gles2              supported   Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       334 INFO  [caps] (6060) display.fragment_highp     supported   
+       334 INFO  [caps] (6060) display.max_texture_size   supported   8192
+       334 INFO  [caps] (6060) display.mode               supported   1920x1080 @0 Hz
+       334 INFO  [caps] (6060) display.panel              supported   3840x2160
+       334 INFO  [caps] (6060) display.refresh_rate       supported   120 Hz
+       334 INFO  [caps] (6060) storage.kv                 supported   db8
+       334 INFO  [caps] (6060) net.http                   supported   libcurl/7.61.0 OpenSSL/1.1.1t
+       334 INFO  [caps] (6060) audio.output               unknown     not requested by the app
+       334 INFO  [caps] (6060) images.decode              supported   PNG, JPEG, GIF, BMP, WebP, SVG
+       334 INFO  [caps] (6060) input.pointer              unknown     no pointer event yet
+       334 INFO  [caps] (6060) lifecycle.background       unknown     no background event yet
+       334 INFO  [caps] (6060) lifecycle.relaunch_params  supported   SDL_webOSTakeRelaunchMessage
+       334 INFO  [caps] (6060) media.playback             unknown     not implemented in the kit yet
+       343 INFO  [csweb] (6060) csweb: app /media/developer/apps/usr/palm/applications/org.csweb.tv, runtime /media/developer/apps/usr/palm/applications/org.csweb.tv/runtime-aarch64, tmp /tmp/org.csweb.tv
+       347 INFO  [csweb] (6060) plugin data: 1 files restored
+       352 INFO  [csweb] (6060) runtime: launching (AOT: ok)
+       354 INFO  [lifecycle] (6060) Initialising -> Running (Started)
+       669 INFO  [window] (6060) shown
+       669 INFO  [speech] (6060) Audio Guidance setting: off
+       669 INFO  [caps] (6060) accessibility.audio_guidance now supported: off
+       669 INFO  [csweb] (6060) device media: hevc yes, uhd yes, 120 Hz, hdr yes, dv yes, atmos yes, dts no, soc O20N
+       669 INFO  [csweb] (6060) plugins: 2 repositories, 4 installed
+       669 INFO  [network] (6060) online (Wi-Fi)
+       669 INFO  [caps] (6060) network.status now supported: online (Wi-Fi)
+       669 INFO  [csweb] (6060) runtime: ready
+       671 INFO  [focus] (6060) focus nav.Home
+       735 INFO  [app] (6060) first frame: drawable 1920x1080
+       735 INFO  [fonts] (6060) 90 font files under the system font directories
+       736 INFO  [fonts] (6060) system fallback font /usr/share/fonts/LG_Display-Regular.ttf (search 52 ms)
+       804 INFO  [lifecycle] (6060) SDL WILLENTERFOREGROUND
+       805 INFO  [lifecycle] (6060) SDL DIDENTERFOREGROUND
+       805 INFO  [window] (6060) focus gained
+     11265 INFO  [csweb] (6060) home: âš¡PlayZTV Live Events, 1 sections
+     11282 INFO  [fonts] (6060) system fallback font /usr/share/fonts/LG_Display_JP_Gothic.ttf (search 12 ms)
+     16567 INFO  [fonts] (6060) system fallback font /usr/share/fonts/NotoEmoji-Regular.ttf (search 993 ms)
+     19844 INFO  [caps] (6060) input.pointer now supported: first event: move
+     19844 DEBUG [pointer] (6060) move px=(960,540) logical=(960,540) button=1 wheel=0.0 hit=0
+     19844 DEBUG [pointer] (6060) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+     20287 DEBUG [pointer] (6060) wheel px=(0,0) logical=(935,444) button=1 wheel=-1.0 hit=1
+     20314 DEBUG [pointer] (6060) wheel px=(0,0) logical=(924,424) button=1 wheel=-1.0 hit=1
+     20331 DEBUG [pointer] (6060) wheel px=(0,0) logical=(924,424) button=1 wheel=-1.0 hit=1
+     20347 DEBUG [pointer] (6060) wheel px=(0,0) logical=(924,424) button=1 wheel=-1.0 hit=1
+     20348 DEBUG [pointer] (6060) wheel px=(0,0) logical=(924,424) button=1 wheel=-1.0 hit=1
+     20389 DEBUG [pointer] (6060) wheel px=(0,0) logical=(924,424) button=1 wheel=-2.0 hit=1
+     20389 DEBUG [pointer] (6060) wheel px=(0,0) logical=(924,424) button=1 wheel=-1.0 hit=1
+     20426 DEBUG [pointer] (6060) wheel px=(0,0) logical=(924,424) button=1 wheel=-1.0 hit=1
+     20446 DEBUG [pointer] (6060) wheel px=(0,0) logical=(924,424) button=1 wheel=-1.0 hit=1
+     20447 DEBUG [pointer] (6060) wheel px=(0,0) logical=(924,424) button=1 wheel=-1.0 hit=1
+     20727 DEBUG [pointer] (6060) wheel px=(0,0) logical=(986,377) button=1 wheel=-2.0 hit=1
+     20747 DEBUG [pointer] (6060) wheel px=(0,0) logical=(986,377) button=1 wheel=-1.0 hit=1
+     20777 DEBUG [pointer] (6060) wheel px=(0,0) logical=(986,377) button=1 wheel=-1.0 hit=1
+     20794 DEBUG [pointer] (6060) wheel px=(0,0) logical=(986,377) button=1 wheel=-1.0 hit=1
+     20807 DEBUG [pointer] (6060) wheel px=(0,0) logical=(986,377) button=1 wheel=-1.0 hit=1
+     20847 DEBUG [pointer] (6060) wheel px=(0,0) logical=(986,377) button=1 wheel=-2.0 hit=1
+     21057 DEBUG [pointer] (6060) move px=(990,381) logical=(990,381) button=1 wheel=0.0 hit=0
+     21213 INFO  [focus] (6060) focus #65
+     21388 INFO  [focus] (6060) focus #61
+     22067 DEBUG [pointer] (6060) move px=(738,623) logical=(738,623) button=1 wheel=0.0 hit=0
+     22177 DEBUG [pointer] (6060) wheel px=(0,0) logical=(720,582) button=1 wheel=1.0 hit=1
+     22225 DEBUG [pointer] (6060) wheel px=(0,0) logical=(720,582) button=1 wheel=1.0 hit=1
+     22266 DEBUG [pointer] (6060) wheel px=(0,0) logical=(720,582) button=1 wheel=1.0 hit=1
+     22287 DEBUG [pointer] (6060) wheel px=(0,0) logical=(720,582) button=1 wheel=1.0 hit=1
+     22306 DEBUG [pointer] (6060) wheel px=(0,0) logical=(720,582) button=1 wheel=1.0 hit=1
+     22328 DEBUG [pointer] (6060) wheel px=(0,0) logical=(658,457) button=1 wheel=2.0 hit=1
+     22366 DEBUG [pointer] (6060) wheel px=(0,0) logical=(510,202) button=1 wheel=1.0 hit=1
+     22387 DEBUG [pointer] (6060) wheel px=(0,0) logical=(430,93) button=1 wheel=1.0 hit=0
+     22387 DEBUG [pointer] (6060) wheel px=(0,0) logical=(430,93) button=1 wheel=1.0 hit=0
+     23048 INFO  [focus] (6060) focus home.hero.open
+     23069 DEBUG [pointer] (6060) move px=(135,768) logical=(135,768) button=1 wheel=0.0 hit=0
+     23670 INFO  [focus] (6060) focus #18
+     23778 DEBUG [pointer] (6060) wheel px=(0,0) logical=(827,954) button=1 wheel=-1.0 hit=1
+     23810 DEBUG [pointer] (6060) wheel px=(0,0) logical=(827,954) button=1 wheel=-1.0 hit=1
+     23810 DEBUG [pointer] (6060) wheel px=(0,0) logical=(827,954) button=1 wheel=-1.0 hit=1
+     23827 DEBUG [pointer] (6060) wheel px=(0,0) logical=(827,954) button=1 wheel=-1.0 hit=1
+     23827 DEBUG [pointer] (6060) wheel px=(0,0) logical=(827,954) button=1 wheel=-1.0 hit=1
+     23845 DEBUG [pointer] (6060) wheel px=(0,0) logical=(827,954) button=1 wheel=-2.0 hit=1
+     23861 DEBUG [pointer] (6060) wheel px=(0,0) logical=(827,954) button=1 wheel=-1.0 hit=1
+     23867 DEBUG [pointer] (6060) wheel px=(0,0) logical=(827,954) button=1 wheel=-1.0 hit=1
+     23887 DEBUG [pointer] (6060) wheel px=(0,0) logical=(827,954) button=1 wheel=-1.0 hit=1
+     23909 DEBUG [pointer] (6060) wheel px=(0,0) logical=(827,954) button=1 wheel=-1.0 hit=1
+     23909 INFO  [focus] (6060) focus #61
+     24127 DEBUG [pointer] (6060) move px=(827,953) logical=(827,953) button=1 wheel=0.0 hit=1
+     24287 DEBUG [pointer] (6060) wheel px=(0,0) logical=(780,885) button=1 wheel=-1.0 hit=1
+     24307 DEBUG [pointer] (6060) wheel px=(0,0) logical=(780,885) button=1 wheel=-1.0 hit=1
+     24328 DEBUG [pointer] (6060) wheel px=(0,0) logical=(780,885) button=1 wheel=-1.0 hit=1
+     24387 DEBUG [pointer] (6060) wheel px=(0,0) logical=(780,885) button=1 wheel=-1.0 hit=1
+     24388 DEBUG [pointer] (6060) wheel px=(0,0) logical=(780,885) button=1 wheel=-1.0 hit=1
+     24807 INFO  [focus] (6060) focus #65
+     24890 INFO  [perf] (6060) frames 300 presented of 727 drawn: interval avg 18.99 median 19.91 p95 21.34 max 33.92 ms, late 1; max ms events 0.95 update 3.11 draw 32.26 finish 0.17 swap 7.81; draw calls 27, quads 408, textures 14, views 74, rss 57.3 MB
+     25127 DEBUG [pointer] (6060) move px=(1438,994) logical=(1438,994) button=1 wheel=0.0 hit=0
+     25209 INFO  [focus] (6060) focus #69
+     25347 INFO  [focus] (6060) focus #65
+     25406 INFO  [focus] (6060) focus #61
+     25466 INFO  [focus] (6060) focus #49
+     25828 INFO  [focus] (6060) focus #57
+     26127 DEBUG [pointer] (6060) move px=(159,768) logical=(159,768) button=1 wheel=0.0 hit=1
+     27138 DEBUG [pointer] (6060) move px=(145,800) logical=(145,800) button=1 wheel=0.0 hit=1
+     27568 INFO  [focus] (6060) focus #49
+     28167 DEBUG [pointer] (6060) move px=(1914,16) logical=(1914,16) button=1 wheel=0.0 hit=0
+     28506 INFO  [focus] (6060) focus #69
+     28627 INFO  [focus] (6060) focus #65
+     28791 INFO  [focus] (6060) focus nav.Settings
+     28870 INFO  [focus] (6060) focus #61
+     28968 INFO  [focus] (6060) focus #57
+     29167 DEBUG [pointer] (6060) move px=(0,391) logical=(0,391) button=1 wheel=0.0 hit=0
+     29767 INFO  [focus] (6060) focus #49
+     29801 INFO  [focus] (6060) focus #57
+     29850 INFO  [focus] (6060) focus #61
+     29966 INFO  [focus] (6060) focus #57
+     30186 DEBUG [pointer] (6060) move px=(395,1074) logical=(395,1074) button=1 wheel=0.0 hit=0
+     31188 DEBUG [pointer] (6060) move px=(1846,1074) logical=(1846,1074) button=1 wheel=0.0 hit=0
+     31318 INFO  [focus] (6060) focus #69
+     32187 DEBUG [pointer] (6060) move px=(1879,1035) logical=(1879,1035) button=1 wheel=0.0 hit=0
+     32510 INFO  [focus] (6060) focus nav.Settings
+     33197 DEBUG [pointer] (6060) move px=(1294,146) logical=(1294,146) button=1 wheel=0.0 hit=0
+     34527 DEBUG [pointer] (6060) move px=(1315,176) logical=(1315,176) button=1 wheel=0.0 hit=0
+     37847 DEBUG [pointer] (6060) move px=(1316,172) logical=(1316,172) button=1 wheel=0.0 hit=0
+     40767 DEBUG [pointer] (6060) move px=(1316,171) logical=(1316,171) button=1 wheel=0.0 hit=0
+     41387 DEBUG [pointer] (6060) wheel px=(0,0) logical=(676,0) button=1 wheel=-1.0 hit=0
+     41570 INFO  [focus] (6060) focus nav.Search
+     41768 DEBUG [pointer] (6060) move px=(1098,257) logical=(1098,257) button=1 wheel=0.0 hit=0
+     41778 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1098,257) button=1 wheel=1.0 hit=1
+     41802 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1098,257) button=1 wheel=1.0 hit=1
+     41867 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1121,269) button=1 wheel=1.0 hit=1
+     41886 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1121,269) button=1 wheel=1.0 hit=1
+     42346 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1121,274) button=1 wheel=1.0 hit=1
+     42467 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1194,283) button=1 wheel=1.0 hit=1
+     42671 INFO  [focus] (6060) focus home.provider
+     42777 DEBUG [pointer] (6060) move px=(1844,55) logical=(1844,55) button=1 wheel=0.0 hit=0
+     42907 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1872,197) button=1 wheel=1.0 hit=1
+     43778 DEBUG [pointer] (6060) press px=(1544,88) logical=(1544,88) button=1 wheel=0.0 hit=1
+     43961 DEBUG [pointer] (6060) release px=(1544,88) logical=(1544,88) button=1 wheel=0.0 hit=1
+     43964 INFO  [focus] (6060) focus chip.TV Series
+     44029 DEBUG [pointer] (6060) move px=(1539,85) logical=(1539,85) button=1 wheel=0.0 hit=0
+     44521 INFO  [focus] (6060) focus #92
+     45038 DEBUG [pointer] (6060) move px=(647,420) logical=(647,420) button=1 wheel=0.0 hit=0
+     45421 INFO  [focus] (6060) focus #91
+     45490 INFO  [focus] (6060) focus #92
+     45493 INFO  [perf] (6060) frames 600 presented of 1592 drawn: interval avg 18.92 median 19.88 p95 21.76 max 37.76 ms, late 1; max ms events 1.53 update 3.41 draw 36.40 finish 0.69 swap 3.05; draw calls 33, quads 516, textures 21, views 94, rss 58.5 MB
+     45550 INFO  [focus] (6060) focus provider.YouTube
+     46067 DEBUG [pointer] (6060) move px=(686,524) logical=(686,524) button=1 wheel=0.0 hit=1
+     46910 INFO  [focus] (6060) focus #92
+     47067 DEBUG [pointer] (6060) move px=(785,430) logical=(785,430) button=1 wheel=0.0 hit=0
+     48087 DEBUG [pointer] (6060) move px=(736,1009) logical=(736,1009) button=1 wheel=0.0 hit=0
+     48441 INFO  [focus] (6060) focus #96
+     49327 DEBUG [pointer] (6060) move px=(644,865) logical=(644,865) button=1 wheel=0.0 hit=1
+     50347 DEBUG [pointer] (6060) move px=(653,875) logical=(653,875) button=1 wheel=0.0 hit=1
+     50538 DEBUG [pointer] (6060) press px=(655,876) logical=(655,876) button=1 wheel=0.0 hit=1
+     50710 DEBUG [pointer] (6060) release px=(655,876) logical=(655,876) button=1 wheel=0.0 hit=1
+     50713 INFO  [focus] (6060) focus home.provider
+     51347 DEBUG [pointer] (6060) move px=(1100,649) logical=(1100,649) button=1 wheel=0.0 hit=0
+     51477 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1422,200) button=1 wheel=1.0 hit=1
+     51518 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1575,0) button=1 wheel=1.0 hit=0
+     51537 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1601,0) button=1 wheel=1.0 hit=0
+     51547 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1601,0) button=1 wheel=1.0 hit=0
+     51558 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1601,0) button=1 wheel=1.0 hit=0
+     51567 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1601,0) button=1 wheel=1.0 hit=0
+     51577 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1601,0) button=1 wheel=1.0 hit=0
+     51587 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1601,0) button=1 wheel=1.0 hit=0
+     51597 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1601,0) button=1 wheel=1.0 hit=0
+     51607 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1601,0) button=1 wheel=1.0 hit=0
+     51890 INFO  [focus] (6060) focus nav.Settings
+     52379 DEBUG [pointer] (6060) move px=(1884,290) logical=(1884,290) button=1 wheel=0.0 hit=0
+     52809 INFO  [focus] (6060) focus home.provider
+     53208 DEBUG [pointer] (6060) press px=(1526,65) logical=(1526,65) button=1 wheel=0.0 hit=1
+     53407 DEBUG [pointer] (6060) move px=(1519,64) logical=(1519,64) button=1 wheel=0.0 hit=1
+     53421 DEBUG [pointer] (6060) release px=(1519,64) logical=(1519,64) button=1 wheel=0.0 hit=1
+     53424 INFO  [focus] (6060) focus chip.TV Series
+     54381 INFO  [focus] (6060) focus chip.Others
+     54412 DEBUG [pointer] (6060) move px=(1077,331) logical=(1077,331) button=1 wheel=0.0 hit=1
+     54868 INFO  [focus] (6060) focus chip.Livestreams
+     55328 DEBUG [pointer] (6060) press px=(824,306) logical=(824,306) button=1 wheel=0.0 hit=1
+     55512 DEBUG [pointer] (6060) release px=(824,306) logical=(824,306) button=1 wheel=0.0 hit=1
+     55698 DEBUG [pointer] (6060) move px=(824,307) logical=(824,307) button=1 wheel=0.0 hit=1
+     56570 INFO  [focus] (6060) focus chip.TV Series
+     56697 DEBUG [pointer] (6060) move px=(574,296) logical=(574,296) button=1 wheel=0.0 hit=1
+     56788 DEBUG [pointer] (6060) press px=(608,297) logical=(608,297) button=1 wheel=0.0 hit=1
+     57003 DEBUG [pointer] (6060) release px=(608,297) logical=(608,297) button=1 wheel=0.0 hit=1
+     57717 DEBUG [pointer] (6060) move px=(948,378) logical=(948,378) button=1 wheel=0.0 hit=0
+     57831 INFO  [focus] (6060) focus chip.Livestreams
+     58197 DEBUG [pointer] (6060) press px=(812,273) logical=(812,273) button=1 wheel=0.0 hit=0
+     58407 DEBUG [pointer] (6060) release px=(816,275) logical=(816,275) button=1 wheel=0.0 hit=0
+     58718 DEBUG [pointer] (6060) move px=(905,291) logical=(905,291) button=1 wheel=0.0 hit=1
+     58991 INFO  [focus] (6060) focus chip.Others
+     59329 DEBUG [pointer] (6060) press px=(1076,304) logical=(1076,304) button=1 wheel=0.0 hit=1
+     59534 DEBUG [pointer] (6060) release px=(1072,302) logical=(1072,302) button=1 wheel=0.0 hit=1
+     59739 DEBUG [pointer] (6060) move px=(1068,302) logical=(1068,302) button=1 wheel=0.0 hit=1
+     59911 INFO  [focus] (6060) focus chip.Livestreams
+     59961 INFO  [focus] (6060) focus #137
+     60017 INFO  [heartbeat] (6060) uptime 60 s, Running, rss 57.5 MB, presented 646, drawn 2422, views 101
+     60329 INFO  [focus] (6060) focus provider.Dailymotion
+     60371 INFO  [focus] (6060) focus #138
+     60471 INFO  [focus] (6060) focus provider.Dailymotion
+     60529 INFO  [focus] (6060) focus provider.Internet Archive
+     60649 INFO  [focus] (6060) focus provider.YouTube
+     60738 DEBUG [pointer] (6060) move px=(640,657) logical=(640,657) button=1 wheel=0.0 hit=1
+     61088 INFO  [focus] (6060) focus provider.Internet Archive
+     61767 DEBUG [pointer] (6060) press px=(648,602) logical=(648,602) button=1 wheel=0.0 hit=1
+     61970 INFO  [csweb] (6060) home: Internet Archive, 1 sections
+     61971 DEBUG [pointer] (6060) release px=(648,602) logical=(648,602) button=1 wheel=0.0 hit=1
+     61973 INFO  [focus] (6060) focus home.provider
+     62206 DEBUG [pointer] (6060) move px=(650,601) logical=(650,601) button=1 wheel=0.0 hit=0
+     63478 DEBUG [pointer] (6060) move px=(725,539) logical=(725,539) button=1 wheel=0.0 hit=0
+     64880 INFO  [fonts] (6060) system fallback font /usr/share/fonts/NotoSansGeorgian-Regular.ttf (search 15 ms)
+     64880 INFO  [fonts] (6060) system fallback font /usr/share/fonts/Tinos-Regular.ttf (search 15 ms)
+     64880 INFO  [fonts] (6060) system fallback font /usr/share/fonts/LG_Smart_UI_Gujarati.ttf (search 15 ms)
+     65007 DEBUG [pointer] (6060) move px=(722,532) logical=(722,532) button=1 wheel=0.0 hit=0
+     66938 DEBUG [pointer] (6060) move px=(722,448) logical=(722,448) button=1 wheel=0.0 hit=0
+     67947 DEBUG [pointer] (6060) move px=(477,143) logical=(477,143) button=1 wheel=0.0 hit=0
+     68636 INFO  [focus] (6060) focus nav.Home
+     68660 INFO  [focus] (6060) focus nav.Search
+     68706 INFO  [focus] (6060) focus nav.Library
+     68939 INFO  [focus] (6060) focus nav.Settings
+     68957 DEBUG [pointer] (6060) move px=(1174,76) logical=(1174,76) button=1 wheel=0.0 hit=1
+     69218 INFO  [focus] (6060) focus nav.Library
+     69337 INFO  [focus] (6060) focus nav.Search
+     69958 DEBUG [pointer] (6060) move px=(721,23) logical=(721,23) button=1 wheel=0.0 hit=0
+     70947 DEBUG [pointer] (6060) press px=(802,84) logical=(802,84) button=1 wheel=0.0 hit=1
+     71148 DEBUG [pointer] (6060) release px=(802,84) logical=(802,84) button=1 wheel=0.0 hit=1
+     71148 INFO  [focus] (6060) focus nav.Search
+     71346 DEBUG [pointer] (6060) move px=(803,84) logical=(803,84) button=1 wheel=0.0 hit=1
+     71587 INFO  [focus] (6060) focus search.field
+     71657 INFO  [focus] (6060) focus chip.Others
+     72078 INFO  [focus] (6060) focus search.field
+     72367 DEBUG [pointer] (6060) move px=(327,201) logical=(327,201) button=1 wheel=0.0 hit=0
+     72778 DEBUG [pointer] (6060) press px=(352,224) logical=(352,224) button=1 wheel=0.0 hit=1
+     72917 DEBUG [pointer] (6060) release px=(352,225) logical=(352,225) button=1 wheel=0.0 hit=1
+     72918 INFO  [text] (6060) text input on for search.field (screen keyboard supported)
+     73384 DEBUG [pointer] (6060) move px=(354,232) logical=(354,232) button=1 wheel=0.0 hit=1
+     73568 DEBUG [pointer] (6060) left px=(0,0) logical=(715,523) button=1 wheel=0.0 hit=0
+     86632 DEBUG [key] (6060) down sc=40 kc=0xd repeat=0 action=Confirm pointer=0
+     86646 INFO  [text] (6060) text input off
+     86684 DEBUG [pointer] (6060) move px=(1507,787) logical=(1507,787) button=1 wheel=0.0 hit=0
+     87287 INFO  [focus] (6060) focus nav.profile
+     87685 DEBUG [pointer] (6060) move px=(177,4) logical=(177,4) button=1 wheel=0.0 hit=0
+     88687 DEBUG [pointer] (6060) move px=(210,95) logical=(210,95) button=1 wheel=0.0 hit=1
+     89267 INFO  [focus] (6060) focus search.field
+     89354 INFO  [focus] (6060) focus chip.TV Series
+     89394 INFO  [focus] (6060) focus chip.Livestreams
+     89717 DEBUG [pointer] (6060) move px=(651,355) logical=(651,355) button=1 wheel=0.0 hit=0
+     90717 DEBUG [pointer] (6060) move px=(506,358) logical=(506,358) button=1 wheel=0.0 hit=0
+     90797 INFO  [focus] (6060) focus chip.Others
+     91178 DEBUG [pointer] (6060) press px=(535,333) logical=(535,333) button=1 wheel=0.0 hit=1
+     91366 DEBUG [pointer] (6060) release px=(536,332) logical=(536,332) button=1 wheel=0.0 hit=1
+     94026 INFO  [perf] (6060) frames 900 presented of 4141 drawn: interval avg 18.52 median 19.70 p95 22.57 max 38.51 ms, late 2; max ms events 0.91 update 15.15 draw 36.07 finish 0.44 swap 5.52; draw calls 33, quads 388, textures 38, views 161, rss 66.6 MB
+     94326 DEBUG [pointer] (6060) move px=(530,338) logical=(530,338) button=1 wheel=0.0 hit=1
+     94441 INFO  [focus] (6060) focus #207
+     94626 INFO  [focus] (6060) focus #211
+     95337 DEBUG [pointer] (6060) move px=(953,448) logical=(953,448) button=1 wheel=0.0 hit=0
+     96327 INFO  [focus] (6060) focus #207
+     96360 DEBUG [pointer] (6060) move px=(945,448) logical=(945,448) button=1 wheel=0.0 hit=1
+     97198 DEBUG [pointer] (6060) press px=(902,459) logical=(902,459) button=1 wheel=0.0 hit=1
+     97410 DEBUG [pointer] (6060) release px=(902,459) logical=(902,459) button=1 wheel=0.0 hit=1
+     97424 INFO  [focus] (6060) focus details.bookmark
+     98056 INFO  [csweb] (6060) details: Movie, 0 episodes in 0 groups, 0 recommendations
+     98096 INFO  [focus] (6060) focus details.play
+     98566 DEBUG [pointer] (6060) move px=(901,458) logical=(901,458) button=1 wheel=0.0 hit=0
+     99568 DEBUG [pointer] (6060) move px=(63,646) logical=(63,646) button=1 wheel=0.0 hit=0
+    100666 DEBUG [pointer] (6060) move px=(60,663) logical=(60,663) button=1 wheel=0.0 hit=0
+    101667 DEBUG [pointer] (6060) move px=(171,634) logical=(171,634) button=1 wheel=0.0 hit=1
+    101688 DEBUG [pointer] (6060) press px=(174,634) logical=(174,634) button=1 wheel=0.0 hit=1
+    101945 DEBUG [pointer] (6060) release px=(174,634) logical=(174,634) button=1 wheel=0.0 hit=1
+    101945 INFO  [focus] (6060) focus <none>
+    102247 INFO  [perf] (6060) frames 1200 presented of 4547 drawn: interval avg 19.14 median 19.80 p95 21.12 max 97.99 ms, late 2; max ms events 78.10 update 1.53 draw 21.45 finish 0.96 swap 9.31; draw calls 1, quads 62, textures 44, views 241, rss 70.2 MB
+    103172 DEBUG [csweb] (6060) link: EVE Online - Wightstorm forward base first look.ia (mp4)  VIDEO from archive.org
+    103240 INFO  [focus] (6060) focus player.skip
+    103244 DEBUG [csweb] (6060) link: EVE Online - Wightstorm forward base first look.ia (mp4)  VIDEO from archive.org
+    103244 DEBUG [csweb] (6060) link: EVE Online - Wightstorm forward base first look (mp4)  VIDEO from archive.org
+    103244 DEBUG [csweb] (6060) link: EVE Online - Wightstorm forward base first look (mp4)  VIDEO from archive.org
+    103244 INFO  [csweb] (6060) links loaded: 4 links, 0 subtitles
+    103244 INFO  [csweb] (6060) playing link 0: EVE Online - Wightstorm forward base first look.ia (mp4)  (ffmpeg)
+    103437 INFO  [starfish] (6060) decoder H264: 4096x2304@60
+    103437 INFO  [starfish] (6060) decoder H265: 4096x2304@120
+    103451 INFO  [starfish] (6060) decoder VP9: 4096x2304@60
+    103451 INFO  [starfish] (6060) decoder AV1: 4096x2304@60
+    103472 INFO  [starfish] (6060) exported window _Window_Id_5
+    103472 INFO  [starfish] (6060) place 1920x1080 -> 0,0 1920x1080 rv=1
+    103472 INFO  [media] (6416) Idle -> Opening
+    103507 INFO  [screensaver] (6060) blocked (video playing)
+    103543 INFO  [focus] (6060) focus #309
+    103546 INFO  [csweb] (6060) player Idle -> Opening
+    105618 INFO  [http.stream] (6417) https://archive.org/download/eve-online-wightstorm-forward-base-first-look/EVE%20Online%20-%20Wightstorm%20forward%20base%20first%20look.ia.mp4: seekable, 511993730 bytes
+    106739 INFO  [media] (6416) https://archive.org/download/eve-online-wightstorm-forward-base-first-look/EVE%20Online%20-%20Wightstorm%20forward%20base%20first%20look.ia.mp4: using starfish
+    106739 INFO  [media] (6416) opened https://archive.org/download/eve-online-wightstorm-forward-base-first-look/EVE%20Online%20-%20Wightstorm%20forward%20base%20first%20look.ia.mp4: mov,mp4,m4a,3gp,3g2,mj2, 1134.1 s, video h264 1920x1080, audio aac 44100 Hz x2
+    106739 INFO  [starfish] (6416) Load {"args":[{"mediaTransportType":"BUFFERSTREAM","option":{"appId":"org.csweb.tv","windowId":"_Window_Id_5","externalStreamingInfo":{"contents":{"codec":{"video":"H264","audio":"AAC"},"esInfo":{"pauseAtDecodeTime":false,"ptsToDecode":0,"seperatedPTS":true,"videoFpsValue":60,"videoFpsScale":1},"format":"RAW","provider":"wnk"},"streamQualityInfo":true,"streamQualityInfoNonFlushable":true,"audioSync":true,"restartStreaming":false,"bufferingCtrInfo":{"bufferMaxLevel":0,"bufferMinLevel":0,"preBufferByte":0,"qBufferLevelAudio":0,"qBufferLevelVideo":0,"srcBufferLevelAudio":{"minimum":1,"maximum":1048576},"srcBufferLevelVideo":{"minimum":1,"maximum":8388608}}},"needAudio":true,"queryPosition":false,"lowDelayMode":false,"transmission":{"contentsType":"LIVE"},"adaptiveStreaming":{"audioOnly":false,"adaptiveResolution":true,"maxWidth":1920,"maxHeight":1080,"maxFrameRate":60}}}]}
+    106804 INFO  [starfish] (6416) event type=13 num=1 
+    106804 INFO  [starfish] (6416) event type=14 num=0 1
+    106804 INFO  [starfish] (6416) event type=5 num=0 0 video/x-h264 (null) (null) 1920 1080 (null) 60.000000 0 0 0
+    106804 INFO  [starfish] (6416) event type=15 num=0 1
+    106804 INFO  [starfish] (6416) event type=8 num=0 audio/mpeg (null) (null) 0.000000 0 (null) 0 0 0 0 aac 0 (null) 0 
+    106880 INFO  [starfish] (6424) event type=37 num=1 
+    106880 INFO  [starfish] (6424) event type=22 num=0 true
+    106952 INFO  [starfish] (6416) event type=17 num=0 {"context":"_0kfZD5LFuyIsdY","resourceList":[{"type":"VDEC","portNumber":2},{"type":"ADEC","portNumber":1}]}
+
+    106952 INFO  [starfish] (6416) Load -> 1 (193.1 ms)
+    106952 INFO  [media] (6416) Opening -> Ready
+    106952 INFO  [media] (6416) Ready -> Playing
+    106955 INFO  [starfish] (6416) splice: first video pts 0.000 s -> 0.100 s (key)
+    106955 INFO  [starfish] (6416) splice: video pts 0.000 s -> 0.100 s (decoder clock -1.000 s, shift +0.100 s)
+    106955 INFO  [starfish] (6416) Play -> 1
+    106972 INFO  [csweb] (6060) player Opening -> Ready
+    106973 INFO  [starfish] (6060) place 1920x1080 -> 0,0 1920x1080 rv=1
+    106974 INFO  [csweb] (6060) player Ready -> Playing
+    107013 INFO  [starfish] (6424) event type=7 num=0 {"track":-1,"dualMono":false,"immersive":"none"}
+
+    107064 INFO  [starfish] (6424) event type=44 num=0 ´eŽê
+    107075 INFO  [starfish] (6424) event type=4 num=0 {"context":"_0kfZD5LFuyIsdY","content":"movie","video":{"frameRate":60,"scanType":"VIDEO_PROGRESSIVE","width":1920,"height":1080,"bitRate":0,"adaptive":true,"path":"network","afd":16,"rotation":0,"data3D":{"originalPattern":"check_board","currentPattern":"check_board","typeLR":"LR"},"hdrType":"none"
+    107114 INFO  [starfish] (6427) event type=10001 num=0 {"serviceType":"all","videoSinkType":"main_video","audioSinkType":"main_sound"}
+
+    107121 INFO  [starfish] (6424) event type=26 num=0 true
+    107153 INFO  [starfish] (6424) sink: 0 displayed, 0 dropped, 1 FRAMEREADY in 5 s (presented pts 0.100 s)
+    107153 INFO  [starfish] (6424) first frame presented (pts 100000000 ns)
+    112164 INFO  [starfish] (6424) sink: 272 displayed, 0 dropped, 23 FRAMEREADY in 5 s (presented pts 4.667 s)
+    115773 DEBUG [key] (6060) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+    115804 INFO  [starfish] (6427) event type=10002 num=0 {"serviceType":"all","videoSinkType":"main_video","audioSinkType":"main_sound","code":8}
+
+    115821 INFO  [starfish] (6416) event type=23 num=0 true
+    115835 INFO  [starfish] (6416) Unload -> 1, destroyed (59.9 ms)
+    115835 INFO  [media] (6416) Playing -> Stopped
+    115850 INFO  [screensaver] (6060) allowed (video playing)
+    115931 INFO  [focus] (6060) focus details.play
+    116827 DEBUG [key] (6060) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+    116878 INFO  [focus] (6060) focus #207
+    117607 DEBUG [pointer] (6060) move px=(960,540) logical=(960,540) button=1 wheel=0.0 hit=0
+    117610 DEBUG [pointer] (6060) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+    117754 DEBUG [pointer] (6060) wheel px=(0,0) logical=(960,540) button=1 wheel=-1.0 hit=1
+    117804 INFO  [perf] (6060) frames 1500 presented of 5108 drawn: interval avg 19.83 median 19.45 p95 22.32 max 264.33 ms, late 7; max ms events 51.05 update 71.07 draw 41.13 finish 0.44 swap 4.11; draw calls 39, quads 390, textures 50, views 165, rss 88.0 MB
+    117971 DEBUG [pointer] (6060) wheel px=(0,0) logical=(960,540) button=1 wheel=1.0 hit=1
+    117988 DEBUG [pointer] (6060) wheel px=(0,0) logical=(960,540) button=1 wheel=1.0 hit=1
+    118054 DEBUG [pointer] (6060) wheel px=(0,0) logical=(960,540) button=1 wheel=1.0 hit=1
+    118104 INFO  [focus] (6060) focus #211
+    118288 INFO  [focus] (6060) focus #215
+    118388 INFO  [focus] (6060) focus #211
+    118638 DEBUG [pointer] (6060) move px=(1154,542) logical=(1154,542) button=1 wheel=0.0 hit=1
+    118676 INFO  [focus] (6060) focus #215
+    118818 INFO  [focus] (6060) focus nav.Settings
+    118836 INFO  [focus] (6060) focus nav.Library
+    119051 INFO  [focus] (6060) focus nav.Settings
+    119638 DEBUG [pointer] (6060) move px=(1238,75) logical=(1238,75) button=1 wheel=0.0 hit=1
+    119708 DEBUG [pointer] (6060) press px=(1239,75) logical=(1239,75) button=1 wheel=0.0 hit=1
+    119958 DEBUG [pointer] (6060) release px=(1204,73) logical=(1204,73) button=1 wheel=0.0 hit=1
+    119958 INFO  [focus] (6060) focus settings.extensions
+    119998 INFO  [focus] (6060) focus nav.Settings
+    120027 INFO  [heartbeat] (6060) uptime 120 s, Running, rss 88.5 MB, presented 1580, drawn 5240, views 124
+    120290 INFO  [focus] (6060) focus nav.Library
+    120347 INFO  [focus] (6060) focus settings.extensions
+    120378 INFO  [focus] (6060) focus settings.profiles
+    120423 INFO  [focus] (6060) focus settings.profile_start
+    120456 INFO  [focus] (6060) focus settings.langs
+    120523 INFO  [focus] (6060) focus settings.media
+    120639 DEBUG [pointer] (6060) move px=(311,769) logical=(311,769) button=1 wheel=0.0 hit=1
+    120689 INFO  [focus] (6060) focus settings.langs
+    121228 INFO  [focus] (6060) focus settings.profile_start
+    121389 INFO  [focus] (6060) focus settings.profiles
+    121639 DEBUG [pointer] (6060) move px=(425,487) logical=(425,487) button=1 wheel=0.0 hit=1
+    121672 INFO  [focus] (6060) focus settings.profile_start
+    121755 DEBUG [pointer] (6060) wheel px=(0,0) logical=(559,582) button=1 wheel=-1.0 hit=1
+    121772 DEBUG [pointer] (6060) wheel px=(0,0) logical=(559,582) button=1 wheel=-1.0 hit=1
+    121791 DEBUG [pointer] (6060) wheel px=(0,0) logical=(559,582) button=1 wheel=-1.0 hit=1
+    121823 DEBUG [pointer] (6060) wheel px=(0,0) logical=(559,582) button=1 wheel=-2.0 hit=1
+    121823 INFO  [focus] (6060) focus settings.langs
+    121838 INFO  [focus] (6060) focus settings.media
+    121855 DEBUG [pointer] (6060) wheel px=(0,0) logical=(559,582) button=1 wheel=-1.0 hit=1
+    121855 INFO  [focus] (6060) focus settings.tests
+    121872 DEBUG [pointer] (6060) wheel px=(0,0) logical=(559,582) button=1 wheel=-1.0 hit=1
+    121872 DEBUG [pointer] (6060) wheel px=(0,0) logical=(559,582) button=1 wheel=-1.0 hit=1
+    121888 INFO  [focus] (6060) focus settings.quality
+    121906 DEBUG [pointer] (6060) wheel px=(0,0) logical=(559,582) button=1 wheel=-1.0 hit=1
+    121906 INFO  [focus] (6060) focus settings.autoplay
+    121922 INFO  [focus] (6060) focus settings.seek_on
+    121939 INFO  [focus] (6060) focus settings.seek_off
+    121972 INFO  [focus] (6060) focus settings.sub_lang
+    122010 INFO  [focus] (6060) focus settings.sub_size
+    122055 INFO  [focus] (6060) focus settings.sub_box
+    122206 DEBUG [pointer] (6060) wheel px=(0,0) logical=(573,587) button=1 wheel=-2.0 hit=1
+    122240 DEBUG [pointer] (6060) wheel px=(0,0) logical=(573,587) button=1 wheel=-1.0 hit=1
+    122288 DEBUG [pointer] (6060) wheel px=(0,0) logical=(573,587) button=1 wheel=-2.0 hit=1
+    122322 DEBUG [pointer] (6060) wheel px=(0,0) logical=(573,587) button=1 wheel=-1.0 hit=1
+    122355 DEBUG [pointer] (6060) wheel px=(0,0) logical=(573,587) button=1 wheel=-2.0 hit=1
+    122389 DEBUG [pointer] (6060) wheel px=(0,0) logical=(573,587) button=1 wheel=-1.0 hit=1
+    122670 DEBUG [pointer] (6060) move px=(579,591) logical=(579,591) button=1 wheel=0.0 hit=0
+    122678 DEBUG [pointer] (6060) wheel px=(0,0) logical=(579,591) button=1 wheel=-1.0 hit=1
+    122688 DEBUG [pointer] (6060) wheel px=(0,0) logical=(579,591) button=1 wheel=-1.0 hit=1
+    122698 DEBUG [pointer] (6060) wheel px=(0,0) logical=(579,591) button=1 wheel=-1.0 hit=1
+    122727 INFO  [focus] (6060) focus settings.cast
+    122744 DEBUG [pointer] (6060) wheel px=(0,0) logical=(605,607) button=1 wheel=-1.0 hit=1
+    122762 DEBUG [pointer] (6060) wheel px=(0,0) logical=(605,607) button=1 wheel=-1.0 hit=1
+    122774 DEBUG [pointer] (6060) wheel px=(0,0) logical=(605,607) button=1 wheel=-1.0 hit=1
+    122805 DEBUG [pointer] (6060) wheel px=(0,0) logical=(605,607) button=1 wheel=-1.0 hit=1
+    122822 DEBUG [pointer] (6060) wheel px=(0,0) logical=(605,607) button=1 wheel=-1.0 hit=1
+    122839 DEBUG [pointer] (6060) wheel px=(0,0) logical=(605,607) button=1 wheel=-1.0 hit=1
+    123338 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1335,790) button=1 wheel=1.0 hit=1
+    123338 INFO  [focus] (6060) focus settings.clear_history
+    123672 DEBUG [pointer] (6060) move px=(167,1000) logical=(167,1000) button=1 wheel=0.0 hit=0
+    123906 INFO  [perf] (6060) frames 1800 presented of 5484 drawn: interval avg 16.21 median 16.57 p95 18.16 max 24.32 ms, late 0; max ms events 1.23 update 14.22 draw 21.93 finish 0.13 swap 3.58; draw calls 7, quads 748, textures 50, views 124, rss 88.6 MB
+    123972 DEBUG [pointer] (6060) wheel px=(0,0) logical=(502,835) button=1 wheel=-1.0 hit=1
+    124023 DEBUG [pointer] (6060) wheel px=(0,0) logical=(518,835) button=1 wheel=-2.0 hit=1
+    124056 DEBUG [pointer] (6060) wheel px=(0,0) logical=(518,835) button=1 wheel=-1.0 hit=1
+    124089 DEBUG [pointer] (6060) wheel px=(0,0) logical=(518,835) button=1 wheel=-2.0 hit=1
+    124106 DEBUG [pointer] (6060) wheel px=(0,0) logical=(518,835) button=1 wheel=-1.0 hit=1
+    124688 DEBUG [pointer] (6060) move px=(341,1032) logical=(341,1032) button=1 wheel=0.0 hit=0
+    125718 DEBUG [pointer] (6060) move px=(588,891) logical=(588,891) button=1 wheel=0.0 hit=0
+    126877 DEBUG [pointer] (6060) move px=(592,887) logical=(592,887) button=1 wheel=0.0 hit=0
+    128658 DEBUG [pointer] (6060) move px=(593,887) logical=(593,887) button=1 wheel=0.0 hit=0
+    130148 DEBUG [pointer] (6060) move px=(696,908) logical=(696,908) button=1 wheel=0.0 hit=0
+    131157 DEBUG [pointer] (6060) move px=(370,705) logical=(370,705) button=1 wheel=0.0 hit=0
+    132178 DEBUG [pointer] (6060) move px=(360,707) logical=(360,707) button=1 wheel=0.0 hit=0
+    133378 DEBUG [pointer] (6060) wheel px=(0,0) logical=(358,709) button=1 wheel=1.0 hit=1
+    133422 INFO  [focus] (6060) focus settings.cast
+    133756 DEBUG [pointer] (6060) move px=(360,709) logical=(360,709) button=1 wheel=0.0 hit=0
+    133989 DEBUG [pointer] (6060) wheel px=(0,0) logical=(360,711) button=1 wheel=1.0 hit=1
+    134023 INFO  [focus] (6060) focus settings.sub_box
+    134124 INFO  [focus] (6060) focus settings.sub_size
+    134988 DEBUG [pointer] (6060) wheel px=(0,0) logical=(362,715) button=1 wheel=1.0 hit=1
+    135022 DEBUG [pointer] (6060) wheel px=(0,0) logical=(362,715) button=1 wheel=1.0 hit=1
+    135023 INFO  [focus] (6060) focus settings.sub_lang
+    135139 INFO  [focus] (6060) focus settings.seek_off
+    135222 INFO  [focus] (6060) focus settings.seek_on
+    136020 DEBUG [pointer] (6060) move px=(362,716) logical=(362,716) button=1 wheel=0.0 hit=1
+    137558 DEBUG [pointer] (6060) move px=(363,716) logical=(363,716) button=1 wheel=0.0 hit=1
+    138118 INFO  [focus] (6060) focus settings.autoplay
+    138588 DEBUG [pointer] (6060) move px=(603,638) logical=(603,638) button=1 wheel=0.0 hit=1
+    138938 DEBUG [pointer] (6060) wheel px=(0,0) logical=(426,674) button=1 wheel=1.0 hit=1
+    139040 INFO  [focus] (6060) focus settings.quality
+    139589 DEBUG [pointer] (6060) move px=(435,670) logical=(435,670) button=1 wheel=0.0 hit=1
+    139787 DEBUG [pointer] (6060) wheel px=(0,0) logical=(433,672) button=1 wheel=1.0 hit=1
+    139905 INFO  [focus] (6060) focus settings.tests
+    140687 DEBUG [pointer] (6060) move px=(432,673) logical=(432,673) button=1 wheel=0.0 hit=0
+    141178 DEBUG [pointer] (6060) press px=(466,716) logical=(466,716) button=1 wheel=0.0 hit=1
+    141425 DEBUG [pointer] (6060) release px=(466,716) logical=(466,716) button=1 wheel=0.0 hit=1
+    141441 INFO  [focus] (6060) focus tests.start
+    141503 INFO  [perf] (6060) frames 2100 presented of 6109 drawn: interval avg 16.31 median 16.55 p95 18.11 max 21.64 ms, late 0; max ms events 0.90 update 4.37 draw 19.97 finish 0.08 swap 3.25; draw calls 3, quads 169, textures 51, views 135, rss 88.6 MB
+    141808 DEBUG [pointer] (6060) move px=(466,715) logical=(466,715) button=1 wheel=0.0 hit=0
+    142815 DEBUG [pointer] (6060) move px=(334,341) logical=(334,341) button=1 wheel=0.0 hit=0
+    143828 DEBUG [pointer] (6060) press px=(237,326) logical=(237,326) button=1 wheel=0.0 hit=1
+    143838 DEBUG [pointer] (6060) move px=(242,326) logical=(242,326) button=1 wheel=0.0 hit=1
+    144028 INFO  [csweb] (6060) provider tests: 4 providers
+    144060 DEBUG [pointer] (6060) release px=(242,326) logical=(242,326) button=1 wheel=0.0 hit=1
+    144719 INFO  [focus] (6060) focus tests.provider.0
+    144838 DEBUG [pointer] (6060) move px=(0,437) logical=(0,437) button=1 wheel=0.0 hit=0
+    145050 INFO  [focus] (6060) focus tests.provider.1
+    145270 INFO  [focus] (6060) focus tests.provider.2
+    145322 INFO  [focus] (6060) focus tests.provider.3
+    146526 DEBUG [pointer] (6060) move px=(877,656) logical=(877,656) button=1 wheel=0.0 hit=1
+    147538 DEBUG [pointer] (6060) move px=(1595,465) logical=(1595,465) button=1 wheel=0.0 hit=0
+    148559 DEBUG [pointer] (6060) move px=(712,671) logical=(712,671) button=1 wheel=0.0 hit=1
+    148928 INFO  [csweb] (6060) provider test Dailymotion: Passed
+    148928 INFO  [csweb] (6060) provider test YouTube: Failed
+    148928 INFO  [csweb] (6060) provider test Internet Archive: Passed
+    148928 INFO  [csweb] (6060) provider test âš¡PlayZTV Live Events: Failed
+    149218 INFO  [focus] (6060) focus tests.provider.2
+    149568 DEBUG [pointer] (6060) move px=(587,567) logical=(587,567) button=1 wheel=0.0 hit=1
+    149919 INFO  [focus] (6060) focus tests.provider.1
+    150568 DEBUG [pointer] (6060) move px=(2,269) logical=(2,269) button=1 wheel=0.0 hit=0
+    150785 INFO  [focus] (6060) focus tests.start
+    151568 DEBUG [pointer] (6060) move px=(154,316) logical=(154,316) button=1 wheel=0.0 hit=1
+    151708 DEBUG [pointer] (6060) press px=(156,311) logical=(156,311) button=1 wheel=0.0 hit=1
+    151908 INFO  [csweb] (6060) provider tests: 4 providers
+    151930 DEBUG [pointer] (6060) release px=(157,310) logical=(157,310) button=1 wheel=0.0 hit=1
+    152578 DEBUG [pointer] (6060) move px=(142,361) logical=(142,361) button=1 wheel=0.0 hit=0
+    154838 DEBUG [pointer] (6060) move px=(144,361) logical=(144,361) button=1 wheel=0.0 hit=0
+    155128 INFO  [focus] (6060) focus tests.provider.0
+    155848 DEBUG [pointer] (6060) move px=(1409,632) logical=(1409,632) button=1 wheel=0.0 hit=0
+    155868 INFO  [focus] (6060) focus tests.provider.3
+    157118 DEBUG [pointer] (6060) move px=(1232,654) logical=(1232,654) button=1 wheel=0.0 hit=1
+    157417 INFO  [csweb] (6060) provider test Dailymotion: Failed
+    157417 INFO  [csweb] (6060) provider test YouTube: Failed
+    157417 INFO  [csweb] (6060) provider test Internet Archive: Passed
+    157417 INFO  [csweb] (6060) provider test âš¡PlayZTV Live Events: Failed
+    158157 DEBUG [pointer] (6060) move px=(1265,634) logical=(1265,634) button=1 wheel=0.0 hit=1
+    159597 DEBUG [pointer] (6060) move px=(1246,632) logical=(1246,632) button=1 wheel=0.0 hit=1
+    160438 INFO  [focus] (6060) focus tests.provider.2
+    160606 DEBUG [pointer] (6060) move px=(0,727) logical=(0,727) button=1 wheel=0.0 hit=0
+    160808 INFO  [focus] (6060) focus tests.provider.3
+    160859 INFO  [focus] (6060) focus tests.provider.2
+    161042 DEBUG [key] (6060) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+    161067 INFO  [focus] (6060) focus settings.media
+    161248 INFO  [focus] (6060) focus settings.langs
+    161623 DEBUG [pointer] (6060) move px=(0,223) logical=(0,223) button=1 wheel=0.0 hit=0
+    162018 INFO  [focus] (6060) focus nav.profile
+    162288 DEBUG [pointer] (6060) wheel px=(0,0) logical=(200,84) button=1 wheel=1.0 hit=0
+    162308 INFO  [focus] (6060) focus settings.extensions
+    162398 DEBUG [pointer] (6060) wheel px=(0,0) logical=(96,108) button=1 wheel=1.0 hit=0
+    162519 DEBUG [pointer] (6060) wheel px=(0,0) logical=(96,108) button=1 wheel=1.0 hit=0
+    162538 DEBUG [pointer] (6060) wheel px=(0,0) logical=(96,108) button=1 wheel=1.0 hit=0
+    162548 DEBUG [pointer] (6060) wheel px=(0,0) logical=(96,108) button=1 wheel=1.0 hit=0
+    162609 DEBUG [pointer] (6060) wheel px=(0,0) logical=(96,108) button=1 wheel=1.0 hit=0
+    162718 DEBUG [pointer] (6060) move px=(128,113) logical=(128,113) button=1 wheel=0.0 hit=1
+    162928 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1914,439) button=1 wheel=1.0 hit=1
+    162945 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1914,439) button=1 wheel=1.0 hit=1
+    162975 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1914,439) button=1 wheel=1.0 hit=1
+    162992 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1914,439) button=1 wheel=1.0 hit=1
+    163023 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1854,457) button=1 wheel=1.0 hit=1
+    163039 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1717,499) button=1 wheel=2.0 hit=1
+    163055 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1717,499) button=1 wheel=1.0 hit=1
+    163089 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1630,510) button=1 wheel=1.0 hit=1
+    163089 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1630,510) button=1 wheel=1.0 hit=1
+    163105 INFO  [perf] (6060) frames 2400 presented of 7449 drawn: interval avg 16.76 median 16.68 p95 20.49 max 42.36 ms, late 7; max ms events 25.73 update 21.23 draw 30.07 finish 0.38 swap 4.49; draw calls 7, quads 748, textures 52, views 124, rss 88.7 MB
+    163122 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1580,517) button=1 wheel=1.0 hit=1
+    163372 INFO  [focus] (6060) focus settings.profile_start
+    163422 DEBUG [pointer] (6060) wheel px=(0,0) logical=(594,631) button=1 wheel=1.0 hit=1
+    163458 DEBUG [pointer] (6060) wheel px=(0,0) logical=(489,655) button=1 wheel=1.0 hit=1
+    163459 DEBUG [pointer] (6060) wheel px=(0,0) logical=(489,655) button=1 wheel=1.0 hit=1
+    163491 DEBUG [pointer] (6060) wheel px=(0,0) logical=(369,683) button=1 wheel=1.0 hit=1
+    163491 INFO  [focus] (6060) focus settings.langs
+    163505 DEBUG [pointer] (6060) wheel px=(0,0) logical=(369,683) button=1 wheel=1.0 hit=1
+    163539 DEBUG [pointer] (6060) wheel px=(0,0) logical=(369,683) button=1 wheel=1.0 hit=1
+    163555 DEBUG [pointer] (6060) wheel px=(0,0) logical=(369,683) button=1 wheel=1.0 hit=1
+    163574 DEBUG [pointer] (6060) wheel px=(0,0) logical=(369,683) button=1 wheel=1.0 hit=1
+    163723 DEBUG [pointer] (6060) move px=(262,652) logical=(262,652) button=1 wheel=0.0 hit=0
+    163923 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=-1.0 hit=1
+    163939 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=-1.0 hit=1
+    163956 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=-2.0 hit=1
+    163973 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=-1.0 hit=1
+    163991 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=-2.0 hit=1
+    163991 INFO  [focus] (6060) focus settings.media
+    164007 INFO  [focus] (6060) focus settings.tests
+    164023 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=-1.0 hit=1
+    164024 INFO  [focus] (6060) focus settings.quality
+    164040 INFO  [focus] (6060) focus settings.autoplay
+    164055 INFO  [focus] (6060) focus settings.seek_on
+    164072 INFO  [focus] (6060) focus settings.seek_off
+    164106 INFO  [focus] (6060) focus settings.sub_lang
+    164139 INFO  [focus] (6060) focus settings.sub_size
+    164172 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=1.0 hit=1
+    164173 INFO  [focus] (6060) focus settings.sub_box
+    164190 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=1.0 hit=1
+    164223 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=1.0 hit=1
+    164239 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=1.0 hit=1
+    164239 INFO  [focus] (6060) focus settings.sub_size
+    164256 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=1.0 hit=1
+    164273 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=1.0 hit=1
+    164273 INFO  [focus] (6060) focus settings.sub_lang
+    164289 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=2.0 hit=1
+    164306 INFO  [focus] (6060) focus settings.seek_off
+    164325 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=1.0 hit=1
+    164326 INFO  [focus] (6060) focus settings.seek_on
+    164340 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=1.0 hit=1
+    164341 DEBUG [pointer] (6060) wheel px=(0,0) logical=(247,640) button=1 wheel=1.0 hit=1
+    164341 INFO  [focus] (6060) focus settings.autoplay
+    164356 INFO  [focus] (6060) focus settings.quality
+    164406 INFO  [focus] (6060) focus settings.tests
+    164423 INFO  [focus] (6060) focus settings.media
+    164489 INFO  [focus] (6060) focus settings.langs
+    164690 DEBUG [pointer] (6060) wheel px=(0,0) logical=(0,667) button=1 wheel=1.0 hit=1
+    164691 DEBUG [pointer] (6060) wheel px=(0,0) logical=(0,667) button=1 wheel=1.0 hit=1
+    164706 DEBUG [pointer] (6060) wheel px=(0,0) logical=(0,667) button=1 wheel=1.0 hit=1
+    164722 DEBUG [pointer] (6060) wheel px=(0,0) logical=(0,667) button=1 wheel=2.0 hit=1
+    164741 DEBUG [pointer] (6060) wheel px=(0,0) logical=(0,667) button=1 wheel=1.0 hit=1
+    164759 DEBUG [pointer] (6060) wheel px=(0,0) logical=(0,667) button=1 wheel=1.0 hit=1
+    164773 DEBUG [pointer] (6060) wheel px=(0,0) logical=(0,667) button=1 wheel=1.0 hit=1
+    164791 DEBUG [pointer] (6060) move px=(0,656) logical=(0,656) button=1 wheel=0.0 hit=0
+    165818 DEBUG [pointer] (6060) move px=(102,268) logical=(102,268) button=1 wheel=0.0 hit=0
+    166799 INFO  [focus] (6060) focus nav.profile
+    166819 DEBUG [pointer] (6060) move px=(192,80) logical=(192,80) button=1 wheel=0.0 hit=1
+    167818 DEBUG [pointer] (6060) move px=(58,82) logical=(58,82) button=1 wheel=0.0 hit=0
+    168608 DEBUG [pointer] (6060) press px=(230,67) logical=(230,67) button=1 wheel=0.0 hit=1
+    168826 DEBUG [pointer] (6060) release px=(230,67) logical=(230,67) button=1 wheel=0.0 hit=1
+    168839 INFO  [focus] (6060) focus profiles.profile.0
+    169020 DEBUG [pointer] (6060) move px=(232,68) logical=(232,68) button=1 wheel=0.0 hit=0
+    170039 DEBUG [pointer] (6060) move px=(1914,1074) logical=(1914,1074) button=1 wheel=0.0 hit=0
+    171058 DEBUG [pointer] (6060) move px=(100,436) logical=(100,436) button=1 wheel=0.0 hit=0
+    171868 INFO  [focus] (6060) focus profiles.manage
+    172057 DEBUG [pointer] (6060) move px=(131,705) logical=(131,705) button=1 wheel=0.0 hit=1
+    172328 DEBUG [pointer] (6060) press px=(138,721) logical=(138,721) button=1 wheel=0.0 hit=1
+    172566 DEBUG [pointer] (6060) release px=(138,722) logical=(138,722) button=1 wheel=0.0 hit=1
+    173078 DEBUG [pointer] (6060) move px=(162,712) logical=(162,712) button=1 wheel=0.0 hit=1
+    174198 DEBUG [pointer] (6060) move px=(341,554) logical=(341,554) button=1 wheel=0.0 hit=0
+    175248 DEBUG [pointer] (6060) move px=(400,493) logical=(400,493) button=1 wheel=0.0 hit=0
+    175660 DEBUG [key] (6060) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+    175678 INFO  [focus] (6060) focus profiles.profile.0
+    176297 DEBUG [pointer] (6060) move px=(179,405) logical=(179,405) button=1 wheel=0.0 hit=0
+    177298 DEBUG [pointer] (6060) move px=(209,415) logical=(209,415) button=1 wheel=0.0 hit=0
+    177889 DEBUG [pointer] (6060) press px=(155,458) logical=(155,458) button=1 wheel=0.0 hit=0
+    178106 DEBUG [pointer] (6060) release px=(155,458) logical=(155,458) button=1 wheel=0.0 hit=0
+    178348 DEBUG [pointer] (6060) move px=(155,459) logical=(155,459) button=1 wheel=0.0 hit=0
+    179358 DEBUG [pointer] (6060) move px=(162,542) logical=(162,542) button=1 wheel=0.0 hit=0
+    179398 DEBUG [pointer] (6060) press px=(162,542) logical=(162,542) button=1 wheel=0.0 hit=0
+    179558 DEBUG [pointer] (6060) release px=(162,543) logical=(162,543) button=1 wheel=0.0 hit=0
+    179658 DEBUG [pointer] (6060) press px=(162,543) logical=(162,543) button=1 wheel=0.0 hit=0
+    179745 DEBUG [pointer] (6060) release px=(162,543) logical=(162,543) button=1 wheel=0.0 hit=0
+    180032 INFO  [heartbeat] (6060) uptime 180 s, Running, rss 89.3 MB, presented 2559, drawn 8187, views 137
+    180208 DEBUG [key] (6060) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+    180227 INFO  [focus] (6060) focus settings.profile_start
+    180408 DEBUG [pointer] (6060) move px=(502,525) logical=(502,525) button=1 wheel=0.0 hit=1
+    180541 INFO  [focus] (6060) focus settings.profiles
+    180640 INFO  [focus] (6060) focus settings.extensions
+    180740 INFO  [focus] (6060) focus nav.Home
+    181258 INFO  [focus] (6060) focus nav.Search
+    181308 INFO  [focus] (6060) focus settings.extensions
+    181398 INFO  [focus] (6060) focus settings.profiles
+    181430 DEBUG [pointer] (6060) move px=(267,512) logical=(267,512) button=1 wheel=0.0 hit=1
+    181430 INFO  [focus] (6060) focus settings.profile_start
+    182013 DEBUG [pointer] (6060) wheel px=(0,0) logical=(274,620) button=1 wheel=1.0 hit=1
+    182487 DEBUG [pointer] (6060) move px=(274,623) logical=(274,623) button=1 wheel=0.0 hit=0
+    182738 INFO  [focus] (6060) focus settings.langs
+    182806 INFO  [focus] (6060) focus settings.media
+    183307 INFO  [focus] (6060) focus settings.langs
+    183623 DEBUG [pointer] (6060) move px=(399,706) logical=(399,706) button=1 wheel=0.0 hit=1
+    183788 INFO  [perf] (6060) frames 2700 presented of 8407 drawn: interval avg 16.09 median 16.50 p95 18.58 max 24.24 ms, late 0; max ms events 2.30 update 9.94 draw 22.04 finish 0.34 swap 3.85; draw calls 7, quads 748, textures 56, views 124, rss 89.3 MB
+    184810 DEBUG [pointer] (6060) move px=(396,706) logical=(396,706) button=1 wheel=0.0 hit=1
+    186379 DEBUG [pointer] (6060) move px=(396,707) logical=(396,707) button=1 wheel=0.0 hit=1
+    188121 DEBUG [pointer] (6060) move px=(398,709) logical=(398,709) button=1 wheel=0.0 hit=1
+    189548 DEBUG [pointer] (6060) move px=(402,706) logical=(402,706) button=1 wheel=0.0 hit=1
+    193098 DEBUG [pointer] (6060) move px=(395,709) logical=(395,709) button=1 wheel=0.0 hit=1
+    193669 DEBUG [pointer] (6060) wheel px=(0,0) logical=(410,748) button=1 wheel=-1.0 hit=1
+    193692 INFO  [focus] (6060) focus settings.media
+    193841 INFO  [focus] (6060) focus settings.tests
+    194123 DEBUG [pointer] (6060) move px=(412,745) logical=(412,745) button=1 wheel=0.0 hit=1
+    195279 DEBUG [pointer] (6060) move px=(412,742) logical=(412,742) button=1 wheel=0.0 hit=1
+    195588 DEBUG [pointer] (6060) wheel px=(0,0) logical=(412,742) button=1 wheel=-1.0 hit=1
+    195739 INFO  [focus] (6060) focus settings.quality
+    198028 DEBUG [pointer] (6060) move px=(413,741) logical=(413,741) button=1 wheel=0.0 hit=1
+    198838 DEBUG [pointer] (6060) press px=(425,738) logical=(425,738) button=1 wheel=0.0 hit=1
+    199048 DEBUG [pointer] (6060) release px=(425,738) logical=(425,738) button=1 wheel=0.0 hit=1
+    199048 INFO  [focus] (6060) focus settings.quality.option0
+    199573 DEBUG [pointer] (6060) move px=(426,738) logical=(426,738) button=1 wheel=0.0 hit=0
+    199678 INFO  [focus] (6060) focus settings.quality.option5
+    199698 INFO  [focus] (6060) focus settings.quality.option4
+    199774 INFO  [focus] (6060) focus settings.quality.option3
+    200041 INFO  [focus] (6060) focus settings.quality.option2
+    200141 INFO  [focus] (6060) focus settings.quality.option1
+    200556 DEBUG [pointer] (6060) press px=(940,374) logical=(940,374) button=1 wheel=0.0 hit=1
+    200742 DEBUG [pointer] (6060) release px=(940,374) logical=(940,374) button=1 wheel=0.0 hit=1
+    200742 INFO  [focus] (6060) focus settings.langs
+    200922 DEBUG [pointer] (6060) move px=(934,378) logical=(934,378) button=1 wheel=0.0 hit=1
+    200989 INFO  [focus] (6060) focus settings.media
+    201023 INFO  [focus] (6060) focus settings.tests
+    201089 INFO  [focus] (6060) focus settings.quality
+    201155 INFO  [focus] (6060) focus settings.autoplay
+    201572 DEBUG [pointer] (6060) wheel px=(0,0) logical=(623,851) button=1 wheel=-1.0 hit=1
+    201605 DEBUG [pointer] (6060) wheel px=(0,0) logical=(623,851) button=1 wheel=-1.0 hit=1
+    201605 INFO  [focus] (6060) focus settings.seek_on
+    201655 INFO  [focus] (6060) focus settings.seek_off
+    201772 INFO  [focus] (6060) focus settings.sub_lang
+    201955 DEBUG [pointer] (6060) move px=(624,850) logical=(624,850) button=1 wheel=0.0 hit=1
+    202172 INFO  [focus] (6060) focus settings.seek_off
+    202671 INFO  [perf] (6060) frames 3000 presented of 8943 drawn: interval avg 16.45 median 16.67 p95 18.10 max 30.84 ms, late 1; max ms events 1.14 update 2.29 draw 29.09 finish 0.14 swap 2.22; draw calls 7, quads 751, textures 56, views 124, rss 88.5 MB
+    202798 INFO  [focus] (6060) focus settings.sub_lang
+    202905 DEBUG [pointer] (6060) wheel px=(0,0) logical=(546,824) button=1 wheel=-1.0 hit=1
+    202988 INFO  [focus] (6060) focus settings.sub_size
+    203171 INFO  [focus] (6060) focus settings.sub_box
+    203255 DEBUG [pointer] (6060) move px=(547,823) logical=(547,823) button=1 wheel=0.0 hit=1
+    203361 INFO  [focus] (6060) focus settings.sub_size
+    203588 INFO  [focus] (6060) focus settings.sub_lang
+    204348 DEBUG [pointer] (6060) press px=(604,722) logical=(604,722) button=1 wheel=0.0 hit=0
+    204549 DEBUG [pointer] (6060) release px=(604,722) logical=(604,722) button=1 wheel=0.0 hit=0
+    204758 DEBUG [pointer] (6060) move px=(604,723) logical=(604,723) button=1 wheel=0.0 hit=0
+    205538 DEBUG [pointer] (6060) press px=(1007,677) logical=(1007,677) button=1 wheel=0.0 hit=1
+    205758 DEBUG [pointer] (6060) release px=(1007,677) logical=(1007,677) button=1 wheel=0.0 hit=1
+    205758 INFO  [focus] (6060) focus settings.sub_lang.option9
+    205763 INFO  [focus] (6060) focus settings.sub_lang.option6
+    205923 DEBUG [pointer] (6060) move px=(1007,678) logical=(1007,678) button=1 wheel=0.0 hit=0
+    206542 INFO  [focus] (6060) focus settings.sub_lang.option5
+    206563 INFO  [focus] (6060) focus settings.sub_lang.option4
+    206623 INFO  [focus] (6060) focus settings.sub_lang.option3
+    206989 DEBUG [pointer] (6060) move px=(1034,385) logical=(1034,385) button=1 wheel=0.0 hit=1
+    207154 DEBUG [pointer] (6060) press px=(1025,393) logical=(1025,393) button=1 wheel=0.0 hit=1
+    207348 DEBUG [pointer] (6060) release px=(1024,395) logical=(1024,395) button=1 wheel=0.0 hit=1
+    207348 INFO  [focus] (6060) focus settings.sub_lang
+    207489 INFO  [focus] (6060) focus settings.seek_on
+    207505 INFO  [focus] (6060) focus settings.seek_off
+    207539 INFO  [focus] (6060) focus settings.sub_lang
+    207572 INFO  [focus] (6060) focus settings.sub_box
+    207605 INFO  [focus] (6060) focus settings.cast
+    207955 INFO  [focus] (6060) focus settings.sub_box
+    207989 DEBUG [pointer] (6060) move px=(963,857) logical=(963,857) button=1 wheel=0.0 hit=1
+    208123 INFO  [focus] (6060) focus settings.sub_size
+    208339 INFO  [focus] (6060) focus settings.sub_lang
+    208869 DEBUG [pointer] (6060) press px=(1167,672) logical=(1167,672) button=1 wheel=0.0 hit=1
+    209048 DEBUG [pointer] (6060) release px=(1167,672) logical=(1167,672) button=1 wheel=0.0 hit=1
+    209049 INFO  [focus] (6060) focus settings.sub_lang.option3
+    209053 INFO  [focus] (6060) focus settings.sub_lang.option6
+    209175 DEBUG [pointer] (6060) move px=(1166,672) logical=(1166,672) button=1 wheel=0.0 hit=1
+    209361 INFO  [focus] (6060) focus settings.sub_lang.option5
+    209506 DEBUG [pointer] (6060) wheel px=(0,0) logical=(961,586) button=1 wheel=-1.0 hit=0
+    209522 DEBUG [pointer] (6060) wheel px=(0,0) logical=(961,586) button=1 wheel=-1.0 hit=0
+    209690 DEBUG [pointer] (6060) wheel px=(0,0) logical=(961,586) button=1 wheel=-1.0 hit=0
+    209822 DEBUG [pointer] (6060) wheel px=(0,0) logical=(961,586) button=1 wheel=-1.0 hit=0
+    209839 DEBUG [pointer] (6060) wheel px=(0,0) logical=(961,586) button=1 wheel=-1.0 hit=0
+    209879 DEBUG [pointer] (6060) wheel px=(0,0) logical=(961,586) button=1 wheel=-1.0 hit=0
+    209972 INFO  [focus] (6060) focus settings.sub_lang.option6
+    210006 INFO  [focus] (6060) focus settings.sub_lang.option9
+    210040 INFO  [focus] (6060) focus settings.sub_lang.option11
+    210072 INFO  [perf] (6060) frames 3300 presented of 9350 drawn: interval avg 16.22 median 16.63 p95 18.29 max 21.85 ms, late 0; max ms events 1.20 update 1.32 draw 19.69 finish 0.38 swap 2.73; draw calls 8, quads 1095, textures 56, views 169, rss 88.5 MB
+    210206 DEBUG [pointer] (6060) move px=(280,1067) logical=(280,1067) button=1 wheel=0.0 hit=0
+    210207 DEBUG [pointer] (6060) wheel px=(0,0) logical=(280,1067) button=1 wheel=-2.0 hit=0
+    210241 DEBUG [pointer] (6060) wheel px=(0,0) logical=(280,1067) button=1 wheel=-1.0 hit=0
+    210291 DEBUG [pointer] (6060) wheel px=(0,0) logical=(280,1067) button=1 wheel=-1.0 hit=0
+    210308 DEBUG [pointer] (6060) wheel px=(0,0) logical=(280,1067) button=1 wheel=-1.0 hit=0
+    210340 DEBUG [pointer] (6060) wheel px=(0,0) logical=(280,1067) button=1 wheel=-1.0 hit=0
+    210408 DEBUG [pointer] (6060) wheel px=(0,0) logical=(309,1031) button=1 wheel=-1.0 hit=0
+    210423 DEBUG [pointer] (6060) wheel px=(0,0) logical=(309,1031) button=1 wheel=-1.0 hit=0
+    210678 INFO  [focus] (6060) focus settings.sub_lang.option10
+    210756 DEBUG [pointer] (6060) wheel px=(0,0) logical=(925,944) button=1 wheel=1.0 hit=0
+    210840 INFO  [focus] (6060) focus settings.sub_lang.option9
+    210856 DEBUG [pointer] (6060) wheel px=(0,0) logical=(968,905) button=1 wheel=1.0 hit=0
+    210890 DEBUG [pointer] (6060) wheel px=(0,0) logical=(968,905) button=1 wheel=1.0 hit=0
+    210907 DEBUG [pointer] (6060) wheel px=(0,0) logical=(968,905) button=1 wheel=1.0 hit=0
+    211208 DEBUG [pointer] (6060) move px=(974,893) logical=(974,893) button=1 wheel=0.0 hit=1
+    211908 DEBUG [pointer] (6060) press px=(937,891) logical=(937,891) button=1 wheel=0.0 hit=1
+    212118 DEBUG [pointer] (6060) release px=(937,891) logical=(937,891) button=1 wheel=0.0 hit=1
+    212118 INFO  [focus] (6060) focus settings.sub_lang
+    212288 DEBUG [pointer] (6060) move px=(936,891) logical=(936,891) button=1 wheel=0.0 hit=0
+    212624 INFO  [focus] (6060) focus settings.cast
+    213122 INFO  [focus] (6060) focus settings.sub_box
+    213172 INFO  [focus] (6060) focus settings.sub_size
+    213223 INFO  [focus] (6060) focus settings.sub_lang
+    213289 DEBUG [pointer] (6060) move px=(934,660) logical=(934,660) button=1 wheel=0.0 hit=1
+    213473 INFO  [focus] (6060) focus settings.sub_size
+    214308 DEBUG [pointer] (6060) move px=(914,777) logical=(914,777) button=1 wheel=0.0 hit=1
+    214718 DEBUG [pointer] (6060) wheel px=(0,0) logical=(902,805) button=1 wheel=-1.0 hit=1
+    214737 INFO  [focus] (6060) focus settings.sub_box
+    214789 DEBUG [pointer] (6060) wheel px=(0,0) logical=(902,805) button=1 wheel=-1.0 hit=1
+    214856 INFO  [focus] (6060) focus settings.cast
+    214958 DEBUG [pointer] (6060) wheel px=(0,0) logical=(902,805) button=1 wheel=-1.0 hit=1
+    214973 DEBUG [pointer] (6060) wheel px=(0,0) logical=(902,805) button=1 wheel=-1.0 hit=1
+    215005 INFO  [focus] (6060) focus settings.clear_history
+    215323 DEBUG [pointer] (6060) move px=(903,805) logical=(903,805) button=1 wheel=0.0 hit=1
+    215761 INFO  [focus] (6060) focus settings.cast
+    216240 INFO  [focus] (6060) focus settings.sub_box
+    216339 DEBUG [pointer] (6060) move px=(1237,444) logical=(1237,444) button=1 wheel=0.0 hit=1
+    216339 INFO  [focus] (6060) focus settings.sub_size
+    216507 INFO  [focus] (6060) focus settings.sub_box
+    216822 INFO  [perf] (6060) frames 3600 presented of 9743 drawn: interval avg 16.47 median 16.65 p95 18.21 max 22.99 ms, late 0; max ms events 2.28 update 1.58 draw 21.43 finish 0.16 swap 3.59; draw calls 7, quads 751, textures 56, views 124, rss 88.5 MB
+    217149 DEBUG [pointer] (6060) press px=(1173,495) logical=(1173,495) button=1 wheel=0.0 hit=1
+    217348 DEBUG [pointer] (6060) release px=(1173,495) logical=(1173,495) button=1 wheel=0.0 hit=1
+    217438 DEBUG [pointer] (6060) move px=(1174,495) logical=(1174,495) button=1 wheel=0.0 hit=1
+    218678 DEBUG [pointer] (6060) move px=(1231,498) logical=(1231,498) button=1 wheel=0.0 hit=1
+    219721 DEBUG [pointer] (6060) move px=(1221,500) logical=(1221,500) button=1 wheel=0.0 hit=1
+    219948 DEBUG [pointer] (6060) press px=(1197,507) logical=(1197,507) button=1 wheel=0.0 hit=1
+    220138 DEBUG [pointer] (6060) release px=(1194,507) logical=(1194,507) button=1 wheel=0.0 hit=1
+    220937 DEBUG [pointer] (6060) move px=(1231,496) logical=(1231,496) button=1 wheel=0.0 hit=1
+    221738 INFO  [focus] (6060) focus settings.cast
+    221939 DEBUG [pointer] (6060) move px=(899,689) logical=(899,689) button=1 wheel=0.0 hit=0
+    221939 DEBUG [pointer] (6060) wheel px=(0,0) logical=(899,689) button=1 wheel=-1.0 hit=1
+    221957 DEBUG [pointer] (6060) wheel px=(0,0) logical=(899,689) button=1 wheel=-2.0 hit=1
+    221972 DEBUG [pointer] (6060) wheel px=(0,0) logical=(899,689) button=1 wheel=-1.0 hit=1
+    222022 DEBUG [pointer] (6060) wheel px=(0,0) logical=(899,689) button=1 wheel=-2.0 hit=1
+    222040 DEBUG [pointer] (6060) wheel px=(0,0) logical=(899,689) button=1 wheel=-1.0 hit=1
+    222072 DEBUG [pointer] (6060) wheel px=(0,0) logical=(899,689) button=1 wheel=-2.0 hit=1
+    222208 INFO  [focus] (6060) focus settings.clear_history
+    222841 DEBUG [key] (6060) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+    222871 INFO  [focus] (6060) focus #353
+    222894 INFO  [focus] (6060) focus #357
+    222942 DEBUG [pointer] (6060) move px=(920,862) logical=(920,862) button=1 wheel=0.0 hit=0
+    223968 DEBUG [pointer] (6060) move px=(1272,1074) logical=(1272,1074) button=1 wheel=0.0 hit=0
+    225278 DEBUG [pointer] (6060) move px=(1343,1049) logical=(1343,1049) button=1 wheel=0.0 hit=0
+    226288 DEBUG [pointer] (6060) move px=(1302,244) logical=(1302,244) button=1 wheel=0.0 hit=0
+    227298 DEBUG [pointer] (6060) move px=(1381,325) logical=(1381,325) button=1 wheel=0.0 hit=0
+    227789 INFO  [focus] (6060) focus nav.Settings
+    228040 DEBUG [pointer] (6060) press px=(1172,48) logical=(1172,48) button=1 wheel=0.0 hit=0
+    228300 DEBUG [pointer] (6060) move px=(1187,57) logical=(1187,57) button=1 wheel=0.0 hit=1
+    228368 DEBUG [pointer] (6060) release px=(1196,59) logical=(1196,59) button=1 wheel=0.0 hit=0
+    229358 DEBUG [pointer] (6060) move px=(1194,62) logical=(1194,62) button=1 wheel=0.0 hit=1
+    229598 DEBUG [pointer] (6060) press px=(1147,76) logical=(1147,76) button=1 wheel=0.0 hit=1
+    230033 DEBUG [pointer] (6060) release px=(1143,74) logical=(1143,74) button=1 wheel=0.0 hit=1
+    230034 INFO  [focus] (6060) focus settings.extensions
+    230072 INFO  [focus] (6060) focus nav.Settings
+    230368 DEBUG [pointer] (6060) move px=(1151,73) logical=(1151,73) button=1 wheel=0.0 hit=1
+    230528 INFO  [focus] (6060) focus settings.tests
+    230641 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1119,911) button=1 wheel=-1.0 hit=1
+    230705 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1119,911) button=1 wheel=-1.0 hit=1
+    230723 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1119,911) button=1 wheel=-1.0 hit=1
+    230739 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1119,911) button=1 wheel=-1.0 hit=1
+    230739 INFO  [focus] (6060) focus settings.quality
+    230772 INFO  [focus] (6060) focus settings.autoplay
+    230790 INFO  [focus] (6060) focus settings.seek_on
+    230823 INFO  [focus] (6060) focus settings.seek_off
+    230890 INFO  [focus] (6060) focus settings.sub_lang
+    231006 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1119,911) button=1 wheel=-2.0 hit=1
+    231006 INFO  [focus] (6060) focus settings.sub_size
+    231023 DEBUG [pointer] (6060) wheel px=(0,0) logical=(1119,911) button=1 wheel=-1.0 hit=1
+    231040 INFO  [focus] (6060) focus settings.sub_box
+    231105 INFO  [focus] (6060) focus settings.cast
+    231175 INFO  [focus] (6060) focus settings.clear_history
+    231373 DEBUG [pointer] (6060) move px=(1146,880) logical=(1146,880) button=1 wheel=0.0 hit=0
+    232427 DEBUG [pointer] (6060) move px=(1179,747) logical=(1179,747) button=1 wheel=0.0 hit=0
+    232498 INFO  [focus] (6060) focus settings.cast
+    232639 INFO  [focus] (6060) focus settings.sub_box
+    233438 DEBUG [pointer] (6060) move px=(1158,510) logical=(1158,510) button=1 wheel=0.0 hit=1
+    233628 DEBUG [pointer] (6060) press px=(1141,544) logical=(1141,544) button=1 wheel=0.0 hit=1
+    233868 DEBUG [pointer] (6060) release px=(1141,544) logical=(1141,544) button=1 wheel=0.0 hit=1
+    234090 INFO  [perf] (6060) frames 3900 presented of 10549 drawn: interval avg 16.33 median 16.62 p95 18.40 max 21.81 ms, late 0; max ms events 1.22 update 10.40 draw 20.23 finish 0.53 swap 2.55; draw calls 7, quads 751, textures 57, views 124, rss 88.7 MB
+    234281 INFO  [focus] (6060) focus settings.clear_history
+    234438 DEBUG [pointer] (6060) move px=(1021,868) logical=(1021,868) button=1 wheel=0.0 hit=0
+    235438 DEBUG [pointer] (6060) move px=(1154,725) logical=(1154,725) button=1 wheel=0.0 hit=0
+    235478 INFO  [focus] (6060) focus settings.cast
+    235672 INFO  [focus] (6060) focus settings.sub_box
+    236074 INFO  [focus] (6060) focus settings.cast
+    236439 DEBUG [pointer] (6060) move px=(363,672) logical=(363,672) button=1 wheel=0.0 hit=1
+    237478 DEBUG [pointer] (6060) move px=(1846,614) logical=(1846,614) button=1 wheel=0.0 hit=0
+    237719 DEBUG [key] (6060) down sc=482 kc=0x200003 repeat=0 action=Back pointer=1
+    237739 INFO  [focus] (6060) focus nav.Settings
+    238497 DEBUG [pointer] (6060) move px=(1651,760) logical=(1651,760) button=1 wheel=0.0 hit=0
+    239518 DEBUG [pointer] (6060) move px=(1914,682) logical=(1914,682) button=1 wheel=0.0 hit=0
+    240121 INFO  [heartbeat] (6060) uptime 240 s, Running, rss 88.7 MB, presented 4017, drawn 10872, views 78
+    244554 DEBUG [pointer] (6060) move px=(1337,984) logical=(1337,984) button=1 wheel=0.0 hit=0
+    245537 INFO  [focus] (6060) focus #357
+    245557 DEBUG [pointer] (6060) move px=(517,985) logical=(517,985) button=1 wheel=0.0 hit=0
+    245579 INFO  [focus] (6060) focus #353
+    246131 INFO  [focus] (6060) focus home.provider
+    246578 DEBUG [pointer] (6060) move px=(29,0) logical=(29,0) button=1 wheel=0.0 hit=0
+    247578 DEBUG [pointer] (6060) move px=(1557,70) logical=(1557,70) button=1 wheel=0.0 hit=1
