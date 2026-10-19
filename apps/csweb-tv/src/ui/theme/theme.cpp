@@ -3,6 +3,12 @@
 
 namespace csweb::ui::theme {
 
+Color avatar_colour(int index) {
+    static const Color colours[] = {Color::hex(0x5B6CFFFF), Color::hex(0xE0567AFF), Color::hex(0x2FA88BFF),
+                                    Color::hex(0xE39A2EFF), Color::hex(0x8E5BD6FF), Color::hex(0x3D8FD9FF)};
+    return colours[index >= 0 && index < 6 ? index : 0];
+}
+
 wnk::ui::Theme make_kit_theme() {
     wnk::ui::Theme t;
     t.background = kBackground;

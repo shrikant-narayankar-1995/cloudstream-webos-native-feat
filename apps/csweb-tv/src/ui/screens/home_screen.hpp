@@ -77,6 +77,7 @@ class HomeScreen : public wnk::ui::Screen {
 
     Backdrop *backdrop_ = nullptr;
     TopBar *top_ = nullptr;
+    bool shown_ = false;
     PillButton *provider_button_ = nullptr;
     wnk::ui::Label *clock_ = nullptr;
     wnk::ui::Column *content_ = nullptr;
@@ -93,6 +94,7 @@ class HomeScreen : public wnk::ui::Screen {
     wnk::ui::CollectionView *resume_rail_ = nullptr;
     std::vector<library::Resume> resume_;
     core::Signal::Subscription library_sub_;
+    core::Signal::Subscription profile_sub_;  // another profile: its home source
     core::Signal::Subscription plugins_sub_;
     double last_clock_ms_ = -1e9;
     wnk::async::Lifetime life_;  // destroyed first: late runtime answers find the screen gone

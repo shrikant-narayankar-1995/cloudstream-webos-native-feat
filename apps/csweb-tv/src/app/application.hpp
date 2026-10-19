@@ -46,6 +46,7 @@ class Application : public wnk::app::Delegate {
 
     wnk::ui::Navigator *nav_ = nullptr;
     std::string pending_search_;  // a cloudstreamsearch:// query waiting for the plugins to load
+    bool choosing_profile_ = false;  // the start-up profile picker is open
     std::string pending_repo_;    // a repository link waiting for the stored repositories to be read
     core::Signal::Subscription plugins_sub_;
     double since_data_save_s_ = 0;

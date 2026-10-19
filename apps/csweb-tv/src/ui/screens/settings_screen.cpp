@@ -61,6 +61,13 @@ SettingsScreen::SettingsScreen(app::Services &s) : Screen("Settings"), s_(s) {
     first_ = &list.add<ValueRow>("Extensions", "Repositories and plugins", [this](Ui &ui) { s_.router->open_extensions(ui); });
     first_->name = "settings.extensions";
 
+    section(list, "Profiles");
+    profiles_ = &list.add<ValueRow>("Profiles", "", [this](Ui &ui) { s_.router->open_profiles(ui); });
+    profiles_->name = "settings.profiles";
+    list.add<Toggle>("Choose a profile at start", !st->get_bool(settings::kSkipProfileSelect, false), [st](Ui &, bool on) {
+        st->set(settings::kSkipProfileSelect, !on);
+    }).set_description("With more than one profile; a profile with a PIN always asks").name = "settings.profile_start";
+
     section(list, "Providers");
     langs_ = &list.add<ValueRow>("Provider languages", "", [this](Ui &ui) { choose_languages(ui); });
     langs_->name = "settings.langs";
@@ -129,7 +136,7 @@ SettingsScreen::SettingsScreen(app::Services &s) : Screen("Settings"), s_(s) {
 
     section(list, "Search");
     list.add<ValueRow>("Clear search history", "", [st](Ui &ui) {
-        st->set("search_history", "[]");
+        st->set(settings::kSearchHistory, "[]");
         ui.toast("Search history cleared.");
     }).name = "settings.clear_history";
 
@@ -159,6 +166,7 @@ void SettingsScreen::refresh() {
     }
     media_->set_value(f.media == settings::default_media() ? "All but NSFW" : media.empty() ? "Any" : join(media, 3));
 
+    profiles_->set_value(s_.profiles.current().name + (s_.profiles.all().size() > 1 ? " · " + std::to_string(s_.profiles.all().size()) + " profiles" : ""));
     const std::string home = s_.settings->get_string(settings::kHomeProvider);
     home_->set_text("Home source: " + (home.empty() ? std::string("none chosen") : home) + " (change it on Home)");
     std::string state;

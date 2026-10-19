@@ -2,6 +2,7 @@
 //
 // Settings (design 15), CloudStream's settings that apply on a TV, in its sections:
 //   Extensions                repositories and plugins
+//   Profiles                  local profiles, the picker at start (AccountSelectActivity)
 //   Providers                 provider languages, preferred media, test extensions (SettingsProviders)
 //   Player                    preferred quality, autoplay next, seek times (SettingsPlayer)
 //   Subtitles                 auto-select language, size, outline or box (SubtitlesFragment, as far
@@ -33,7 +34,7 @@ class SettingsScreen : public wnk::ui::Screen {
     void choose_media(wnk::ui::Ui &ui);
     app::Services &s_;
     wnk::ui::Label *runtime_ = nullptr, *home_ = nullptr;
-    wnk::ui::ValueRow *langs_ = nullptr, *media_ = nullptr;
+    wnk::ui::ValueRow *langs_ = nullptr, *media_ = nullptr, *profiles_ = nullptr;
     wnk::ui::View *first_ = nullptr;
     bool shown_ = false;
     core::Signal::Subscription sub_;

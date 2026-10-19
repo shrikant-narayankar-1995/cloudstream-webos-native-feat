@@ -91,6 +91,12 @@ HomeScreen::HomeScreen(app::Services &s) : Screen("Home"), s_(s) {
         s_.router->open_details(ui, r.show.provider, item, true);
     };
     library_sub_ = s_.library->changed.subscribe([this] { rebuild_resume(); });
+    profile_sub_ = s_.profile_changed.subscribe([this] {
+        Ui *u = this->ui();
+        if (u == nullptr) return;
+        refresh(*u);
+        if (s_.router->nav().top() == this) u->focus(top_->current_tab());
+    });
     rebuild_resume();
 
     rows_box_ = &content_->add<Column>(26);
@@ -111,6 +117,8 @@ HomeScreen::~HomeScreen() { cancel_requests(); }
 
 void HomeScreen::on_show(Ui &ui) {
     Screen::on_show(ui);
+    if (!shown_) ui.focus(top_->current_tab());  // not the profile button before it
+    shown_ = true;
     refresh(ui);
 }
 

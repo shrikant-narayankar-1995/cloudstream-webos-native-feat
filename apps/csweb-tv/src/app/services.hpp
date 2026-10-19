@@ -8,6 +8,7 @@
 #include "library/library_store.hpp"
 #include "plugins/plugin_data.hpp"
 #include "plugins/plugin_manager.hpp"
+#include "profiles/profiles.hpp"
 #include "runtime/runtime_client.hpp"
 #include "settings/settings_store.hpp"
 
@@ -31,6 +32,8 @@ struct Services {
     wnk::media::DeviceMediaCaps device;       // what the TV's decoders take (filled at start on the TV)
     core::Signal plugins_changed;  // providers, installed plugins or repositories changed
     core::Signal runtime_changed;  // the runtime started, stopped or failed
+    profiles::Profiles profiles = profiles::Profiles::from_json(nlohmann::json());
+    core::Signal profile_changed;  // another profile was chosen, or one was renamed
 };
 
 }  // namespace csweb::app

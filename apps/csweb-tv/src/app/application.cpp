@@ -54,8 +54,13 @@ void Application::on_start(wnk::app::Context &ctx) {
     settings_ = std::make_unique<settings::SettingsStore>(ctx.store(), ctx.pool());
     settings_->load();
     services_.settings = settings_.get();
+    // The profile chosen last time (DataStoreHelper.selectedKeyIndex) decides which library and
+    // per-profile settings are used.
+    services_.profiles = profiles::Profiles::from_json(settings_->get(settings::kProfiles));
+    settings_->set_profile(services_.profiles.selected());
     library_ = std::make_unique<library::LibraryStore>(ctx.store(), ctx.pool());
-    library_->load();
+    if (services_.profiles.selected() != 0) library_->switch_profile(services_.profiles.selected());
+    else library_->load();
     services_.library = library_.get();
 
     if (auto transport = ctx.http()) {
@@ -123,6 +128,16 @@ void Application::on_start(wnk::app::Context &ctx) {
     plugins_->start();
     runtime_->start();
     plugins_sub_ = services_.plugins_changed.subscribe([this, &ctx] { run_pending_search(ctx.ui()); });
+    // AccountSelectActivity: the picker at start with more than one profile (unless skipped), and
+    // always for a locked profile. Links wait until a profile is chosen.
+    const bool many = services_.profiles.all().size() > 1 && !settings_->get_bool(settings::kSkipProfileSelect, false);
+    if (many || services_.profiles.current().locked()) {
+        choosing_profile_ = true;
+        router_->open_profiles(ui, true, [this](wnk::ui::Ui &u) {
+            choosing_profile_ = false;
+            run_pending_search(u);
+        });
+    }
     open_link(ui, ctx.launch().params_json);
 }
 
@@ -179,6 +194,7 @@ void Application::add_repository_from_link(wnk::ui::Ui &ui, const std::string &u
 // Links wait for what they need: a repository for the stored list to be read (or the add would be
 // overwritten), a search for the plugins to load.
 void Application::run_pending_search(wnk::ui::Ui &ui) {
+    if (choosing_profile_) return;
     if (!pending_repo_.empty() && plugins_->started()) {
         const std::string url = std::move(pending_repo_);
         pending_repo_.clear();

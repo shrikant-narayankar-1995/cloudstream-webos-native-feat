@@ -15,7 +15,7 @@ namespace csweb::ui {
 using namespace wnk::ui;
 
 namespace {
-constexpr const char *kHistoryKey = "search_history";
+constexpr const char *kHistoryKey = settings::kSearchHistory;
 constexpr size_t kHistoryMax = 10;
 const wnk::Size kCell{theme::kPosterW, theme::kPosterH + 56};
 }  // namespace

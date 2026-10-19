@@ -10,6 +10,9 @@
 
 namespace csweb::ui::theme {
 
+// Profile avatar colours (profiles::kAvatarColours of them).
+wnk::render::Color avatar_colour(int index);
+
 using wnk::render::Color;
 
 // Colour roles

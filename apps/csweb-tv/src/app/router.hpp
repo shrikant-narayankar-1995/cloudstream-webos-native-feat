@@ -13,6 +13,7 @@
 
 #include "wnk/ui/navigation.hpp"
 
+#include <functional>
 #include <string>
 #include <vector>
 
@@ -48,6 +49,12 @@ class Router {
     void replace_player(wnk::ui::Ui &ui, const PlayTarget &target);
     void open_extensions(wnk::ui::Ui &ui);
     void open_provider_tests(wnk::ui::Ui &ui);
+    // The profile picker; at start (`startup`) Back leaves the app and `then` runs once one is chosen.
+    void open_profiles(wnk::ui::Ui &ui, bool startup = false, std::function<void(wnk::ui::Ui &)> then = {});
+    // Makes `key_index` the current profile: its settings and library, Home reloaded (setAccount).
+    // `back_home`: show Home afterwards (CloudStream returns to MainActivity).
+    void switch_profile(wnk::ui::Ui &ui, int key_index, bool back_home = true);
+    Services &services() { return s_; }
     void open_repository(wnk::ui::Ui &ui, const plugins::RepositoryData &repo);
     void back(wnk::ui::Ui &ui);
 
