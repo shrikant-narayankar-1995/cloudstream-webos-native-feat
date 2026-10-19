@@ -193,17 +193,30 @@ void run_runtime_tests(const std::string &app_dir, const std::string &tmp, std::
     mkdir((tmp + "/plugin-data").c_str(), 0700);
     const std::string libs = rt + "/usr/lib:" + rt + "/usr/lib/art:" + rt + "/usr/lib/java/dex/art/natives:" + rt + "/lib";
     for (const auto &t : tests) {
-        if (!t.is_object() || !t.value("plugin", "").size() || !t.contains("args") || !t["args"].is_array()) continue;
+        if (!t.is_object()) continue;
+        const std::vector<std::string> vm{"--library-path", libs, rt + "/usr/bin/dalvikvm", "-Xmx256m", "-Xnoimage-dex2oat",
+                                          "-Xcompiler-option", "--compiler-filter=verify",
+                                          "-Djavax.net.ssl.trustStore=" + rt + "/trust/cacerts",
+                                          "-Djava.library.path=" + rt + "/usr/lib/java/dex/art/natives",
+                                          "-cp", rt + "/csweb/csweb-host.dex:" + rt + "/csweb/cloudstream.jar",
+                                          "org.csweb.loader.Main", "--data", tmp + "/plugin-data"};
+        if (t.value("service", false)) {
+            // One long-lived runtime serving the scripted requests in "stdin"; @TESTPLUGINS@ is this
+            // package's testplugins/ directory. The session ends at end of input.
+            std::string input = t.value("stdin", "");
+            const std::string marker = "@TESTPLUGINS@", dir = app_dir + "/testplugins";
+            for (size_t at; (at = input.find(marker)) != std::string::npos;) input.replace(at, marker.size(), dir);
+            std::vector<std::string> args = vm;
+            args.insert(args.end(), {"--serve", "1"});
+            results.push_back(run("rt " + t.value("label", "service"), rt + "/lib/" + kLoader, args, env, kRuntimeTimeoutMs, input));
+            continue;
+        }
+        if (!t.value("plugin", "").size() || !t.contains("args") || !t["args"].is_array()) continue;
         const std::string plugin = t.value("plugin", "");
         if (plugin.find('/') != std::string::npos) continue;  // file names inside testplugins/ only
-        std::vector<std::string> args{"--library-path", libs, rt + "/usr/bin/dalvikvm", "-Xmx256m", "-Xnoimage-dex2oat",
-                                      "-Xcompiler-option", "--compiler-filter=verify",
-                                      "-Djavax.net.ssl.trustStore=" + rt + "/trust/cacerts",
-                                      "-Djava.library.path=" + rt + "/usr/lib/java/dex/art/natives",
-                                      "-cp", rt + "/csweb/csweb-host.dex:" + rt + "/csweb/cloudstream.jar",
-                                      "org.csweb.loader.Main", "--data", tmp + "/plugin-data",
-                                      "--plugin", app_dir + "/testplugins/" + plugin, "--sha256", t.value("sha256", ""),
-                                      "--timeout", "200"};
+        std::vector<std::string> args = vm;
+        args.insert(args.end(), {"--plugin", app_dir + "/testplugins/" + plugin, "--sha256", t.value("sha256", ""),
+                                 "--timeout", "200"});
         for (const auto &a : t["args"]) if (a.is_string()) args.push_back(a.get<std::string>());
         // "stdin": the answers the native app would send (e.g. to a settings dialog, --ui stdin).
         results.push_back(run("rt " + t.value("label", plugin), rt + "/lib/" + kLoader, args, env, kRuntimeTimeoutMs,

@@ -47,13 +47,31 @@ import kotlinx.coroutines.BuildersKt;
  * Events: plugin, provider, result, link, subtitle, dialog, toast, unsupported, error, done. Diagnostics
  * (plugin logging) go to stderr. With --ui stdin, every dialog the plugin shows is described in a
  * "dialog" event and the runtime waits for the app's answer as one JSON line on stdin
- * (org.csweb.compat.ui.DialogProtocol); without it dialogs are reported and left unanswered. The process ends with Runtime.halt, because ART's shutdown thread aborts after
- * main returns in this runtime build.
+ * (org.csweb.compat.ui.DialogProtocol); without it dialogs are reported and left unanswered.
+ *
+ *   csloader --serve 1 --data DIR      the long-lived service instead (see Service)
+ *
+ * The process ends with Runtime.halt, because ART's shutdown thread aborts after main returns in this
+ * runtime build.
  */
 public final class Main {
     private static final PrintStream OUT = System.out;
-    private static final Map<String, String> args = new LinkedHashMap<>();
-    private static HeadlessContext appContext;
+    static final Map<String, String> args = new LinkedHashMap<>();
+    static HeadlessContext appContext;
+    /** The service request the current thread works for; its id tags every event the thread emits. */
+    static final ThreadLocal<String> REQUEST = new ThreadLocal<>();
+    /** The coroutine of each running service request, for cancellation. */
+    static final Map<String, kotlinx.coroutines.Job> JOBS = new java.util.concurrent.ConcurrentHashMap<>();
+    /** Service requests that already reported done (cancelled or timed out) while their thread still runs. */
+    static final java.util.Set<String> ENDED = java.util.concurrent.ConcurrentHashMap.newKeySet();
+
+    /** Where dialog answers come from; null when no app is attached (dialogs are reported only). */
+    interface Answers {
+        /** The next answer for dialog {@code id}, or null when the app closed the channel. */
+        Map<String, Object> next(int id) throws Exception;
+    }
+
+    static Answers answers;
 
     public static void main(String[] argv) {
         long start = System.currentTimeMillis();
@@ -63,6 +81,10 @@ public final class Main {
                 if (!argv[i].startsWith("--")) throw new IllegalArgumentException("bad argument " + argv[i]);
                 args.put(argv[i].substring(2), argv[i + 1]);
             }
+            if (args.containsKey("serve")) {
+                Service.run(args);  // never returns
+            }
+            if ("stdin".equals(args.get("ui"))) answers = Main::readAnswer;
             startWatchdog(Integer.parseInt(args.getOrDefault("timeout", "120")));
             // As on Android an uncaught exception on any thread ends the process; report it first.
             Thread.setDefaultUncaughtExceptionHandler((thread, t) -> {
@@ -127,7 +149,7 @@ public final class Main {
             if (api == null) throw new IllegalArgumentException("no provider named " + args.get("provider"));
         }
 
-        boolean ok = op.equals("load-only") || operation(api, op);
+        boolean ok = op.equals("load-only") || operation(api, op, args);
         ok &= answerDialogs("operation:" + op);
         String hashAfter = sha256(file);
         if (!hashAfter.equals(hashBefore)) {
@@ -144,7 +166,7 @@ public final class Main {
      * in a fresh class loader, with a headless instance of exactly that type (CloudStream passes its
      * MainActivity on Android).
      */
-    private static BasePlugin loadPlugin(File file, File data, String hash, Class<?> activityType) throws Exception {
+    static BasePlugin loadPlugin(File file, File data, String hash, Class<?> activityType) throws Exception {
         PathClassLoader loader = new PathClassLoader(file.getAbsolutePath(), Main.class.getClassLoader());
         String manifestText;
         try (InputStream in = loader.getResourceAsStream("manifest.json")) {
@@ -225,7 +247,7 @@ public final class Main {
     }
 
     /** PluginManager.unloadPlugin: beforeUnload, then drop the APIs and extractors the plugin registered. */
-    private static void unload(BasePlugin plugin) {
+    static void unload(BasePlugin plugin) {
         try {
             plugin.beforeUnload();
         } catch (Throwable t) {
@@ -250,7 +272,7 @@ public final class Main {
      * its Activity; the headless runtime passes the application context, so plugins that need an
      * Activity's fragment manager or custom views fail with an unsupported report.
      */
-    private static boolean settings(BasePlugin plugin) {
+    static boolean settings(BasePlugin plugin) {
         kotlin.jvm.functions.Function1<android.content.Context, Unit> open =
                 plugin instanceof Plugin ? ((Plugin) plugin).getOpenSettings() : null;
         if (open == null) {
@@ -266,53 +288,79 @@ public final class Main {
         return answerDialogs("settings");
     }
 
-    private static final class LoaderUi extends UiHost {
+    static final class LoaderUi extends UiHost {
         final List<android.app.Dialog> showing = new ArrayList<>();
         final Map<android.app.Dialog, Integer> ids = new java.util.IdentityHashMap<>();
+        final Map<android.app.Dialog, String> owners = new java.util.IdentityHashMap<>();
         final java.util.Set<android.app.Dialog> reported =
                 java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<android.app.Dialog, Boolean>());
         int next = 1;
 
         @Override public synchronized void shown(android.app.Dialog d) {
             if (!ids.containsKey(d)) ids.put(d, next++);
+            String owner = REQUEST.get();
+            if (owner != null) owners.put(d, owner);
             showing.add(d);
         }
 
-        @Override public synchronized void dismissed(android.app.Dialog d) {
-            showing.remove(d);
-            emit(event("dialog_closed", "dialog", ids.get(d)));
+        @Override public void dismissed(android.app.Dialog d) {
+            Integer id;
+            synchronized (this) {
+                showing.remove(d);
+                id = ids.get(d);
+            }
+            emit(event("dialog_closed", "dialog", id));
         }
 
         @Override public void toast(CharSequence text, int duration) {
             emit(event("toast", "text", String.valueOf(text), "long", duration != 0));
         }
 
-        synchronized android.app.Dialog top() {
-            return showing.isEmpty() ? null : showing.get(showing.size() - 1);
+        /** The newest showing dialog shown by {@code owner} (null: by the one-shot loader or any thread). */
+        synchronized android.app.Dialog top(String owner) {
+            for (int i = showing.size() - 1; i >= 0; i--) {
+                android.app.Dialog d = showing.get(i);
+                if (owner == null || owner.equals(owners.get(d))) return d;
+            }
+            return null;
+        }
+
+        synchronized int id(android.app.Dialog d) {
+            return ids.get(d);
         }
     }
 
     private static BufferedReader uiInput;
 
+    /** One-shot mode (--ui stdin): the next stdin line is the answer to the dialog just described. */
+    private static Map<String, Object> readAnswer(int id) throws IOException {
+        if (uiInput == null) uiInput = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
+        String line = uiInput.readLine();
+        return line == null ? null : parseAnswer(line);
+    }
+
+    static Map<String, Object> parseAnswer(String line) {
+        if (line.length() > 1 << 20) throw new IllegalArgumentException("answer longer than 1 MiB");
+        Object parsed = MiniJson.decode(line);
+        if (!(parsed instanceof Map)) throw new IllegalArgumentException("answer is not a JSON object");
+        @SuppressWarnings("unchecked") Map<String, Object> answer = (Map<String, Object>) parsed;
+        return answer;
+    }
+
     /**
-     * Describe the topmost showing dialog, wait for the app's answer, apply it; repeat until no dialog is
-     * showing. Answers run on this (the plugin's main) thread, as dialog callbacks do on Android.
+     * Describe the newest dialog the current request showed, wait for the app's answer, apply it; repeat
+     * until none is showing. Answers run on this thread (the one that showed the dialog), as dialog
+     * callbacks run on the thread that owns the dialog on Android.
      */
-    private static boolean answerDialogs(String stage) {
+    static boolean answerDialogs(String stage) {
         LoaderUi ui = (LoaderUi) UiHost.get("dialogs");
-        boolean interactive = "stdin".equals(args.get("ui"));
+        String owner = REQUEST.get();
         for (int round = 0; round < 200; round++) {
-            android.app.Dialog d = ui.top();
+            android.app.Dialog d = ui.top(owner);
             if (d == null) return true;
-            Map<String, Object> m = event("dialog", "dialog", ui.ids.get(d), "stage", stage);
-            try {
-                m.putAll(DialogProtocol.describe(d));
-            } catch (Throwable t) {
-                error("dialog", t);
-                return false;
-            }
-            if (!interactive) {
-                // Without an app attached the dialog is reported once and stays open, unanswered.
+            int id = ui.id(d);
+            if (answers == null) {
+                // Without an app attached each dialog is reported once and stays open, unanswered.
                 synchronized (ui) {
                     for (android.app.Dialog open : ui.showing) {
                         if (!ui.reported.add(open)) continue;
@@ -323,20 +371,17 @@ public final class Main {
                 }
                 return true;
             }
-            emit(m);
             try {
-                if (uiInput == null) uiInput = new BufferedReader(new InputStreamReader(System.in, StandardCharsets.UTF_8));
-                String line = uiInput.readLine();
-                if (line == null) {
+                Map<String, Object> m = event("dialog", "dialog", id, "stage", stage);
+                m.putAll(DialogProtocol.describe(d));
+                emit(m);
+                Map<String, Object> answer = answers.next(id);
+                if (answer == null) {
                     emit(event("error", "stage", "dialog", "type", "EndOfInput", "message", "the app closed the dialog channel"));
                     return false;
                 }
-                if (line.length() > 1 << 20) throw new IllegalArgumentException("answer longer than 1 MiB");
-                Object parsed = MiniJson.decode(line);
-                if (!(parsed instanceof Map)) throw new IllegalArgumentException("answer is not a JSON object");
-                @SuppressWarnings("unchecked") Map<String, Object> answer = (Map<String, Object>) parsed;
-                if (!ui.ids.get(d).equals(answer.get("dialog"))) {
-                    throw new IllegalArgumentException("answer for dialog " + answer.get("dialog") + ", expected " + ui.ids.get(d));
+                if (!Integer.valueOf(id).equals(answer.get("dialog"))) {
+                    throw new IllegalArgumentException("answer for dialog " + answer.get("dialog") + ", expected " + id);
                 }
                 DialogProtocol.answer(d, answer);  // answer contents (typed text, passwords) are never logged
             } catch (Throwable t) {
@@ -355,7 +400,9 @@ public final class Main {
     }
 
     private static Object await(Suspend s) throws Exception {
+        String id = REQUEST.get();
         return BuildersKt.runBlocking(EmptyCoroutineContext.INSTANCE, (scope, cont) -> {
+            if (id != null) JOBS.put(id, kotlinx.coroutines.JobKt.getJob(scope.getCoroutineContext()));
             try {
                 return s.call(cont);
             } catch (RuntimeException e) {
@@ -366,12 +413,12 @@ public final class Main {
         });
     }
 
-    private static boolean operation(MainAPI api, String op) {
-        int limit = Integer.parseInt(args.getOrDefault("limit", "20"));
+    static boolean operation(MainAPI api, String op, Map<String, String> p) {
+        int limit = Integer.parseInt(p.getOrDefault("limit", "20"));
         try {
             switch (op) {
                 case "search": {
-                    String q = required("query");
+                    String q = required(p, "query");
                     Object r = await(c -> api.search(q, 1, c));
                     return items(r, "result", limit);
                 }
@@ -393,7 +440,7 @@ public final class Main {
                     return any;
                 }
                 case "details": {
-                    String url = required("url");
+                    String url = required(p, "url");
                     Object r = await(c -> api.load(url, c));
                     if (r == null) return items(null, "details", 1);
                     emit(describe("details", r));
@@ -402,7 +449,7 @@ public final class Main {
                     return true;
                 }
                 case "links": {
-                    String data = required("url");
+                    String data = required(p, "url");
                     int[] n = {0};
                     Object r = await(c -> api.loadLinks(data, false,
                             sub -> { emit(describe("subtitle", sub)); return Unit.INSTANCE; },
@@ -467,19 +514,27 @@ public final class Main {
 
     // --- output -----------------------------------------------------------------------------------
 
-    private static Map<String, Object> event(String name, Object... kv) {
+    static Map<String, Object> event(String name, Object... kv) {
         Map<String, Object> m = new LinkedHashMap<>();
         m.put("event", name);
         for (int i = 0; i + 1 < kv.length; i += 2) m.put(String.valueOf(kv[i]), kv[i + 1]);
         return m;
     }
 
-    private static synchronized void emit(Map<String, Object> m) {
+    static synchronized void emit(Map<String, Object> m) {
+        String id = REQUEST.get();
+        if (id != null && ENDED.contains(id)) return;  // a cancelled request's thread reports nothing after its done
+        if (id != null && !m.containsKey("id")) {
+            Map<String, Object> tagged = new LinkedHashMap<>();
+            tagged.put("id", id);
+            tagged.putAll(m);
+            m = tagged;
+        }
         OUT.println(MiniJson.encode(m));
         OUT.flush();
     }
 
-    private static void error(String stage, Throwable t) {
+    static void error(String stage, Throwable t) {
         for (Throwable c = t; c != null; c = c.getCause()) {
             if (c instanceof Unsupported) {
                 emit(event("unsupported", "api", c.getMessage(), "stage", stage));
@@ -511,12 +566,16 @@ public final class Main {
     // --- helpers ----------------------------------------------------------------------------------
 
     private static String required(String key) {
-        String v = args.get(key);
+        return required(args, key);
+    }
+
+    static String required(Map<String, String> p, String key) {
+        String v = p.get(key);
         if (v == null) throw new IllegalArgumentException("missing --" + key);
         return v;
     }
 
-    private static byte[] readAll(InputStream in, int max) throws IOException {
+    static byte[] readAll(InputStream in, int max) throws IOException {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         byte[] buf = new byte[8192];
         for (int n; (n = in.read(buf)) > 0; ) {
@@ -526,7 +585,7 @@ public final class Main {
         return out.toByteArray();
     }
 
-    private static String sha256(File f) throws Exception {
+    static String sha256(File f) throws Exception {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         try (InputStream in = new FileInputStream(f)) {
             byte[] buf = new byte[65536];

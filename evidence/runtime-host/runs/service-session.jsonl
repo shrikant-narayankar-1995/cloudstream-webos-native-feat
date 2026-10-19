@@ -1,0 +1,55 @@
+{"event":"ready","protocol":1}
+{"id":"l1","event":"plugin","name":"CswebConformance","version":1,"class":"org.csweb.conformance.ConformancePlugin","base":"Plugin","requiresResources":true,"sha256":"579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632"}
+{"id":"l1","event":"resources","package":"org.csweb.conformance"}
+{"id":"l1","event":"settings","available":true}
+{"id":"l1","event":"provider","name":"Conformance","plugin":"<project>/test-plugins/conformance/out/CswebConformance.cs3","mainUrl":"https://conformance.invalid","lang":"en","hasMainPage":false,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"id":"l1","event":"loaded","plugin":"<project>/test-plugins/conformance/out/CswebConformance.cs3","providers":1}
+{"event":"done","id":"l1","ok":true,"elapsed_ms":182}
+{"id":"l2","event":"plugin","name":"DailymotionProvider","version":4,"class":"recloudstream.DailymotionPlugin","base":"BasePlugin","requiresResources":false,"sha256":"9036525a64e8b3c8fe04f94e9fe89a744c13d69af684ed0d2ad2a7eb0f332cd9"}
+{"id":"l2","event":"provider","name":"Dailymotion","plugin":"<project>/evidence/plugins/all/DailymotionProvider.cs3","mainUrl":"https://api.dailymotion.com","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"id":"l2","event":"loaded","plugin":"<project>/evidence/plugins/all/DailymotionProvider.cs3","providers":1}
+{"event":"done","id":"l2","ok":true,"elapsed_ms":50}
+{"id":"l3","event":"plugin","name":"LibriVoxAudiobook","version":34,"class":"com.RowdyAvocado.LibriVoxAudiobookPlugin","base":"Plugin","requiresResources":false,"sha256":"71e7aac096b706b69c53cc2122750ff114e3274741f5807d866f37be1819a54b"}
+{"id":"l3","event":"provider","name":"Librivox Audiobook","plugin":"<project>/evidence/plugins/all/LibriVoxAudiobook.cs3","mainUrl":"https://librivox.org","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"id":"l3","event":"loaded","plugin":"<project>/evidence/plugins/all/LibriVoxAudiobook.cs3","providers":1}
+{"event":"done","id":"l3","ok":true,"elapsed_ms":95}
+{"id":"bad","event":"error","stage":"integrity","type":"HashMismatch","message":"plugin SHA-256 54f3de560bebeff2e4a10d1163f6146313c59061d21c3a230125611f01b531eb does not match the supplied 00"}
+{"event":"done","id":"bad","ok":false,"elapsed_ms":0}
+{"id":"s3","event":"result","class":"com.lagradost.cloudstream3.MovieSearchResponse","name":"Conformance Alpha","url":"https://conformance.invalid/item/0?color=ff2f8f5b&padding=32","apiName":"Conformance","type":"Others"}
+{"id":"s3","event":"result","class":"com.lagradost.cloudstream3.MovieSearchResponse","name":"Conformance Beta","url":"https://conformance.invalid/item/1?color=ff2f8f5b&padding=32","apiName":"Conformance","type":"Others"}
+{"id":"s3","event":"count","kind":"result","value":2}
+{"event":"done","id":"s3","ok":true,"elapsed_ms":2}
+{"id":"set","event":"dialog","dialog":1,"stage":"settings","title":"Conformance settings","cancelable":true,"message":null,"buttons":{"positive":"Save","negative":"Cancel"},"view":{"key":"v0","type":"column","children":[{"key":"label_name","type":"label","text":"Display name"},{"key":"name_field","type":"text-field","input":"text","value":""},{"key":"enabled_box","type":"checkbox","text":"Show extra results","checked":false}]}}
+{"id":"set","event":"dialog_closed","dialog":1}
+{"event":"done","id":"set","ok":true,"elapsed_ms":3}
+{"id":"d1","event":"details","class":"com.lagradost.cloudstream3.MovieLoadResponse","name":"Conformance Beta","url":"https://conformance.invalid/item/1","apiName":"Conformance","type":"Others","plot":"Test fixture: this text comes from the plugin's resources.arsc.","dataUrl":"1"}
+{"event":"done","id":"d1","ok":true,"elapsed_ms":1}
+{"event":"error","id":"t1","stage":"timeout","type":"Timeout","message":"request did not finish in time"}
+{"event":"done","id":"t1","ok":false}
+{"id":"s2","event":"result","class":"com.lagradost.cloudstream3.AnimeSearchResponse","name":"Pride and Prejudice","url":"https://librivox.org/pride-and-prejudice-by-jane-austen/","apiName":"Librivox Audiobook","type":"Anime","posterUrl":"https://archive.org/services/img/pride_and_prejudice_librivox"}
+{"id":"s2","event":"result","class":"com.lagradost.cloudstream3.AnimeSearchResponse","name":"Pride and Prejudice","url":"","apiName":"Librivox Audiobook","type":"Anime"}
+{"id":"s2","event":"count","kind":"result","value":2}
+{"event":"done","id":"s2","ok":true,"elapsed_ms":960}
+{"id":"s1","event":"result","class":"com.lagradost.cloudstream3.MovieSearchResponse","name":"NASA - NASA TV","url":"https://www.dailymotion.com/video/xhfpjn","apiName":"Dailymotion","type":"Movie","posterUrl":"https://s1.dmcdn.net/v/1lk0J1eoUqsyOnBuQ/x360"}
+{"id":"s1","event":"result","class":"com.lagradost.cloudstream3.MovieSearchResponse","name":"Nasa -  Wtc - Nasa Zoom","url":"https://www.dailymotion.com/video/x2t3e5","apiName":"Dailymotion","type":"Movie","posterUrl":"https://s1.dmcdn.net/v/H_Xj1g4FgbC6XkG1/x360"}
+{"id":"s1","event":"count","kind":"result","value":26}
+{"event":"done","id":"s1","ok":true,"elapsed_ms":1283}
+{"event":"done","id":"u1","ok":true,"elapsed_ms":9}
+{"id":"l4","event":"plugin","name":"CswebConformance","version":1,"class":"org.csweb.conformance.ConformancePlugin","base":"Plugin","requiresResources":true,"sha256":"579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632"}
+{"id":"l4","event":"resources","package":"org.csweb.conformance"}
+{"id":"l4","event":"settings","available":true}
+{"id":"l4","event":"provider","name":"Served","plugin":"<project>/test-plugins/conformance/out/CswebConformance.cs3","mainUrl":"https://conformance.invalid","lang":"en","hasMainPage":false,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"id":"l4","event":"loaded","plugin":"<project>/test-plugins/conformance/out/CswebConformance.cs3","providers":1}
+{"event":"done","id":"l4","ok":true,"elapsed_ms":5}
+{"id":"p","event":"provider","name":"Dailymotion","plugin":"<project>/evidence/plugins/all/DailymotionProvider.cs3","mainUrl":"https://api.dailymotion.com","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"id":"x","event":"error","stage":"request:nope","type":"java.lang.IllegalArgumentException","message":"unknown op nope","rootType":"java.lang.IllegalArgumentException","rootMessage":"unknown op nope"}
+{"event":"done","id":"x","ok":false,"elapsed_ms":1}
+{"id":"p","event":"provider","name":"Librivox Audiobook","plugin":"<project>/evidence/plugins/all/LibriVoxAudiobook.cs3","mainUrl":"https://librivox.org","lang":"en","hasMainPage":true,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"id":"p","event":"provider","name":"Served","plugin":"<project>/test-plugins/conformance/out/CswebConformance.cs3","mainUrl":"https://conformance.invalid","lang":"en","hasMainPage":false,"hasQuickSearch":false,"supportedTypes":"[Others]"}
+{"event":"done","id":"p","ok":true,"elapsed_ms":0}
+{"id":"s4","event":"result","class":"com.lagradost.cloudstream3.MovieSearchResponse","name":"Conformance Alpha","url":"https://conformance.invalid/item/0?color=ff2f8f5b&padding=32","apiName":"Served","type":"Others"}
+{"id":"s4","event":"result","class":"com.lagradost.cloudstream3.MovieSearchResponse","name":"Conformance Beta","url":"https://conformance.invalid/item/1?color=ff2f8f5b&padding=32","apiName":"Served","type":"Others"}
+{"id":"s4","event":"result","class":"com.lagradost.cloudstream3.MovieSearchResponse","name":"Conformance Gamma","url":"https://conformance.invalid/item/2?color=ff2f8f5b&padding=32","apiName":"Served","type":"Others"}
+{"id":"s4","event":"count","kind":"result","value":3}
+{"event":"done","id":"s4","ok":true,"elapsed_ms":1}
+{"event":"done","id":"eof","ok":true,"elapsed_ms":0}

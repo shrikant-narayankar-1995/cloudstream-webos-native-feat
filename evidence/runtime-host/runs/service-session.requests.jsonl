@@ -1,0 +1,16 @@
+{"id":"l1","op":"load","plugin":"<project>/test-plugins/conformance/out/CswebConformance.cs3","sha256":"579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632"}
+{"id":"l2","op":"load","plugin":"<project>/evidence/plugins/all/DailymotionProvider.cs3","sha256":"9036525a64e8b3c8fe04f94e9fe89a744c13d69af684ed0d2ad2a7eb0f332cd9"}
+{"id":"l3","op":"load","plugin":"<project>/evidence/plugins/all/LibriVoxAudiobook.cs3","sha256":"71e7aac096b706b69c53cc2122750ff114e3274741f5807d866f37be1819a54b"}
+{"id":"bad","op":"load","plugin":"<project>/evidence/plugins/all/InternetArchiveProvider.cs3","sha256":"00"}
+{"id":"s1","op":"search","provider":"Dailymotion","query":"nasa","limit":2}
+{"id":"s2","op":"search","provider":"Librivox Audiobook","query":"Pride and Prejudice","limit":2}
+{"id":"s3","op":"search","provider":"Conformance","query":"*"}
+{"id":"t1","op":"search","provider":"Dailymotion","query":"apollo","timeout":1}
+{"id":"set","op":"settings","plugin":"<project>/test-plugins/conformance/out/CswebConformance.cs3"}
+{"op":"answer","dialog":1,"fields":{"name_field":"Served","enabled_box":true},"button":"positive"}
+{"id":"d1","op":"details","provider":"Conformance","url":"https://conformance.invalid/item/1"}
+{"id":"u1","op":"unload","plugin":"<project>/test-plugins/conformance/out/CswebConformance.cs3"}
+{"id":"l4","op":"load","plugin":"<project>/test-plugins/conformance/out/CswebConformance.cs3","sha256":"579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632"}
+{"id":"s4","op":"search","provider":"Served","query":"*"}
+{"id":"p","op":"providers"}
+{"id":"x","op":"nope"}
