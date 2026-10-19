@@ -61,7 +61,7 @@ Log: `evidence/runtime-host/artprobe-x86_64.log`, `tls-matrix-x86_64.log`.
 | Desugared lambdas, `CompletableFuture` | ok |
 | `java.util.stream` `Collectors.toList/joining` **inside libcore** | **FAIL** `BootstrapMethodError` (un-desugared invokedynamic in core-oj) |
 | HTTPS (HttpsURLConnection → wolfSSL JSSE), cert validation on | ok for example.com, google.com, api.github.com, dailymotion.com, letsencrypt.org, debian.org, kernel.org |
-| HTTPS to **archive.org** | **FAIL** `SSLHandshakeException: ASN parsing error (-140)`; archive.org serves an RSA chain up to the legacy SHA-1 "Go Daddy Class 2" root |
+| HTTPS to **archive.org** | **FAIL** with Alpine's libwolfssl: `SSLHandshakeException: ASN parsing error (-140)`; archive.org sends the legacy "Go Daddy Class 2" root, serial 0. **Fixed 2026-10-19** by rebuilding wolfSSL with `WOLFSSL_ASN_ALLOW_0_SERIAL` (docs/runtime/tls.md) |
 | Process exit | **abort (SIGABRT) in "Shutdown thread"** after `main` returns (exit-path defect) |
 
 None of these was run on the TV yet; the TV needs the aarch64 (or armv7) packages.

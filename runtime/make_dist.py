@@ -9,7 +9,8 @@ Layout of <out dir> (every file a regular file, no symlinks, so it can travel in
   lib/ld-musl-<arch>.so.1            musl dynamic loader (the runtime is started through it)
   usr/bin/dalvikvm, usr/bin/dex2oat  ART executables (unmodified)
   usr/lib/..., usr/lib/art/...       DT_NEEDED closure of the above and of the JNI libraries,
-                                     libEGL.so.1 replaced by runtime/native's stub
+                                     libEGL.so.1 replaced by runtime/native's stub, libwolfssl.so.46
+                                     by runtime/native/build-wolfssl.sh's build (serial-0 roots parse)
   usr/lib/java/dex/art/*.jar, natives/   boot class path and its JNI libraries (unmodified)
   usr/share/icu/<ver>/icudt*.dat     ICU data (ICU_DATA)
   bin/dex2oat                        runtime/native relaunch helper (ART finds dex2oat on $PATH)
@@ -76,7 +77,11 @@ def repack_classpath_jar(apk, jar):
 
 def main(rootfs, arch, out):
     native = os.path.join(HERE, "native", "out")
-    overrides = {"libEGL.so.1": os.path.join(native, f"libEGL.so.1.{arch}")}
+    overrides = {"libEGL.so.1": os.path.join(native, f"libEGL.so.1.{arch}"),
+                 "libwolfssl.so.46": os.path.join(native, f"libwolfssl.so.46.{arch}")}
+    for name, path in overrides.items():
+        if not os.path.exists(path):
+            sys.exit(f"missing {path}: run runtime/native/build-native.sh and build-wolfssl.sh first")
     if os.path.exists(out):
         shutil.rmtree(out)
     os.makedirs(out)

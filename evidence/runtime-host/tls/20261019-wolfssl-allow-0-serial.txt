@@ -1,0 +1,39 @@
+wolfSSL 5.9.4 (Alpine wolfssl-jni configuration), stock vs. rebuilt with -DWOLFSSL_ASN_ALLOW_0_SERIAL
+(runtime/native/build-wolfssl.sh). Test client: wolfSSL_CTX_load_verify_locations(Alpine ca-certificates),
+SNI + wolfSSL_check_domain_name, wolfSSL_connect. 2026-10-19, alpine:edge container on the host.
+
+Chain verification, certificates as archive.org sends them, root-most first, against the CA bundle:
+  Go Daddy Class 2 Certification Authority (self-signed, serial 0): verify -140 ASN parsing error
+  Go Daddy Root Certificate Authority - G2 (cross-signed):          verify 1
+  Go Daddy Secure Certificate Authority - G2:                       verify 1
+  *.archive.org:                                                    verify 1
+
+x86_64, stock libwolfssl:
+  connect archive.org: -1 err -140 ASN parsing error, invalid input, TLSv1.3
+  connect archive.org (TLS 1.2 only): -1 err -140 ASN parsing error, invalid input, TLSv1.2
+x86_64, rebuilt:
+  connect archive.org: 1 err 0 ok, TLSv1.3
+  connect api.dailymotion.com: 1 err 0 ok, TLSv1.3
+  connect expired.badssl.com: -1 err -151 ASN date error, current date is after expiration, TLSv1.2
+  connect self-signed.badssl.com: -1 err -275 ASN self-signed certificate error, TLSv1.2
+  connect wrong.host.badssl.com: -1 err -322 peer subject name mismatch, TLSv1.2
+aarch64 (qemu-aarch64 user mode), rebuilt:
+  connect archive.org: 1 err 0 ok, TLSv1.3
+  connect api.dailymotion.com: 1 err 0 ok, TLSv1.3
+  connect expired.badssl.com: -1 err -151 ASN date error, current date is after expiration, TLSv1.2
+  connect self-signed.badssl.com: -1 err -275 ASN self-signed certificate error, TLSv1.2
+  connect wrong.host.badssl.com: -1 err -322 peer subject name mismatch, TLSv1.2
+aarch64, stock libwolfssl from runtime/rootfs/aarch64:
+  connect archive.org: -1 err -140 ASN parsing error, invalid input, TLSv1.3
+
+Exported symbols, rebuilt vs. stock: 3194 / 3194, none missing (aarch64 and x86_64); DT_NEEDED: libc only.
+sha256 libwolfssl.so.46.aarch64 36412182196707c3875acfd7c5b4f173cafdf316c7ef86a45b0682966a4da153
+sha256 libwolfssl.so.46.x86_64  37b3df9f773179b1c97688f4ac17dc94d4c3d87fbc5f69a2756317fe5fc34644
+
+Plugin through the runtime service (host ART x86_64, dist with the rebuilt library), unmodified
+InternetArchiveProvider.cs3 (sha256 54f3de56…31eb), search "pride and prejudice":
+  {"event":"done","id":"1","ok":true,"elapsed_ms":134}                        load
+  {"id":"2","event":"result",…,"name":"Pride & Prejudice","url":"https://archive.org/details/05joorsivfeyrfzblgym63yxtxwkxubwmr4la8pa","apiName":"Internet Archive",…}
+  {"id":"2","event":"count","kind":"result","value":26}
+  {"event":"done","id":"2","ok":true,"elapsed_ms":1321}
+Before: SSLHandshakeException: ASN parsing error (-140) (docs/research/dependency-inventory.md).
