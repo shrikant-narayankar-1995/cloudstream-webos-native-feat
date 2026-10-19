@@ -2,70 +2,76 @@
 
 Date/time: 2026-10-19
 Branch/commit: `main` (project repository; see `git log`)
-Native App Kit commit: `e10f35ecd6e27987cc866b28caea6be66a023fcc` + `docs/kit-patches/0001`, `0002`
+Native App Kit commit: `e10f35ecd6e27987cc866b28caea6be66a023fcc` + `docs/kit-patches/0001`, `0002`, `0003`
 CloudStream: source `eb962b4fb7b1387b8de42ec58000cee0a01fe741`; pre-release APK sha256 `add4b760…6d83`
-Runtime: Alpine art_standalone 0_git20251009-r3 (aarch64 on the TV, x86_64 on the host)
+Runtime: Alpine art_standalone 0_git20251009-r3 (aarch64 on the TV, x86_64 on the host), wolfSSL 5.9.4
+rebuilt with `WOLFSSL_ASN_ALLOW_0_SERIAL` (docs/runtime/tls.md)
 Target TV / firmware: LG OLED65C1PTB, webOS 6.5.3 (kisscurl-koli), firmware 03.53.45, Developer Mode
 Toolchain / NDK: arm-webos-linux-gnueabi gcc 12.2.0; OpenJDK 17 + D8 8.5.35 and clang/lld in alpine:edge containers
 
 ## Current phase and gate
-Phase: 1 complete (feasibility gate)
+Phase: 5/6 (TV UI and playback) in progress; the app `apps/csweb-tv` (org.csweb.tv 0.1.0) runs on the host
+and on the TV.
 Runtime feasibility: **PASS** (scoped; see docs/FEASIBILITY_DECISION.md)
-Reason: unmodified Dailymotion and LibriVoxAudiobook plugins loaded, registered and returned real
-search/details/links results inside the bundled ART runtime on the TV.
 
 ## Completed work
-- Phase 0 audits, TV platform probe, runtime evaluation (earlier commits).
-- Android compat layer + csloader (CloudStream's loadPlugin sequence) with 165 host tests.
-- CNCVerse survey: 37 plugins, all Android `Plugin`; load-only pass 38/40 load and register (after the
-  headless-Activity reload).
-- Plugin resources (`requiresResources`: resources.arsc, binary XML) and a conformance test plugin.
-- Plugin settings/dialog bridge: `--op settings`, AlertDialog/LayoutInflater/framework widgets described
-  to the app and answered over stdin (docs/runtime/dialog-protocol.md); verified on host ART with the
-  conformance plugin (prefs written by the plugin, visible on next load).
-- Relocatable, pruned aarch64 runtime (50 MiB + 62 MiB CloudStream DEX), kit private-runtime packaging.
-- On-TV plugin execution (probe 0.2.0); probe 0.3.0 adds resources and the settings dialog on the TV
-  (conformance plugin, `evidence/device/20261019-110528-runtimeprobe-0.3/`).
+- Phases 0-1: audits, TV probe, runtime evaluation, Android compat layer + csloader, plugin resources and
+  settings dialogs, relocatable runtime, on-TV plugin execution, long-lived runtime service, AOT runtime.
+- CSWeb TV app, mirroring CloudStream's own flows (MainActivity, HomeFragment, SearchFragment,
+  ResultFragment, GeneratorPlayer, LibraryFragment, ExtensionsFragment, AccountSelectActivity):
+  - Extensions: repositories (URL, cloudstreamrepo://, shortcodes), plugin install with hash checks,
+    update, remove, plugin settings dialogs; plugin data kept across reboots (DB8 snapshot).
+  - Home: one chosen source (None/Random/provider) with its main page, Continue watching.
+  - Search: all allowed providers in parallel, grouped results, history, TvType chips.
+  - Details: metadata, season/dub groups, episode ranges, bookmarks (WatchType), resume, cast row,
+    recommendations.
+  - Player: loadLinks with Skip loading, CloudStream link priorities, next mirror on error, sources,
+    subtitles (plugin files, stream tracks, auto-select language, sync offset, size/box style), audio,
+    resume position, next episode (autoplay setting), Episodes overlay, seek times from Settings.
+  - Library: WatchType tabs, sort orders of the local list.
+  - Settings: provider languages, preferred media, Test extensions (CloudStream's provider test),
+    preferred quality, autoplay, seek times, subtitle language/size/style, show cast, clear history,
+    profiles; app and runtime state.
+  - Profiles: local profiles with their own library, home source, chips and history; optional 4-digit
+    PIN (stored as a digest); picker at start.
+  - Deep links: cloudstreamrepo://, https://cs.repo?…, cloudstreamsearch://.
+- Kit patch 0003: every URL query value redacted in logs (stream tokens).
+- Conformance fixture v2 (own test plugin): adds a two-season series with actors.
 
-- Long-lived runtime service (`--serve`, docs/runtime/service-protocol.md): plugins loaded once, request
-  ids, concurrent operations, cancel/timeout, dialog answers routed by dialog. On the TV 14 requests ran in
-  11 s in one process (later loads ~0.1-0.2 s, operations network-bound) vs 7-10 s per one-shot process.
-
-- Ahead-of-time compiled runtime (docs/runtime/aot.md): boot image + verified class path built on the host
-  with the runtime's own dex2oat (aarch64 under qemu-user). On the TV: one-shot local operation 7.2 → 1.7 s,
-  peak RSS 113 → 57 MiB; service first load 3.45 → 1.55 s, 14-request session 11.0 → 4.1 s.
-
-## Commands executed (this phase)
+## Commands executed (latest session)
 | Command | Exit | Notes |
 |---|---:|---|
-| `docker run … runtime/build.sh` | 0 | compat tests 165/165, csweb-host.dex |
-| `docker run … runtime/make-rootfs.sh aarch64/x86_64` | 0 | apk signature-checked roots |
-| `python3 runtime/make_dist.py …` | 0 | dists 110 / 113 MiB |
-| `runtime/run-batch-host.sh evidence/plugins/all …` | 0 | load-only 38/40 |
-| `runtime/dist-run.sh runtime/dist/runtime-x86_64 … --op settings --ui stdin` | 0 | conformance settings answered, prefs saved |
-| `python3 -m unittest discover -s tests/tools` (kit) | 0 | 33 passed |
-| `tools/build-webos.sh` (with probe) | 0 | 0 warnings, check-package passed |
-| `tools/verify.sh … --private-runtime runtime-aarch64` | 0 | 7/7 |
-| `tools/install.sh … --private-runtime runtime-aarch64`, `launch.sh`, `logs.sh` | 0 | TV run |
+| `cmake --build --preset host-debug -j12` | 0 | no warnings |
+| `ctest --preset host-debug` (kit) | 0 | 106/106, incl. 17 csweb suites |
+| `docker run … eclipse-temurin:17-jdk sh test-plugins/conformance/build.sh` | 0 | fixture v2 sha256 b964798d… |
+| `cmake --build --preset webos-release --target csweb-tv-ipk` | 0 | 77.9 MB, check-package passed |
+| `tools/install.sh … --private-runtime runtime-aarch64` | 1 | TV unreachable (powered off) |
 
 ## Tests
-- Passed: compat 165; TV probe 0.5.0 runtime tests 11/12 (AOT and imageless; conformance 4/4, service sessions 14/14); project tools 8; kit tool tests 33; kit host suite incl. csweb probe test; TV runtime tests 4/5
-- Failed: TV InternetArchive search (wolfSSL vs archive.org chain, known runtime defect)
-- Skipped: provider operations for plugins sourcing unlicensed content (by decision); webosbrew-ipk-verify (not installed)
+- Passed: kit host suite 106 (csweb: sha256, zip_check, repository, runtime_types, plugin_store,
+  runtime_client, episode_groups, redact, deep_link, library, dir_snapshot, preferences, provider_test,
+  profiles, link_priority, subtitle_file); compat 165; scripted host UI runs (settings, chips, picker,
+  subtitle sync, provider tests, profiles and PIN, library sort, series/episodes/cast).
+- Provider test on the host: Internet Archive passes; Dailymotion fails inside CloudStream's bundled
+  Dailymotion extractor (the API now sends `subtitles.data` as an array); Invidious' public instance fails.
+- Not yet on the TV: this session's features (the TV was off after the 0.1 first-launch run).
 
 ## Evidence
-- TV: `evidence/device/20261019-075624-runtimeprobe-0.2/`
-- Host runs: `evidence/runtime-host/runs/`, `load-only/`, `relocated/`
-- Plugin hashes: `evidence/plugins/*/SHA256SUMS`; probe ipk `evidence/baseline/probe-0.2-ipk-sha256.txt`
+- TV: `evidence/device/20261019-csweb-tv-0.1-first/` (AOT runtime ready ~0.5 s, first frame ~1 s,
+  repository deep link), earlier probe runs under `evidence/device/`.
+- Host app: `evidence/app-host/20261019-csweb-tv-0.1-stage2/`; TLS: `evidence/runtime-host/tls/`.
 
 ## Risks/blockers
-- First plugin load in a service ~1.5 s; service memory ~75 MiB. Package 76 MB (AOT +22 MB); the boot image
-  is tied to the app id through the stable path /tmp/<app id>/rt.
-- TLS failures for some chains (archive.org); WebView, custom/AndroidX views and fragments unsupported.
-- Headless-Activity reload verified on host only (no legitimate plugin needs it; not exercised on the TV).
+- Features not built, by platform limits or scope: downloads (no writable storage; removed at the
+  user's request), AniList/MAL/Simkl sync (OAuth needs a browser), trailers (YouTube), AniSkip,
+  OpenSubtitles search, playback speed (the kit's PlaybackController has no rate control), NSFW toggle
+  (the runtime keeps CloudStream's default, adult off), pinned providers, backup/restore.
+- Plugins needing a WebView, custom/AndroidX views or fragments are unsupported.
 - Licence audit of the bundled runtime still metadata-only (needed before any redistribution).
-- Kit patches 0001/0002 live in this repo; consider proposing 0002 upstream.
+- Package 78 MB; the AOT boot image is tied to the app id through /tmp/<app id>/rt.
 
 ## Next tasks
-1. Fix TLS for archive.org in the runtime layer (BouncyCastle JSSE provider or wolfSSL build).
-2. Phase 2: native app skeleton on the kit (repositories, plugin install with hash checks, search UI) using the runtime service.
+1. Install the current ipk on the TV; with the remote: install DailymotionProvider and
+   InternetArchiveProvider, play an Internet Archive item (patched wolfSSL on the TV), try profiles,
+   settings, Test extensions; collect logs into evidence/device/.
+2. Phase 7: licence audit, security review, compatibility matrix, release report.
