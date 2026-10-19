@@ -78,4 +78,8 @@ Host ART (x86_64), unmodified conformance plugin `CswebConformance.cs3` (sha256 
   plugin with those preferences: provider named "My Conformance", 3 results instead of 2.
 - `evidence/runtime-host/runs/conformance-settings-unanswered.jsonl`: no app attached.
 
-Not yet done: rendering in the native app (Phase 2) and a TV run of the settings op.
+TV (LG OLED65C1PTB, webOS 6.5.3, probe 0.3.0 feeding the answer on stdin): same dialog description,
+answer applied, next load named "My Conformance" with 3 results
+(`evidence/device/20261019-110528-runtimeprobe-0.3/`).
+
+Not yet done: rendering the dialog in the native app (Phase 2).

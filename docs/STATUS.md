@@ -24,7 +24,8 @@ search/details/links results inside the bundled ART runtime on the TV.
   to the app and answered over stdin (docs/runtime/dialog-protocol.md); verified on host ART with the
   conformance plugin (prefs written by the plugin, visible on next load).
 - Relocatable, pruned aarch64 runtime (50 MiB + 62 MiB CloudStream DEX), kit private-runtime packaging.
-- On-TV plugin execution (probe 0.2.0).
+- On-TV plugin execution (probe 0.2.0); probe 0.3.0 adds resources and the settings dialog on the TV
+  (conformance plugin, `evidence/device/20261019-110528-runtimeprobe-0.3/`).
 
 ## Commands executed (this phase)
 | Command | Exit | Notes |
@@ -40,7 +41,7 @@ search/details/links results inside the bundled ART runtime on the TV.
 | `tools/install.sh … --private-runtime runtime-aarch64`, `launch.sh`, `logs.sh` | 0 | TV run |
 
 ## Tests
-- Passed: compat 165; project tools 8; kit tool tests 33; kit host suite incl. csweb probe test; TV runtime tests 4/5
+- Passed: compat 165; TV probe 0.3.0 runtime tests 8/9 (conformance 4/4); project tools 8; kit tool tests 33; kit host suite incl. csweb probe test; TV runtime tests 4/5
 - Failed: TV InternetArchive search (wolfSSL vs archive.org chain, known runtime defect)
 - Skipped: provider operations for plugins sourcing unlicensed content (by decision); webosbrew-ipk-verify (not installed)
 
@@ -52,12 +53,11 @@ search/details/links results inside the bundled ART runtime on the TV.
 ## Risks/blockers
 - ~10 s per operation with a fresh runtime; memory ~120 MiB per process.
 - TLS failures for some chains (archive.org); WebView, custom/AndroidX views and fragments unsupported.
-- Resources, headless Activity and settings are verified on host ART only; not yet re-run on the TV.
+- Headless-Activity reload verified on host only (no legitimate plugin needs it; not exercised on the TV).
 - Licence audit of the bundled runtime still metadata-only (needed before any redistribution).
 - Kit patches 0001/0002 live in this repo; consider proposing 0002 upstream.
 
 ## Next tasks
-0. Rebuild the probe package with the new runtime and run conformance (resources, settings) on the TV.
 1. Long-lived runtime service (one ART process, JSON requests over stdin/stdout) and a host-precompiled arm64 boot image.
 2. Fix TLS for archive.org in the runtime layer (BouncyCastle JSSE provider or wolfSSL build).
 3. Phase 2: native app skeleton on the kit (repositories, plugin install with hash checks, search UI) using the runtime service.

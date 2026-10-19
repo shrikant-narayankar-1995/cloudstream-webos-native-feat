@@ -95,12 +95,15 @@ services or live sports were not exercised beyond the load-only pass.
 | LibriVoxAudiobook | details | TvSeriesLoadResponse, 37 chapters | 37 chapters, 9.8 s | |
 | LibriVoxAudiobook | loadLinks | 1 MP3 ExtractorLink with referer | same, 7.6 s | playable URL on archive.org |
 
-TV log: `evidence/device/20261019-075624-runtimeprobe-0.2/org.csweb.runtimeprobe-events-20261019-075836.log`.
+TV logs: `evidence/device/20261019-075624-runtimeprobe-0.2/org.csweb.runtimeprobe-events-20261019-075836.log`;
+re-run with probe 0.3.0 (same results, 6.3-7.0 s per operation, peak RSS 112-119 MiB):
+`evidence/device/20261019-110528-runtimeprobe-0.3/org.csweb.runtimeprobe-events-20261019-110744.log`.
 
 ## Conformance test plugin (test fixture, not a provider)
 
 `test-plugins/conformance` (CswebConformance, built with Kotlin 2.4.0 / aapt2 / D8 like a real plugin) checks
-features no available legitimate plugin uses. Host ART results (`evidence/runtime-host/runs/conformance-*.jsonl`):
+features no available legitimate plugin uses. Host ART results (`evidence/runtime-host/runs/conformance-*.jsonl`);
+the same four runs passed on the TV with probe 0.3.0 (3.4-3.6 s each, peak RSS ~111 MiB; log above):
 
 | Feature | Result |
 |---|---|

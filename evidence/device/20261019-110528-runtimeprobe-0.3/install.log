@@ -1,0 +1,16 @@
+fw-check: org.csweb.runtimeprobe_0.3.0_arm.ipk against 7 firmware image(s) from /home/sostk/.cache/plxnative/fwsym/data
+          main needs ['libdl.so.2', 'libGLESv2.so.2', 'libSDL2-2.0.so.0', 'libpthread.so.0', 'libm.so.6', 'libc.so.6', 'ld-linux.so.3', 'librt.so.1']; bundled ['libSDL2-2.0.so.0']
+  OK   webOS 5.3.1    04.30.90.01-HE_DTV_W20L_AFAAJAAA
+  OK   webOS 6.4.0    03.40.82.01-HE_DTV_W21P_AFADATAA
+  OK   webOS 7.4.0    04.40.90.01-HE_DTV_W22O_AFABATAA
+  OK   webOS 8.3.0    03.30.60.01-HE_DTV_W23O_AFABATAA
+  OK   webOS 9.2.0    23.20.50.01-HE_DTV_W23O_AFABATAA
+  OK   webOS 10.2.0   33.20.40.01-HE_DTV_W22H_AFABATPU
+  OK   webOS 11.2.0   43.21.70.01-HE_DTV_W23O_AFABJAAA
+fw-check: 7/7 loadable (symbol presence only; behaviour needs a TV)
+(webosbrew-ipk-verify not installed: second opinion skipped)
+Uploading org.csweb.runtimeprobe_0.3.0_arm.ipk to tv...
+Installing org.csweb.runtimeprobe_0.3.0_arm.ipk on tv...
+Installed package org.csweb.runtimeprobe!
+Deleting uploaded package...
+install exit=0
