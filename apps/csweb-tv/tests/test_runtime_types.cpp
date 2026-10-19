@@ -48,6 +48,17 @@ TEST("links_and_quality") {
     CHECK_EQ(v.audio_tracks.size(), size_t(2));
     CHECK_EQ(v.audio_tracks[0].headers.at("Referer"), std::string("r"));
     CHECK_EQ(v.audio_tracks[1].url, std::string("https://v/a2"));
+    CHECK(!v.drm);
+    auto d = parse_link(json::parse(R"J({"name":"D","url":"https://h/m.mpd","linkType":"DASH","drm":{
+        "uuid":"e2719d58-a985-b3c9-781a-b030af78d30e","kty":"oct","kid":"_u3wDe7erb7v8Lqt8A3QDQ",
+        "key":"ABEiM0RVZneImaq7zN3u_w","licenseUrl":"null","keyRequestParameters":{"a":"b"}}})J"));
+    REQUIRE(d.drm.has_value());
+    CHECK(d.drm->clearkey());
+    CHECK_EQ(d.drm->kid, std::string("_u3wDe7erb7v8Lqt8A3QDQ"));
+    CHECK(d.drm->license_url.empty());
+    CHECK_EQ(d.drm->key_request_parameters.at("a"), std::string("b"));
+    CHECK_EQ(std::string(drm_name("EDEF8BA9-79D6-4ACE-A3C8-27DCD51D21ED")), std::string("Widevine"));
+    CHECK_EQ(std::string(drm_name("9a04f079-9840-4286-ab92-e65be0885f95")), std::string("PlayReady"));
     CHECK_EQ(quality_label(1080), std::string("1080p"));
     CHECK_EQ(quality_label(2160), std::string("4K"));
     CHECK_EQ(quality_label(400), std::string());

@@ -4,6 +4,7 @@
 #include "wnk_test.hpp"
 
 #include "player/link_priority.hpp"
+#include "player/media_factory.hpp"
 
 using namespace csweb::player;
 using csweb::runtime::Link;
@@ -45,6 +46,30 @@ TEST("playable") {
     CHECK(!playable(link("m", 720, "MAGNET", "magnet:?xt=urn")));
     CHECK(!playable(link("f", 720, "VIDEO", "file:///etc/passwd")));
     CHECK(playable(link("h", 720, "M3U8", "HTTPS://h/x.m3u8")));
+}
+
+TEST("drm_links") {
+    Link ck = link("ck", 1080, "DASH", "https://h/m.mpd");
+    ck.drm = csweb::runtime::Drm{};
+    ck.drm->uuid = "e2719d58-a985-b3c9-781a-b030af78d30e";
+    CHECK(!playable(ck));  // ClearKey needs its key (or a licence server)
+    CHECK_EQ(unsupported_reason(ck), std::string("ClearKey without a key"));
+    ck.drm->kid = "_u3wDe7erb7v8Lqt8A3QDQ";  // JWK base64url, as CloudStream's player takes them
+    ck.drm->key = "ABEiM0RVZneImaq7zN3u_w";
+    CHECK(playable(ck));
+    const auto keys = clearkey_keys(ck);
+    REQUIRE(keys.size() == 1);
+    CHECK_EQ(keys.begin()->first, std::string("feedf00deedeadbeeff0baadf00dd00d"));
+    CHECK_EQ(keys.begin()->second, std::string("00112233445566778899aabbccddeeff"));
+    ck.drm->key = "not a key";
+    CHECK(clearkey_keys(ck).empty());
+    Link wv = link("wv", 1080, "DASH", "https://h/m.mpd");
+    wv.drm = csweb::runtime::Drm{};
+    wv.drm->uuid = "edef8ba9-79d6-4ace-a3c8-27dcd51d21ed";
+    wv.drm->license_url = "https://lic/wv";
+    CHECK(!playable(wv));
+    CHECK_EQ(unsupported_reason(wv), std::string("Widevine DRM"));
+    CHECK(clearkey_keys(wv).empty());
 }
 
 TEST("headers") {

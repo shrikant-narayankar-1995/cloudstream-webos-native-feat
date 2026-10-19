@@ -415,7 +415,7 @@ void PlayerScreen::open_sources(Ui &ui) {
     for (size_t i : player::sort_links(links_)) {
         const auto &l = links_[i];
         std::string text = link_label(l);
-        if (!player::playable(l)) text += "  ·  not supported";
+        if (!player::playable(l)) text += "  ·  not supported (" + player::unsupported_reason(l) + ")";
         else if (errored_.count(i)) text += "  ·  failed";
         auto &b = list.add<PillButton>(text, i == current_ ? "check" : "", PillButton::Style::Glass, [this, dlg, i](Ui &u) {
             dlg->dismiss(u);

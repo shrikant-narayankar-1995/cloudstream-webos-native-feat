@@ -20,8 +20,11 @@ inline constexpr int kDefaultSourcePriority = 1;
 int quality_priority(int quality);
 int link_priority(const runtime::Link &link);
 // Torrents and magnets need CloudStream's torrent server, which the app does not have; anything
-// that is not http(s) cannot be opened either.
+// that is not http(s) cannot be opened either. DRM links play only with ClearKey (keys in the clear):
+// Widevine and PlayReady need licences for the TV's own protected DRM, which an app cannot use.
 bool playable(const runtime::Link &link);
+// Why a link cannot play ("" when it can), for the sources list.
+std::string unsupported_reason(const runtime::Link &link);
 // Indices into `links`, best first.
 std::vector<size_t> sort_links(const std::vector<runtime::Link> &links);
 

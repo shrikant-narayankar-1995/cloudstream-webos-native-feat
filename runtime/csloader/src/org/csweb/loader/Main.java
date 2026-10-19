@@ -599,6 +599,33 @@ public final class Main {
             m.remove("headerNames");
             m.put("headers", h);
         }
+        // DrmExtractorLink: the DRM system and, for ClearKey, the content key (CS3IPlayer builds a local key
+        // set from kid/key). Key values and licence parameters are secrets: like header values they go
+        // only to the app (withHeaders), never to logged output.
+        Object uuid = tryBean(l, "getUuid");
+        if (uuid != null) {
+            Map<String, Object> drm = new LinkedHashMap<>();
+            drm.put("uuid", String.valueOf(uuid));
+            Object kty = tryBean(l, "getKty");
+            if (kty != null) drm.put("kty", String.valueOf(kty));
+            Object license = tryBean(l, "getLicenseUrl");
+            if (license != null) drm.put("licenseUrl", String.valueOf(license));
+            Object kid = tryBean(l, "getKid");
+            Object key = tryBean(l, "getKey");
+            if (withHeaders) {
+                if (kid != null) drm.put("kid", String.valueOf(kid));
+                if (key != null) drm.put("key", String.valueOf(key));
+                Object params = tryBean(l, "getKeyRequestParameters");
+                if (params instanceof Map) {
+                    Map<String, Object> p = new LinkedHashMap<>();
+                    for (Map.Entry<?, ?> e : ((Map<?, ?>) params).entrySet()) p.put(String.valueOf(e.getKey()), String.valueOf(e.getValue()));
+                    drm.put("keyRequestParameters", p);
+                }
+            } else {
+                drm.put("hasKey", kid != null && key != null);
+            }
+            m.put("drm", drm);
+        }
         // ExtractorLink.audioTracks: separate audio streams the player merges with the video (CS3IPlayer).
         Object tracks = tryBean(l, "getAudioTracks");
         if (tracks instanceof List && !((List<?>) tracks).isEmpty()) {

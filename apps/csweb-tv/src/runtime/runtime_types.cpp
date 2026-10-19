@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 #include "runtime/runtime_types.hpp"
 
+#include <cctype>
+
 namespace csweb::runtime {
 
 namespace {
@@ -151,6 +153,21 @@ Link parse_link(const json &e) {
             if (h.value().is_string()) l.headers[h.key()] = h.value().get<std::string>();
         }
     }
+    if (auto it = e.find("drm"); it != e.end() && it->is_object()) {
+        Drm d;
+        d.uuid = str(*it, "uuid");
+        d.kty = str(*it, "kty");
+        d.kid = str(*it, "kid");
+        d.key = str(*it, "key");
+        d.license_url = str(*it, "licenseUrl");
+        if (d.license_url == "null") d.license_url.clear();
+        if (auto p = it->find("keyRequestParameters"); p != it->end() && p->is_object()) {
+            for (auto v = p->begin(); v != p->end(); ++v) {
+                if (v.value().is_string()) d.key_request_parameters[v.key()] = v.value().get<std::string>();
+            }
+        }
+        l.drm = std::move(d);
+    }
     if (auto it = e.find("audioTracks"); it != e.end() && it->is_array()) {
         for (const auto &t : *it) {
             if (!t.is_object() || str(t, "url").empty()) continue;
@@ -166,6 +183,24 @@ Link parse_link(const json &e) {
     }
     return l;
 }
+
+namespace {
+std::string lower(std::string s) {
+    for (char &c : s) c = static_cast<char>(std::tolower(static_cast<unsigned char>(c)));
+    return s;
+}
+}  // namespace
+
+// CloudStream's CLEARKEY_DRM_UUID, WIDEVINE_DRM_UUID and PLAYREADY_DRM_UUID (ExtractorApi.kt).
+const char *drm_name(const std::string &uuid) {
+    const std::string u = lower(uuid);
+    if (u == "e2719d58-a985-b3c9-781a-b030af78d30e") return "ClearKey";
+    if (u == "edef8ba9-79d6-4ace-a3c8-27dcd51d21ed") return "Widevine";
+    if (u == "9a04f079-9840-4286-ab92-e65be0885f95") return "PlayReady";
+    return "DRM";
+}
+
+bool Drm::clearkey() const { return std::string(drm_name(uuid)) == "ClearKey"; }
 
 Subtitle parse_subtitle(const json &e) { return {str(e, "lang"), str(e, "url")}; }
 

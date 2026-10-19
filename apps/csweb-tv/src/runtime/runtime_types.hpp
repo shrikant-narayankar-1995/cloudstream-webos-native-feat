@@ -8,6 +8,7 @@
 #include <nlohmann/json.hpp>
 
 #include <map>
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -65,11 +66,21 @@ struct AudioTrack {
     std::map<std::string, std::string> headers;  // only with withHeaders; never logged
 };
 
+// DrmExtractorLink: the DRM system (uuid) and, for ClearKey, the content key as CloudStream's player
+// uses it (kid/key, JWK base64url or hex). Keys are secrets: never logged.
+struct Drm {
+    std::string uuid, kty, kid, key, license_url;
+    std::map<std::string, std::string> key_request_parameters;
+    bool clearkey() const;  // CLEARKEY_DRM_UUID; Widevine and PlayReady cannot play on this TV
+};
+const char *drm_name(const std::string &uuid);  // "ClearKey", "Widevine", "PlayReady" or "DRM"
+
 struct Link {
     std::string name, source, url, referer, link_type;  // link_type: VIDEO, M3U8, DASH, TORRENT, MAGNET
     int quality = 400;                                   // CloudStream Qualities value (400 unknown, 0 auto, 1080...)
     std::map<std::string, std::string> headers;          // only with withHeaders; never logged
     std::vector<AudioTrack> audio_tracks;                // separate audio (e.g. YouTube's video-only streams)
+    std::optional<Drm> drm;                              // DrmExtractorLink
 };
 
 struct Subtitle {

@@ -119,6 +119,9 @@ wnk_add_webos_package(
         PRIVATE_RUNTIMES ${_csweb_runtimes})
 
 if (WNK_BUILD_TESTS)
+    # Host tool: a stream URL through the player's source (tools/media_probe.cpp).
+    add_executable(csweb-media-probe tools/media_probe.cpp)
+    target_link_libraries(csweb-media-probe PRIVATE csweb_player)
     foreach (t link_priority merged_source subtitle_file)
         add_executable(csweb_test_${t} tests/test_${t}.cpp)
         target_include_directories(csweb_test_${t} PRIVATE "${PROJECT_SOURCE_DIR}/tests/unit")
