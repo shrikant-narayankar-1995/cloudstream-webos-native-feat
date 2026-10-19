@@ -33,7 +33,13 @@ Runtime feasibility: **PASS** (scoped; see docs/FEASIBILITY_DECISION.md)
     preferred quality, autoplay, seek times, subtitle language/size/style, show cast, clear history,
     profiles; app and runtime state.
   - Profiles: local profiles with their own library, home source, chips and history; optional 4-digit
-    PIN (stored as a digest); picker at start.
+    PIN (stored as a digest); "Who's watching?" picker at start (design 13: round avatars, colours,
+    PIN pad).
+  - Start: CloudStream's splash (the cloud on the app background); first-run setup (welcome,
+    "Who's watching?" profiles, then Extensions or Home) until HAS_DONE_SETUP_KEY is set.
+  - Look: CloudStream's cloud as the launcher icon with a "webOS" label (tools/make_brand.py);
+    frosted glass over artwork (blurred backdrop composed per panel, glass.hpp) for the top bar and
+    the buttons over posters. Host only so far; not yet seen on the TV.
   - Deep links: cloudstreamrepo://, https://cs.repo?…, cloudstreamsearch://.
 - Kit patch 0003: every URL query value redacted in logs (stream tokens).
 - Kit patch 0004: long labels (YouTube descriptions) no longer stall the UI (found on the TV with the

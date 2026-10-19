@@ -105,6 +105,17 @@ bool Profiles::remove(int key_index) {
     return true;
 }
 
+bool Profiles::set_image(int key_index, int image_index) {
+    if (image_index < 0 || image_index >= kAvatarColours) return false;
+    for (auto &p : list_) {
+        if (p.key_index == key_index) {
+            p.image_index = image_index;
+            return true;
+        }
+    }
+    return false;
+}
+
 bool Profiles::rename(int key_index, const std::string &name) {
     const std::string n = clean_name(name);
     if (n.empty()) return false;

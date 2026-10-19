@@ -10,5 +10,7 @@ namespace csweb::ui {
 
 void set_asset_root(const std::string &app_dir);
 std::string icon_url(const std::string &name, bool dark = false);
+// A bundled file under the app directory ("brand/logo.png").
+std::string asset_url(const std::string &path);
 
 }  // namespace csweb::ui

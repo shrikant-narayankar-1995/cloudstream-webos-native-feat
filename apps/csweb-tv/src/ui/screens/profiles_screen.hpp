@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0-or-later
 //
-// Profiles (design 13), as CloudStream's AccountSelectActivity: a tile per profile with its avatar;
-// choosing one asks for its PIN when it has one and switches to it. "Manage" turns the tiles into
-// editors (rename, set or remove the PIN, delete; the default profile cannot be deleted) and offers
-// "Add profile". At start (more than one profile, or a locked one) Back leaves the app instead of
-// skipping the choice.
+// "Who's watching?" (design 13), as CloudStream's AccountSelectActivity: a round avatar per profile
+// and an "Add" tile; choosing a locked profile opens the PIN pad under the row, any other switches to
+// it at once. "Manage profiles" turns the avatars into editors (rename, colour, set or remove the PIN,
+// delete; the default profile cannot be deleted). At start (more than one profile, or a locked one)
+// Back leaves the app instead of skipping the choice.
 #pragma once
 
 #include "app/router.hpp"
@@ -16,6 +16,7 @@
 namespace csweb::ui {
 
 class PillButton;
+class PinPad;
 
 class ProfilesScreen : public wnk::ui::Screen {
  public:
@@ -27,9 +28,10 @@ class ProfilesScreen : public wnk::ui::Screen {
  private:
     void rebuild();
     void choose(wnk::ui::Ui &ui, int key_index);
+    void open_pin(wnk::ui::Ui &ui, int key_index);
+    void close_pin(wnk::ui::Ui &ui);
+    void add_profile(wnk::ui::Ui &ui);
     void edit(wnk::ui::Ui &ui, int key_index);
-    void ask_name(wnk::ui::Ui &ui, const std::string &title, const std::string &current,
-                  std::function<void(wnk::ui::Ui &, const std::string &)> done);
     void ask_pin(wnk::ui::Ui &ui, const std::string &title, std::function<void(wnk::ui::Ui &, const std::string &)> done);
     void save();
 
@@ -38,10 +40,18 @@ class ProfilesScreen : public wnk::ui::Screen {
     bool managing_ = false;
     std::function<void(wnk::ui::Ui &)> on_chosen_;
     wnk::ui::Row *tiles_ = nullptr;
+    PinPad *pin_ = nullptr;
+    int pin_for_ = -1;
     wnk::ui::Label *hint_ = nullptr;
     PillButton *manage_ = nullptr;
     wnk::ui::View *first_ = nullptr;
 };
+
+// A dialog asking for a profile name (`done` gets what was typed).
+void ask_profile_name(wnk::ui::Ui &ui, const std::string &title, const std::string &current,
+                      std::function<void(wnk::ui::Ui &, const std::string &)> done);
+// A dialog of the avatar colours; saves the choice and runs `changed`.
+void choose_profile_colour(wnk::ui::Ui &ui, app::Services &s, int key_index, std::function<void(wnk::ui::Ui &)> changed);
 
 // Asks for `key_index`'s PIN when it has one, then runs `then` (CloudStream's handleAccountSelect).
 void unlock_profile(wnk::ui::Ui &ui, app::Services &s, int key_index, std::function<void(wnk::ui::Ui &)> then);

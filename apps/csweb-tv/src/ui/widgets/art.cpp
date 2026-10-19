@@ -32,11 +32,13 @@ Backdrop::Backdrop(std::string url) {
     image_ = &add<ImageView>(url);
     image_->set_fit(ImageFit::Cover);
     image_->set_visible(!url.empty());  // no artwork: the screen background, not a placeholder
+    blur_.set_url(url);
 }
 
 void Backdrop::set_url(const std::string &url) {
     if (image_->url() != url) image_->set_url(url);
     image_->set_visible(!url.empty());
+    blur_.set_url(url);
 }
 
 void Backdrop::layout_content(Ui &ui, const wnk::Rect &content) { image_->layout(ui, content); }
@@ -46,6 +48,9 @@ void Backdrop::draw_over(Ui &ui) {
     draw_ramp(ui, {f.x, f.y, f.w * left_extent, f.h}, theme::kBackground, left_strength, 0.0f, true);
     const float h = f.h * bottom_extent;
     draw_ramp(ui, {f.x, f.y + f.h - h, f.w, h}, theme::kBackground, 0.0f, fade_to_background ? 1.0f : 0.8f, false);
+    if (image_->visible() && image_->state() == ImageView::State::Ready && blur_.image()) {
+        glass::publish(ui, {blur_.image(), f, left_strength, left_extent, bottom_extent, fade_to_background});
+    }
 }
 
 }  // namespace csweb::ui

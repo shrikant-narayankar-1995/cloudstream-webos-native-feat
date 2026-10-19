@@ -61,6 +61,7 @@ inline constexpr const char *kSearchHistory = "search_history";
 inline constexpr const char *kLibrarySorting = "library_sorting_mode";  // ListSorting ordinal, A-Z by default
 inline constexpr const char *kProfiles = "profiles";  // profiles::Profiles (shared)
 inline constexpr const char *kSkipProfileSelect = "skip_startup_account_select_key";
+inline constexpr const char *kSetupDone = "HAS_DONE_SETUP_KEY";  // the first-run setup was finished (shared)
 // True for the values each profile keeps for itself (CloudStream's $currentAccount keys).
 bool profile_key(const std::string &key);
 

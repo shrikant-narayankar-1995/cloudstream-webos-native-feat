@@ -25,6 +25,7 @@ class NavBar : public wnk::ui::Row {
 
  private:
     std::vector<PillButton *> tabs_;
+    glass::Surface surface_;
 };
 
 }  // namespace csweb::ui

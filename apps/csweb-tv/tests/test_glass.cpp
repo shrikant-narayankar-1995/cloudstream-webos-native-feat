@@ -1,0 +1,70 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+// ui/widgets/glass: the blurred artwork copy and a glass panel's composed pixels.
+#define WNK_TEST_MAIN
+#include "wnk_test.hpp"
+
+#include "ui/widgets/glass.hpp"
+
+using namespace csweb::ui;
+
+namespace {
+const uint8_t *at(const std::vector<uint8_t> &px, int w, int x, int y) { return &px[(static_cast<size_t>(y) * w + x) * 4]; }
+
+// Left half red, right half blue.
+wnk::image::ImageRGBA halves(int w, int h) {
+    wnk::image::ImageRGBA img;
+    img.width = w;
+    img.height = h;
+    img.pixels.resize(static_cast<size_t>(w) * h * 4);
+    for (int y = 0; y < h; y++) {
+        for (int x = 0; x < w; x++) {
+            uint8_t *p = &img.pixels[(static_cast<size_t>(y) * w + x) * 4];
+            p[0] = x < w / 2 ? 255 : 0;
+            p[2] = x < w / 2 ? 0 : 255;
+            p[3] = 255;
+        }
+    }
+    return img;
+}
+}  // namespace
+
+TEST("blur_scales_down_and_softens_edges") {
+    const glass::Blurred b = glass::blur(halves(640, 360), 160, 3);
+    CHECK_EQ(b.width, 160);
+    CHECK_EQ(b.height, 90);
+    CHECK(b.id != 0);
+    CHECK(glass::blur(halves(640, 360)).id != b.id);
+    const uint8_t *edge = &b.rgba[(45 * 160 + 80) * 4];
+    CHECK(edge[0] > 40 && edge[0] < 215);  // the hard edge became a ramp
+    CHECK(edge[2] > 40 && edge[2] < 215);
+    CHECK_EQ(b.rgba[(45 * 160 + 2) * 4 + 0], 255);  // far from the edge: unchanged
+    CHECK_EQ(b.rgba[3], 255);
+    CHECK_EQ(glass::blur(wnk::image::ImageRGBA{}).width, 0);
+}
+
+TEST("panel_is_rounded_with_a_brighter_top_border") {
+    const glass::Style s = glass::panel_style();
+    const int w = 200, h = 60;
+    const auto px = glass::compose(w, h, 30, s, nullptr, {0, 0, 200, 60});
+    CHECK_EQ(at(px, w, 0, 0)[3], 0);       // outside the rounded corner
+    CHECK_EQ(at(px, w, w - 1, h - 1)[3], 0);
+    CHECK(at(px, w, 100, 30)[3] > 200);     // the body: translucent ground
+    CHECK(at(px, w, 100, 30)[3] < 255);
+    CHECK(at(px, w, 100, 0)[0] > at(px, w, 100, h - 1)[0]);  // border brighter at the top
+}
+
+TEST("panel_over_artwork_shows_the_blurred_colour_under_it") {
+    glass::Under under;
+    under.image = std::make_shared<const glass::Blurred>(glass::blur(halves(640, 360)));
+    under.frame = {0, 0, 1920, 1080};
+    const glass::Style s = glass::chip_style();
+    const auto left = glass::compose(100, 50, 25, s, &under, {100, 500, 100, 50});
+    const auto right = glass::compose(100, 50, 25, s, &under, {1700, 500, 100, 50});
+    CHECK_EQ(at(left, 100, 50, 25)[3], 255);  // opaque over artwork
+    CHECK(at(left, 100, 50, 25)[0] > at(left, 100, 50, 25)[2]);    // red under the left panel
+    CHECK(at(right, 100, 50, 25)[2] > at(right, 100, 50, 25)[0]);  // blue under the right one
+    under.left_strength = 1;
+    under.left_extent = 0.5f;
+    const auto scrim = glass::compose(100, 50, 25, s, &under, {0, 500, 100, 50});
+    CHECK(at(scrim, 100, 50, 25)[0] < at(left, 100, 50, 25)[0]);  // the backdrop's scrim darkens it
+}

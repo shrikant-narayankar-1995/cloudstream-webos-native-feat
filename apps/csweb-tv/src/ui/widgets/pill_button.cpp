@@ -23,6 +23,11 @@ PillButton &PillButton::set_selected(bool on) {
     return *this;
 }
 
+PillButton &PillButton::set_frosted(bool on) {
+    frosted_ = on;
+    return *this;
+}
+
 PillButton &PillButton::set_icon(std::string icon) {
     if (icon == icon_ && (icon_.empty() || icon_light_)) return *this;  // callers may set it every frame
     icon_ = std::move(icon);
@@ -87,6 +92,8 @@ void PillButton::draw(Ui &ui) {
         r.fill_rect(f, ui.fade(theme::kFocusFill), radius);
     } else if (focused) {
         r.fill_rect(f, ui.fade(theme::kFocusFill), radius);
+    } else if (style_ == Style::Glass && frosted_) {
+        surface_.draw(ui, f, radius, glass::chip_style());
     } else if (style_ == Style::Glass) {
         r.fill_rect(f, ui.fade(theme::kGlassBorder), radius);
         r.fill_rect({f.x + 1, f.y + 1, f.w - 2, f.h - 2}, ui.fade(theme::Color::hex(0x1E2129FF)), radius - 1);

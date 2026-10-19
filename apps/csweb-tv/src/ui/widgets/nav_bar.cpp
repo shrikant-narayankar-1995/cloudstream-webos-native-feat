@@ -25,9 +25,7 @@ void NavBar::set_selected(size_t index) {
 
 void NavBar::draw(Ui &ui) {
     const wnk::Rect f = frame();
-    auto &r = ui.renderer();
-    r.fill_rect(f, ui.fade(theme::kGlassBorder), f.h * 0.5f);
-    r.fill_rect({f.x + 1, f.y + 1, f.w - 2, f.h - 2}, ui.fade(theme::Color::hex(0x161921E6)), f.h * 0.5f - 1);
+    surface_.draw(ui, f, f.h * 0.5f, glass::panel_style());
 }
 
 }  // namespace csweb::ui

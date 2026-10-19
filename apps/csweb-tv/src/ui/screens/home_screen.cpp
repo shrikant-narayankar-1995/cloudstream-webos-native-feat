@@ -60,6 +60,7 @@ HomeScreen::HomeScreen(app::Services &s) : Screen("Home"), s_(s) {
     hero_play_->name = "home.hero.open";
     hero_info_ = &buttons.add<PillButton>("", "refresh", PillButton::Style::Glass, [this](Ui &) { pick_hero(); }, 72);
     hero_info_->accessible_label = "Another pick";
+    hero_info_->set_frosted(true);
     hero_->set_visible(false);
 
     state_ = &content_->add<Column>(24);
@@ -105,6 +106,7 @@ HomeScreen::HomeScreen(app::Services &s) : Screen("Home"), s_(s) {
     provider_button_ = &top_->right().add<PillButton>("Source", "chevron-down", PillButton::Style::Glass,
                                                      [this](Ui &ui) { open_provider_picker(ui); }, 60);
     provider_button_->name = "home.provider";
+    provider_button_->set_frosted(true);
     clock_ = &top_->right().add<Label>("");
     clock_->set_bold(true);
 

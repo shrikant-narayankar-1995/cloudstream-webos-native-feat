@@ -64,6 +64,7 @@ DetailsScreen::DetailsScreen(app::Services &s, std::string provider, runtime::Se
     resume_->name = "details.resume";
     resume_->set_visible(false);
     bookmark_ = &buttons.add<PillButton>("Add to library", "bookmark", PillButton::Style::Glass, [this](Ui &ui) { choose_list(ui); }, 72);
+    bookmark_->set_frosted(true);
     bookmark_->name = "details.bookmark";
     library_sub_ = s_.library->changed.subscribe([this] { refresh_library(); });
 
@@ -202,6 +203,7 @@ void DetailsScreen::show(Ui &ui) {
                     show_group(g, 0);
                 }, 56);
                 b.name = "details.group." + std::to_string(g.season) + g.dub;
+                b.set_frosted(true);
             }
         }
         show_group(group_, 0);
@@ -253,6 +255,7 @@ void DetailsScreen::show_group(const runtime::EpisodeGroup &g, size_t range) {
         for (size_t i = 0; i < rs.size(); i++) {
             const std::string text = std::to_string(rs[i].min_episode) + "-" + std::to_string(rs[i].max_episode);
             auto &b = range_row_->add<PillButton>(text, "", PillButton::Style::Glass, [this, g, i](Ui &) { show_group(g, i); }, 52);
+            b.set_frosted(true);
             b.set_selected(i == range);
             b.name = "details.range." + std::to_string(i);
         }

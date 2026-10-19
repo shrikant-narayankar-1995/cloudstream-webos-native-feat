@@ -39,6 +39,7 @@ class Profiles {
     Profile &add(const std::string &name);
     bool remove(int key_index);  // the default profile cannot be removed
     bool rename(int key_index, const std::string &name);
+    bool set_image(int key_index, int image_index);  // false for an unknown profile or colour
     bool set_pin(int key_index, const std::string &pin);  // "" removes it; false for an invalid PIN
     bool check_pin(int key_index, const std::string &pin) const;
 

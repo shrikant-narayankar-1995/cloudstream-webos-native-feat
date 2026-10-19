@@ -6,6 +6,9 @@
 #include "runtime/runtime_launcher.hpp"
 #include "ui/screens/home_screen.hpp"
 #include "ui/screens/player_screen.hpp"
+#include "ui/screens/setup_screen.hpp"
+#include "ui/screens/splash_screen.hpp"
+#include "ui/widgets/glass.hpp"
 #include "ui/widgets/icons.hpp"
 
 #include "wnk/log.hpp"
@@ -51,6 +54,7 @@ void Application::on_start(wnk::app::Context &ctx) {
     make_dir(plugin_dir);
     make_dir(data_dir);
     ui::set_asset_root(app_dir);
+    ui::glass::init(ctx.images(), &ctx.pool(), &ctx.dispatcher());
     services_.ctx = &ctx;
 
     settings_ = std::make_unique<settings::SettingsStore>(ctx.store(), ctx.pool());
@@ -134,15 +138,30 @@ void Application::on_start(wnk::app::Context &ctx) {
     plugins_->start();
     runtime_->start();
     plugins_sub_ = services_.plugins_changed.subscribe([this, &ctx] { run_pending_search(ctx.ui()); });
-    // AccountSelectActivity: the picker at start with more than one profile (unless skipped), and
-    // always for a locked profile. Links wait until a profile is chosen.
-    const bool many = services_.profiles.all().size() > 1 && !settings_->get_bool(settings::kSkipProfileSelect, false);
-    if (many || services_.profiles.current().locked()) {
+    if (!settings_->get_bool(settings::kSetupDone, false)) {
+        // First run (CloudStream's setup until HAS_DONE_SETUP_KEY): links wait for it.
         choosing_profile_ = true;
-        router_->open_profiles(ui, true, [this](wnk::ui::Ui &u) {
+        nav_->push(ui, std::make_unique<ui::SetupScreen>(services_, [this](wnk::ui::Ui &u, bool open_extensions) {
             choosing_profile_ = false;
+            router_->back(u);
+            if (open_extensions) router_->open_extensions(u);
             run_pending_search(u);
-        });
+        }));
+    } else {
+        // AccountSelectActivity: the picker at start with more than one profile (unless skipped), and
+        // always for a locked profile. Links wait until a profile is chosen.
+        const bool many = services_.profiles.all().size() > 1 && !settings_->get_bool(settings::kSkipProfileSelect, false);
+        if (many || services_.profiles.current().locked()) {
+            choosing_profile_ = true;
+            router_->open_profiles(ui, true, [this](wnk::ui::Ui &u) {
+                choosing_profile_ = false;
+                run_pending_search(u);
+            });
+        }
+    }
+    // The splash over all of it (CloudStream's splash_background); it fades into the screen below.
+    if (std::getenv("CSWEB_NO_SPLASH") == nullptr) {
+        nav_->push(ui, std::make_unique<ui::SplashScreen>([this](wnk::ui::Ui &u) { router_->back(u); }));
     }
     open_link(ui, ctx.launch().params_json);
 }

@@ -17,4 +17,6 @@ std::string icon_url(const std::string &name, bool dark) {
     return "file://" + root() + "/icons/" + name + (dark && name != "star" ? "-dark" : "") + ".svg";
 }
 
+std::string asset_url(const std::string &path) { return "file://" + root() + "/" + path; }
+
 }  // namespace csweb::ui

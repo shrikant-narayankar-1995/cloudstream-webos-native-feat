@@ -46,6 +46,16 @@ TEST("add_rename_remove_round_trip") {
     CHECK(!p.select(42));
 }
 
+TEST("avatar_colour_is_kept_and_bounded") {
+    Profiles p = Profiles::from_json(nlohmann::json());
+    const int k = p.add("Kids").key_index;
+    CHECK(p.set_image(k, 4));
+    CHECK(!p.set_image(k, kAvatarColours));
+    CHECK(!p.set_image(k, -1));
+    CHECK(!p.set_image(99, 1));
+    CHECK_EQ(Profiles::from_json(p.to_json()).find(k)->image_index, 4);
+}
+
 TEST("pins_are_four_digits_and_stored_as_digests") {
     Profiles p = Profiles::from_json(nlohmann::json());
     const int k = p.add("Kids").key_index;

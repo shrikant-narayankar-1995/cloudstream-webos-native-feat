@@ -73,12 +73,17 @@ add_executable(csweb-tv
         src/ui/screens/provider_test_screen.cpp
         src/ui/screens/search_screen.cpp
         src/ui/screens/settings_screen.cpp
+        src/ui/screens/setup_screen.cpp
+        src/ui/screens/splash_screen.cpp
         src/ui/theme/theme.cpp
         src/ui/widgets/art.cpp
         src/ui/widgets/episode_row.cpp
+        src/ui/widgets/glass.cpp
         src/ui/widgets/icons.cpp
         src/ui/widgets/nav_bar.cpp
         src/ui/widgets/pill_button.cpp
+        src/ui/widgets/pin_pad.cpp
+        src/ui/widgets/profile_avatar.cpp
         src/ui/widgets/top_bar.cpp
         src/ui/widgets/type_chips.cpp)
 target_link_libraries(csweb-tv PRIVATE csweb_core csweb_player wnk_app wnk_media_ui)
@@ -91,9 +96,11 @@ endif ()
 
 set(_csweb_fonts "${PROJECT_SOURCE_DIR}/assets/fonts")
 set(_csweb_icons "${CMAKE_CURRENT_SOURCE_DIR}/assets/icons")
+set(_csweb_brand "${CMAKE_CURRENT_SOURCE_DIR}/assets/brand")  # tools/make_brand.py
 add_custom_command(TARGET csweb-tv POST_BUILD
         COMMAND "${CMAKE_COMMAND}" -E copy_directory "${_csweb_fonts}" "$<TARGET_FILE_DIR:csweb-tv>/fonts"
         COMMAND "${CMAKE_COMMAND}" -E copy_directory "${_csweb_icons}" "$<TARGET_FILE_DIR:csweb-tv>/icons"
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory "${_csweb_brand}" "$<TARGET_FILE_DIR:csweb-tv>/brand"
         VERBATIM)
 
 set(_csweb_runtimes)
@@ -113,7 +120,7 @@ wnk_add_webos_package(
         LARGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons/largeIcon.png"
         ICON_COLOR "#0B0D12"
         EXPECTED_NEEDED "${CMAKE_CURRENT_SOURCE_DIR}/packaging/expected-needed.txt"
-        EXTRA_DIRS "${_csweb_fonts}" "${_csweb_icons}"
+        EXTRA_DIRS "${_csweb_fonts}" "${_csweb_icons}" "${_csweb_brand}"
         REQUIRED_PERMISSIONS database.operation
         BUNDLED_LIBS ${WNK_FFMPEG_RUNTIME_LIBS}
         PRIVATE_RUNTIMES ${_csweb_runtimes})
@@ -122,6 +129,10 @@ if (WNK_BUILD_TESTS)
     # Host tool: a stream URL through the player's source (tools/media_probe.cpp).
     add_executable(csweb-media-probe tools/media_probe.cpp)
     target_link_libraries(csweb-media-probe PRIVATE csweb_player)
+    add_executable(csweb_test_glass tests/test_glass.cpp src/ui/widgets/glass.cpp src/ui/theme/theme.cpp)
+    target_include_directories(csweb_test_glass PRIVATE "${PROJECT_SOURCE_DIR}/tests/unit" "${CMAKE_CURRENT_SOURCE_DIR}/src")
+    target_link_libraries(csweb_test_glass PRIVATE wnk_app)
+    add_test(NAME csweb.glass COMMAND csweb_test_glass)
     foreach (t link_priority merged_source subtitle_file)
         add_executable(csweb_test_${t} tests/test_${t}.cpp)
         target_include_directories(csweb_test_${t} PRIVATE "${PROJECT_SOURCE_DIR}/tests/unit")

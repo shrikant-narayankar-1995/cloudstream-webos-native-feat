@@ -2,8 +2,11 @@
 //
 // Artwork with the legibility scrims of the designs: a backdrop image filling the view, darkened
 // towards the left (where hero text sits) and towards the bottom (where rows start). The renderer
-// has no gradients, so each ramp is a stack of thin bands.
+// has no gradients, so each ramp is a stack of thin bands. A blurred copy of the image is kept for
+// the glass panels drawn over it (glass.hpp).
 #pragma once
+
+#include "ui/widgets/glass.hpp"
 
 #include "wnk/ui/widgets.hpp"
 
@@ -26,6 +29,7 @@ class Backdrop : public wnk::ui::View {
 
  private:
     wnk::ui::ImageView *image_;
+    glass::BlurSource blur_;
 };
 
 // Fills `r` with `steps` bands from alpha a0 to a1 along x (horizontal) or y.
