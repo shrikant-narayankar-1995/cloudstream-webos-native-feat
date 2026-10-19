@@ -1,0 +1,45 @@
+         0 INFO  [app] (25028) start app_id=org.csweb.tv platform=webos params={"@system_native_app":true,"target":"cloudstreamrepo://raw.githubusercontent.com/recloudstream/extensions/master/repo.json","nid":"org.csweb.tv"}
+         7 INFO  [device] (25028) webos OLED65C1PTB webOS 6.5.3 (kisscurl-koli) firmware 03.53.45 board O20_DVB ram 3 GB kernel 4.4.84-229.kcl4tv.6 aarch64
+         8 INFO  [crash] (25028) handler installed: /tmp/org.csweb.tv/crash.log, version 0.1.0, build id 4c4b7c90a860b8ffd5c9527f62994a679ccfddbc
+        10 INFO  [lifecycle] (25028) Created -> Initialising (Start)
+       159 INFO  [gamepad] (25028) uid 6860 gid 5000 groups [29,44,505,509,777]; /dev/input event files readable 32 of 32
+       159 INFO  [gamepad] (25028) at start: 0 joystick(s)
+       159 INFO  [screensaver] (25028) allowed (default)
+       159 INFO  [app] (25028) video driver wayland, display mode 1920x1080 @0 Hz
+       446 INFO  [gl] (25028) ARM / Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       451 INFO  [i18n] (25028) locale en-AU (formats en-US) from settingsservice; 0 catalog file(s), 0 entries
+       493 INFO  [caps] (25028) diagnostics.crash_record   supported   /tmp/org.csweb.tv/crash.log
+       493 INFO  [caps] (25028) i18n.system_locale         supported   en-AU
+       493 INFO  [caps] (25028) display.gles2              supported   Mali-G51 / OpenGL ES 3.2 v1.r9p0-01rel0.5fa3737ac24396a69b1d512b70e9e31d
+       493 INFO  [caps] (25028) display.fragment_highp     supported   
+       493 INFO  [caps] (25028) display.max_texture_size   supported   8192
+       493 INFO  [caps] (25028) display.mode               supported   1920x1080 @0 Hz
+       493 INFO  [caps] (25028) display.panel              supported   3840x2160
+       493 INFO  [caps] (25028) display.refresh_rate       supported   120 Hz
+       493 INFO  [caps] (25028) storage.kv                 supported   db8
+       493 INFO  [caps] (25028) net.http                   supported   libcurl/7.61.0 OpenSSL/1.1.1t
+       493 INFO  [caps] (25028) audio.output               unknown     not requested by the app
+       493 INFO  [caps] (25028) images.decode              supported   PNG, JPEG, GIF, BMP, WebP, SVG
+       493 INFO  [caps] (25028) input.pointer              unknown     no pointer event yet
+       493 INFO  [caps] (25028) lifecycle.background       unknown     no background event yet
+       493 INFO  [caps] (25028) lifecycle.relaunch_params  supported   SDL_webOSTakeRelaunchMessage
+       493 INFO  [caps] (25028) media.playback             unknown     not implemented in the kit yet
+       499 INFO  [csweb] (25028) csweb: app /media/developer/apps/usr/palm/applications/org.csweb.tv, runtime /media/developer/apps/usr/palm/applications/org.csweb.tv/runtime-aarch64, tmp /tmp/org.csweb.tv
+       507 INFO  [csweb] (25028) runtime: launching (AOT: ok)
+       512 INFO  [csweb] (25028) link: add repository
+       515 INFO  [lifecycle] (25028) Initialising -> Running (Started)
+       889 DEBUG [http] (25051) GET https://raw.githubusercontent.com/recloudstream/extensions/master/repo.json -> none 200 (attempt 1, 373 ms)
+       989 INFO  [window] (25028) shown
+       989 INFO  [speech] (25028) Audio Guidance setting: off
+       989 INFO  [caps] (25028) accessibility.audio_guidance now supported: off
+       989 INFO  [csweb] (25028) device media: hevc yes, uhd yes, 120 Hz, hdr yes, dv yes, atmos yes, dts no, soc O20N
+       989 INFO  [csweb] (25028) plugins: 0 repositories, 0 installed
+       989 INFO  [network] (25028) online (Wi-Fi)
+       989 INFO  [caps] (25028) network.status now supported: online (Wi-Fi)
+       989 INFO  [csweb] (25028) runtime: ready
+      1002 INFO  [focus] (25028) focus nav.Home
+      1063 INFO  [app] (25028) first frame: drawable 1920x1080
+      1068 INFO  [focus] (25028) focus #58
+      1122 INFO  [lifecycle] (25028) SDL WILLENTERFOREGROUND
+      1122 INFO  [lifecycle] (25028) SDL DIDENTERFOREGROUND
+      1423 INFO  [window] (25028) focus gained
