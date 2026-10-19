@@ -427,14 +427,19 @@ public final class Main {
                         emit(event("unsupported", "api", api.getName() + ".getMainPage", "stage", "operation"));
                         return false;
                     }
-                    com.lagradost.cloudstream3.MainPageData first = api.getMainPage().get(0);
+                    // One declared section (index into MainAPI.mainPage, as the provider event lists them), one page.
+                    int index = Integer.parseInt(p.getOrDefault("section", "0"));
+                    int page = Integer.parseInt(p.getOrDefault("page", "1"));
+                    if (index < 0 || index >= api.getMainPage().size()) throw new IllegalArgumentException("no main page section " + index);
+                    com.lagradost.cloudstream3.MainPageData first = api.getMainPage().get(index);
                     com.lagradost.cloudstream3.MainPageRequest req = new com.lagradost.cloudstream3.MainPageRequest(
                             first.getName(), first.getData(), first.getHorizontalImages());
-                    Object r = await(c -> api.getMainPage(1, req, c));
+                    Object r = await(c -> api.getMainPage(page, req, c));
                     if (r == null) return items(null, "result", limit);
                     boolean any = false;
                     for (Object list : (List<?>) bean(r, "getItems")) {
-                        emit(event("section", "name", bean(list, "getName")));
+                        emit(event("section", "name", bean(list, "getName"), "index", index, "page", page,
+                                "horizontal", tryBean(list, "isHorizontalImages"), "hasNext", tryBean(r, "getHasNext")));
                         any |= items(bean(list, "getList"), "result", limit);
                     }
                     return any;
@@ -443,9 +448,21 @@ public final class Main {
                     String url = required(p, "url");
                     Object r = await(c -> api.load(url, c));
                     if (r == null) return items(null, "details", 1);
-                    emit(describe("details", r));
+                    emit(details(r));
                     Object eps = tryBean(r, "getEpisodes");
                     if (eps instanceof List) items(eps, "episode", limit);
+                    if (eps instanceof Map) {  // AnimeLoadResponse: episodes per DubStatus
+                        for (Map.Entry<?, ?> e : ((Map<?, ?>) eps).entrySet()) {
+                            if (!(e.getValue() instanceof List)) continue;
+                            int i = 0;
+                            for (Object ep : (List<?>) e.getValue()) {
+                                if (i++ >= limit) break;
+                                Map<String, Object> m = describe("episode", ep);
+                                m.put("dub", String.valueOf(e.getKey()));
+                                emit(m);
+                            }
+                        }
+                    }
                     return true;
                 }
                 case "links": {
@@ -453,7 +470,7 @@ public final class Main {
                     int[] n = {0};
                     Object r = await(c -> api.loadLinks(data, false,
                             sub -> { emit(describe("subtitle", sub)); return Unit.INSTANCE; },
-                            link -> { n[0]++; emit(describe("link", link)); return Unit.INSTANCE; }, c));
+                            link -> { n[0]++; emit(link(link, "true".equals(p.get("withHeaders")))); return Unit.INSTANCE; }, c));
                     emit(event("links_returned", "value", String.valueOf(r), "count", n[0]));
                     return n[0] > 0;
                 }
@@ -484,7 +501,88 @@ public final class Main {
 
     // Plain properties of a result object (SearchResponse, LoadResponse, ExtractorLink, SubtitleFile...).
     private static final String[] PROPS = {"getName", "getUrl", "getApiName", "getType", "getPosterUrl", "getYear",
-            "getPlot", "getDataUrl", "getSource", "getQuality", "getReferer", "isM3u8", "getLang", "getEpisode", "getSeason", "getData"};
+            "getPlot", "getDataUrl", "getSource", "getQuality", "getReferer", "isM3u8", "isDash", "getLang", "getEpisode",
+            "getSeason", "getData", "getDescription", "getRunTime", "getDate", "getScore"};
+
+    /** A LoadResponse: the plain properties plus what the details screen shows. */
+    private static Map<String, Object> details(Object r) {
+        Map<String, Object> m = describe("details", r);
+        for (String p : new String[]{"getBackgroundPosterUrl", "getLogoUrl", "getDuration", "getContentRating",
+                "getComingSoon", "getShowStatus"}) {
+            Object v = tryBean(r, p);
+            if (v != null) m.put(Character.toLowerCase(p.charAt(3)) + p.substring(4), v instanceof Number || v instanceof Boolean ? v : String.valueOf(v));
+        }
+        Object tags = tryBean(r, "getTags");
+        if (tags instanceof List) {
+            List<String> t = new ArrayList<>();
+            for (Object o : (List<?>) tags) t.add(String.valueOf(o));
+            m.put("tags", t);
+        }
+        Object actors = tryBean(r, "getActors");
+        if (actors instanceof List) {
+            List<Object> a = new ArrayList<>();
+            for (Object o : (List<?>) actors) {
+                Object actor = tryBean(o, "getActor");
+                if (actor == null) continue;
+                Map<String, Object> x = new LinkedHashMap<>();
+                x.put("name", tryBean(actor, "getName"));
+                x.put("image", tryBean(actor, "getImage"));
+                Object role = tryBean(o, "getRoleString");
+                if (role == null) role = tryBean(o, "getRole");
+                if (role != null) x.put("role", String.valueOf(role));
+                a.add(x);
+            }
+            m.put("actors", a);
+        }
+        Object recs = tryBean(r, "getRecommendations");
+        if (recs instanceof List) {
+            List<Object> a = new ArrayList<>();
+            for (Object o : (List<?>) recs) {
+                Map<String, Object> x = describe("result", o);
+                x.remove("event");
+                a.add(x);
+            }
+            m.put("recommendations", a);
+        }
+        Object trailers = tryBean(r, "getTrailers");
+        if (trailers instanceof List) {
+            List<Object> a = new ArrayList<>();
+            for (Object o : (List<?>) trailers) a.add(tryBean(o, "getExtractorUrl"));
+            m.put("trailers", a);
+        }
+        Object seasons = tryBean(r, "getSeasonNames");
+        if (seasons instanceof List) {
+            List<Object> a = new ArrayList<>();
+            for (Object o : (List<?>) seasons) {
+                Map<String, Object> x = new LinkedHashMap<>();
+                x.put("season", tryBean(o, "getSeason"));
+                x.put("name", tryBean(o, "getName"));
+                x.put("displaySeason", tryBean(o, "getDisplaySeason"));
+                a.add(x);
+            }
+            m.put("seasons", a);
+        }
+        return m;
+    }
+
+    /**
+     * An ExtractorLink. Header values are needed to play some links (Referer, User-Agent, cookies) and go
+     * to the app only when it asks (withHeaders, service mode); the one-shot mode used by the probe logs
+     * its output and gets header names only.
+     */
+    private static Map<String, Object> link(Object l, boolean withHeaders) {
+        Map<String, Object> m = describe("link", l);
+        Object type = tryBean(l, "getType");
+        if (type != null) m.put("linkType", String.valueOf(type));
+        Object headers = tryBean(l, "getHeaders");
+        if (withHeaders && headers instanceof Map) {
+            Map<String, Object> h = new LinkedHashMap<>();
+            for (Map.Entry<?, ?> e : ((Map<?, ?>) headers).entrySet()) h.put(String.valueOf(e.getKey()), String.valueOf(e.getValue()));
+            m.remove("headerNames");
+            m.put("headers", h);
+        }
+        return m;
+    }
 
     private static Map<String, Object> describe(String kind, Object o) {
         Map<String, Object> m = event(kind, "class", o.getClass().getName());

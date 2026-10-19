@@ -223,9 +223,13 @@ final class Service {
     }
 
     private static void provider(MainAPI api) {
+        List<String> sections = new ArrayList<>();
+        for (com.lagradost.cloudstream3.MainPageData d : api.getMainPage()) sections.add(d.getName());
+        List<String> types = new ArrayList<>();
+        for (Object t : api.getSupportedTypes()) types.add(String.valueOf(t));
         Main.emit(Main.event("provider", "name", api.getName(), "plugin", api.getSourcePlugin(), "mainUrl", api.getMainUrl(),
                 "lang", api.getLang(), "hasMainPage", api.getHasMainPage(), "hasQuickSearch", api.getHasQuickSearch(),
-                "supportedTypes", String.valueOf(api.getSupportedTypes())));
+                "supportedTypes", types, "mainPage", sections));
     }
 
     /** By provider name (optionally within a plugin), or the plugin's only provider when no name is given. */

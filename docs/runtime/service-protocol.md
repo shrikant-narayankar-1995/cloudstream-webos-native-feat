@@ -25,11 +25,11 @@ The first line on stdout is `{"event":"ready","protocol":1}`. Plugin and runtime
 |---|---|---|
 | `load` | `plugin` (path), `sha256` (required) | `plugin`, `resources`, `compat`, `settings`, `provider`…, `loaded` (`providers` = count; 0 for settings-only plugins) |
 | `unload` | `plugin` | as CloudStream's `unloadPlugin`: `beforeUnload`, providers and extractors removed |
-| `providers` | | one `provider` event per loaded provider (with its `plugin`) |
+| `providers` | | one `provider` event per loaded provider (with its `plugin`, `supportedTypes`, `mainPage` section names) |
 | `search` | `provider` and/or `plugin`, `query`, [`limit`] | `result`…, `count` / `empty` |
-| `mainpage` | `provider`, [`limit`] | `section`, `result`… |
-| `details` | `provider`, `url`, [`limit`] | `details`, `episode`… |
-| `links` | `provider`, `url` (the data from details) | `link`…, `subtitle`…, `links_returned` |
+| `mainpage` | `provider`, [`section` index into the provider's `mainPage` list], [`page`], [`limit`] | `section` (`name`, `index`, `page`, `horizontal`, `hasNext`), `result`… |
+| `details` | `provider`, `url`, [`limit`] | `details` (plain properties plus `backgroundPosterUrl`, `logoUrl`, `duration`, `score`, `tags`, `actors`, `recommendations`, `trailers`, `seasons`, `showStatus`), `episode`… (`dub` for anime episode lists) |
+| `links` | `provider`, `url` (the data from details), [`withHeaders`] | `link`… (`linkType`, `quality`, `referer`; header values only with `withHeaders`, names otherwise), `subtitle`…, `links_returned` |
 | `settings` | `plugin` | `dialog`… (see dialog-protocol.md) |
 | `cancel` | `target` (a request id) | the target ends with `error` (`Cancelled`) and `done ok:false` |
 | `shutdown` | | waits for earlier requests, then exits |
