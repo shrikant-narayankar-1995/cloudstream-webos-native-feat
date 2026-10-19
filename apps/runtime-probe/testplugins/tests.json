@@ -1,17 +1,11 @@
 [
-  {"label": "dailymotion search", "plugin": "DailymotionProvider.cs3",
-   "sha256": "9036525a64e8b3c8fe04f94e9fe89a744c13d69af684ed0d2ad2a7eb0f332cd9",
-   "args": ["--op", "search", "--query", "nasa", "--limit", "3"]},
-  {"label": "librivox search", "plugin": "LibriVoxAudiobook.cs3",
-   "sha256": "71e7aac096b706b69c53cc2122750ff114e3274741f5807d866f37be1819a54b",
-   "args": ["--op", "search", "--query", "Pride and Prejudice", "--limit", "2"]},
-  {"label": "librivox details", "plugin": "LibriVoxAudiobook.cs3",
-   "sha256": "71e7aac096b706b69c53cc2122750ff114e3274741f5807d866f37be1819a54b",
-   "args": ["--op", "details", "--url", "https://librivox.org/pride-and-prejudice-by-jane-austen/", "--limit", "2"]},
-  {"label": "librivox links", "plugin": "LibriVoxAudiobook.cs3",
-   "sha256": "71e7aac096b706b69c53cc2122750ff114e3274741f5807d866f37be1819a54b",
-   "args": ["--op", "links", "--url", "https://www.archive.org/download/pride_and_prejudice_librivox/prideandprejudice_01-03_austen.mp3"]},
-  {"label": "internetarchive search", "plugin": "InternetArchiveProvider.cs3",
-   "sha256": "54f3de560bebeff2e4a10d1163f6146313c59061d21c3a230125611f01b531eb",
-   "args": ["--op", "search", "--query", "nosferatu", "--limit", "2"]}
+  {"label": "dailymotion search", "plugin": "DailymotionProvider.cs3", "sha256": "9036525a64e8b3c8fe04f94e9fe89a744c13d69af684ed0d2ad2a7eb0f332cd9", "args": ["--op", "search", "--query", "nasa", "--limit", "3"]},
+  {"label": "librivox search", "plugin": "LibriVoxAudiobook.cs3", "sha256": "71e7aac096b706b69c53cc2122750ff114e3274741f5807d866f37be1819a54b", "args": ["--op", "search", "--query", "Pride and Prejudice", "--limit", "2"]},
+  {"label": "librivox details", "plugin": "LibriVoxAudiobook.cs3", "sha256": "71e7aac096b706b69c53cc2122750ff114e3274741f5807d866f37be1819a54b", "args": ["--op", "details", "--url", "https://librivox.org/pride-and-prejudice-by-jane-austen/", "--limit", "2"]},
+  {"label": "librivox links", "plugin": "LibriVoxAudiobook.cs3", "sha256": "71e7aac096b706b69c53cc2122750ff114e3274741f5807d866f37be1819a54b", "args": ["--op", "links", "--url", "https://www.archive.org/download/pride_and_prejudice_librivox/prideandprejudice_01-03_austen.mp3"]},
+  {"label": "internetarchive search", "plugin": "InternetArchiveProvider.cs3", "sha256": "54f3de560bebeff2e4a10d1163f6146313c59061d21c3a230125611f01b531eb", "args": ["--op", "search", "--query", "nosferatu", "--limit", "2"]},
+  {"label": "conformance search (resources)", "plugin": "CswebConformance.cs3", "sha256": "579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632", "args": ["--op", "search", "--query", "*"]},
+  {"label": "conformance details", "plugin": "CswebConformance.cs3", "sha256": "579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632", "args": ["--op", "details", "--url", "https://conformance.invalid/item/0"]},
+  {"label": "conformance settings (dialog answered)", "plugin": "CswebConformance.cs3", "sha256": "579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632", "args": ["--op", "settings", "--ui", "stdin"], "stdin": "{\"dialog\":1,\"fields\":{\"name_field\":\"My Conformance\",\"enabled_box\":true},\"button\":\"positive\"}\n"},
+  {"label": "conformance search after settings", "plugin": "CswebConformance.cs3", "sha256": "579d0d25a70f9190ab7c27abc0d67ea0e1e8bf273923a1cecbd7e82bf8868632", "args": ["--op", "search", "--query", "*"]}
 ]

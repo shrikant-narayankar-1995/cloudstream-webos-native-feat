@@ -52,14 +52,30 @@ struct RunResult {
     long maxrss_kb = 0;  // peak resident set of the child (wait4 rusage)
 };
 
-// fork + execve with a fixed environment; stdout and stderr captured; killed after the timeout.
+// fork + execve with a fixed environment; stdin from `input` (at most one pipe buffer) or /dev/null,
+// stdout and stderr captured; killed after the timeout.
 RunResult run(const std::string &label, const std::string &path, const std::vector<std::string> &args,
-              const std::vector<std::string> &env, int timeout_ms = kChildTimeoutMs) {
+              const std::vector<std::string> &env, int timeout_ms = kChildTimeoutMs, const std::string &input = {}) {
     RunResult r{label, {}, {}};
     const auto started = std::chrono::steady_clock::now();
     int fds[2];
     if (pipe2(fds, O_CLOEXEC) != 0) {
         r.status = std::string("pipe failed: ") + std::strerror(errno);
+        return r;
+    }
+    int stdin_pipe[2];
+    if (input.size() > 16 * 1024 || pipe2(stdin_pipe, O_CLOEXEC) != 0) {
+        r.status = input.size() > 16 * 1024 ? "stdin text too long" : std::string("pipe failed: ") + std::strerror(errno);
+        close(fds[0]);
+        close(fds[1]);
+        return r;
+    }
+    // The whole input fits in the pipe buffer, so writing it before the child runs cannot block.
+    const bool written = input.empty() || write(stdin_pipe[1], input.data(), input.size()) == static_cast<ssize_t>(input.size());
+    close(stdin_pipe[1]);
+    if (!written) {
+        r.status = std::string("stdin write failed: ") + std::strerror(errno);
+        for (int fd : {fds[0], fds[1], stdin_pipe[0]}) close(fd);
         return r;
     }
     std::vector<char *> argv{const_cast<char *>(path.c_str())};
@@ -74,9 +90,11 @@ RunResult run(const std::string &label, const std::string &path, const std::vect
         r.status = std::string("fork failed: ") + std::strerror(errno);
         close(fds[0]);
         close(fds[1]);
+        close(stdin_pipe[0]);
         return r;
     }
     if (pid == 0) {  // only async-signal-safe calls until execve
+        dup2(stdin_pipe[0], STDIN_FILENO);
         dup2(fds[1], STDOUT_FILENO);
         dup2(fds[1], STDERR_FILENO);
         execve(path.c_str(), argv.data(), envp.data());
@@ -89,6 +107,7 @@ RunResult run(const std::string &label, const std::string &path, const std::vect
         _exit(127);
     }
     close(fds[1]);
+    close(stdin_pipe[0]);
     std::string out;
     const auto deadline = std::chrono::steady_clock::now() + std::chrono::milliseconds(timeout_ms);
     bool timed_out = false;
@@ -186,7 +205,9 @@ void run_runtime_tests(const std::string &app_dir, const std::string &tmp, std::
                                       "--plugin", app_dir + "/testplugins/" + plugin, "--sha256", t.value("sha256", ""),
                                       "--timeout", "200"};
         for (const auto &a : t["args"]) if (a.is_string()) args.push_back(a.get<std::string>());
-        results.push_back(run("rt " + t.value("label", plugin), rt + "/lib/" + kLoader, args, env, kRuntimeTimeoutMs));
+        // "stdin": the answers the native app would send (e.g. to a settings dialog, --ui stdin).
+        results.push_back(run("rt " + t.value("label", plugin), rt + "/lib/" + kLoader, args, env, kRuntimeTimeoutMs,
+                              t.value("stdin", "")));
     }
 }
 

@@ -26,7 +26,7 @@ wnk_add_webos_package(
         TARGET wnk-csprobe
         APPID org.csweb.runtimeprobe
         TITLE "CS runtime probe"
-        VERSION 0.2.0
+        VERSION 0.3.0
         VENDOR "cloudstream-webos"
         ICON "${CMAKE_CURRENT_SOURCE_DIR}/icon.png"
         LARGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/largeIcon.png"
