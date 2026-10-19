@@ -116,6 +116,10 @@ PlayerScreen::PlayerScreen(app::Services &s, app::PlayTarget target)
     next_ = &buttons.add<PillButton>("Next episode", "skip", PillButton::Style::Glass, [this](Ui &ui) { play_next(ui); }, 64);
     next_->name = "player.next";
     next_->set_visible(!target_.queue.empty());
+    // isThereEpisodes: more than one episode in the list.
+    auto &eps = buttons.add<PillButton>("Episodes", "more", PillButton::Style::Glass, [this](Ui &ui) { open_episodes(ui); }, 64);
+    eps.name = "player.episodes";
+    eps.set_visible(target_.episodes.size() > 1);
     bar_->set_visible(false);
 
     spinner_ = &add<Spinner>(96);
@@ -582,6 +586,12 @@ void PlayerScreen::save_position() {
 
 void PlayerScreen::play_next(Ui &ui) {
     if (target_.queue.empty()) return;
+    // The episode after this one; with the full list known, by position in it.
+    if (target_.index + 1 < target_.episodes.size()) {
+        WNK_LOGI(kCat, "player: next episode");
+        play_episode(ui, target_.index + 1);
+        return;
+    }
     save_position();
     app::PlayTarget t = target_;
     const library::EpisodeRef n = t.queue.front();
@@ -592,6 +602,45 @@ void PlayerScreen::play_next(Ui &ui) {
     t.episode = n.episode;
     WNK_LOGI(kCat, "player: next episode");
     s_.router->replace_player(ui, t);
+}
+
+void PlayerScreen::play_episode(Ui &ui, size_t index) {
+    // GeneratorPlayer.loadThisEpisode: the player starts over with that episode.
+    if (index >= target_.episodes.size()) return;
+    save_position();
+    app::PlayTarget t = target_;
+    const library::EpisodeRef &n = t.episodes[index];
+    t.index = index;
+    t.data = n.data;
+    t.subtitle = n.name;
+    t.season = n.season;
+    t.episode = n.episode;
+    t.queue.assign(t.episodes.begin() + static_cast<std::ptrdiff_t>(index) + 1, t.episodes.end());
+    s_.router->replace_player(ui, t);
+}
+
+void PlayerScreen::open_episodes(Ui &ui) {
+    auto d = std::make_unique<Dialog>("Episodes");
+    Dialog *dlg = d.get();
+    auto &scroll = d->body().add<ScrollView>();
+    scroll.set_height(Dim::fixed(600));
+    auto &list = scroll.add<Column>(8);
+    View *current = nullptr;
+    for (size_t i = 0; i < target_.episodes.size(); i++) {
+        const auto &e = target_.episodes[i];
+        const auto p = s_.library->get().view_pos(target_.provider, e.data);
+        std::string text = e.name;
+        if (p && p->duration_ms > 0) text += "  ·  " + std::to_string(static_cast<int>(library::visual_progress(*p) * 100)) + " %";
+        auto &b = list.add<PillButton>(text, i == target_.index ? "play" : "", PillButton::Style::Glass, [this, dlg, i](Ui &u) {
+            dlg->dismiss(u);
+            if (i != target_.index) play_episode(u, i);
+        }, 60);
+        b.name = "episodes." + std::to_string(i);
+        if (i == target_.index) current = &b;
+    }
+    d->add_button("Close");
+    ui.show_dialog(std::move(d));
+    if (current) ui.focus(current);
 }
 
 void PlayerScreen::pause_for_background() {

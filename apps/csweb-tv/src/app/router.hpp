@@ -21,10 +21,13 @@ namespace csweb::app {
 
 // What to play: the provider and the data for loadLinks (an episode's data or a movie's dataUrl),
 // the show it belongs to (for resume and bookmarks) and the episodes after it, in order (the player
-// plays the next one when this one ends, and resume moves to it past 90 %).
+// plays the next one when this one ends, and resume moves to it past 90 %). `episodes` is the whole
+// list this one is in (GeneratorPlayer's allMeta), for the player's Episodes overlay.
 struct PlayTarget {
     library::Show show;
     std::vector<library::EpisodeRef> queue;
+    std::vector<library::EpisodeRef> episodes;
+    size_t index = 0;  // this one in `episodes`
     std::string provider;
     std::string data;
     std::string title;      // the show or movie

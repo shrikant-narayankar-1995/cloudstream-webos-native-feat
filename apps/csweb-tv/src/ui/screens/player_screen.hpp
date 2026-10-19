@@ -12,7 +12,8 @@
 //     (setViewPosAndResume), and plays the next episode when one ends (autoplay_next_key);
 //   - subtitles in the chosen language turn on by themselves (autoSelectSubtitles), can be delayed
 //     or advanced (subtitle offset), and use the size and style from Settings;
-//   - Left/Right seek by the times set for controls shown and hidden (FullScreenPlayer).
+//   - Left/Right seek by the times set for controls shown and hidden (FullScreenPlayer);
+//   - Episodes lists the episodes this one is among, the current one focused (showEpisodesOverlay).
 // Playback is the kit's: PlaybackController with the TV's decoder under a transparent UI.
 #pragma once
 
@@ -69,6 +70,8 @@ class PlayerScreen : public wnk::ui::Screen {
     int64_t seek_us(bool controls_hidden) const;
     void save_position();
     void play_next(wnk::ui::Ui &ui);
+    void play_episode(wnk::ui::Ui &ui, size_t index);
+    void open_episodes(wnk::ui::Ui &ui);
     std::string link_label(const runtime::Link &l) const;
 
     app::Services &s_;

@@ -292,7 +292,11 @@ void DetailsScreen::play(Ui &ui, const runtime::Episode *ep) {
             bool after = false;
             for (const auto &e : it->second) {
                 if (after) t.queue.push_back(episode_ref(e));
-                if (&e == ep || e.data == ep->data) after = true;
+                if (!after && (&e == ep || e.data == ep->data)) {
+                    after = true;
+                    t.index = t.episodes.size();
+                }
+                t.episodes.push_back(episode_ref(e));
             }
         }
         t.data = ep->data;
