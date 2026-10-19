@@ -31,6 +31,10 @@ search/details/links results inside the bundled ART runtime on the TV.
   ids, concurrent operations, cancel/timeout, dialog answers routed by dialog. On the TV 14 requests ran in
   11 s in one process (later loads ~0.1-0.2 s, operations network-bound) vs 7-10 s per one-shot process.
 
+- Ahead-of-time compiled runtime (docs/runtime/aot.md): boot image + verified class path built on the host
+  with the runtime's own dex2oat (aarch64 under qemu-user). On the TV: one-shot local operation 7.2 → 1.7 s,
+  peak RSS 113 → 57 MiB; service first load 3.45 → 1.55 s, 14-request session 11.0 → 4.1 s.
+
 ## Commands executed (this phase)
 | Command | Exit | Notes |
 |---|---:|---|
@@ -45,7 +49,7 @@ search/details/links results inside the bundled ART runtime on the TV.
 | `tools/install.sh … --private-runtime runtime-aarch64`, `launch.sh`, `logs.sh` | 0 | TV run |
 
 ## Tests
-- Passed: compat 165; TV probe 0.4.0 runtime tests 9/10 (conformance 4/4, service session 14/14); project tools 8; kit tool tests 33; kit host suite incl. csweb probe test; TV runtime tests 4/5
+- Passed: compat 165; TV probe 0.5.0 runtime tests 11/12 (AOT and imageless; conformance 4/4, service sessions 14/14); project tools 8; kit tool tests 33; kit host suite incl. csweb probe test; TV runtime tests 4/5
 - Failed: TV InternetArchive search (wolfSSL vs archive.org chain, known runtime defect)
 - Skipped: provider operations for plugins sourcing unlicensed content (by decision); webosbrew-ipk-verify (not installed)
 
@@ -55,13 +59,13 @@ search/details/links results inside the bundled ART runtime on the TV.
 - Plugin hashes: `evidence/plugins/*/SHA256SUMS`; probe ipk `evidence/baseline/probe-0.2-ipk-sha256.txt`
 
 ## Risks/blockers
-- First request in a service still pays ~3.3 s of runtime warm-up; memory ~125 MiB for the service.
+- First plugin load in a service ~1.5 s; service memory ~75 MiB. Package 76 MB (AOT +22 MB); the boot image
+  is tied to the app id through the stable path /tmp/<app id>/rt.
 - TLS failures for some chains (archive.org); WebView, custom/AndroidX views and fragments unsupported.
 - Headless-Activity reload verified on host only (no legitimate plugin needs it; not exercised on the TV).
 - Licence audit of the bundled runtime still metadata-only (needed before any redistribution).
 - Kit patches 0001/0002 live in this repo; consider proposing 0002 upstream.
 
 ## Next tasks
-1. Host-precompiled arm64 boot image / AOT for csweb-host.dex and the CloudStream jar to cut the 3.3 s warm-up.
-2. Fix TLS for archive.org in the runtime layer (BouncyCastle JSSE provider or wolfSSL build).
-3. Phase 2: native app skeleton on the kit (repositories, plugin install with hash checks, search UI) using the runtime service.
+1. Fix TLS for archive.org in the runtime layer (BouncyCastle JSSE provider or wolfSSL build).
+2. Phase 2: native app skeleton on the kit (repositories, plugin install with hash checks, search UI) using the runtime service.

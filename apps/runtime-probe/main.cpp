@@ -172,10 +172,41 @@ bool copy_file(const std::string &from, const std::string &to, std::string &erro
 
 // Unmodified CloudStream plugins on the bundled ART (runtime-<arch>/, see runtime/make_dist.py), one
 // process per operation: imageless boot and verify-only compilation, so nothing is compiled to tmpfs.
+// Ahead-of-time compiled runtime (runtime/make-aot.sh): the boot image and odex files name the runtime by
+// a stable path, <runtime dir>/rt, a symlink to the installed runtime. Returns that path and the extra
+// VM options, or empty when the runtime has no AOT files for this path (ART then boots imageless).
+struct Aot {
+    std::string base;
+    std::vector<std::string> options;
+    std::string status;
+};
+
+Aot prepare_aot(const std::string &rt, const std::string &tmp) {
+    std::ifstream f(rt + "/AOT.json");
+    if (!f) return {{}, {}, "no AOT.json"};
+    const auto aot = nlohmann::json::parse(f, nullptr, false);
+    const std::string link = tmp + "/rt";
+    if (!aot.is_object() || aot.value("stable_path", "") != link || !aot.contains("bootclasspath")) {
+        return {{}, {}, "AOT.json is for " + (aot.is_object() ? aot.value("stable_path", "?") : std::string("?"))};
+    }
+    struct stat st {};
+    if (lstat(link.c_str(), &st) == 0) {
+        if (!S_ISLNK(st.st_mode)) return {{}, {}, link + " exists and is not a symlink"};  // never replace a real file
+        if (unlink(link.c_str()) != 0) return {{}, {}, "unlink " + link + ": " + std::strerror(errno)};
+    }
+    if (symlink(rt.c_str(), link.c_str()) != 0) return {{}, {}, "symlink " + link + ": " + std::strerror(errno)};
+    std::string bcp;
+    for (const auto &j : aot["bootclasspath"]) {
+        if (!j.is_string() || j.get<std::string>().find("..") != std::string::npos) return {{}, {}, "bad bootclasspath entry"};
+        bcp += (bcp.empty() ? "" : ":") + link + "/" + j.get<std::string>();
+    }
+    return {link, {"-Ximage:" + link + "/" + aot.value("image", "boot/boot.art"), "-Xbootclasspath:" + bcp}, "ok"};
+}
+
 void run_runtime_tests(const std::string &app_dir, const std::string &tmp, std::vector<RunResult> &results) {
-    const std::string rt = app_dir + "/" + kRuntimeDir;
+    const std::string installed = app_dir + "/" + kRuntimeDir;
     std::ifstream spec(app_dir + "/testplugins/tests.json");
-    if (access((rt + "/lib/" + kLoader).c_str(), X_OK) != 0 || !spec) {
+    if (access((installed + "/lib/" + kLoader).c_str(), X_OK) != 0 || !spec) {
         results.push_back({"runtime", "not bundled in this build", {}});
         return;
     }
@@ -184,22 +215,28 @@ void run_runtime_tests(const std::string &app_dir, const std::string &tmp, std::
         results.push_back({"runtime", "testplugins/tests.json is not a JSON array", {}});
         return;
     }
+    const Aot aot = prepare_aot(installed, tmp);
+    results.push_back({"runtime aot", aot.status, {}});
     std::string icu;
-    if (std::ifstream v(rt + "/ICU_VERSION"); v) std::getline(v, icu);
-    const std::vector<std::string> env{"PATH=" + rt + "/bin", "ANDROID_DATA=" + tmp + "/art", "HOME=" + tmp + "/home",
-                                       "ICU_DATA=" + rt + "/usr/share/icu/" + icu};
+    if (std::ifstream v(installed + "/ICU_VERSION"); v) std::getline(v, icu);
     mkdir((tmp + "/art").c_str(), 0700);
     mkdir((tmp + "/home").c_str(), 0700);
     mkdir((tmp + "/plugin-data").c_str(), 0700);
-    const std::string libs = rt + "/usr/lib:" + rt + "/usr/lib/art:" + rt + "/usr/lib/java/dex/art/natives:" + rt + "/lib";
     for (const auto &t : tests) {
         if (!t.is_object()) continue;
-        const std::vector<std::string> vm{"--library-path", libs, rt + "/usr/bin/dalvikvm", "-Xmx256m", "-Xnoimage-dex2oat",
-                                          "-Xcompiler-option", "--compiler-filter=verify",
-                                          "-Djavax.net.ssl.trustStore=" + rt + "/trust/cacerts",
-                                          "-Djava.library.path=" + rt + "/usr/lib/java/dex/art/natives",
-                                          "-cp", rt + "/csweb/csweb-host.dex:" + rt + "/csweb/cloudstream.jar",
-                                          "org.csweb.loader.Main", "--data", tmp + "/plugin-data"};
+        // "aot": false runs a test imageless from the installed path, for comparison.
+        const bool use_aot = !aot.base.empty() && t.value("aot", true);
+        const std::string rt = use_aot ? aot.base : installed;
+        const std::vector<std::string> env{"PATH=" + rt + "/bin", "ANDROID_DATA=" + tmp + "/art", "HOME=" + tmp + "/home",
+                                           "ICU_DATA=" + rt + "/usr/share/icu/" + icu};
+        const std::string libs = rt + "/usr/lib:" + rt + "/usr/lib/art:" + rt + "/usr/lib/java/dex/art/natives:" + rt + "/lib";
+        std::vector<std::string> vm{"--library-path", libs, rt + "/usr/bin/dalvikvm", "-Xmx256m", "-Xnoimage-dex2oat",
+                                    "-Xcompiler-option", "--compiler-filter=verify",
+                                    "-Djavax.net.ssl.trustStore=" + rt + "/trust/cacerts",
+                                    "-Djava.library.path=" + rt + "/usr/lib/java/dex/art/natives",
+                                    "-cp", rt + "/csweb/csweb-host.dex:" + rt + "/csweb/cloudstream.jar",
+                                    "org.csweb.loader.Main", "--data", tmp + "/plugin-data"};
+        if (use_aot) vm.insert(vm.begin() + 4, aot.options.begin(), aot.options.end());
         if (t.value("service", false)) {
             // One long-lived runtime serving the scripted requests in "stdin"; @TESTPLUGINS@ is this
             // package's testplugins/ directory. The session ends at end of input.
@@ -208,7 +245,8 @@ void run_runtime_tests(const std::string &app_dir, const std::string &tmp, std::
             for (size_t at; (at = input.find(marker)) != std::string::npos;) input.replace(at, marker.size(), dir);
             std::vector<std::string> args = vm;
             args.insert(args.end(), {"--serve", "1"});
-            results.push_back(run("rt " + t.value("label", "service"), rt + "/lib/" + kLoader, args, env, kRuntimeTimeoutMs, input));
+            results.push_back(run("rt " + t.value("label", "service") + (use_aot ? "" : " [imageless]"), rt + "/lib/" + kLoader, args,
+                                  env, kRuntimeTimeoutMs, input));
             continue;
         }
         if (!t.value("plugin", "").size() || !t.contains("args") || !t["args"].is_array()) continue;
@@ -219,8 +257,8 @@ void run_runtime_tests(const std::string &app_dir, const std::string &tmp, std::
                                  "--timeout", "200"});
         for (const auto &a : t["args"]) if (a.is_string()) args.push_back(a.get<std::string>());
         // "stdin": the answers the native app would send (e.g. to a settings dialog, --ui stdin).
-        results.push_back(run("rt " + t.value("label", plugin), rt + "/lib/" + kLoader, args, env, kRuntimeTimeoutMs,
-                              t.value("stdin", "")));
+        results.push_back(run("rt " + t.value("label", plugin) + (use_aot ? "" : " [imageless]"), rt + "/lib/" + kLoader, args,
+                              env, kRuntimeTimeoutMs, t.value("stdin", "")));
     }
 }
 

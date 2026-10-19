@@ -3,6 +3,7 @@
 """Assemble a relocatable plugin runtime from an Alpine root (runtime/make-rootfs.sh).
 
 usage: make_dist.py <rootfs dir> <arch: aarch64|x86_64> <out dir, by convention runtime/dist/runtime-<arch>>
+       make_dist.py --manifest <out dir>     rewrite MANIFEST.json after runtime/make-aot.sh
 
 Layout of <out dir> (every file a regular file, no symlinks, so it can travel in an ipk):
   lib/ld-musl-<arch>.so.1            musl dynamic loader (the runtime is started through it)
@@ -19,6 +20,7 @@ Layout of <out dir> (every file a regular file, no symlinks, so it can travel in
                                      Java resources (META-INF/services, *.kotlin_builtins...), byte for byte,
                                      stored 4-byte aligned so ART maps the DEX instead of copying it
   MANIFEST.json                      every file with size and SHA-256, plus the Alpine package list
+Added by runtime/make-aot.sh (optional): boot/<isa>/ boot image, csweb/oat/<isa>/ odex files, AOT.json.
 """
 import hashlib
 import json
@@ -130,21 +132,35 @@ def main(rootfs, arch, out):
     jar = os.path.join(out, "csweb", "cloudstream.jar")
     repack_classpath_jar(apk, jar)
 
+    write_manifest(out, {"arch": arch, "alpine_packages": open(os.path.join(HERE, f"rootfs-{arch}.manifest")).read().split(),
+                         "cloudstream_apk_sha256": sha256(apk)})
+
+
+def write_manifest(out, base):
     files = []
     for d, _, names in os.walk(out):
         for n in names:
             p = os.path.join(d, n)
-            files.append({"path": os.path.relpath(p, out), "size": os.path.getsize(p), "sha256": sha256(p)})
+            if os.path.relpath(p, out) != "MANIFEST.json":
+                files.append({"path": os.path.relpath(p, out), "size": os.path.getsize(p), "sha256": sha256(p)})
     files.sort(key=lambda f: f["path"])
-    manifest = {"arch": arch, "total_bytes": sum(f["size"] for f in files), "files": files,
-                "alpine_packages": open(os.path.join(HERE, f"rootfs-{arch}.manifest")).read().split(),
-                "cloudstream_apk_sha256": sha256(apk)}
+    manifest = dict(base, total_bytes=sum(f["size"] for f in files), files=files)
+    aot = os.path.join(out, "AOT.json")
+    manifest["aot"] = json.load(open(aot)) if os.path.exists(aot) else None
     with open(os.path.join(out, "MANIFEST.json"), "w") as f:
         json.dump(manifest, f, indent=1)
-    print(f"{arch}: {len(files)} files, {manifest['total_bytes'] / 2**20:.1f} MiB -> {out}")
+    print(f"{base['arch']}: {len(files)} files, {manifest['total_bytes'] / 2**20:.1f} MiB -> {out}")
+
+
+def rewrite_manifest(out):
+    old = json.load(open(os.path.join(out, "MANIFEST.json")))
+    write_manifest(out, {k: old[k] for k in ("arch", "alpine_packages", "cloudstream_apk_sha256")})
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
+    if len(sys.argv) == 3 and sys.argv[1] == "--manifest":
+        rewrite_manifest(sys.argv[2])
+    elif len(sys.argv) == 4:
+        main(*sys.argv[1:])
+    else:
         sys.exit(__doc__)
-    main(*sys.argv[1:])

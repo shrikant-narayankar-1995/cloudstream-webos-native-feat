@@ -1,0 +1,11 @@
+{
+ "stable_path": "/tmp/org.csweb.runtimeprobe/rt",
+ "isa": "arm64",
+ "instruction_set_features": "-a53,-crc,-lse,-fp16,-dotprod",
+ "image": "boot/boot.art",
+ "bootclasspath": ["usr/lib/java/dex/art/core-oj-hostdex.jar", "usr/lib/java/dex/art/apachehttp-hostdex.jar", "usr/lib/java/dex/art/apache-xml-hostdex.jar", "usr/lib/java/dex/art/bouncycastle-hostdex.jar", "usr/lib/java/dex/art/core-junit-hostdex.jar", "usr/lib/java/dex/art/core-libart-hostdex.jar", "usr/lib/java/dex/art/hamcrest-hostdex.jar", "usr/lib/java/dex/art/junit-runner-hostdex.jar", "usr/lib/java/dex/art/okhttp-hostdex.jar", "usr/lib/java/dex/art/wolfssljni-hostdex.jar"],
+ "classpath": ["csweb/csweb-host.dex", "csweb/cloudstream.jar"],
+ "classpath_filter": "verify",
+ "dex2oat_sha256": "4a5a5f147837a3c3769edf5261a0b686ba8f66ac0759c8eefc812bb5f68235eb",
+ "qemu": "qemu-aarch64 version 11.1.2"
+}
