@@ -67,6 +67,7 @@ SettingsScreen::SettingsScreen(app::Services &s) : Screen("Settings"), s_(s) {
     media_ = &list.add<ValueRow>("Preferred media", "", [this](Ui &ui) { choose_media(ui); });
     media_->set_description("Which sources Home and Search use");
     media_->name = "settings.media";
+    list.add<ValueRow>("Test extensions", "", [this](Ui &ui) { s_.router->open_provider_tests(ui); }).name = "settings.tests";
 
     section(list, "Player");
     {

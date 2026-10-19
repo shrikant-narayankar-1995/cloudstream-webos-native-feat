@@ -47,6 +47,7 @@ class Router {
     // From the player: replaces it with a player for `target` (the next episode).
     void replace_player(wnk::ui::Ui &ui, const PlayTarget &target);
     void open_extensions(wnk::ui::Ui &ui);
+    void open_provider_tests(wnk::ui::Ui &ui);
     void open_repository(wnk::ui::Ui &ui, const plugins::RepositoryData &repo);
     void back(wnk::ui::Ui &ui);
 

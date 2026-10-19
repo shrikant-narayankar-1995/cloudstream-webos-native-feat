@@ -6,6 +6,7 @@
 #include "ui/screens/home_screen.hpp"
 #include "ui/screens/library_screen.hpp"
 #include "ui/screens/player_screen.hpp"
+#include "ui/screens/provider_test_screen.hpp"
 #include "ui/screens/search_screen.hpp"
 #include "ui/screens/settings_screen.hpp"
 
@@ -43,6 +44,8 @@ void Router::replace_player(wnk::ui::Ui &ui, const PlayTarget &target) {
 }
 
 void Router::open_extensions(wnk::ui::Ui &ui) { nav_.push(ui, std::make_unique<ui::ExtensionsScreen>(s_)); }
+
+void Router::open_provider_tests(wnk::ui::Ui &ui) { nav_.push(ui, std::make_unique<ui::ProviderTestScreen>(s_)); }
 
 void Router::open_repository(wnk::ui::Ui &ui, const plugins::RepositoryData &repo) {
     nav_.push(ui, std::make_unique<ui::RepositoryScreen>(s_, repo));
