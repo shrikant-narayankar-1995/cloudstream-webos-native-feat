@@ -25,7 +25,7 @@ The first line on stdout is `{"event":"ready","protocol":1}`. Plugin and runtime
 |---|---|---|
 | `load` | `plugin` (path), `sha256` (required) | `plugin`, `resources`, `compat`, `settings`, `provider`…, `loaded` (`providers` = count; 0 for settings-only plugins) |
 | `unload` | `plugin` | as CloudStream's `unloadPlugin`: `beforeUnload`, providers and extractors removed |
-| `providers` | | one `provider` event per loaded provider (with its `plugin`, `supportedTypes`, `mainPage` section names) |
+| `providers` | | one `provider` event per loaded provider (with its `plugin`, `supportedTypes`, `mainPage` section names; plus, read by reflection and `null` when the API lacks them: `sequentialMainPage`, `sequentialMainPageDelay`, `sequentialMainPageScrollDelay`, `mainPageTimeoutMs`, `usesWebView`, `hasDownloadSupport`, `instantLinkLoading`) |
 | `search` | `provider` and/or `plugin`, `query`, [`limit`] | `result`…, `count` / `empty` |
 | `mainpage` | `provider`, [`section` index into the provider's `mainPage` list], [`page`], [`limit`] | `section` (`name`, `index`, `page`, `horizontal`, `hasNext`), `result`… |
 | `details` | `provider`, `url`, [`limit`] | `details` (plain properties plus `backgroundPosterUrl`, `logoUrl`, `duration`, `score`, `tags`, `actors`, `recommendations`, `trailers`, `seasons`, `showStatus`), `episode`… (`dub` for anime episode lists) |

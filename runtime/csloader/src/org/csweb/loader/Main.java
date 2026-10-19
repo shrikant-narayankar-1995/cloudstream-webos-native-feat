@@ -602,7 +602,7 @@ public final class Main {
         return m.invoke(o);
     }
 
-    private static Object tryBean(Object o, String getter) {
+    static Object tryBean(Object o, String getter) {
         try {
             return bean(o, getter);
         } catch (Throwable t) {

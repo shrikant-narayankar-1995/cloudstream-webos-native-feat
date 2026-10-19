@@ -229,7 +229,16 @@ final class Service {
         for (Object t : api.getSupportedTypes()) types.add(String.valueOf(t));
         Main.emit(Main.event("provider", "name", api.getName(), "plugin", api.getSourcePlugin(), "mainUrl", api.getMainUrl(),
                 "lang", api.getLang(), "hasMainPage", api.getHasMainPage(), "hasQuickSearch", api.getHasQuickSearch(),
-                "supportedTypes", types, "mainPage", sections));
+                "supportedTypes", types, "mainPage", sections,
+                // How CloudStream schedules this provider's main page (APIRepository.getMainPage) and
+                // what it needs; read by reflection so an older API without a field still loads.
+                "sequentialMainPage", Main.tryBean(api, "getSequentialMainPage"),
+                "sequentialMainPageDelay", Main.tryBean(api, "getSequentialMainPageDelay"),
+                "sequentialMainPageScrollDelay", Main.tryBean(api, "getSequentialMainPageScrollDelay"),
+                "mainPageTimeoutMs", Main.tryBean(api, "getGetMainPageTimeoutMs"),
+                "usesWebView", Main.tryBean(api, "getUsesWebView"),
+                "hasDownloadSupport", Main.tryBean(api, "getHasDownloadSupport"),
+                "instantLinkLoading", Main.tryBean(api, "getInstantLinkLoading")));
     }
 
     /** By provider name (optionally within a plugin), or the plugin's only provider when no name is given. */
