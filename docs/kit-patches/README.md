@@ -1,7 +1,7 @@
 # Kit patches
 
-The project builds on Native App Kit `085b06d98f187ba071144ae687d9f845aaed675d` (upstream `main`,
-2026-10-20) **without local changes**. `external/webos-native-app-kit` is a plain checkout of that commit,
+The project builds on Native App Kit `937da4f164486587bd8b9a989ce1888ff9a250d3` (upstream `main`,
+2026-10-21) **without local changes**. `external/webos-native-app-kit` is a plain checkout of that commit,
 made or checked by `tools/fetch-kit.sh` (which holds the pinned commit; CI uses it too):
 
     tools/fetch-kit.sh
@@ -34,3 +34,4 @@ and upstream as a pull request.
 |---|---|---|
 | `HttpClient::send` and `auth::Session::send` are `[[nodiscard]]` (a refused request never calls back; the app's plugin install waited for ever on a URL with a space, fixed in the app in `0d8f40e`) | https://github.com/Native-Webos/webos-native-app-kit/pull/7 | `74f339a` |
 | `e2e.shows.back_cancels_details` accepts any cancel before the slow reply (it failed on CI runners at 1.0-1.3 s) | https://github.com/Native-Webos/webos-native-app-kit/pull/8 | `085b06d` |
+| Live DASH follows new segments by the clock between MPD updates and keeps every rendition of the bitrate ladder listed (stalls with dropped frames, and switches landing up to 30 s in the past, on the LG C1; test stream: `tools/abr-test/`, project PR #7) | https://github.com/Native-Webos/webos-native-app-kit/pull/9 | `937da4f` |
