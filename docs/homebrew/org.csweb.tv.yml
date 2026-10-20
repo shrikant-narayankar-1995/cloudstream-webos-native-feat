@@ -1,0 +1,28 @@
+# DRAFT listing for https://github.com/webosbrew/apps-repo (packages/org.csweb.tv.yml). Not submitted.
+# Before submitting: TV screenshots (public HTTPS URLs), a full (not pre-release) release so that
+# releases/latest has org.csweb.tv.manifest.json, and docs/homebrew/SUBMISSION.md read through.
+title: CSWeb TV
+iconUri: https://raw.githubusercontent.com/sostk/cloudstream-webos-native/main/apps/csweb-tv/packaging/icons/largeIcon.png
+manifestUrl: https://github.com/sostk/cloudstream-webos-native/releases/latest/download/org.csweb.tv.manifest.json
+category: multimedia
+pool: main
+requirements:
+  # Only tested on webOS 6.5.3 (LG OLED65C1).
+  webosRelease: '>=6.0'
+description: |
+  A native webOS app that runs [CloudStream](https://github.com/recloudstream/cloudstream) extensions
+  on the TV itself, with a TV interface for browsing, search, a library and playback.
+
+  **It comes with no content and no extensions.** You add extension repositories yourself, and you
+  are responsible for only adding sources you are allowed to use, such as YouTube, the Internet
+  Archive, an Invidious instance or your own media server.
+
+  - Extensions run unmodified on the TV in a bundled Android runtime (ART); no phone or server needed
+  - Profiles with optional PINs, library and continue watching
+  - HLS and DASH playback with subtitles and audio tracks
+
+  Free software (GPL-3.0-or-later). The package includes the licence notices and source locations
+  of everything it ships.
+# screenshots:
+#   - url: https://raw.githubusercontent.com/sostk/cloudstream-webos-native/main/docs/homebrew/screenshots/home.png
+#     caption: Home
