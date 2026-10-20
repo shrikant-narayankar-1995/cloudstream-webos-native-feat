@@ -64,22 +64,18 @@ jobs:
         working-directory: ${{ env.KIT }}
         run: cmake --build --preset ${{ matrix.preset }} -j"$(nproc)"
 
-      # The kit's end-to-end runs (e2e.*) drive its example apps by timed key scripts; on the runners a
-      # few have missed their timing (Native-Webos/webos-native-app-kit#8), so they get up to two
-      # retries. A test that really fails still fails; the app's own tests run once.
       - name: Test (kit and apps)
         if: matrix.preset != 'host-asan'
         working-directory: ${{ env.KIT }}
-        run: |
-          ctest --preset ${{ matrix.preset }} -j"$(nproc)" -E '^e2e\.'
-          ctest --preset ${{ matrix.preset }} -j"$(nproc)" -R '^e2e\.' --repeat until-pass:3
+        run: ctest --preset ${{ matrix.preset }} -j"$(nproc)"
 
       # The runners have no GPU: Mesa's llvmpipe compiles shaders to machine code at run time, and
       # its allocations from that code reach LeakSanitizer with no module name, so the kit's
       # suppressions (tests/lsan-host.supp, by module) cannot match them. The tests that open a GL
       # context run with leak detection off; AddressSanitizer and UBSan still check them. Every
-      # other test keeps leak detection. The kit's GL runs get up to two retries, as above (under ASan
-      # with software rendering tvui gamepad_navigates has also missed its timing).
+      # other test keeps leak detection. The kit's GL runs drive its example apps by timed key scripts,
+      # and under ASan with software rendering tvui gamepad_navigates has missed its timing; they get
+      # up to two retries. A test that really fails still fails; the app's own tests run once.
       - name: Test (kit and apps, ASan)
         if: matrix.preset == 'host-asan'
         working-directory: ${{ env.KIT }}

@@ -1,7 +1,7 @@
 # Kit patches
 
-The project builds on Native App Kit `5f91c565722b258d7e62e0503198d49e97ecc176` (upstream `main`,
-2026-10-19) **without local changes**. `external/webos-native-app-kit` is a plain checkout of that commit,
+The project builds on Native App Kit `085b06d98f187ba071144ae687d9f845aaed675d` (upstream `main`,
+2026-10-20) **without local changes**. `external/webos-native-app-kit` is a plain checkout of that commit,
 made or checked by `tools/fetch-kit.sh` (which holds the pinned commit; CI uses it too):
 
     tools/fetch-kit.sh
@@ -28,10 +28,9 @@ path checks, 0002's CMake comment is more precise, and every one has more tests.
 A future kit change goes here again as `NNNN-name.md` + `NNNN-name.patch` against the commit above,
 and upstream as a pull request.
 
-## Offered upstream, not carried here
+## Later upstream changes from this project
 
-| Change | Upstream pull request |
-|---|---|
-| `HttpClient::send` and `auth::Session::send` are `[[nodiscard]]` (a refused request never calls back; the app's plugin install waited for ever on a URL with a space, fixed in the app in `0d8f40e`) | https://github.com/Native-Webos/webos-native-app-kit/pull/7 |
-
-The app already checks every `send` result, so it needs no patch while this is open.
+| Change | Pull request | Merge commit |
+|---|---|---|
+| `HttpClient::send` and `auth::Session::send` are `[[nodiscard]]` (a refused request never calls back; the app's plugin install waited for ever on a URL with a space, fixed in the app in `0d8f40e`) | https://github.com/Native-Webos/webos-native-app-kit/pull/7 | `74f339a` |
+| `e2e.shows.back_cancels_details` accepts any cancel before the slow reply (it failed on CI runners at 1.0-1.3 s) | https://github.com/Native-Webos/webos-native-app-kit/pull/8 | `085b06d` |
