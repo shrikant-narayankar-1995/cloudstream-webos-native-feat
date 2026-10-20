@@ -78,8 +78,14 @@ LaunchPlan plan_runtime_launch(const std::string &runtime_dir, const std::string
 
     auto &s = plan.spec;
     s.path = rt + "/lib/" + loader;
-    s.args = {"--library-path", libs, rt + "/usr/bin/dalvikvm", "-Xmx" + std::to_string(heap_mb) + "m",
-              "-Xnoimage-dex2oat", "-Xcompiler-option", "--compiler-filter=verify"};
+    s.args = {"--library-path", libs};
+    // low4g.so (aarch64 runtimes): replaces ART's low-4GB allocator, which never finishes on some TVs
+    if (access((runtime_dir + "/lib/low4g.so").c_str(), R_OK) == 0) {
+        s.args.push_back("--preload");
+        s.args.push_back(rt + "/lib/low4g.so");
+    }
+    s.args.insert(s.args.end(), {rt + "/usr/bin/dalvikvm", "-Xmx" + std::to_string(heap_mb) + "m",
+              "-Xnoimage-dex2oat", "-Xcompiler-option", "--compiler-filter=verify"});
     s.args.insert(s.args.end(), aot.options.begin(), aot.options.end());
     for (std::string a : {"-Djavax.net.ssl.trustStore=" + rt + "/trust/cacerts",
                           "-Djava.library.path=" + rt + "/usr/lib/java/dex/art/natives", std::string("-cp"),
