@@ -20,6 +20,7 @@ Layout of <out dir> (every file a regular file, no symlinks, so it can travel in
                                      assets/, resources.arsc, manifest, signatures): classes*.dex and the
                                      Java resources (META-INF/services, *.kotlin_builtins...), byte for byte,
                                      stored 4-byte aligned so ART maps the DEX instead of copying it
+  licenses/                          aarch64 only: NOTICES.md, packages.tsv, texts/ (runtime/tools/notices.py)
   MANIFEST.json                      every file with size and SHA-256, plus the Alpine package list
 Added by runtime/make-aot.sh (optional): boot/<isa>/ boot image, csweb/oat/<isa>/ odex files, AOT.json.
 """
@@ -136,6 +137,16 @@ def main(rootfs, arch, out):
     apk = os.path.join(PROJECT, "evidence", "cloudstream-app", "app-prerelease-release.apk")
     jar = os.path.join(out, "csweb", "cloudstream.jar")
     repack_classpath_jar(apk, jar)
+
+    # Licence notices (runtime/tools/notices.py; checked against this dist by `notices.py check`).
+    # They describe the aarch64 runtime that ships in the TV package; the x86_64 one is for host runs.
+    lic = os.path.join(HERE, "licenses")
+    if arch == "aarch64":
+        put(os.path.join(lic, "NOTICES.md"), "licenses/NOTICES.md")
+        put(os.path.join(lic, "packages.tsv"), "licenses/packages.tsv")
+        for origin in sorted(os.listdir(os.path.join(lic, "texts"))):
+            for name in sorted(os.listdir(os.path.join(lic, "texts", origin))):
+                put(os.path.join(lic, "texts", origin, name), f"licenses/texts/{origin}/{name}")
 
     write_manifest(out, {"arch": arch, "alpine_packages": open(os.path.join(HERE, f"rootfs-{arch}.manifest")).read().split(),
                          "cloudstream_apk_sha256": sha256(apk)})

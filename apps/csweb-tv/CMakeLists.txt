@@ -124,7 +124,8 @@ wnk_add_webos_package(
         EXTRA_DIRS "${_csweb_fonts}" "${_csweb_icons}" "${_csweb_brand}"
         REQUIRED_PERMISSIONS database.operation
         BUNDLED_LIBS ${WNK_FFMPEG_RUNTIME_LIBS}
-        PRIVATE_RUNTIMES ${_csweb_runtimes})
+        PRIVATE_RUNTIMES ${_csweb_runtimes}
+        SOURCE_URL "https://github.com/sostk/cloudstream-webos-native")
 
 if (WNK_BUILD_TESTS)
     # Host tool: a stream URL through the player's source (tools/media_probe.cpp).
