@@ -32,9 +32,17 @@ TEST("positions_and_resume") {
     REQUIRE(lib.resume("Prov", "https://s/1").has_value());
     lib.set_view_pos_and_resume(show(), ep(1), ep(2), 600000, 1200000, 2);
     CHECK_EQ(lib.start_position_ms("Prov", "data1"), int64_t(600000));
-    CHECK_EQ(lib.resume("Prov", "https://s/1")->episode.episode, 1);
+    {
+        const auto r = lib.resume("Prov", "https://s/1");  // CHECK_EQ keeps a reference: not into a temporary
+        REQUIRE(r.has_value());
+        CHECK_EQ(r->episode.episode, 1);
+    }
     lib.set_view_pos_and_resume(show(), ep(1), ep(2), 1100000, 1200000, 3);  // 91 %: next becomes resume
-    CHECK_EQ(lib.resume("Prov", "https://s/1")->episode.episode, 2);
+    {
+        const auto r = lib.resume("Prov", "https://s/1");  // CHECK_EQ keeps a reference: not into a temporary
+        REQUIRE(r.has_value());
+        CHECK_EQ(r->episode.episode, 2);
+    }
     lib.set_view_pos_and_resume(show(), ep(1), ep(2), 1160000, 1200000, 4);  // 96 %: starts over
     CHECK_EQ(lib.start_position_ms("Prov", "data1"), int64_t(0));
     lib.set_view_pos_and_resume(show(), ep(2), std::nullopt, 1150000, 1200000, 5);  // last one done
