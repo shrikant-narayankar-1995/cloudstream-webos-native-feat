@@ -389,7 +389,7 @@ void PlayerScreen::update(Ui &ui, float dt) {
         last_save_ms_ = ui.now_ms();
         save_position();
     }
-    const bool busy = s.state == PlayState::Opening || s.state == PlayState::Seeking;
+    const bool busy = s.state == PlayState::Opening || s.state == PlayState::Seeking || s.buffering;
     if (busy || s.state == PlayState::Playing) {
         if (!screen_on_.held()) screen_on_ = s_.ctx->keep_screen_on("video playing");
     } else if (screen_on_.held()) {
