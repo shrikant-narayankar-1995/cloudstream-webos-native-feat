@@ -1,10 +1,10 @@
 # Kit patches
 
 The project builds on Native App Kit `5f91c565722b258d7e62e0503198d49e97ecc176` (upstream `main`,
-2026-10-19) **without local changes**. `external/webos-native-app-kit` is a plain checkout of that commit:
+2026-10-19) **without local changes**. `external/webos-native-app-kit` is a plain checkout of that commit,
+made or checked by `tools/fetch-kit.sh` (which holds the pinned commit; CI uses it too):
 
-    git -C external/webos-native-app-kit fetch origin
-    git -C external/webos-native-app-kit checkout 5f91c565722b258d7e62e0503198d49e97ecc176
+    tools/fetch-kit.sh
 
 Until then the project carried six patches on `e10f35ecd6e27987cc866b28caea6be66a023fcc`. All six were
 offered upstream on 2026-10-20 as separate pull requests (one commit each, with extra tests and guide
