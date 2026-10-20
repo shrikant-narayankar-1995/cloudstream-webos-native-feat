@@ -486,9 +486,12 @@ public final class Main {
                 case "links": {
                     String data = required(p, "url");
                     int[] n = {0};
+                    // Plugins call these callbacks from their own coroutine threads (extractors run in parallel),
+                    // where REQUEST is unset: tag the events with this request's id explicitly.
+                    final String rid = REQUEST.get();
                     Object r = await(c -> api.loadLinks(data, false,
-                            sub -> { emit(subtitle(sub, "true".equals(p.get("withHeaders")))); return Unit.INSTANCE; },
-                            link -> { n[0]++; emit(link(link, "true".equals(p.get("withHeaders")))); return Unit.INSTANCE; }, c));
+                            sub -> { emitFor(rid, subtitle(sub, "true".equals(p.get("withHeaders")))); return Unit.INSTANCE; },
+                            link -> { n[0]++; emitFor(rid, link(link, "true".equals(p.get("withHeaders")))); return Unit.INSTANCE; }, c));
                     emit(event("links_returned", "value", String.valueOf(r), "count", n[0]));
                     return n[0] > 0;
                 }
@@ -698,6 +701,18 @@ public final class Main {
         m.put("event", name);
         for (int i = 0; i + 1 < kv.length; i += 2) m.put(String.valueOf(kv[i]), kv[i + 1]);
         return m;
+    }
+
+    /** emit() for a known request id, from any thread. */
+    static void emitFor(String rid, Map<String, Object> m) {
+        if (rid != null && !m.containsKey("id")) {
+            if (ENDED.contains(rid)) return;
+            Map<String, Object> tagged = new LinkedHashMap<>();
+            tagged.put("id", rid);
+            tagged.putAll(m);
+            m = tagged;
+        }
+        emit(m);
     }
 
     static synchronized void emit(Map<String, Object> m) {
