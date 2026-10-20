@@ -83,6 +83,8 @@ notices no longer describe what ships.
 
 - `ci.yml` (pull requests, main): builds the runtime from the pinned inputs, cached until `runtime/` or
   the lock changes, then the full package.
+- `release.yml` (by hand, with a version `x.y.z`): runs `ci.yml` with that version and publishes the
+  package as release `v<version>` (from main only; the tag must be new).
 - `upstream-latest.yml` (Mondays, or by hand): builds from the latest Alpine edge and CloudStream
   pre-release (`build-runtime.sh --latest`). It reports what moved in the run summary and uploads an
   untested package.
