@@ -14,6 +14,7 @@ Layout of <out dir> (every file a regular file, no symlinks, so it can travel in
   usr/lib/java/dex/art/*.jar, natives/   boot class path and its JNI libraries (unmodified)
   usr/share/icu/<ver>/icudt*.dat     ICU data (ICU_DATA)
   bin/dex2oat                        runtime/native relaunch helper (ART finds dex2oat on $PATH)
+  lib/low4g.so                       aarch64: runtime/native/low4g.c, preloaded (ART low-4GB allocator fix)
   trust/cacerts                      Java trust store from Alpine's ca-certificates (Mozilla)
   csweb/csweb-host.dex               Android compat layer + csloader (runtime/build.sh)
   csweb/cloudstream.jar              CloudStream's pre-release APK minus Android-only parts (res/, lib/,
@@ -131,6 +132,8 @@ def main(rootfs, arch, out):
         with open(os.path.join(out, "ICU_VERSION"), "w") as fh:
             fh.write(ver + "\n")
     put(os.path.join(native, f"relaunch.{arch}"), "bin/dex2oat")
+    if arch == "aarch64":  # preloaded by runtime_launcher.cpp: ART low-4GB allocator fix (native/low4g.c)
+        put(os.path.join(native, "low4g.so.aarch64"), "lib/low4g.so")
     put(os.path.join(HERE, "trust", "cacerts"), "trust/cacerts")
     put(os.path.join(HERE, "out", "csweb-host.dex"), "csweb/csweb-host.dex")
 
