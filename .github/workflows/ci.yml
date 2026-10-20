@@ -41,7 +41,8 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y -q --no-install-recommends \
             cmake g++ make pkg-config python3 git curl xz-utils \
-            libsdl2-dev libgles-dev libegl-dev libegl-mesa0 libgl1-mesa-dri libcurl4 openssl
+            libsdl2-dev libgles-dev libegl-dev libegl-mesa0 libgl1-mesa-dri libcurl4 openssl \
+            ffmpeg  # the kit's media and player tests generate their clips with the ffmpeg CLI
 
       - name: Check out the kit at the pinned commit
         run: tools/fetch-kit.sh
@@ -63,8 +64,22 @@ jobs:
         run: cmake --build --preset ${{ matrix.preset }} -j"$(nproc)"
 
       - name: Test (kit and apps)
+        if: matrix.preset != 'host-asan'
         working-directory: ${{ env.KIT }}
         run: ctest --preset ${{ matrix.preset }} -j"$(nproc)"
+
+      # The runners have no GPU: Mesa's llvmpipe compiles shaders to machine code at run time, and
+      # its allocations from that code reach LeakSanitizer with no module name, so the kit's
+      # suppressions (tests/lsan-host.supp, by module) cannot match them. The tests that open a GL
+      # context run with leak detection off; AddressSanitizer and UBSan still check them. Every
+      # other test keeps leak detection.
+      - name: Test (kit and apps, ASan)
+        if: matrix.preset == 'host-asan'
+        working-directory: ${{ env.KIT }}
+        run: |
+          GL='^(integration\.renderer_gl|e2e\..*)$'
+          ctest --preset host-asan -j"$(nproc)" -E "$GL"
+          ASAN_OPTIONS=detect_leaks=0 ctest --preset host-asan -j"$(nproc)" -R "$GL"
 
       - name: Test (project tools)
         if: matrix.preset == 'host-debug'
