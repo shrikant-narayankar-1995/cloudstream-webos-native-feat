@@ -12,14 +12,17 @@ apk add -q openjdk17-jdk curl >/dev/null 2>&1
 JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 M=https://repo1.maven.org/maven2
 mkdir -p /tmp/lib /tmp/cls /tmp/stubcls "$OUT"
-fetch() { curl -sfL -o "/tmp/lib/$(basename "$1")" "$M/$1"; }
-fetch org/jetbrains/kotlin/kotlin-stdlib/2.2.0/kotlin-stdlib-2.2.0.jar
-fetch org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.10.2/kotlinx-coroutines-core-jvm-1.10.2.jar
-fetch com/fasterxml/jackson/core/jackson-databind/2.13.1/jackson-databind-2.13.1.jar
-fetch com/fasterxml/jackson/core/jackson-core/2.13.1/jackson-core-2.13.1.jar
-fetch com/fasterxml/jackson/core/jackson-annotations/2.13.1/jackson-annotations-2.13.1.jar
+# Every download is checked against the SHA-256 recorded when the runtime was tested.
+get() { curl -sfL -o "$2" "$3" && echo "$1  $2" | sha256sum -c - >/dev/null || { echo "build.sh: $3: bad download" >&2; exit 1; }; }
+fetch() { get "$1" "/tmp/lib/$(basename "$2")" "$M/$2"; }
+fetch 65d12d85a3b865c160db9147851712a64b10dadd68b22eea22a95bf8a8670dca org/jetbrains/kotlin/kotlin-stdlib/2.2.0/kotlin-stdlib-2.2.0.jar
+fetch 5ca175b38df331fd64155b35cd8cae1251fa9ee369709b36d42e0a288ccce3fd org/jetbrains/kotlinx/kotlinx-coroutines-core-jvm/1.10.2/kotlinx-coroutines-core-jvm-1.10.2.jar
+fetch 56cfbdc9e1736b5c56b43757f6cf546ee6d49393c79383c4e495c4f7047cb506 com/fasterxml/jackson/core/jackson-databind/2.13.1/jackson-databind-2.13.1.jar
+fetch 8be6935cd8f9673ac684a589aaa1caecd57dee7c37ed1443d17924325799003d com/fasterxml/jackson/core/jackson-core/2.13.1/jackson-core-2.13.1.jar
+fetch ab607939d288e22bff4cb97acc6b25e841d82681f2bc40ce67bb35cb0ffdb06d com/fasterxml/jackson/core/jackson-annotations/2.13.1/jackson-annotations-2.13.1.jar
 R8=8.5.35
-curl -sfL -o /tmp/r8.jar https://dl.google.com/android/maven2/com/android/tools/r8/$R8/r8-$R8.jar
+get 4733945987ee0a840fafc34080b135259e01678412e07212b23f706334290294 /tmp/r8.jar \
+    https://dl.google.com/android/maven2/com/android/tools/r8/$R8/r8-$R8.jar
 CP=$P/evidence/cloudstream-app/classes.jar:$(ls /tmp/lib/*.jar | tr '\n' ':')
 # compile-only stubs first, then the shipped sources against them
 javac -nowarn --release 8 -d /tmp/stubcls $(find $P/runtime/compile-stubs -name '*.java')
