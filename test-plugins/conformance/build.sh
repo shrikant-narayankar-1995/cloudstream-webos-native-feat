@@ -14,7 +14,8 @@ curl -sfL -o kotlinc.zip https://github.com/JetBrains/kotlin/releases/download/v
 curl -sfL -o aapt2.jar https://dl.google.com/android/maven2/com/android/tools/build/aapt2/9.4.1-15978811/aapt2-9.4.1-15978811-linux.jar
 curl -sfL -o platform.zip https://dl.google.com/android/repository/platform-35_r02.zip
 curl -sfL -o r8.jar https://dl.google.com/android/maven2/com/android/tools/r8/9.5.26/r8-9.5.26.jar
-sha256sum kotlinc.zip aapt2.jar platform.zip r8.jar > $O/TOOLCHAIN-SHA256
+# The toolchain the fixture was built and tested with (out/TOOLCHAIN-SHA256, committed).
+sha256sum -c $O/TOOLCHAIN-SHA256 >/dev/null || { echo "build.sh: toolchain download differs from out/TOOLCHAIN-SHA256" >&2; exit 1; }
 unzip -q kotlinc.zip && unzip -q -o aapt2.jar aapt2 && chmod +x aapt2
 ANDROID_JAR=$(unzip -Z1 platform.zip | grep '/android.jar$'); unzip -q -j platform.zip "$ANDROID_JAR" -d .
 # resources -> resources.arsc + binary XML (package org.csweb.conformance)

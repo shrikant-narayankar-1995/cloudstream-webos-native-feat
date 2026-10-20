@@ -1,0 +1,88 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Weekly: builds the plugin runtime and the TV package from the LATEST upstream inputs (Alpine edge,
+# CloudStream's current pre-release) instead of the pinned ones, and reports what moved. The package
+# is untested: install it on the TV, and when it works, move the pins (runtime/inputs.lock,
+# rootfs-<arch>.manifest, runtime/licenses/) in a pull request. Pull requests and main keep using the
+# pinned inputs (ci.yml), so upstream changes never break them unannounced.
+# No plugin from a repository is downloaded or run.
+name: Upstream latest
+
+on:
+  schedule:
+    - cron: '17 3 * * 1'  # Mondays 03:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  KIT: external/webos-native-app-kit
+
+jobs:
+  latest:
+    name: Runtime and package from latest upstream
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the runtime from the latest upstream inputs
+        run: tools/build-runtime.sh --latest 2>&1 | tee build-runtime.log
+
+      - name: Report what moved
+        run: |
+          {
+            echo "## Upstream compared with the pinned inputs"
+            echo
+            echo "### Alpine packages (runtime/rootfs-aarch64.manifest)"
+            if git diff --quiet -- runtime/rootfs-aarch64.manifest; then
+              echo "No change."
+            else
+              echo '```diff'; git diff -U0 -- runtime/rootfs-aarch64.manifest | grep '^[-+][^-+]'; echo '```'
+            fi
+            echo
+            echo "### CloudStream pre-release"
+            for f in app-prerelease-release.apk classes.jar app-sources.jar; do
+              have=$(sha256sum "evidence/cloudstream-app/$f" | cut -d' ' -f1)
+              if grep -q "^$have  cloudstream/$f " runtime/inputs.lock; then
+                echo "- \`$f\`: unchanged"
+              else
+                echo "- \`$f\`: **new build** \`$have\`"
+              fi
+            done
+            echo
+            echo "### Licence notices"
+            if grep -q "runtime/licenses/ matches this dist" build-runtime.log; then
+              echo "No change."
+            else
+              echo "The shipped packages, versions or licences changed: regenerate runtime/licenses/ when moving the pins."
+              echo '```diff'; sed -n '/^--- committed/,/^notices.py:/p' build-runtime.log; echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          if ! git diff --quiet -- runtime/rootfs-aarch64.manifest; then
+            echo "::warning::Alpine packages moved since the pins; see the run summary"
+          fi
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends cmake make pkg-config python3 git curl xz-utils
+
+      - name: Check out the kit at the pinned commit
+        run: tools/fetch-kit.sh
+
+      - uses: ./.github/actions/webos-ndk
+
+      - name: Build and check the package
+        working-directory: ${{ env.KIT }}
+        run: |
+          cmake --preset webos-release \
+            -DWNK_EXTRA_APP_DIRS="$GITHUB_WORKSPACE/apps/runtime-probe;$GITHUB_WORKSPACE/apps/csweb-tv"
+          cmake --build --preset webos-release -j"$(nproc)" --target csweb-tv-ipk
+
+      - name: Upload the untested package
+        uses: actions/upload-artifact@v4
+        with:
+          name: org.csweb.tv-ipk-LATEST-UNTESTED
+          path: ${{ env.KIT }}/build/webos-release/dist/org.csweb.tv_*_arm.ipk
+          retention-days: 14

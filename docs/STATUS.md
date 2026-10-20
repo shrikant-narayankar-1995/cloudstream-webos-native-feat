@@ -80,6 +80,16 @@ Runtime feasibility: **PASS** (scoped; see docs/FEASIBILITY_DECISION.md)
   repository deep link), earlier probe runs under `evidence/device/`.
 - Host app: `evidence/app-host/20261019-csweb-tv-0.1-stage2/`; TLS: `evidence/runtime-host/tls/`.
 
+## Runtime inputs and CI (2026-10-20)
+- Runtime inputs pinned (runtime/inputs.lock: CloudStream pre-release + 88 Alpine packages, all identical to the
+  tested root) and mirrored with the sources of what ships on release runtime-inputs-1 (docs/runtime/inputs.md).
+- tools/build-runtime.sh builds runtime-aarch64 from them: 96 of the 97 tested files byte-identical (wolfSSL and
+  boot image included); trust/cacerts differs only in entry timestamps (same 121 certificates).
+- Licence notices: runtime-aarch64/licenses/ (NOTICES.md, packages.tsv, texts/ from each package's source);
+  licenses/SOURCE.txt names this repository.
+- CI builds the full package (with runtime) on pull requests and main; a weekly job builds from the latest
+  upstream inputs and reports what moved. Full package checked locally (check-package); not yet on the TV.
+
 ## Risks/blockers
 - Fixed 2026-10-20: a plugin URL with a space ("builds/My Plugin.cs3") stayed on "Installing…" for
   ever: the kit's HttpClient refuses whitespace without a callback and the app ignored that. URLs are
@@ -102,4 +112,4 @@ Runtime feasibility: **PASS** (scoped; see docs/FEASIBILITY_DECISION.md)
 1. Install the current ipk on the TV; with the remote: install DailymotionProvider and
    InternetArchiveProvider, play an Internet Archive item (patched wolfSSL on the TV), try profiles,
    settings, Test extensions; collect logs into evidence/device/.
-2. Phase 7: licence audit, security review, compatibility matrix, release report.
+2. Phase 7: licence audit (runtime notices done; app/kit side to review), security review, compatibility matrix, release report.

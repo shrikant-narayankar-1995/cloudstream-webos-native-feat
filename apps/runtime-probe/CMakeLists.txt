@@ -33,7 +33,8 @@ wnk_add_webos_package(
         ICON_COLOR "#7c2d12"
         EXPECTED_NEEDED "${CMAKE_CURRENT_SOURCE_DIR}/expected-needed.txt"
         EXTRA_DIRS "${WNK_FONT_DIR}" ${_csweb_extra_dirs}
-        PRIVATE_RUNTIMES ${_csweb_runtimes})
+        PRIVATE_RUNTIMES ${_csweb_runtimes}
+        SOURCE_URL "https://github.com/sostk/cloudstream-webos-native")
 
 if (WNK_BUILD_TESTS)
     # The child probe on the host: exec mappings, entropy and threads must work on a normal Linux.

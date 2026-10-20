@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Builds and tests the apps on every pull request and on every push to main (a merged pull request).
 #   host:  kit + apps built for Linux (host-debug and host-asan), all tests (kit, apps, project tools)
-#   webos: the TV package (org.csweb.tv ipk) with the webOS NDK, checked by the kit's check-package
-# The kit is checked out at the commit tools/fetch-kit.sh pins. The plugin runtime (runtime/dist) is
-# not built here yet, so the CI package cannot run plugins; it is for build and packaging checks only.
-# No downloaded plugin code is run: the app tests use their own fixtures.
+#   runtime: the plugin runtime (runtime-aarch64) from the pinned inputs (tools/build-runtime.sh),
+#            cached until runtime/ or its inputs change
+#   webos: the full TV package (org.csweb.tv ipk with that runtime), checked by the kit's check-package
+# The kit is checked out at the commit tools/fetch-kit.sh pins. No plugin from a repository is
+# downloaded or run: the tests use the project's own fixtures (and its conformance test plugin).
 name: CI
 
 on:
@@ -63,23 +64,29 @@ jobs:
         working-directory: ${{ env.KIT }}
         run: cmake --build --preset ${{ matrix.preset }} -j"$(nproc)"
 
+      # The kit's end-to-end runs (e2e.*) drive its example apps by timed key scripts; on the runners a
+      # few have missed their timing (Native-Webos/webos-native-app-kit#8), so they get up to two
+      # retries. A test that really fails still fails; the app's own tests run once.
       - name: Test (kit and apps)
         if: matrix.preset != 'host-asan'
         working-directory: ${{ env.KIT }}
-        run: ctest --preset ${{ matrix.preset }} -j"$(nproc)"
+        run: |
+          ctest --preset ${{ matrix.preset }} -j"$(nproc)" -E '^e2e\.'
+          ctest --preset ${{ matrix.preset }} -j"$(nproc)" -R '^e2e\.' --repeat until-pass:3
 
       # The runners have no GPU: Mesa's llvmpipe compiles shaders to machine code at run time, and
       # its allocations from that code reach LeakSanitizer with no module name, so the kit's
       # suppressions (tests/lsan-host.supp, by module) cannot match them. The tests that open a GL
       # context run with leak detection off; AddressSanitizer and UBSan still check them. Every
-      # other test keeps leak detection.
+      # other test keeps leak detection. The kit's GL runs get up to two retries, as above (under ASan
+      # with software rendering tvui gamepad_navigates has also missed its timing).
       - name: Test (kit and apps, ASan)
         if: matrix.preset == 'host-asan'
         working-directory: ${{ env.KIT }}
         run: |
           GL='^(integration\.renderer_gl|e2e\..*)$'
           ctest --preset host-asan -j"$(nproc)" -E "$GL"
-          ASAN_OPTIONS=detect_leaks=0 ctest --preset host-asan -j"$(nproc)" -R "$GL"
+          ASAN_OPTIONS=detect_leaks=0 ctest --preset host-asan -j"$(nproc)" -R "$GL" --repeat until-pass:3
 
       - name: Test (project tools)
         if: matrix.preset == 'host-debug'
@@ -93,15 +100,51 @@ jobs:
           path: ${{ env.KIT }}/build/${{ matrix.preset }}/Testing/Temporary/
           retention-days: 7
 
+  runtime:
+    name: Plugin runtime (aarch64)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      # Computed before the build: afterwards runtime/ holds the build's root-owned output, which
+      # hashFiles cannot read when the cache step evaluates its key again to save.
+      - name: Runtime cache key
+        id: runtime-key
+        run: echo "key=runtime-aarch64-${{ hashFiles('runtime/**', 'tools/build-runtime.sh', 'tools/fetch-runtime-inputs.sh', 'test-plugins/conformance/**') }}" >> "$GITHUB_OUTPUT"
+
+      - name: Cache the runtime
+        id: runtime-cache
+        uses: actions/cache@v4
+        with:
+          path: runtime-aarch64.tar
+          key: ${{ steps.runtime-key.outputs.key }}
+
+      - name: Cache the pinned inputs
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/csweb-runtime-inputs
+          key: runtime-inputs-${{ hashFiles('runtime/inputs.lock') }}
+
+      - name: Build the runtime from the pinned inputs
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        run: |
+          tools/build-runtime.sh
+          tar -C runtime/dist -cf runtime-aarch64.tar runtime-aarch64
+
+      - name: Keep the runtime for the package
+        uses: actions/upload-artifact@v4
+        with:
+          name: runtime-aarch64
+          path: runtime-aarch64.tar
+          retention-days: 3
+
   webos:
     name: webOS package
+    needs: runtime
     runs-on: ubuntu-24.04
     timeout-minutes: 60
-    env:
-      # openlgtv/buildroot-nc4 release webos-d7ed7ee: arm-webos-linux-gnueabi gcc 12.2.0, the NDK
-      # recorded in docs/STATUS.md. GitHub publishes no digest for it; this one was taken on 2026-10-20.
-      NDK_URL: https://github.com/openlgtv/buildroot-nc4/releases/download/webos-d7ed7ee/arm-webos-linux-gnueabi_sdk-buildroot.tar.gz
-      NDK_SHA256: 32816626e99fb34922a49d0c639f7c8a30356fffb222372d4823027f1382f640
     steps:
       - uses: actions/checkout@v4
 
@@ -113,30 +156,24 @@ jobs:
       - name: Check out the kit at the pinned commit
         run: tools/fetch-kit.sh
 
-      - name: Cache the webOS NDK
-        id: ndk-cache
-        uses: actions/cache@v4
+      - uses: ./.github/actions/webos-ndk
+
+      - name: Get the plugin runtime
+        uses: actions/download-artifact@v4
         with:
-          path: ~/ndk.tar.gz
-          key: webos-ndk-${{ env.NDK_SHA256 }}
+          name: runtime-aarch64
 
-      - name: Download the webOS NDK
-        if: steps.ndk-cache.outputs.cache-hit != 'true'
-        run: curl -fsSL --retry 3 -o ~/ndk.tar.gz "$NDK_URL"
-
-      - name: Verify and install the webOS NDK
+      - name: Put the runtime in place
         run: |
-          echo "$NDK_SHA256  $HOME/ndk.tar.gz" | sha256sum -c -
-          mkdir -p ~/webos-ndk
-          tar -xzf ~/ndk.tar.gz -C ~/webos-ndk
-          (cd ~/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot && ./relocate-sdk.sh)
-          echo "WEBOS_NDK=$HOME/webos-ndk/arm-webos-linux-gnueabi_sdk-buildroot" >> "$GITHUB_ENV"
+          mkdir -p runtime/dist
+          tar -C runtime/dist -xf runtime-aarch64.tar
+          test -f runtime/dist/runtime-aarch64/lib/ld-musl-aarch64.so.1
 
       - name: Cache the bundled FFmpeg
         uses: actions/cache@v4
         with:
           path: ${{ env.KIT }}/build/webos-release/ffmpeg
-          key: ffmpeg-webos-release-${{ hashFiles('tools/fetch-kit.sh') }}-${{ env.NDK_SHA256 }}
+          key: ffmpeg-webos-release-${{ hashFiles('tools/fetch-kit.sh', '.github/actions/webos-ndk/action.yml') }}
 
       - name: Configure
         working-directory: ${{ env.KIT }}
@@ -148,9 +185,9 @@ jobs:
         working-directory: ${{ env.KIT }}
         run: cmake --build --preset webos-release -j"$(nproc)" --target csweb-tv-ipk
 
-      - name: Upload the package (no plugin runtime)
+      - name: Upload the package
         uses: actions/upload-artifact@v4
         with:
-          name: org.csweb.tv-ipk-no-runtime
+          name: org.csweb.tv-ipk
           path: ${{ env.KIT }}/build/webos-release/dist/org.csweb.tv_*_arm.ipk
           retention-days: 14
