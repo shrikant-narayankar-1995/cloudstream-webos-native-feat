@@ -1,0 +1,119 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Release build, started by hand (Actions > Release > Run workflow) with the version to give the app.
+#   1. checks the version (three integers, as webOS requires) and that tag v<version> is new
+#   2. runs the whole CI (ci.yml) on this commit with that version: host tests, plugin runtime from
+#      the pinned inputs, full TV package checked by check-package
+#   3. creates the GitHub release v<version> on this commit with the package and its SHA-256
+# Releases are made from main only. CI builds and checks the package; it does not run it on a TV.
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: App version, three integers (x.y.z), e.g. 0.2.0
+        required: true
+        type: string
+      prerelease:
+        description: Mark the release as a pre-release
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Check the version
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Version, tag and branch
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          if ! [[ "$VERSION" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]; then
+            echo "::error::version '$VERSION' must be three integers, e.g. 0.2.0 (webOS requirement)"
+            exit 1
+          fi
+          if [[ "$GITHUB_REF" != refs/heads/main ]]; then
+            echo "::error::releases are made from main (this run is on $GITHUB_REF)"
+            exit 1
+          fi
+          if git ls-remote --exit-code --tags origin "refs/tags/v$VERSION" >/dev/null; then
+            echo "::error::tag v$VERSION already exists"
+            exit 1
+          fi
+          echo "Releasing v$VERSION from $GITHUB_SHA"
+
+  build:
+    name: Build and test
+    needs: check
+    uses: ./.github/workflows/ci.yml
+    with:
+      version: ${{ inputs.version }}
+
+  release:
+    name: Publish the release
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+    env:
+      VERSION: ${{ inputs.version }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Get the package
+        uses: actions/download-artifact@v4
+        with:
+          name: org.csweb.tv-ipk
+          path: dist
+
+      - name: Check the package
+        run: |
+          ipk="dist/org.csweb.tv_${VERSION}_arm.ipk"
+          test -f "$ipk" || { ls -l dist; echo "::error::$ipk not built"; exit 1; }
+          (cd dist && sha256sum "$(basename "$ipk")" > SHA256SUMS && cat SHA256SUMS)
+
+      - name: Release notes
+        run: |
+          kit=$(tools/fetch-kit.sh --print)
+          inputs=$(sed -n 's#^\# mirror: .*/download/##p' runtime/inputs.lock)
+          sha=$(cut -d' ' -f1 dist/SHA256SUMS)
+          cat > notes.md <<EOF
+          CSWeb TV $VERSION for LG webOS TVs (ARM), built by CI from commit \`$GITHUB_SHA\`.
+
+          **Install:** \`org.csweb.tv_${VERSION}_arm.ipk\` with Developer Mode (\`ares-install\`) or the kit's \`tools/install.sh\`.
+          SHA-256: \`$sha\`
+
+          The app ships no plugins and no content: it runs CloudStream extensions from repositories you add.
+
+          **Built with**
+          - Native App Kit \`$kit\`
+          - Plugin runtime from the pinned inputs in \`runtime/inputs.lock\` (release [$inputs](https://github.com/$GITHUB_REPOSITORY/releases/tag/$inputs), which also holds the sources of what the runtime ships)
+          - CloudStream pre-release \`eb962b4\`
+
+          **Checked by CI:** host tests (debug and ASan), the plugin runtime build and its licence notices, and the kit's package check. It is not run on a TV by CI.
+
+          **Licences:** GPL-3.0-or-later. The package carries \`licenses/\` (app and kit) and \`runtime-aarch64/licenses/\` (runtime). Source: this repository at this tag, and the release above for the runtime's parts.
+          EOF
+          cat notes.md
+
+      - name: Create the release
+        env:
+          PRERELEASE: ${{ inputs.prerelease }}
+        run: |
+          flags=()
+          if [[ "$PRERELEASE" == true ]]; then flags+=(--prerelease); fi
+          gh release create "v$VERSION" "${flags[@]}" \
+            --target "$GITHUB_SHA" \
+            --title "CSWeb TV $VERSION" \
+            --notes-file notes.md \
+            "dist/org.csweb.tv_${VERSION}_arm.ipk" dist/SHA256SUMS
