@@ -3,7 +3,8 @@
 #   1. checks the version (three integers, as webOS requires) and that tag v<version> is new
 #   2. runs the whole CI (ci.yml) on this commit with that version: host tests, plugin runtime from
 #      the pinned inputs, full TV package checked by check-package
-#   3. creates the GitHub release v<version> on this commit with the package and its SHA-256
+#   3. creates the GitHub release v<version> on this commit with the package, its SHA-256 and the
+#      Homebrew Channel manifest (org.csweb.tv.manifest.json); a full release is marked latest
 # Releases are made from main only. CI builds and checks the package; it does not run it on a TV.
 name: Release
 
@@ -82,6 +83,32 @@ jobs:
           test -f "$ipk" || { ls -l dist; echo "::error::$ipk not built"; exit 1; }
           (cd dist && sha256sum "$(basename "$ipk")" > SHA256SUMS && cat SHA256SUMS)
 
+      # The manifest the Homebrew Channel reads (format of webosbrew-gen-manifest); a listing points at
+      # .../releases/latest/download/org.csweb.tv.manifest.json, so full releases are marked latest.
+      - name: Homebrew Channel manifest
+        run: |
+          python3 - "$VERSION" <<'EOF'
+          import hashlib, json, os, sys
+          version = sys.argv[1]
+          ipk = f"org.csweb.tv_{version}_arm.ipk"
+          repo, sha = os.environ["GITHUB_REPOSITORY"], os.environ["GITHUB_SHA"]
+          manifest = {
+              "id": "org.csweb.tv",
+              "version": version,
+              "type": "native",
+              "title": "CSWeb TV",
+              "appDescription": "Runs CloudStream extensions natively on the TV. Ships no content or plugins.",
+              "iconUri": f"https://raw.githubusercontent.com/{repo}/{sha}/apps/csweb-tv/packaging/icons/largeIcon.png",
+              "sourceUrl": f"https://github.com/{repo}",
+              "rootRequired": False,
+              "ipkUrl": ipk,
+              "ipkHash": {"sha256": hashlib.sha256(open(f"dist/{ipk}", "rb").read()).hexdigest()},
+          }
+          with open("dist/org.csweb.tv.manifest.json", "w") as f:
+              json.dump(manifest, f)
+          print(json.dumps(manifest, indent=1))
+          EOF
+
       - name: Release notes
         run: |
           kit=$(tools/fetch-kit.sh --print)
@@ -110,10 +137,12 @@ jobs:
         env:
           PRERELEASE: ${{ inputs.prerelease }}
         run: |
-          flags=()
-          if [[ "$PRERELEASE" == true ]]; then flags+=(--prerelease); fi
+          # Only full releases become "latest" (what the Homebrew Channel listing follows); the
+          # runtime-inputs-N releases are pre-releases and never are.
+          flags=(--latest)
+          if [[ "$PRERELEASE" == true ]]; then flags=(--prerelease --latest=false); fi
           gh release create "v$VERSION" "${flags[@]}" \
             --target "$GITHUB_SHA" \
             --title "CSWeb TV $VERSION" \
             --notes-file notes.md \
-            "dist/org.csweb.tv_${VERSION}_arm.ipk" dist/SHA256SUMS
+            "dist/org.csweb.tv_${VERSION}_arm.ipk" dist/org.csweb.tv.manifest.json dist/SHA256SUMS
