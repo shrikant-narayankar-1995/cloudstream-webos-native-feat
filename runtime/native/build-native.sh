@@ -28,5 +28,18 @@ for arch in $ARCHES; do
             -Wl,--allow-shlib-undefined -Wall -Wextra -Werror -o out/low4g.so.aarch64 low4g.c
     fi
 done
-file out/*
-sha256sum out/*
+case " $ARCHES " in
+    *" armv7 "*)
+        # The legacy ART APK/cache lives in out/art-armv7/. Report only regular helper files.
+        set --
+        for output in out/*; do
+            [ ! -f "$output" ] || set -- "$@" "$output"
+        done
+        file "$@"
+        sha256sum "$@"
+        ;;
+    *)
+        file out/*
+        sha256sum out/*
+        ;;
+esac
