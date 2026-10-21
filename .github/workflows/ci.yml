@@ -202,10 +202,72 @@ jobs:
           retention-days: 14
 
   # ---- legacy package (docs/legacy-build.md): nothing above depends on these jobs -------------------------
+  art-legacy:
+    name: ART package (armv7, native ARM)
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify native armv7 execution and compute ART cache key
+        id: art-key
+        run: |
+          if test -e /proc/sys/fs/binfmt_misc/qemu-arm; then
+            echo "::error::qemu-arm is registered; this job requires native armv7 execution"
+            exit 1
+          fi
+          docker pull --platform linux/arm/v7 alpine:edge
+          docker run --rm --platform linux/arm/v7 alpine:edge sh -ec '
+            test "$(apk --print-arch)" = armv7
+            test "$(getconf LONG_BIT)" = 32
+            echo "Native armv7 userspace works"
+          '
+          IMAGE_ID=$(docker image inspect alpine:edge --format '{{.Id}}')
+          docker run --rm --platform linux/arm/v7 alpine:edge sh -ec '
+            printf "%s\n" https://dl-cdn.alpinelinux.org/alpine/edge/main \
+              https://dl-cdn.alpinelinux.org/alpine/edge/community \
+              https://dl-cdn.alpinelinux.org/alpine/edge/testing > /etc/apk/repositories
+            apk update >&2
+            apk policy gcc musl-dev binutils openjdk8-jdk wolfssl-jni-dev
+          ' > /tmp/art-toolchain
+          TOOLCHAIN=$(sha256sum /tmp/art-toolchain | cut -d' ' -f1)
+          echo "key=art-armv7-native-v1-${{ hashFiles('runtime/build-art-armv7.sh') }}-${IMAGE_ID#sha256:}-$TOOLCHAIN" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the ART package
+        id: art-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: runtime/native/out/art-armv7
+          key: ${{ steps.art-key.outputs.key }}
+
+      - name: Build ART natively for armv7
+        if: steps.art-cache.outputs.cache-hit != 'true'
+        run: |
+          docker run --rm --platform linux/arm/v7 -v "$GITHUB_WORKSPACE":/p \
+            alpine:edge sh /p/runtime/build-art-armv7.sh
+
+      # Save immediately: a failure in the later runtime job must not discard a successful ART build.
+      - name: Cache the verified ART package
+        if: steps.art-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: runtime/native/out/art-armv7
+          key: ${{ steps.art-key.outputs.key }}
+
+      - name: Keep the ART package and provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: art-armv7
+          path: runtime/native/out/art-armv7/
+          if-no-files-found: error
+          retention-days: 14
+
   runtime-legacy:
     name: Plugin runtime (armv7, legacy)
+    needs: art-legacy
     runs-on: ubuntu-24.04
-    timeout-minutes: 360
+    timeout-minutes: 150
     continue-on-error: true
     steps:
       - uses: actions/checkout@v4
@@ -228,27 +290,20 @@ jobs:
           path: ~/.cache/csweb-runtime-inputs
           key: runtime-inputs-legacy-${{ hashFiles('runtime/inputs.lock', 'runtime/inputs-armv7.lock') }}
 
-      - name: Enable armv7 containers for the ART rebuild
+      - name: Get the native ART package
         if: steps.runtime-cache.outputs.cache-hit != 'true'
-        uses: docker/setup-qemu-action@v3
+        uses: actions/download-artifact@v4
         with:
-          platforms: arm
+          name: art-armv7
+          path: runtime/native/out/art-armv7
 
       # Unpinned (Alpine edge) until runtime/inputs-armv7.lock exists; build-runtime.sh says so in the log.
       - name: Build the runtime
         if: steps.runtime-cache.outputs.cache-hit != 'true'
         run: |
-          tools/build-runtime.sh --arch armv7
+          CSWEB_ARMV7_ART_DIR="$GITHUB_WORKSPACE/runtime/native/out/art-armv7" \
+            tools/build-runtime.sh --arch armv7
           tar -C runtime/dist -cf runtime-armv7.tar runtime-armv7
-
-      - name: Keep the rebuilt ART package and provenance
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: art-armv7
-          path: runtime/native/out/art-armv7/
-          if-no-files-found: ignore
-          retention-days: 14
 
       - name: Keep the runtime for the package
         uses: actions/upload-artifact@v4

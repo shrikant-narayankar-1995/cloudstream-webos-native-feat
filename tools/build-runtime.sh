@@ -76,8 +76,16 @@ if [[ $ARCH == armv7 ]] && (( LATEST || ! PIN_ALPINE )); then
     # edge's armv7 ART r2 still needs wolfSSL ABI 45, but edge now ships ABI 46.
     # Rebuild Alpine's r3 recipe only for the unpinned legacy path; pinned builds use their APKs.
     step "ART for armv7 (wolfSSL 5.9.4)"
-    run --platform linux/arm/v7 alpine:edge sh /p/runtime/build-art-armv7.sh
-    ART_APKS=(-v "$ROOT/runtime/native/out/art-armv7":/art-apks:ro)
+    if [[ -n ${CSWEB_ARMV7_ART_DIR:-} ]]; then
+        # CI builds this APK on a native ARM runner and retains it independently of the runtime.
+        ART_DIR=$(cd "$CSWEB_ARMV7_ART_DIR" && pwd)
+        test -s "$ART_DIR/art_standalone-0_git20251009-r3.apk"
+        test -d "$ART_DIR/keys"
+    else
+        run --platform linux/arm/v7 alpine:edge sh /p/runtime/build-art-armv7.sh
+        ART_DIR="$ROOT/runtime/native/out/art-armv7"
+    fi
+    ART_APKS=(-v "$ART_DIR":/art-apks:ro)
 fi
 step "root filesystem ($ARCH)"
 run "${APKS[@]}" "${ART_APKS[@]}" alpine:edge sh /p/runtime/make-rootfs.sh "$ARCH" ${APKS:+/apks}

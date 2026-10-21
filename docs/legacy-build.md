@@ -60,12 +60,21 @@ is used. The resulting APK is signed with an ephemeral key; only its public key 
 The rootfs installer verifies that signature, and the rebuild checks that its libraries require
 wolfSSL `.46` and do not require `.45`. The custom wolfSSL build retains the serial-zero certificate fix.
 
-On an x86_64 build host, register qemu-arm/binfmt before building (CI uses `docker/setup-qemu-action`).
-`docker run --rm --platform linux/arm/v7 alpine:edge uname -m` should work first. Compiling ART under
-emulation can take considerably longer than assembling the aarch64 runtime.
+CI builds ART in a separate `art-legacy` job on `ubuntu-24.04-arm`. It verifies that a 32-bit armv7
+container runs without a qemu-arm registration before compilation. The verified APK has its own cache,
+keyed by the build script (including recipe/source and wolfSSL pins), Alpine image and selected toolchain
+package versions. That cache is saved before runtime assembly, so a later runtime failure does not
+discard a successful ART build. `runtime-legacy` downloads the signed APK and public key and supplies
+them with `CSWEB_ARMV7_ART_DIR`; this setting is used only for unpinned armv7 builds. Compilation emits
+a heartbeat every minute to distinguish quiet compiler phases from missing log updates.
 
-CI keeps the rebuilt APK, public key, recipe and provenance in the `art-armv7` artifact, even if a
-later runtime step fails. The local output is `runtime/native/out/art-armv7/`. Retain these for the
+For local builds, run the ART container on an ARM host with 32-bit userspace support. On x86_64,
+register qemu-arm/binfmt first; emulating the compiler can take hours. Alternatively, extract CI's
+`art-armv7` artifact and run `CSWEB_ARMV7_ART_DIR=/absolute/path/to/artifact tools/build-runtime.sh --arch armv7`
+to reuse it. The rootfs installer still verifies the APK's signature using the artifact's public key.
+
+CI keeps the rebuilt APK, public key, recipe and provenance in the `art-armv7` artifact before the
+runtime job starts. The local output is `runtime/native/out/art-armv7/`. Retain these for the
 eventual input mirror and licence collection. Pinning this locally signed APK will also require
 retaining its public key in the pinned-input installation path; the current rebuild is for the
 unpinned bootstrap only. Pinned aarch64 builds and their inputs are unchanged.

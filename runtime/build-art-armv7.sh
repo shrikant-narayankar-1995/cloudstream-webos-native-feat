@@ -1,7 +1,7 @@
 #!/bin/sh
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Rebuild Alpine's pinned ART recipe against wolfSSL 5.9.4 for the legacy runtime.
-# Run in an armv7 Alpine container (binfmt/qemu-arm on an x86_64 host):
+# Run in an armv7 Alpine container (CI uses native ARM; x86_64 hosts need binfmt/qemu-arm):
 #   docker run --rm --platform linux/arm/v7 -v <project>:/p alpine:edge \
 #       sh /p/runtime/build-art-armv7.sh
 # Outputs runtime/native/out/art-armv7/{art_standalone-*.apk,keys/,APKBUILD,PROVENANCE}.
@@ -28,9 +28,23 @@ export ABUILD_USERDIR=/tmp/art-signing
 export ABUILD_USERCONF="$ABUILD_USERDIR/abuild.conf"
 abuild-keygen -a -n
 cp "$ABUILD_USERDIR"/*.pub /etc/apk/keys/
-# -F: this is a disposable container; avoid fakeroot under qemu-user.
+# -F: this is a disposable container; no fakeroot process is needed.
 # -r: abuild resolves build dependencies and verifies the source archive's SHA-512.
-abuild -F -r -K -P /tmp/packages
+abuild -F -r -K -P /tmp/packages &
+BUILD_PID=$!
+(
+    while kill -0 "$BUILD_PID" 2>/dev/null; do
+        sleep 60
+        kill -0 "$BUILD_PID" 2>/dev/null || exit 0
+        echo "== ART build active at $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+    done
+) &
+HEARTBEAT_PID=$!
+STATUS=0
+wait "$BUILD_PID" || STATUS=$?
+kill "$HEARTBEAT_PID" 2>/dev/null || true
+wait "$HEARTBEAT_PID" 2>/dev/null || true
+[ "$STATUS" -eq 0 ] || exit "$STATUS"
 APK=/tmp/packages/testing/armv7/art_standalone-0_git20251009-r3.apk
 test -s "$APK"
 # Resolve the built APK against current edge, without executing package scripts.
