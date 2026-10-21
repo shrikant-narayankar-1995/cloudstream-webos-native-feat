@@ -24,11 +24,13 @@ echo '839f8e4dd93453e423fe52777fc7e10a7720d2985449fc15e8e3b70cd315f972  APKBUILD
 export ABUILD_LAST_COMMIT="$APORTS" SOURCE_DATE_EPOCH=1792147193
 export PACKAGER='CSWeb TV Legacy <legacy@csweb.invalid>'
 export SUDO_APK=apk
+export ABUILD_USERDIR=/tmp/art-signing
+export ABUILD_USERCONF="$ABUILD_USERDIR/abuild.conf"
 abuild-keygen -a -n
-cp /root/.abuild/*.pub /etc/apk/keys/
+cp "$ABUILD_USERDIR"/*.pub /etc/apk/keys/
 # -F: this is a disposable container; avoid fakeroot under qemu-user.
 # -r: abuild resolves build dependencies and verifies the source archive's SHA-512.
-abuild -F -r -P /tmp/packages
+abuild -F -r -K -P /tmp/packages
 APK=/tmp/packages/testing/armv7/art_standalone-0_git20251009-r3.apk
 test -s "$APK"
 # Resolve the built APK against current edge, without executing package scripts.
@@ -44,7 +46,7 @@ fi
 rm -rf "$OUT"
 mkdir -p "$OUT/keys"
 cp "$APK" "$OUT/"
-cp /root/.abuild/*.pub "$OUT/keys/"
+cp "$ABUILD_USERDIR"/*.pub "$OUT/keys/"
 cp APKBUILD "$OUT/"
 printf 'aports=%s\nwolfssl=5.9.4-r0\n' "$APORTS" > "$OUT/PROVENANCE"
 apk info -v | sort >> "$OUT/PROVENANCE"
