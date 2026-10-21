@@ -71,8 +71,16 @@ if [[ ! -f "$ROOT/test-plugins/conformance/out/CswebConformance.cs3" ]]; then
     run eclipse-temurin:17-jdk sh /p/test-plugins/conformance/build.sh
 fi
 
+ART_APKS=()
+if [[ $ARCH == armv7 ]] && (( LATEST || ! PIN_ALPINE )); then
+    # edge's armv7 ART r2 still needs wolfSSL ABI 45, but edge now ships ABI 46.
+    # Rebuild Alpine's r3 recipe only for the unpinned legacy path; pinned builds use their APKs.
+    step "ART for armv7 (wolfSSL 5.9.4)"
+    run --platform linux/arm/v7 alpine:edge sh /p/runtime/build-art-armv7.sh
+    ART_APKS=(-v "$ROOT/runtime/native/out/art-armv7":/art-apks:ro)
+fi
 step "root filesystem ($ARCH)"
-run "${APKS[@]}" alpine:edge sh /p/runtime/make-rootfs.sh "$ARCH" ${APKS:+/apks}
+run "${APKS[@]}" "${ART_APKS[@]}" alpine:edge sh /p/runtime/make-rootfs.sh "$ARCH" ${APKS:+/apks}
 step "trust store"
 run "${TRUST_APKS[@]}" alpine:edge sh /p/runtime/make-trust.sh
 if [[ $ARCH == armv7 ]]; then  # the legacy package's bundled libcurl reads it (tools/build-libcurl-webos.sh)

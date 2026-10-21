@@ -49,6 +49,27 @@ cmake --build build/webos-legacy --target csweb-tv-ipk
 
 Configure runs `tools/build-libcurl-webos.sh` once (cached by its inputs), like the kit's FFmpeg.
 
+### Rebuilding ART against current wolfSSL
+
+Alpine edge's available armv7 `art_standalone-0_git20251009-r2` needs `libwolfssl.so.45`, while
+`wolfssl-jni-5.9.4-r0` provides `.46`. Until the armv7 inputs are pinned, the legacy build runs
+`runtime/build-art-armv7.sh` in an armv7 Alpine container to rebuild Alpine's `r3` recipe at
+aports commit `8ac8f5cb2e5c2206a93de5498f6368190625b3cc` against wolfSSL 5.9.4. The recipe has a
+SHA-256 check and abuild verifies the source archive's SHA-512. No ART source patch or ABI symlink
+is used. The resulting APK is signed with an ephemeral key; only its public key leaves the container.
+The rootfs installer verifies that signature, and the rebuild checks that its libraries require
+wolfSSL `.46` and do not require `.45`. The custom wolfSSL build retains the serial-zero certificate fix.
+
+On an x86_64 build host, register qemu-arm/binfmt before building (CI uses `docker/setup-qemu-action`).
+`docker run --rm --platform linux/arm/v7 alpine:edge uname -m` should work first. Compiling ART under
+emulation can take considerably longer than assembling the aarch64 runtime.
+
+CI keeps the rebuilt APK, public key, recipe and provenance in the `art-armv7` artifact, even if a
+later runtime step fails. The local output is `runtime/native/out/art-armv7/`. Retain these for the
+eventual input mirror and licence collection. Pinning this locally signed APK will also require
+retaining its public key in the pinned-input installation path; the current rebuild is for the
+unpinned bootstrap only. Pinned aarch64 builds and their inputs are unchanged.
+
 ## First-time setup (once per move of the pins)
 
 Until `runtime/inputs-armv7.lock` exists, `build-runtime.sh --arch armv7` takes the armv7 packages unpinned
