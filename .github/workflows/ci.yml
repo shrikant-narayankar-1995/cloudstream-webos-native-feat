@@ -4,6 +4,9 @@
 #   runtime: the plugin runtime (runtime-aarch64) from the pinned inputs (tools/build-runtime.sh),
 #            cached until runtime/ or its inputs change
 #   webos: the full TV package (org.csweb.tv ipk with that runtime), checked by the kit's check-package
+#   runtime-legacy, webos-legacy: the legacy package for TVs with a 32-bit kernel (org.csweb.tv.legacy:
+#            runtime-armv7 and a bundled libcurl, docs/legacy-build.md). Separate jobs, caches and artifacts;
+#            allowed to fail, so they never hold back the jobs above.
 # The kit is checked out at the commit tools/fetch-kit.sh pins. No plugin from a repository is
 # downloaded or run: the tests use the project's own fixtures (and its conformance test plugin).
 name: CI
@@ -196,4 +199,178 @@ jobs:
         with:
           name: org.csweb.tv-ipk
           path: ${{ env.KIT }}/build/webos-release/dist/org.csweb.tv_*_arm.ipk
+          retention-days: 14
+
+  # ---- legacy package (docs/legacy-build.md): nothing above depends on these jobs -------------------------
+  art-legacy:
+    name: ART package (armv7, native ARM)
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify native armv7 execution and compute ART cache key
+        id: art-key
+        run: |
+          if test -e /proc/sys/fs/binfmt_misc/qemu-arm; then
+            echo "::error::qemu-arm is registered; this job requires native armv7 execution"
+            exit 1
+          fi
+          docker pull --platform linux/arm/v7 alpine:edge
+          docker run --rm --platform linux/arm/v7 alpine:edge sh -ec '
+            test "$(apk --print-arch)" = armv7
+            test "$(getconf LONG_BIT)" = 32
+            echo "Native armv7 userspace works"
+          '
+          IMAGE_ID=$(docker image inspect alpine:edge --format '{{.Id}}')
+          docker run --rm --platform linux/arm/v7 alpine:edge sh -ec '
+            printf "%s\n" https://dl-cdn.alpinelinux.org/alpine/edge/main \
+              https://dl-cdn.alpinelinux.org/alpine/edge/community \
+              https://dl-cdn.alpinelinux.org/alpine/edge/testing > /etc/apk/repositories
+            apk update >&2
+            apk policy gcc musl-dev binutils openjdk8-jdk wolfssl-jni-dev
+          ' > /tmp/art-toolchain
+          TOOLCHAIN=$(sha256sum /tmp/art-toolchain | cut -d' ' -f1)
+          echo "key=art-armv7-native-v1-${{ hashFiles('runtime/build-art-armv7.sh') }}-${IMAGE_ID#sha256:}-$TOOLCHAIN" >> "$GITHUB_OUTPUT"
+
+      - name: Restore the ART package
+        id: art-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: runtime/native/out/art-armv7
+          key: ${{ steps.art-key.outputs.key }}
+
+      - name: Build ART natively for armv7
+        if: steps.art-cache.outputs.cache-hit != 'true'
+        run: |
+          docker run --rm --platform linux/arm/v7 -v "$GITHUB_WORKSPACE":/p \
+            alpine:edge sh /p/runtime/build-art-armv7.sh
+
+      # Save immediately: a failure in the later runtime job must not discard a successful ART build.
+      - name: Cache the verified ART package
+        if: steps.art-cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: runtime/native/out/art-armv7
+          key: ${{ steps.art-key.outputs.key }}
+
+      - name: Keep the ART package and provenance
+        uses: actions/upload-artifact@v4
+        with:
+          name: art-armv7
+          path: runtime/native/out/art-armv7/
+          if-no-files-found: error
+          retention-days: 14
+
+  runtime-legacy:
+    name: Plugin runtime (armv7, legacy)
+    needs: art-legacy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Runtime cache key
+        id: runtime-key
+        run: echo "key=runtime-armv7-${{ hashFiles('runtime/**', 'tools/build-runtime.sh', 'tools/fetch-runtime-inputs.sh', 'test-plugins/conformance/**') }}" >> "$GITHUB_OUTPUT"
+
+      - name: Cache the runtime
+        id: runtime-cache
+        uses: actions/cache@v4
+        with:
+          path: runtime-armv7.tar
+          key: ${{ steps.runtime-key.outputs.key }}
+
+      - name: Cache the pinned inputs
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/csweb-runtime-inputs
+          key: runtime-inputs-legacy-${{ hashFiles('runtime/inputs.lock', 'runtime/inputs-armv7.lock') }}
+
+      - name: Get the native ART package
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: art-armv7
+          path: runtime/native/out/art-armv7
+
+      # Unpinned (Alpine edge) until runtime/inputs-armv7.lock exists; build-runtime.sh says so in the log.
+      - name: Build the runtime
+        if: steps.runtime-cache.outputs.cache-hit != 'true'
+        run: |
+          CSWEB_ARMV7_ART_DIR="$GITHUB_WORKSPACE/runtime/native/out/art-armv7" \
+            tools/build-runtime.sh --arch armv7
+          tar -C runtime/dist -cf runtime-armv7.tar runtime-armv7
+
+      - name: Keep the runtime for the package
+        uses: actions/upload-artifact@v4
+        with:
+          name: runtime-armv7
+          path: runtime-armv7.tar
+          retention-days: 3
+
+  webos-legacy:
+    name: webOS package (legacy)
+    needs: runtime-legacy
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q --no-install-recommends cmake make pkg-config python3 git curl xz-utils
+
+      - name: Check out the kit at the pinned commit
+        run: tools/fetch-kit.sh
+
+      - uses: ./.github/actions/webos-ndk
+
+      - name: Get the plugin runtime
+        uses: actions/download-artifact@v4
+        with:
+          name: runtime-armv7
+
+      - name: Put the runtime in place
+        run: |
+          mkdir -p runtime/dist
+          tar -C runtime/dist -xf runtime-armv7.tar
+          test -f runtime/dist/runtime-armv7/lib/ld-musl-armhf.so.1
+          test -f runtime/dist/runtime-armv7/trust/ca-bundle.pem
+
+      - name: Cache the bundled FFmpeg
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.KIT }}/build/webos-legacy/ffmpeg
+          key: ffmpeg-webos-release-${{ hashFiles('tools/fetch-kit.sh', '.github/actions/webos-ndk/action.yml') }}
+
+      - name: Cache the bundled libcurl sources
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/wnk/libcurl
+          key: libcurl-sources-${{ hashFiles('tools/build-libcurl-webos.sh') }}
+
+      - name: Configure
+        working-directory: ${{ env.KIT }}
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          cmake --preset webos-release -B build/webos-legacy \
+            -DWNK_EXTRA_APP_DIRS="$GITHUB_WORKSPACE/apps/csweb-tv" -DCSWEB_LEGACY=ON \
+            ${VERSION:+-DCSWEB_VERSION="$VERSION"}
+
+      - name: Build and check the package
+        working-directory: ${{ env.KIT }}
+        run: cmake --build build/webos-legacy -j"$(nproc)" --target csweb-tv-ipk
+
+      - name: Upload the package
+        uses: actions/upload-artifact@v4
+        with:
+          name: org.csweb.tv.legacy-ipk
+          path: ${{ env.KIT }}/build/webos-legacy/dist/org.csweb.tv.legacy_*_arm.ipk
           retention-days: 14

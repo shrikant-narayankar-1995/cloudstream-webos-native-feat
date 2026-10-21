@@ -28,6 +28,12 @@ if [ -n "$APKS" ]; then
         echo "make-rootfs.sh: installed packages differ from rootfs-$ARCH.manifest" >&2
         exit 1
     fi
+elif [ "$ARCH" = armv7 ] && [ -d /art-apks ]; then
+    # Locally rebuilt ART r3: retain signature checks using only its public key.
+    cp /art-apks/keys/*.pub "$ROOT/etc/apk/keys/"
+    apk add -q --root "$ROOT" --arch "$ARCH" --initdb --no-scripts --update-cache --keys-dir "$ROOT/etc/apk/keys" \
+        --repositories-file "$ROOT/etc/apk/repositories" /art-apks/art_standalone-*.apk
+    apk info --root "$ROOT" -v 2>/dev/null | sort > "/p/runtime/rootfs-$ARCH.manifest"
 else
     apk add -q --root "$ROOT" --arch "$ARCH" --initdb --no-scripts --update-cache --keys-dir "$ROOT/etc/apk/keys" \
         --repositories-file "$ROOT/etc/apk/repositories" art_standalone

@@ -14,6 +14,9 @@ usage: notices.py check <rootfs dir> <dist dir>      fail unless packages.tsv ma
 
 The texts are taken from each package's own source (Alpine's -doc packages rarely carry them), so
 copyright lines are the projects' own.
+
+CSWEB_LICENSES_DIR (default runtime/licenses) selects the notices directory, e.g. runtime/licenses-armv7
+for the legacy runtime.
 """
 import json
 import os
@@ -21,7 +24,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 RUNTIME = os.path.dirname(HERE)
-LICENSES = os.path.join(RUNTIME, "licenses")
+# The legacy (armv7) runtime keeps its own notices: CSWEB_LICENSES_DIR=runtime/licenses-armv7 (docs/legacy-build.md).
+LICENSES = os.environ.get("CSWEB_LICENSES_DIR") or os.path.join(RUNTIME, "licenses")
 TSV = os.path.join(LICENSES, "packages.tsv")
 
 # Origins whose output ships although no file of theirs is copied as-is: the trust store is

@@ -10,7 +10,7 @@
 # Nothing from the sources is built or run.
 set -eu
 apk add -q abuild curl tar xz bzip2 unzip >/dev/null 2>&1
-L=/p/runtime/licenses
+L=${CSWEB_LICENSES_DIR:-/p/runtime/licenses}  # legacy runtime: -e CSWEB_LICENSES_DIR=/p/runtime/licenses-armv7
 mkdir -p "$L/texts"
 export SRCDEST=/tmp/distfiles
 mkdir -p "$SRCDEST"

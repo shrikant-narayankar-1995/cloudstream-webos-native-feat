@@ -57,7 +57,12 @@ LaunchPlan plan_runtime_launch(const std::string &runtime_dir, const std::string
                                int heap_mb) {
     LaunchPlan plan;
     std::string loader;
+#ifdef CSWEB_LEGACY
+    // The legacy package's armv7 runtime (docs/legacy-build.md): musl calls the armv7 hard-float loader "armhf".
+    for (const char *name : {"ld-musl-armhf.so.1", "ld-musl-x86_64.so.1"}) {
+#else
     for (const char *name : {"ld-musl-aarch64.so.1", "ld-musl-x86_64.so.1"}) {
+#endif
         if (access((runtime_dir + "/lib/" + name).c_str(), X_OK) == 0) loader = name;
     }
     if (loader.empty()) {

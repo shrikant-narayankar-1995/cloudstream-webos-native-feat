@@ -109,7 +109,52 @@ jobs:
           print(json.dumps(manifest, indent=1))
           EOF
 
+      # Legacy package (docs/legacy-build.md), optional: published only when CI built it and its runtime
+      # has licence notices (runtime/licenses-armv7/); otherwise the release is exactly the main package.
+      - name: Get the legacy package
+        id: legacy-ipk
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: org.csweb.tv.legacy-ipk
+          path: dist-legacy
+
+      - name: Legacy package and its manifest
+        id: legacy
+        run: |
+          ipk="dist-legacy/org.csweb.tv.legacy_${VERSION}_arm.ipk"
+          if [[ ! -f "$ipk" ]]; then echo "No legacy package built; publishing the main package only"; exit 0; fi
+          if [[ ! -f runtime/licenses-armv7/packages.tsv ]]; then
+            echo "::warning::legacy package built but runtime/licenses-armv7/ is missing; not publishing it"; exit 0
+          fi
+          (cd dist-legacy && sha256sum "$(basename "$ipk")" > SHA256SUMS-legacy && cat SHA256SUMS-legacy)
+          python3 - "$VERSION" <<'EOF'
+          import hashlib, json, os, sys
+          version = sys.argv[1]
+          ipk = f"org.csweb.tv.legacy_{version}_arm.ipk"
+          repo, sha = os.environ["GITHUB_REPOSITORY"], os.environ["GITHUB_SHA"]
+          manifest = {
+              "id": "org.csweb.tv.legacy",
+              "version": version,
+              "type": "native",
+              "title": "CSWeb TV Legacy",
+              "appDescription": "CSWeb TV for older LG TVs with a 32-bit kernel (webOS 4.x and similar). "
+                                "Runs CloudStream extensions natively. Ships no content or plugins.",
+              "iconUri": f"https://raw.githubusercontent.com/{repo}/{sha}/apps/csweb-tv/packaging/icons/largeIcon.png",
+              "sourceUrl": f"https://github.com/{repo}",
+              "rootRequired": False,
+              "ipkUrl": ipk,
+              "ipkHash": {"sha256": hashlib.sha256(open(f"dist-legacy/{ipk}", "rb").read()).hexdigest()},
+          }
+          with open("dist-legacy/org.csweb.tv.legacy.manifest.json", "w") as f:
+              json.dump(manifest, f)
+          print(json.dumps(manifest, indent=1))
+          EOF
+          echo "files=$ipk dist-legacy/org.csweb.tv.legacy.manifest.json dist-legacy/SHA256SUMS-legacy" >> "$GITHUB_OUTPUT"
+
       - name: Release notes
+        env:
+          LEGACY_FILES: ${{ steps.legacy.outputs.files }}
         run: |
           kit=$(tools/fetch-kit.sh --print)
           inputs=$(sed -n 's#^\# mirror: .*/download/##p' runtime/inputs.lock)
@@ -131,11 +176,21 @@ jobs:
 
           **Licences:** GPL-3.0-or-later. The package carries \`licenses/\` (app and kit) and \`runtime-aarch64/licenses/\` (runtime). Source: this repository at this tag, and the release above for the runtime's parts.
           EOF
+          if [[ -n "$LEGACY_FILES" ]]; then
+            legacy_sha=$(cut -d' ' -f1 dist-legacy/SHA256SUMS-legacy)
+            {
+              echo
+              echo "**Legacy package (older TVs with a 32-bit kernel, e.g. webOS 4.x):** \`org.csweb.tv.legacy_${VERSION}_arm.ipk\`, SHA-256 \`$legacy_sha\`."
+              echo "Install it only if the main package's log shows \`runtime: exited (code 127)\` or \`no HTTP transport\`."
+              echo "It carries an armv7 plugin runtime (\`runtime-armv7/licenses/\`) and its own libcurl (\`licenses-libcurl/\`); see \`docs/legacy-build.md\`."
+            } >> notes.md
+          fi
           cat notes.md
 
       - name: Create the release
         env:
           PRERELEASE: ${{ inputs.prerelease }}
+          LEGACY_FILES: ${{ steps.legacy.outputs.files }}
         run: |
           # Only full releases become "latest" (what the Homebrew Channel listing follows); the
           # runtime-inputs-N releases are pre-releases and never are.
@@ -145,4 +200,5 @@ jobs:
             --target "$GITHUB_SHA" \
             --title "CSWeb TV $VERSION" \
             --notes-file notes.md \
-            "dist/org.csweb.tv_${VERSION}_arm.ipk" dist/org.csweb.tv.manifest.json dist/SHA256SUMS
+            "dist/org.csweb.tv_${VERSION}_arm.ipk" dist/org.csweb.tv.manifest.json dist/SHA256SUMS \
+            $LEGACY_FILES  # empty unless the legacy package is published (word-split on purpose)
