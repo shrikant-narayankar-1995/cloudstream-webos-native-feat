@@ -4,6 +4,15 @@
 
 set(CSWEB_APP_ID org.csweb.tv)
 set(CSWEB_TITLE "CSWeb TV")
+# The legacy package (docs/legacy-build.md): TVs whose kernel is 32-bit (uname armv7l) cannot start the
+# aarch64 plugin runtime, and firmware before webOS 5.3.1 has no libcurl. With this ON the package is
+# org.csweb.tv.legacy, carries runtime-armv7 and its own libcurl. OFF (default) builds exactly the
+# main package.
+option(CSWEB_LEGACY "Build the legacy package (armv7 runtime, bundled libcurl) for 32-bit-kernel TVs" OFF)
+if (CSWEB_LEGACY)
+    set(CSWEB_APP_ID org.csweb.tv.legacy)
+    set(CSWEB_TITLE "CSWeb TV Legacy")
+endif ()
 set(CSWEB_VERSION 0.1.0 CACHE STRING "App version, three integers (the release workflow sets it)")
 get_filename_component(_csweb_root "${CMAKE_CURRENT_SOURCE_DIR}/../.." ABSOLUTE)
 
@@ -34,6 +43,9 @@ add_library(csweb_core STATIC
 target_include_directories(csweb_core PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
 target_include_directories(csweb_core SYSTEM PUBLIC "${PROJECT_SOURCE_DIR}/third_party")
 target_link_libraries(csweb_core PUBLIC wnk_storage wnk_logging wnk_net wnk_async Threads::Threads)
+if (CSWEB_LEGACY)
+    target_compile_definitions(csweb_core PUBLIC CSWEB_LEGACY)
+endif ()
 
 # ---- tests (host) -----------------------------------------------------------------------------------
 if (WNK_BUILD_TESTS)
@@ -105,10 +117,38 @@ add_custom_command(TARGET csweb-tv POST_BUILD
         VERBATIM)
 
 set(_csweb_runtimes)
-if (WNK_WEBOS AND EXISTS "${_csweb_root}/runtime/dist/runtime-aarch64/lib/ld-musl-aarch64.so.1")
-    list(APPEND _csweb_runtimes "${_csweb_root}/runtime/dist/runtime-aarch64")
+set(_csweb_bundled_libs ${WNK_FFMPEG_RUNTIME_LIBS})
+set(_csweb_extra_dirs "${_csweb_fonts}" "${_csweb_icons}" "${_csweb_brand}")
+if (NOT CSWEB_LEGACY)
+    if (WNK_WEBOS AND EXISTS "${_csweb_root}/runtime/dist/runtime-aarch64/lib/ld-musl-aarch64.so.1")
+        list(APPEND _csweb_runtimes "${_csweb_root}/runtime/dist/runtime-aarch64")
+    elseif (WNK_WEBOS)
+        message(WARNING "CSWeb TV: runtime/dist/runtime-aarch64 missing; the package will not run plugins")
+    endif ()
 elseif (WNK_WEBOS)
-    message(WARNING "CSWeb TV: runtime/dist/runtime-aarch64 missing; the package will not run plugins")
+    # Legacy package: the armv7 runtime (tools/build-runtime.sh --arch armv7) ...
+    if (EXISTS "${_csweb_root}/runtime/dist/runtime-armv7/lib/ld-musl-armhf.so.1")
+        list(APPEND _csweb_runtimes "${_csweb_root}/runtime/dist/runtime-armv7")
+    else ()
+        message(WARNING "CSWeb TV Legacy: runtime/dist/runtime-armv7 missing; the package will not run plugins")
+    endif ()
+    # ... and libcurl (tools/build-libcurl-webos.sh), verifying against that runtime's PEM bundle where
+    # webOS installs the app (developer mode and Homebrew Channel alike).
+    set(CSWEB_LEGACY_INSTALL_DIR "/media/developer/apps/usr/palm/applications/${CSWEB_APP_ID}" CACHE STRING
+            "Where webOS installs the legacy package (the bundled libcurl's default CA bundle is under it)")
+    set(_csweb_curl "${CMAKE_BINARY_DIR}/csweb-libcurl")
+    get_filename_component(_csweb_ndk "${WNK_NDK_PREFIX}" DIRECTORY)  # .../bin
+    get_filename_component(_csweb_ndk "${_csweb_ndk}" DIRECTORY)
+    message(STATUS "CSWeb TV Legacy: bundled libcurl in ${_csweb_curl}")
+    execute_process(
+            COMMAND "${CMAKE_COMMAND}" -E env "WEBOS_NDK=${_csweb_ndk}" "${_csweb_root}/tools/build-libcurl-webos.sh"
+                    "${_csweb_curl}" "${CSWEB_LEGACY_INSTALL_DIR}/runtime-armv7/trust/ca-bundle.pem"
+            RESULT_VARIABLE _csweb_curl_rc OUTPUT_VARIABLE _csweb_curl_out ERROR_VARIABLE _csweb_curl_err)
+    if (NOT _csweb_curl_rc EQUAL 0)
+        message(FATAL_ERROR "tools/build-libcurl-webos.sh failed:\n${_csweb_curl_out}\n${_csweb_curl_err}")
+    endif ()
+    list(APPEND _csweb_bundled_libs "${_csweb_curl}/lib/libcurl.so.4")
+    list(APPEND _csweb_extra_dirs "${_csweb_curl}/licenses-libcurl")
 endif ()
 
 wnk_add_webos_package(
@@ -121,9 +161,9 @@ wnk_add_webos_package(
         LARGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/packaging/icons/largeIcon.png"
         ICON_COLOR "#0B0D12"
         EXPECTED_NEEDED "${CMAKE_CURRENT_SOURCE_DIR}/packaging/expected-needed.txt"
-        EXTRA_DIRS "${_csweb_fonts}" "${_csweb_icons}" "${_csweb_brand}"
+        EXTRA_DIRS ${_csweb_extra_dirs}
         REQUIRED_PERMISSIONS database.operation
-        BUNDLED_LIBS ${WNK_FFMPEG_RUNTIME_LIBS}
+        BUNDLED_LIBS ${_csweb_bundled_libs}
         PRIVATE_RUNTIMES ${_csweb_runtimes}
         SOURCE_URL "https://github.com/sostk/cloudstream-webos-native")
 

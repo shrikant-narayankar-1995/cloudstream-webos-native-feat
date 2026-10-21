@@ -7,17 +7,39 @@
 #   tools/build-runtime.sh --latest           instead: the current Alpine edge packages and CloudStream
 #                                             pre-release (untested; for the weekly upstream check). The
 #                                             manifests are rewritten; the notices check reports, not fails.
+#   tools/build-runtime.sh --arch armv7 [...]  the legacy runtime (runtime/dist/runtime-armv7) for TVs with a
+#                                             32-bit kernel (docs/legacy-build.md). Default --arch aarch64:
+#                                             without the option every step is exactly the aarch64 build.
 # Also builds the conformance test plugin (the project's own fixture) that runtime/build.sh tests with.
 # No plugin from a repository is downloaded or run.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 LATEST=0
-if [[ "${1:-}" == --latest ]]; then LATEST=1; shift; fi
-INPUTS="${1:-$HOME/.cache/csweb-runtime-inputs}"
 ARCH=aarch64
-STABLE=/tmp/org.csweb.tv/rt  # where the app links its runtime before starting ART (runtime_launcher.cpp)
+while [[ "${1:-}" == --* ]]; do
+    case $1 in
+        --latest) LATEST=1; shift ;;
+        --arch) ARCH=${2:?--arch needs aarch64 or armv7}; shift 2 ;;
+        *) echo "build-runtime: unknown option $1" >&2; exit 2 ;;
+    esac
+done
+INPUTS="${1:-$HOME/.cache/csweb-runtime-inputs}"
+# Where the app links its runtime before starting ART (runtime_launcher.cpp): /tmp/<app id>/rt.
+case $ARCH in
+    aarch64) STABLE=/tmp/org.csweb.tv/rt ;;
+    armv7) STABLE=/tmp/org.csweb.tv.legacy/rt ;;  # the legacy package's app id (apps/csweb-tv, CSWEB_LEGACY)
+    *) echo "build-runtime: unsupported arch $ARCH (aarch64 or armv7)" >&2; exit 2 ;;
+esac
 DIST="$ROOT/runtime/dist/runtime-$ARCH"
+# aarch64's Alpine pins are in runtime/inputs.lock; another arch has its own lock (runtime/inputs-<arch>.lock).
+# Until that lock exists the arch's Alpine packages are taken unpinned from edge (CloudStream stays pinned),
+# its manifest is rewritten, and missing licence notices are reported instead of failing the build.
+ARCH_LOCK="$ROOT/runtime/inputs-$ARCH.lock"
+PIN_ALPINE=1
+if [[ $ARCH != aarch64 && ! -f $ARCH_LOCK ]]; then PIN_ALPINE=0; fi
+NOTICES_STRICT=1
+if (( LATEST || ! PIN_ALPINE )); then NOTICES_STRICT=0; fi
 step() { echo "== build-runtime: $*"; }
 run() { docker run --rm -v "$ROOT":/p "$@"; }
 
@@ -31,9 +53,17 @@ if (( LATEST )); then
     APKS=() TRUST_APKS=()
 else
     step "inputs"
-    "$ROOT/tools/fetch-runtime-inputs.sh" "$INPUTS"
+    if [[ $ARCH == aarch64 ]]; then
+        "$ROOT/tools/fetch-runtime-inputs.sh" "$INPUTS"
+    elif (( PIN_ALPINE )); then
+        "$ROOT/tools/fetch-runtime-inputs.sh" "$INPUTS" "$ROOT/runtime/inputs.lock" "$ARCH_LOCK"
+    else
+        echo "build-runtime: no runtime/inputs-$ARCH.lock: $ARCH packages from Alpine edge, unpinned" >&2
+        "$ROOT/tools/fetch-runtime-inputs.sh" "$INPUTS"
+    fi
     cp "$INPUTS"/cloudstream/* "$ROOT/evidence/cloudstream-app/"
-    APKS=(-v "$INPUTS/alpine/$ARCH":/apks:ro) TRUST_APKS=(-v "$INPUTS/alpine/x86_64":/apks:ro)
+    APKS=() TRUST_APKS=(-v "$INPUTS/alpine/x86_64":/apks:ro)
+    if (( PIN_ALPINE )); then APKS=(-v "$INPUTS/alpine/$ARCH":/apks:ro); fi
 fi
 
 if [[ ! -f "$ROOT/test-plugins/conformance/out/CswebConformance.cs3" ]]; then
@@ -45,21 +75,38 @@ step "root filesystem ($ARCH)"
 run "${APKS[@]}" alpine:edge sh /p/runtime/make-rootfs.sh "$ARCH" ${APKS:+/apks}
 step "trust store"
 run "${TRUST_APKS[@]}" alpine:edge sh /p/runtime/make-trust.sh
+if [[ $ARCH == armv7 ]]; then  # the legacy package's bundled libcurl reads it (tools/build-libcurl-webos.sh)
+    run "${TRUST_APKS[@]}" alpine:edge sh /p/runtime/make-trust-pem.sh
+fi
 step "native helpers"
-run alpine:edge sh /p/runtime/native/build-native.sh
-step "wolfSSL"
-run alpine:edge sh /p/runtime/native/build-wolfssl.sh
+if [[ $ARCH == aarch64 ]]; then
+    run alpine:edge sh /p/runtime/native/build-native.sh
+    step "wolfSSL"
+    run alpine:edge sh /p/runtime/native/build-wolfssl.sh
+else
+    run alpine:edge sh /p/runtime/native/build-native.sh "$ARCH"
+    step "wolfSSL"
+    run alpine:edge sh /p/runtime/native/build-wolfssl.sh "$ARCH"
+fi
 step "compat layer and csloader (DEX)"
 run alpine:edge sh /p/runtime/build.sh
 
 step "dist"
 python3 "$ROOT/runtime/make_dist.py" "$ROOT/runtime/rootfs/$ARCH" "$ARCH" "$DIST"
 step "ahead-of-time compilation (for $STABLE)"
-run alpine:edge sh /p/runtime/make-aot.sh "$ARCH" "$STABLE"
+if [[ $ARCH == aarch64 ]]; then
+    run alpine:edge sh /p/runtime/make-aot.sh "$ARCH" "$STABLE"
+elif ! run alpine:edge sh /p/runtime/make-aot.sh "$ARCH" "$STABLE"; then
+    # Optional for the legacy runtime: without AOT.json the app starts ART without the boot image (slower).
+    echo "build-runtime: AOT for $ARCH failed; the runtime ships without it" >&2
+    run alpine:edge rm -rf "/p/runtime/dist/runtime-$ARCH/boot" "/p/runtime/dist/runtime-$ARCH/csweb/oat" \
+        "/p/runtime/dist/runtime-$ARCH/AOT.json"
+fi
 python3 "$ROOT/runtime/make_dist.py" --manifest "$DIST"
 
 step "licence notices"
-if (( LATEST )); then
+if [[ $ARCH != aarch64 ]]; then export CSWEB_LICENSES_DIR="$ROOT/runtime/licenses-$ARCH"; fi
+if (( ! NOTICES_STRICT )); then
     python3 "$ROOT/runtime/tools/notices.py" check "$ROOT/runtime/rootfs/$ARCH" "$DIST" || true
 else
     python3 "$ROOT/runtime/tools/notices.py" check "$ROOT/runtime/rootfs/$ARCH" "$DIST"

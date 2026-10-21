@@ -4,19 +4,23 @@
 # SHA-256. Each file is taken from the project's mirror release first (CloudStream's pre-release and
 # Alpine edge replace or drop old builds), then from its upstream URL. Files already present with the
 # right hash are kept.
-#   tools/fetch-runtime-inputs.sh [<dir>]     default: ~/.cache/csweb-runtime-inputs
-# Mirror: $RUNTIME_INPUTS_MIRROR (default: the runtime-inputs-N release named in runtime/inputs.lock),
+#   tools/fetch-runtime-inputs.sh [<dir>] [<lock>...]
+#       <dir> default: ~/.cache/csweb-runtime-inputs; <lock> default: runtime/inputs.lock (the legacy
+#       runtime adds runtime/inputs-armv7.lock, docs/legacy-build.md)
+# Mirror: $RUNTIME_INPUTS_MIRROR (default: the runtime-inputs-N release named in each lock file),
 # where a file's asset name is its path with '/' replaced by '_'.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-LOCK="$ROOT/runtime/inputs.lock"
 DEST="${1:-$HOME/.cache/csweb-runtime-inputs}"
-MIRROR="${RUNTIME_INPUTS_MIRROR:-$(sed -n 's/^# mirror: //p' "$LOCK")}"
+LOCKS=("${@:2}")
+if (( ${#LOCKS[@]} == 0 )); then LOCKS=("$ROOT/runtime/inputs.lock"); fi
 
 verified() { [[ -f "$1" ]] && [[ "$(sha256sum "$1" | cut -d' ' -f1)" == "$2" ]]; }
 
 fetched=0 kept=0
+for LOCK in "${LOCKS[@]}"; do
+MIRROR="${RUNTIME_INPUTS_MIRROR:-$(sed -n 's/^# mirror: //p' "$LOCK")}"
 while read -r sha path url; do
     [[ -z "$sha" || "$sha" == \#* ]] && continue
     out="$DEST/$path"
@@ -37,4 +41,5 @@ while read -r sha path url; do
     fi
     fetched=$((fetched + 1))
 done < "$LOCK"
+done
 echo "fetch-runtime-inputs: $DEST: $fetched fetched, $kept already present, all verified"

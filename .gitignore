@@ -7,6 +7,7 @@
 /evidence/cloudstream-app/*.jar
 /runtime/rootfs/
 /runtime/trust/cacerts
+/runtime/trust/ca-bundle.pem
 
 # Build outputs (reproducible with runtime/build.sh, runtime/native/build-native.sh)
 /runtime/out/

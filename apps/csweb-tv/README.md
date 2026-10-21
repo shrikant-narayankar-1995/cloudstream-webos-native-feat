@@ -94,3 +94,7 @@ tools/build-webos.sh              # ARM build and ipk (bundles runtime/dist/runt
 
 The runtime directory must be built first (`runtime/build.sh`, `runtime/make_dist.py`,
 `runtime/make-aot.sh aarch64 /tmp/org.csweb.tv/rt`).
+
+Older TVs with a 32-bit kernel (`armv7l` in the log, `runtime: exited (code 127)`) need the legacy
+package instead: `-DCSWEB_LEGACY=ON`, app id `org.csweb.tv.legacy`, with `runtime-armv7` and a bundled
+libcurl. See `docs/legacy-build.md`; without the option nothing in this build changes.

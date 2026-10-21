@@ -18,20 +18,27 @@
 set -eu
 ARCH=$1; STABLE=$2
 DIST=/p/runtime/dist/runtime-$ARCH
-case $ARCH in aarch64) ISA=arm64; FEATURES=-a53,-crc,-lse,-fp16,-dotprod;; x86_64) ISA=x86_64; FEATURES=-ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt;; *) echo "bad arch $ARCH" >&2; exit 2;; esac
+case $ARCH in aarch64) ISA=arm64; FEATURES=-a53,-crc,-lse,-fp16,-dotprod;; x86_64) ISA=x86_64; FEATURES=-ssse3,-sse4.1,-sse4.2,-avx,-avx2,-popcnt;;
+    # armv7 (legacy runtime, docs/legacy-build.md): a conservative ARMv7 set, no ARMv8 AArch32 extras.
+    # Replace it with what dalvikvm logs on the TV (--instruction-set-features=...) once it has run there.
+    armv7) ISA=arm; FEATURES=div,atomic_ldrd_strd,-armv8a;;
+    *) echo "bad arch $ARCH" >&2; exit 2;; esac
 # The features the runtime itself selects on the TV (dalvikvm log: --instruction-set-features=...).
+# The emulator for a foreign dex2oat, and musl's loader name (armv7 is "armhf").
+case $ARCH in armv7) QEMU=qemu-arm; HOSTARCH="armv7l armv8l"; LOADER=ld-musl-armhf.so.1;;
+    *) QEMU=qemu-$ARCH; HOSTARCH=$ARCH; LOADER=ld-musl-$ARCH.so.1;; esac
 case $STABLE in /*) ;; *) echo "stable path must be absolute" >&2; exit 2;; esac
 [ -d "$DIST/usr/bin" ] || { echo "no dist at $DIST (run make_dist.py first)" >&2; exit 2; }
 RUN=
-if [ "$(uname -m)" != "$ARCH" ]; then
-    apk add -q qemu-aarch64 >/dev/null 2>&1
-    RUN="qemu-aarch64"
-fi
+case " $HOSTARCH " in *" $(uname -m) "*) ;; *)
+    apk add -q "$QEMU" >/dev/null 2>&1
+    RUN="$QEMU" ;;
+esac
 mkdir -p "$(dirname "$STABLE")"
 ln -s "$DIST" "$STABLE"
 D=$STABLE
 LIBS="$D/usr/lib:$D/usr/lib/art:$D/usr/lib/java/dex/art/natives:$D/lib"
-dex2oat() { env -i ANDROID_DATA=/tmp/aot-data HOME=/tmp/aot-home $RUN "$D/lib/ld-musl-$ARCH.so.1" --library-path "$LIBS" "$D/usr/bin/dex2oat" "$@"; }
+dex2oat() { env -i ANDROID_DATA=/tmp/aot-data HOME=/tmp/aot-home $RUN "$D/lib/$LOADER" --library-path "$LIBS" "$D/usr/bin/dex2oat" "$@"; }
 mkdir -p /tmp/aot-data /tmp/aot-home
 rm -rf "$DIST/boot" "$DIST/csweb/oat" "$DIST/AOT.json"
 mkdir -p "$DIST/boot/$ISA" "$DIST/csweb/oat/$ISA"
@@ -70,7 +77,7 @@ done
     sep=; for j in $JARS; do printf '%s"usr/lib/java/dex/art/%s-hostdex.jar"' "$sep" "$j"; sep=", "; done
     printf '],\n "classpath": ["csweb/csweb-host.dex", "csweb/cloudstream.jar"],\n "classpath_filter": "verify",\n'
     printf ' "dex2oat_sha256": "%s",\n "qemu": "%s"\n}\n' "$(sha256sum "$DIST/usr/bin/dex2oat" | cut -d' ' -f1)" \
-        "$( [ -n "$RUN" ] && qemu-aarch64 --version | head -1 || echo none)"
+        "$( [ -n "$RUN" ] && "$RUN" --version | head -1 || echo none)"
 } > "$DIST/AOT.json"
 chown -R "$(stat -c %u:%g "$DIST")" "$DIST/boot" "$DIST/csweb/oat" "$DIST/AOT.json"
 du -sh "$DIST/boot" "$DIST/csweb/oat"

@@ -6,10 +6,19 @@
 
 #include <cstdlib>
 
+// The legacy package (CSWEB_LEGACY, docs/legacy-build.md) installs beside the main one under its own id.
+#ifdef CSWEB_LEGACY
+#define CSWEB_FALLBACK_APP_ID "org.csweb.tv.legacy"
+#define CSWEB_WINDOW_TITLE "CSWeb TV Legacy"
+#else
+#define CSWEB_FALLBACK_APP_ID "org.csweb.tv"
+#define CSWEB_WINDOW_TITLE "CSWeb TV"
+#endif
+
 int main(int argc, char **argv) {
     wnk::app::AppConfig config;
-    config.fallback_app_id = "org.csweb.tv";
-    config.title = "CSWeb TV";
+    config.fallback_app_id = CSWEB_FALLBACK_APP_ID;
+    config.title = CSWEB_WINDOW_TITLE;
     config.worker_threads = 4;
     config.http = true;
     config.storage = true;

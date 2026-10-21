@@ -21,6 +21,14 @@
 #ifndef CSWEB_HOST_RUNTIME_DIR
 #define CSWEB_HOST_RUNTIME_DIR ""
 #endif
+// The legacy package (CSWEB_LEGACY, docs/legacy-build.md) carries an armv7 runtime under its own app id.
+#ifdef CSWEB_LEGACY
+#define CSWEB_RUNTIME_SUBDIR "/runtime-armv7"
+#define CSWEB_TMP_FALLBACK "/tmp/org.csweb.tv.legacy"
+#else
+#define CSWEB_RUNTIME_SUBDIR "/runtime-aarch64"
+#define CSWEB_TMP_FALLBACK "/tmp/org.csweb.tv"
+#endif
 
 namespace csweb::app {
 
@@ -31,7 +39,7 @@ void make_dir(const std::string &path) { ::mkdir(path.c_str(), 0700); }
 
 std::string runtime_dir(const std::string &app_dir) {
     if (const char *env = std::getenv("CSWEB_RUNTIME_DIR"); env && *env) return env;
-    if (wnk::platform::kIsWebOS) return app_dir + "/runtime-aarch64";
+    if (wnk::platform::kIsWebOS) return app_dir + CSWEB_RUNTIME_SUBDIR;
     return CSWEB_HOST_RUNTIME_DIR;
 }
 }  // namespace
@@ -47,7 +55,7 @@ Application::~Application() {
 void Application::on_start(wnk::app::Context &ctx) {
     const std::string app_dir = ctx.launch().app_dir;
     std::string tmp = ctx.runtime_dir();
-    if (tmp.empty()) tmp = "/tmp/org.csweb.tv";
+    if (tmp.empty()) tmp = CSWEB_TMP_FALLBACK;
     make_dir(tmp);
     stalls_ = std::make_unique<core::StallSampler>(ctx.dispatcher(), tmp + "/stalls.log");
     const std::string plugin_dir = tmp + "/plugins", data_dir = tmp + "/plugin-data";

@@ -23,6 +23,18 @@ static long sys4(long n, long a, long b, long c, long d) {
 }
 enum { SYS_readlinkat = 267, SYS_execve = 59, SYS_exit = 60, SYS_write = 1 };
 __asm__(".global _start\n_start:\n mov %rsp, %rdi\n and $-16, %rsp\n call cstart\n");
+#elif defined(__arm__)
+// armv7 (the legacy runtime, docs/legacy-build.md): EABI syscalls, number in r7. Built with -marm so r7
+// is not Thumb's frame pointer.
+#define LOADER "ld-musl-armhf.so.1"
+static long sys4(long n, long a, long b, long c, long d) {
+    register long r7 __asm__("r7") = n, r0 __asm__("r0") = a, r1 __asm__("r1") = b, r2 __asm__("r2") = c,
+                  r3 __asm__("r3") = d;
+    __asm__ volatile("svc 0" : "+r"(r0) : "r"(r7), "r"(r1), "r"(r2), "r"(r3) : "memory");
+    return r0;
+}
+enum { SYS_readlinkat = 332, SYS_execve = 11, SYS_exit = 1, SYS_write = 4 };
+__asm__(".global _start\n_start:\n mov r0, sp\n bic sp, sp, #7\n bl cstart\n");
 #else
 #error unsupported architecture
 #endif
