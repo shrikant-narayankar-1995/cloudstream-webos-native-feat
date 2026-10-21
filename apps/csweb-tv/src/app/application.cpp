@@ -31,6 +31,9 @@
 #endif
 
 namespace csweb::app {
+#ifdef CSWEB_LEGACY_CURL_DIAGNOSTICS
+void log_legacy_curl_diagnostics();
+#endif
 
 namespace {
 constexpr const char *kCat = "csweb";
@@ -53,6 +56,9 @@ Application::~Application() {
 }
 
 void Application::on_start(wnk::app::Context &ctx) {
+#ifdef CSWEB_LEGACY_CURL_DIAGNOSTICS
+    log_legacy_curl_diagnostics();
+#endif
     const std::string app_dir = ctx.launch().app_dir;
     std::string tmp = ctx.runtime_dir();
     if (tmp.empty()) tmp = CSWEB_TMP_FALLBACK;

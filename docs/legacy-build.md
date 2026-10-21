@@ -114,3 +114,19 @@ The legacy package is built by CI but, like the main one, not run on a TV by CI.
   `/media/developer/apps/usr/palm/applications/org.csweb.tv.legacy/runtime-armv7/trust/ca-bundle.pem`
   (where both developer mode and the Homebrew Channel install apps; `CSWEB_LEGACY_INSTALL_DIR` changes it).
   A TLS failure naming that file means the app is installed elsewhere.
+
+
+### Diagnosing curl initialization
+
+The legacy webOS build logs `[legacy-curl]` lines in `events.log` after the kit initializes HTTP.
+They identify the retained libcurl's path and version, and any initialization errors captured by
+our bundled curl/mbedTLS. Errors include the failed global initializer, PSA/DRBG error codes,
+and entropy-source failures (`getrandom`, `/dev/urandom` open/read) with numeric errno snapshots.
+An errno snapshot can be stale for failures that do not set errno; use it with the named stage
+and its return code. A missing diagnostic symbol indicates a different or older libcurl was loaded.
+The diagnostics inspect the existing library without retrying initialization or making requests.
+They record no random bytes, credentials, or URLs. No initialization failure recorded means only
+that these hooks captured no failure; refer to the kit's `net.http` capability for transport status.
+
+The source instrumentation runs only in `tools/build-libcurl-webos.sh`, and its hash participates
+in the curl build cache key. The main app, firmware libraries, and pinned kit are unchanged.
