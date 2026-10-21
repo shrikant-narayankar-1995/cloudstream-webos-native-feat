@@ -24,6 +24,9 @@ echo '839f8e4dd93453e423fe52777fc7e10a7720d2985449fc15e8e3b70cd315f972  APKBUILD
 export ABUILD_LAST_COMMIT="$APORTS" SOURCE_DATE_EPOCH=1792147193
 export PACKAGER='CSWeb TV Legacy <legacy@csweb.invalid>'
 export SUDO_APK=apk
+# ART otherwise infers arm64 from the host kernel's uname in a native 32-bit container.
+# Its build system explicitly supports ARCH overrides; the compiler and all APKs remain armv7.
+export ARCH=arm
 export ABUILD_USERDIR=/tmp/art-signing
 export ABUILD_USERCONF="$ABUILD_USERDIR/abuild.conf"
 abuild-keygen -a -n
@@ -50,6 +53,9 @@ test -s "$APK"
 # Resolve the built APK against current edge, without executing package scripts.
 apk add --root /tmp/check-art --initdb --no-scripts --keys-dir /etc/apk/keys \
     --repositories-file /etc/apk/repositories "$APK"
+readelf -h /tmp/check-art/usr/bin/dalvikvm > /tmp/art-elf
+grep -q 'Class:.*ELF32' /tmp/art-elf
+grep -q 'Machine:.*ARM' /tmp/art-elf
 scanelf --recursive --needed --nobanner /tmp/check-art/usr > /tmp/art-needed
 grep -q 'libwolfssl.so.46' /tmp/art-needed
 if grep -q 'libwolfssl.so.45' /tmp/art-needed; then
