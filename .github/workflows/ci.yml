@@ -274,7 +274,7 @@ jobs:
 
       - name: Runtime cache key
         id: runtime-key
-        run: echo "key=runtime-armv7-${{ hashFiles('runtime/**', 'tools/build-runtime.sh', 'tools/fetch-runtime-inputs.sh', 'test-plugins/conformance/**') }}" >> "$GITHUB_OUTPUT"
+        run: echo "key=runtime-armv7-${{ hashFiles('runtime/**', 'tools/build-runtime.sh', 'tools/fetch-runtime-inputs.sh', 'tools/instrument-legacy-loader.py', 'test-plugins/conformance/**') }}" >> "$GITHUB_OUTPUT"
 
       - name: Cache the runtime
         id: runtime-cache

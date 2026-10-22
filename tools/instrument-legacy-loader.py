@@ -48,9 +48,16 @@ def instrument(source, output):
     main = before_after(main,
         "            manifestText = new String(readAll(in, 64 * 1024), StandardCharsets.UTF_8);",
         "manifest.read")
-    main = before_after(main,
+    main = once(main,
         "        BasePlugin.Manifest manifest = MainAPIKt.getMapper().readValue(manifestText, BasePlugin.Manifest.class);",
-        "manifest.parse")
+        '        legacyLoadStage("manifest.parse.begin");\n' +
+        '        legacyLoadStage("mapper.initialize.begin");\n' +
+        '        com.fasterxml.jackson.databind.ObjectMapper legacyManifestMapper = MainAPIKt.getMapper();\n' +
+        '        legacyLoadStage("mapper.initialize.end");\n' +
+        '        legacyLoadStage("manifest.deserialize.begin");\n' +
+        '        BasePlugin.Manifest manifest = legacyManifestMapper.readValue(manifestText, BasePlugin.Manifest.class);\n' +
+        '        legacyLoadStage("manifest.deserialize.end");\n' +
+        '        legacyLoadStage("manifest.parse.end");')
     main = before_after(main,
         "        Class<?> pluginClass = loader.loadClass(manifest.getPluginClassName());", "class.resolve")
     main = before_after(main,

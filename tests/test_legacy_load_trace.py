@@ -33,6 +33,10 @@ class LegacyLoadTraceTest(unittest.TestCase):
                         r'\n    // Generated only for the legacy runtime\.[\s\S]*?System\.err\.flush\(\);\n    }\n',
                         '', modified, count=1)
                 modified = re.sub(r'^.*legacyLoadStage\("[^"]+"\);\n', '', modified, flags=re.MULTILINE)
+                modified = modified.replace(
+                    "com.fasterxml.jackson.databind.ObjectMapper legacyManifestMapper = MainAPIKt.getMapper();\n" +
+                    "        BasePlugin.Manifest manifest = legacyManifestMapper.readValue(manifestText, BasePlugin.Manifest.class);",
+                    "BasePlugin.Manifest manifest = MainAPIKt.getMapper().readValue(manifestText, BasePlugin.Manifest.class);")
                 self.assertEqual(re.sub(r'\s+', '', modified), re.sub(r'\s+', '', original.decode()))
 
     def test_stages_are_ordered_and_no_signal_or_stack_dump_is_added(self):
@@ -50,6 +54,10 @@ class LegacyLoadTraceTest(unittest.TestCase):
                 self.assertLess(previous, begin)
                 self.assertLess(begin, end)
                 previous = end
+            nested = [main.index(f'legacyLoadStage("{stage}")') for stage in (
+                "manifest.parse.begin", "mapper.initialize.begin", "mapper.initialize.end",
+                "manifest.deserialize.begin", "manifest.deserialize.end", "manifest.parse.end")]
+            self.assertEqual(nested, sorted(nested))
             for stage in ("request.queued", "request.begin", "request.end", "integrity.begin", "integrity.end",
                           "load.begin", "load.end", "dialogs.begin", "dialogs.end", "providers.begin", "providers.end"):
                 self.assertIn(f'legacyLoadStage("{stage}")', service)

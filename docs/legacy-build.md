@@ -220,3 +220,20 @@ These results can reproduce generic ARMv7/ART/class-loading failures but cannot 
 webOS sandbox, kernel, or firmware libraries. Network-dependent plugin initialization may fail in
 this offline test for a separate reason; inspect the recorded stage and protocol error before
 attributing that failure to the TV problem. Existing main-package jobs do not depend on this job.
+
+Native reproduction result (2026-10-22, run 39768963687, commit f232fe9): both BilibiliProvider
+(SHA-256 a16eeeaab62abeba25eb0be5e189b769e319614ca3cb11b114ad9dd5a6cfc82b) and NguonC
+(SHA-256 47e98cc384468af20117e1ed0168f653192b312ff5eff1d583a29be99067636e) reach ready,
+finish compilation, construct the class loader, and open/read manifest.json, but stop at
+`manifest.parse.begin` and time out after 90 seconds without registering providers. This reproduces
+a loading failure on native ARM Linux and isolates the combined `MainAPIKt.getMapper().readValue(...)`
+step, before plugin class resolution. The class-loader-context warning did not prevent reaching
+manifest parsing. The exact operation inside mapper initialization/deserialization is not yet known.
+Two earlier test-harness setup failures (log-directory ownership and missing passwd entry for the
+numeric test UID) were corrected before this result; they were not TV runtime diagnoses.
+
+The next trace separates that combined expression into `mapper.initialize.begin/end` around
+`MainAPIKt.getMapper()` and `manifest.deserialize.begin/end` around `readValue`. The same
+mapper and manifest types are used, in the same order, only in the generated legacy source copy.
+The armv7 runtime cache key now includes the instrumentation script, so trace-only changes cannot
+silently reuse an older DEX. The aarch64 runtime cache key and Java sources are unchanged.
