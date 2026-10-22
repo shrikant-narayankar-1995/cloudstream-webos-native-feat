@@ -67,6 +67,15 @@ if (WNK_BUILD_TESTS)
             target_compile_definitions(csweb_test_runtime_launcher_${mode} PRIVATE CSWEB_LEGACY)
         endif ()
         add_test(NAME csweb.runtime_launcher_${mode} COMMAND csweb_test_runtime_launcher_${mode})
+        add_executable(csweb_test_child_process_log_${mode}
+                tests/test_child_process_log.cpp src/core/child_process.cpp)
+        target_include_directories(csweb_test_child_process_log_${mode} PRIVATE
+                "${CMAKE_CURRENT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/tests/unit")
+        target_link_libraries(csweb_test_child_process_log_${mode} PRIVATE Threads::Threads)
+        if (mode STREQUAL "legacy")
+            target_compile_definitions(csweb_test_child_process_log_${mode} PRIVATE CSWEB_LEGACY)
+        endif ()
+        add_test(NAME csweb.child_process_log_${mode} COMMAND csweb_test_child_process_log_${mode})
     endforeach ()
 endif ()
 

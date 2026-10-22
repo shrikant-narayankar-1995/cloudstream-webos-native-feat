@@ -168,3 +168,13 @@ keeps the existing imageless fallback and supplies no new override. Main launch 
 This repairs the demonstrated compiler-path mismatch without rebuilding ART or changing its sources.
 It still needs a TV plugin-load test; the existing timeouts do not prove this is the only remaining
 loading problem. Success means providers register, not merely that the plugin download completes.
+
+### Reading runtime.log in Dev Manager
+
+The legacy build sets the open runtime stderr log to mode `0640` on every runtime start, including
+existing `0600` logs from earlier builds. The app owns the file and webOS group `5000` can read it;
+the tested Dev Manager `prisoner` account belongs to that group. Permissions are set on the open
+descriptor before launching ART, so a restrictive umask does not remove group access. Existing
+contents are preserved and new output is appended. Permission setup failures are reported as launch
+errors. No manual chmod or root account is needed after installing and launching the updated package.
+The log remains `/tmp/org.csweb.tv.legacy/runtime.log`; main-package permissions remain `0600`.
