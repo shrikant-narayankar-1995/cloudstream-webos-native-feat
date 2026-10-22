@@ -121,7 +121,7 @@ The legacy package is built by CI but, like the main one, not run on a TV by CI.
 The legacy webOS build logs `[legacy-curl]` lines in `events.log` after the kit initializes HTTP.
 They identify the retained libcurl's path and version, and any initialization errors captured by
 our bundled curl/mbedTLS. Errors include the failed global initializer, PSA/DRBG error codes,
-and entropy-source failures (`getrandom`, `/dev/urandom` open/read) with numeric errno snapshots.
+and entropy-source failures (`getrandom`, device open/read) with numeric errno snapshots and device paths.
 An errno snapshot can be stale for failures that do not set errno; use it with the named stage
 and its return code. A missing diagnostic symbol indicates a different or older libcurl was loaded.
 The diagnostics inspect the existing library without retrying initialization or making requests.
@@ -130,3 +130,21 @@ that these hooks captured no failure; refer to the kit's `net.http` capability f
 
 The source instrumentation runs only in `tools/build-libcurl-webos.sh`, and its hash participates
 in the curl build cache key. The main app, firmware libraries, and pinned kit are unchanged.
+
+### Legacy entropy and interpreter comparison
+
+On the webOS 4.4.3 TV, the diagnostic package loaded its bundled curl but failed in mbedTLS's
+platform entropy device open with ENOENT, followed by PSA error -148. mbedTLS 3.6.7 defaults
+to `/dev/random`, which this TV lacks. The first diagnostic build incorrectly labeled that
+failure `urandom fopen`; the label did not reflect the actual configured device path.
+
+The legacy build supplies the Linux ARM EABI `getrandom` syscall number (384) only if the old
+NDK headers omit it. mbedTLS uses this dedicated kernel interface first and falls back only on
+ENOSYS. Its device fallback is explicitly `/dev/urandom`. All other syscall/device errors remain
+fatal to initialization; no predictable entropy fallback or certificate-verification bypass is used.
+
+The same TV starts ART but repeatedly crashes with SIGSEGV in compiled boot code, with a frame
+reported as `WolfSSLKeyX509.getPrivateKey`. The legacy launcher now adds `-Xint` for an interpreter
+comparison, retaining the boot image's data and resource paths. Its launch status includes
+`interpreter (-Xint)`. This may slow startup; it is a diagnostic comparison, not a confirmed ART fix.
+The main package's launcher options and all ART/runtime build inputs remain unchanged.

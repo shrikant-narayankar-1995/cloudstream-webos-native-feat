@@ -91,6 +91,12 @@ LaunchPlan plan_runtime_launch(const std::string &runtime_dir, const std::string
     }
     s.args.insert(s.args.end(), {rt + "/usr/bin/dalvikvm", "-Xmx" + std::to_string(heap_mb) + "m",
               "-Xnoimage-dex2oat", "-Xcompiler-option", "--compiler-filter=verify"});
+#ifdef CSWEB_LEGACY
+    // Compare against the repeatable ARMv7 crash in boot-wolfssljni-hostdex.oat.
+    // Retain the image's data/paths, but execute Java through ART's interpreter.
+    s.args.push_back("-Xint");
+    plan.aot_status += "; interpreter (-Xint)";
+#endif
     s.args.insert(s.args.end(), aot.options.begin(), aot.options.end());
     for (std::string a : {"-Djavax.net.ssl.trustStore=" + rt + "/trust/cacerts",
                           "-Djava.library.path=" + rt + "/usr/lib/java/dex/art/natives", std::string("-cp"),
