@@ -105,6 +105,19 @@ LaunchPlan plan_runtime_launch(const std::string &runtime_dir, const std::string
         s.args.push_back(std::move(a));
     }
     s.env = {"PATH=" + rt + "/bin", "ANDROID_DATA=" + tmp_dir + "/art", "HOME=" + tmp_dir + "/home"};
+#ifdef CSWEB_LEGACY
+    // This ART's plugin compiler does not forward -Xbootclasspath. Without the environment value,
+    // dex2oat realpaths libart's directory and rejects the image's stable /tmp/.../rt jar locations.
+    // Reuse the validated VM option verbatim, including the jar order; keep imageless fallback as-is.
+    for (const auto &option : aot.options) {
+        const std::string prefix = "-Xbootclasspath:";
+        if (option.compare(0, prefix.size(), prefix) == 0) {
+            s.env.push_back("BOOTCLASSPATH=" + option.substr(prefix.size()));
+            plan.aot_status += "; compiler bootclasspath inherited";
+            break;
+        }
+    }
+#endif
     if (!icu.empty() && exists(runtime_dir + "/usr/share/icu/" + icu)) s.env.push_back("ICU_DATA=" + rt + "/usr/share/icu/" + icu);
     s.stderr_path = tmp_dir + "/runtime.log";
     plan.ok = true;

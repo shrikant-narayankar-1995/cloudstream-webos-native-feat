@@ -56,6 +56,18 @@ if (WNK_BUILD_TESTS)
         target_link_libraries(csweb_test_${t} PRIVATE csweb_core)
         add_test(NAME csweb.${t} COMMAND csweb_test_${t})
     endforeach ()
+    # Compile the launcher independently in each mode so legacy-only environment changes are covered.
+    foreach (mode main legacy)
+        add_executable(csweb_test_runtime_launcher_${mode}
+                tests/test_runtime_launcher.cpp src/runtime/runtime_launcher.cpp)
+        target_include_directories(csweb_test_runtime_launcher_${mode} PRIVATE
+                "${CMAKE_CURRENT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/tests/unit")
+        target_include_directories(csweb_test_runtime_launcher_${mode} SYSTEM PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
+        if (mode STREQUAL "legacy")
+            target_compile_definitions(csweb_test_runtime_launcher_${mode} PRIVATE CSWEB_LEGACY)
+        endif ()
+        add_test(NAME csweb.runtime_launcher_${mode} COMMAND csweb_test_runtime_launcher_${mode})
+    endforeach ()
 endif ()
 
 # ---- csweb_player: link choice, subtitle files, the kit media pipeline for a link ----------------------

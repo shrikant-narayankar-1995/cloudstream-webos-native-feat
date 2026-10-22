@@ -148,3 +148,23 @@ reported as `WolfSSLKeyX509.getPrivateKey`. The legacy launcher now adds `-Xint`
 comparison, retaining the boot image's data and resource paths. Its launch status includes
 `interpreter (-Xint)`. This may slow startup; it is a diagnostic comparison, not a confirmed ART fix.
 The main package's launcher options and all ART/runtime build inputs remain unchanged.
+
+### Plugin compiler boot-classpath inheritance
+
+The next TV log confirms HTTP/HTTPS downloads succeed and ART becomes ready with `-Xint`.
+Plugin installation succeeds, but plugin loading times out after an on-device dex2oat error:
+the image records `/tmp/org.csweb.tv.legacy/rt/...` jar locations while the compiler expects
+real installation paths under `/media/developer/apps/.../runtime-armv7/...`.
+
+The exact ART source at `e78bf68917bcaaf58fef3960cd88793b3b7f39cc` explains the difference:
+`art/runtime/oat_file_assistant.cc::GetBestOatFile` still invokes dex2oat in interpreter mode
+and does not forward the VM's explicit boot class path. In `art/runtime/parsed_options.cc`,
+the compiler accepts `BOOTCLASSPATH` from its environment; without it, its fallback applies
+`realpath` to libart's jar directory. The legacy launcher therefore exports the validated
+`-Xbootclasspath` value verbatim as `BOOTCLASSPATH`, preserving stable paths and jar order.
+Its launch status includes `compiler bootclasspath inherited`. Missing/rejected AOT metadata
+keeps the existing imageless fallback and supplies no new override. Main launch behavior is unchanged.
+
+This repairs the demonstrated compiler-path mismatch without rebuilding ART or changing its sources.
+It still needs a TV plugin-load test; the existing timeouts do not prove this is the only remaining
+loading problem. Success means providers register, not merely that the plugin download completes.
