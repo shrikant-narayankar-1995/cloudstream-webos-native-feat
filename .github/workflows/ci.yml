@@ -7,8 +7,8 @@
 #   runtime-legacy, webos-legacy: the legacy package for TVs with a 32-bit kernel (org.csweb.tv.legacy:
 #            runtime-armv7 and a bundled libcurl, docs/legacy-build.md). Separate jobs, caches and artifacts;
 #            allowed to fail, so they never hold back the jobs above.
-# The kit is checked out at the commit tools/fetch-kit.sh pins. No plugin from a repository is
-# downloaded or run: the tests use the project's own fixtures (and its conformance test plugin).
+# The kit is checked out at the commit tools/fetch-kit.sh pins. Main build tests use this project's
+# own fixtures. The isolated legacy-runtime-test job additionally loads fixed third-party revisions.
 name: CI
 
 on:
@@ -396,14 +396,21 @@ jobs:
           test ! -e /proc/sys/fs/binfmt_misc/qemu-arm
           mkdir -p /tmp/legacy-repro/runtime /tmp/legacy-repro/plugins /tmp/legacy-repro/logs
           tar -C /tmp/legacy-repro/runtime -xf runtime-armv7.tar
-          docker build --platform linux/arm/v7 -t csweb-legacy-test - <<'DOCKERFILE'
+          docker build --platform linux/arm/v7 --build-arg TEST_UID="$(id -u)" \
+            --build-arg TEST_GID="$(id -g)" -t csweb-legacy-test - <<'DOCKERFILE'
           FROM alpine:edge
-          RUN apk add --no-cache python3
+          ARG TEST_UID
+          ARG TEST_GID
+          RUN apk add --no-cache python3 && \
+              addgroup -g "$TEST_GID" cswebtest && \
+              adduser -D -H -u "$TEST_UID" -G cswebtest cswebtest
           DOCKERFILE
           docker run --rm --platform linux/arm/v7 csweb-legacy-test sh -ec '
             test "$(apk --print-arch)" = armv7
             test "$(getconf LONG_BIT)" = 32
           '
+          docker run --rm --platform linux/arm/v7 --user "$(id -u):$(id -g)" \
+            csweb-legacy-test python3 -c 'import os, pwd; print(pwd.getpwuid(os.getuid()).pw_name)'
 
       - name: Fetch fixed plugin revisions and record provenance
         run: |
