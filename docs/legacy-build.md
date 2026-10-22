@@ -269,3 +269,19 @@ The native test now also invokes separate, bounded probe VMs for floating-point 
 kotlinx JSON initialization, Jackson's builder, KotlinModule's builder, and MainAPIKt initialization.
 The probe entry point exists only in the generated legacy DEX and is never called by the app.
 Probe logs accompany the real plugin results; a successful probe alone does not pass the job.
+
+Run 39844484434 isolates a native math failure: conversion of integer 27 yields the correct
+double bits `403b000000000000`, but Math.rint returns `403f1576bf0`. kotlinx JSON and plain
+Jackson initialization complete; KotlinModule.Builder construction and MainAPIKt initialization
+time out. Jackson Kotlin 2.13.1's KotlinFeature initializer calls `2.0.pow(ordinal)`.
+The pinned ART ARM JNI frame builder assumes soft-float arguments/results, while Alpine's
+libopenjdk Math entry points use the hard-float compiler ABI (JNICALL is empty).
+
+The legacy runtime now tests a small Math JNI bridge: AAPCS entry points receive ART's arguments
+and call the same musl libm functions using the compiler's normal AAPCS-VFP convention. It registers
+only java.lang.Math's existing native signatures, before service startup; StrictMath and other
+JNI classes are untouched. It is compiled/packaged only for armv7, and startup fails if rint/pow
+self-checks fail. CI compares baseline and bridged math in separate VMs (including binary arguments,
+rounding, signed zero, NaN and infinity), then retests initializers and real plugin registration.
+The ART APK and aarch64 behavior are unchanged. This is under test, not a compatibility guarantee
+for every JNI method or plugin operation.

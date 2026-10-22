@@ -61,6 +61,13 @@ def instrument(source, output):
         }
         return manifest;
     }
+    private static void legacyInitializeMath() {
+        System.loadLibrary("csweb_legacy_math");
+        if (Double.doubleToRawLongBits(Math.rint(27.0)) != 0x403b000000000000L ||
+                Double.doubleToRawLongBits(Math.pow(2.0, 4.0)) != 0x4030000000000000L)
+            throw new IllegalStateException("legacy Math JNI ABI self-check failed");
+        legacyLoadStage("math.bridge.ready");
+    }
     // Invoked only by the disposable native CI harness, never by the app.
     public static final class LegacyProbe {
         public static void main(String[] args) {
@@ -68,6 +75,7 @@ def instrument(source, output):
             try {
                 String probe = args[0];
                 legacyLoadStage("probe." + probe + ".begin");
+                if (args.length > 1 && args[1].equals("bridge")) legacyInitializeMath();
                 if (probe.equals("math")) {
                     double value = Integer.valueOf(27).doubleValue();
                     System.err.println("[legacy-probe] integer.double.bits=" +
@@ -75,9 +83,21 @@ def instrument(source, output):
                     System.err.println("[legacy-probe] finite=" + Double.isFinite(value));
                     System.err.println("[legacy-probe] rint.bits=" +
                             Long.toHexString(Double.doubleToRawLongBits(Math.rint(value))));
+                    System.err.println("[legacy-probe] pow.bits=" +
+                            Long.toHexString(Double.doubleToRawLongBits(Math.pow(2.0, 4.0))));
                     if (Double.doubleToRawLongBits(value) != 0x403b000000000000L ||
                             !Double.isFinite(value) || Math.rint(value) != value)
                         throw new AssertionError("floating-point probe failed");
+                    if (Math.pow(2.0, 4.0) != 16.0 || Math.pow(2.0, -2.0) != 0.25 ||
+                            Math.sqrt(4.0) != 2.0 || Math.ceil(-1.5) != -1.0 ||
+                            Math.floor(-1.5) != -2.0 || Math.rint(2.5) != 2.0 ||
+                            Math.rint(3.5) != 4.0 || Math.sin(0.0) != 0.0 ||
+                            Math.atan2(0.0, 1.0) != 0.0 || Math.hypot(3.0, 4.0) != 5.0 ||
+                            Math.IEEEremainder(5.0, 2.0) != 1.0 ||
+                            !Double.isNaN(Math.sqrt(-1.0)) ||
+                            Math.rint(Double.POSITIVE_INFINITY) != Double.POSITIVE_INFINITY ||
+                            Double.doubleToRawLongBits(Math.rint(-0.0)) != Long.MIN_VALUE)
+                        throw new AssertionError("Math JNI edge-case probe failed");
                 } else if (probe.equals("serialization")) {
                     Class<?> type = Class.forName("kotlinx.serialization.json.Json");
                     legacyLoadStage("probe.serialization.class.end");
@@ -112,6 +132,8 @@ def instrument(source, output):
     // End generated legacy helper.
 '''
     main = once(main, "public final class Main {", "public final class Main {" + helper)
+    main = once(main, "    public static void main(String[] argv) {",
+        "    public static void main(String[] argv) {\n        legacyInitializeMath();")
 
     def before_after(text, statement, stage):
         indent = statement[:len(statement) - len(statement.lstrip())]

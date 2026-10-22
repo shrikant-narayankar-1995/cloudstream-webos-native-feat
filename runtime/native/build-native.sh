@@ -27,6 +27,22 @@ for arch in $ARCHES; do
         clang --target=aarch64-linux-musl -O2 -fPIC -shared -nostdlib -ffreestanding -fuse-ld=lld -Wl,-soname,low4g.so \
             -Wl,--allow-shlib-undefined -Wall -Wextra -Werror -o out/low4g.so.aarch64 low4g.c
     fi
+    if [ "$arch" = armv7 ]; then
+        # Headers only: the JDK does not become a runtime dependency.
+        apk add -q openjdk17-jdk >/dev/null 2>&1
+        math_sysroot=/tmp/csweb-legacy-math-sysroot
+        mkdir -p "$math_sysroot/etc/apk/keys"
+        cp /usr/share/apk/keys/armv7/* "$math_sysroot/etc/apk/keys/"
+        apk add -q --root "$math_sysroot" --arch armv7 --initdb --no-scripts --update-cache \
+            --keys-dir "$math_sysroot/etc/apk/keys" \
+            --repository https://dl-cdn.alpinelinux.org/alpine/edge/main musl-dev >/dev/null
+        # shellcheck disable=SC2086
+        clang $t -O2 -fno-builtin -fPIC -shared -nostdlib -fuse-ld=lld \
+            --sysroot="$math_sysroot" \
+            -I/usr/lib/jvm/java-17-openjdk/include -I/usr/lib/jvm/java-17-openjdk/include/linux \
+            -Wl,-soname,libcsweb_legacy_math.so -Wl,--allow-shlib-undefined \
+            -Wall -Wextra -Werror -o out/libcsweb_legacy_math.so.armv7 legacy_math.c
+    fi
 done
 case " $ARCHES " in
     *" armv7 "*)

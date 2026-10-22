@@ -62,12 +62,14 @@ def run_case(runtime, plugin, output, load_seconds=90, probes=False):
     if probes:
         # Each initializer gets its own VM and ART data directory. No signals or
         # eager initialization are added to the app's service path.
-        for probe in ("math", "serialization", "jackson", "kotlinModule", "mapper"):
+        for probe in ("math-baseline", "math", "serialization", "jackson", "kotlinModule", "mapper"):
             probe_data = state / ("probe-" + probe)
             probe_data.mkdir()
             probe_env = dict(env, ANDROID_DATA=str(probe_data))
             probe_command = command[:command.index("org.csweb.loader.Main")] + [
-                "org.csweb.loader.Main$LegacyProbe", probe]
+                "org.csweb.loader.Main$LegacyProbe", "math" if probe == "math-baseline" else probe]
+            if probe != "math-baseline":
+                probe_command.append("bridge")
             with (output / ("probe-" + probe + ".log")).open("wb") as log:
                 proc = subprocess.Popen(probe_command, stdout=log, stderr=log,
                                         env=probe_env, start_new_session=True)

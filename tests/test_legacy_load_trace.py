@@ -35,6 +35,7 @@ class LegacyLoadTraceTest(unittest.TestCase):
                         r'\n    // Generated only for the legacy runtime\.[\s\S]*?    // End generated legacy helper\.\n',
                         '', modified, count=1)
                 modified = re.sub(r'^.*legacyLoadStage\("[^"]+"\);\n', '', modified, flags=re.MULTILINE)
+                modified = modified.replace("        legacyInitializeMath();\n", "")
                 modified = modified.replace(
                     "BasePlugin.Manifest manifest = legacyManifest(manifestText);",
                     "BasePlugin.Manifest manifest = MainAPIKt.getMapper().readValue(manifestText, BasePlugin.Manifest.class);")
