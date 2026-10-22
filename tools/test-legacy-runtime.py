@@ -59,6 +59,7 @@ def run_case(runtime, plugin, output, load_seconds=90, probes=False):
                "-Djava.library.path=" + str(rt / "usr/lib/java/dex/art/natives"),
                "-cp", str(rt / "csweb/csweb-host.dex") + ":" + str(rt / "csweb/cloudstream.jar"),
                "org.csweb.loader.Main", "--serve", "1", "--data", str(state / "plugin-data")]
+    probes_ok = True
     if probes:
         # Each initializer gets its own VM and ART data directory. No signals or
         # eager initialization are added to the app's service path.
@@ -85,10 +86,12 @@ def run_case(runtime, plugin, output, load_seconds=90, probes=False):
                         pass
                     proc.wait(timeout=5)
             print(json.dumps({"probe": probe, "timed_out": timed_out, "exit": proc.returncode}))
+            if probe != "math-baseline":
+                probes_ok &= not timed_out and proc.returncode == 0
             print((output / ("probe-" + probe + ".log")).read_text(errors="replace"))
     summary = {"plugin": plugin.name, "sha256": digest, "command": command,
                "kernel": list(os.uname()), "ready": False, "loaded": False,
-               "ok": False, "providers": [], "timed_out": False}
+               "ok": False, "providers": [], "timed_out": False, "probes_ok": probes_ok}
     start = time.monotonic()
     with (output / (plugin.stem + ".runtime.log")).open("wb") as stderr, \
             (output / (plugin.stem + ".protocol.jsonl")).open("wb") as protocol:
@@ -131,7 +134,8 @@ def run_case(runtime, plugin, output, load_seconds=90, probes=False):
                             if event.get("event") == "loaded":
                                 summary["loaded"] = True
                             if event.get("event") == "done":
-                                summary["ok"] = bool(event.get("ok")) and summary["loaded"] and bool(summary["providers"])
+                                summary["ok"] = (bool(event.get("ok")) and summary["loaded"] and
+                                                 bool(summary["providers"]) and probes_ok)
                                 complete = True
                 if proc.poll() is not None:
                     break

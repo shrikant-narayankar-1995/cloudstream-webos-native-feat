@@ -285,3 +285,9 @@ self-checks fail. CI compares baseline and bridged math in separate VMs (includi
 rounding, signed zero, NaN and infinity), then retests initializers and real plugin registration.
 The ART APK and aarch64 behavior are unchanged. This is under test, not a compatibility guarantee
 for every JNI method or plugin operation.
+
+Native result (run 39846264197, commit dab0178): the baseline still returns incorrect rint/pow
+bits, while the bridge passes every Math edge-case probe. KotlinModule initializes in 3 ms and
+MainAPIKt in 114 ms. Both real unmodified plugins register providers with successful loaded/done
+events: BilibiliTV in 0.410 s and Nguồn C in 0.343 s. No timeout occurs. This confirms the bridge
+repairs the reproduced load failure; it does not test webOS searches/playback or every JNI class.
