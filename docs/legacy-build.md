@@ -237,3 +237,20 @@ The next trace separates that combined expression into `mapper.initialize.begin/
 mapper and manifest types are used, in the same order, only in the generated legacy source copy.
 The armv7 runtime cache key now includes the instrumentation script, so trace-only changes cannot
 silently reuse an older DEX. The aarch64 runtime cache key and Java sources are unchanged.
+
+Split trace result (run 39771097878, commit 137d234): both fixed plugins emit
+`mapper.initialize.begin` and time out at 90 seconds without `mapper.initialize.end`. Neither
+reaches `manifest.deserialize.begin`. This isolates `MainAPIKt.getMapper()` and the class
+initialization it triggers; `readValue` is not reached and has not been independently cleared.
+The exact initializer or operation inside that boundary is still unknown. Both runtime and
+webOS package jobs passed; the native plugin-load job fails because these loads time out.
+
+The next legacy-only loader change reads the four manifest fields with the existing bounded
+`MiniJson` parser instead of triggering CloudStream's global mapper. It fills the original
+`BasePlugin.Manifest` DTO through its normal setters. Missing nullable name/version remain null,
+resources default false, unknown fields are ignored, and the plugin class name must be a nonempty
+string. Present fields are type-checked and versions must fit a 32-bit integer. The existing
+64-KiB manifest-read limit and MiniJson's depth limit remain in force. The shared loader sources,
+main DEX build, CloudStream API and plugin bytes are unchanged. This avoids global initialization
+for the loader's manifest step only; plugins may still call that mapper later, so real native
+plugin registration and eventual TV operation must be tested before claiming the app works.

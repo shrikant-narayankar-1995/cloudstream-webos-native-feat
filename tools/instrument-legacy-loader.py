@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Copy csloader sources with progress logs for the opt-in armv7 build only."""
+"""Generate the opt-in armv7 loader: progress logs and bounded manifest parsing."""
 import pathlib
 import shutil
 import sys
@@ -29,6 +29,37 @@ def instrument(source, output):
                 " thread=" + Thread.currentThread().getName() + " stage=" + stage);
         System.err.flush();
     }
+    private static BasePlugin.Manifest legacyManifest(String text) {
+        Object decoded = MiniJson.decode(text);
+        if (!(decoded instanceof Map)) throw new IllegalArgumentException("manifest: not an object");
+        Map<?, ?> fields = (Map<?, ?>) decoded;
+        BasePlugin.Manifest manifest = new BasePlugin.Manifest();
+        Object name = fields.get("name");
+        if (name != null && !(name instanceof String))
+            throw new IllegalArgumentException("manifest: name must be a string");
+        manifest.setName((String) name);
+        Object className = fields.get("pluginClassName");
+        if (!(className instanceof String) || ((String) className).isEmpty())
+            throw new IllegalArgumentException("manifest: pluginClassName must be a nonempty string");
+        manifest.setPluginClassName((String) className);
+        Object resources = fields.get("requiresResources");
+        if (resources != null) {
+            if (!(resources instanceof Boolean))
+                throw new IllegalArgumentException("manifest: requiresResources must be a boolean");
+            manifest.setRequiresResources((Boolean) resources);
+        }
+        Object version = fields.get("version");
+        if (version != null) {
+            if (!(version instanceof Number))
+                throw new IllegalArgumentException("manifest: version must be an integer");
+            double n = ((Number) version).doubleValue();
+            if (!Double.isFinite(n) || n != Math.rint(n) || n < Integer.MIN_VALUE || n > Integer.MAX_VALUE)
+                throw new IllegalArgumentException("manifest: version must be a 32-bit integer");
+            manifest.setVersion(((Number) version).intValue());
+        }
+        return manifest;
+    }
+    // End generated legacy helper.
 '''
     main = once(main, "public final class Main {", "public final class Main {" + helper)
 
@@ -51,12 +82,9 @@ def instrument(source, output):
     main = once(main,
         "        BasePlugin.Manifest manifest = MainAPIKt.getMapper().readValue(manifestText, BasePlugin.Manifest.class);",
         '        legacyLoadStage("manifest.parse.begin");\n' +
-        '        legacyLoadStage("mapper.initialize.begin");\n' +
-        '        com.fasterxml.jackson.databind.ObjectMapper legacyManifestMapper = MainAPIKt.getMapper();\n' +
-        '        legacyLoadStage("mapper.initialize.end");\n' +
-        '        legacyLoadStage("manifest.deserialize.begin");\n' +
-        '        BasePlugin.Manifest manifest = legacyManifestMapper.readValue(manifestText, BasePlugin.Manifest.class);\n' +
-        '        legacyLoadStage("manifest.deserialize.end");\n' +
+        '        legacyLoadStage("manifest.minijson.begin");\n' +
+        '        BasePlugin.Manifest manifest = legacyManifest(manifestText);\n' +
+        '        legacyLoadStage("manifest.minijson.end");\n' +
         '        legacyLoadStage("manifest.parse.end");')
     main = before_after(main,
         "        Class<?> pluginClass = loader.loadClass(manifest.getPluginClassName());", "class.resolve")

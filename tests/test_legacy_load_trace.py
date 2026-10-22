@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Legacy overlay must add only progress output, without editing shared Java sources."""
+"""Legacy overlay preserves shared sources and validates its explicit manifest-parser change."""
 import importlib.util
 import pathlib
 import re
+import shutil
+import subprocess
 import tempfile
 import unittest
 
@@ -30,12 +32,11 @@ class LegacyLoadTraceTest(unittest.TestCase):
                     continue
                 if relative.name == "Main.java":
                     modified = re.sub(
-                        r'\n    // Generated only for the legacy runtime\.[\s\S]*?System\.err\.flush\(\);\n    }\n',
+                        r'\n    // Generated only for the legacy runtime\.[\s\S]*?    // End generated legacy helper\.\n',
                         '', modified, count=1)
                 modified = re.sub(r'^.*legacyLoadStage\("[^"]+"\);\n', '', modified, flags=re.MULTILINE)
                 modified = modified.replace(
-                    "com.fasterxml.jackson.databind.ObjectMapper legacyManifestMapper = MainAPIKt.getMapper();\n" +
-                    "        BasePlugin.Manifest manifest = legacyManifestMapper.readValue(manifestText, BasePlugin.Manifest.class);",
+                    "BasePlugin.Manifest manifest = legacyManifest(manifestText);",
                     "BasePlugin.Manifest manifest = MainAPIKt.getMapper().readValue(manifestText, BasePlugin.Manifest.class);")
                 self.assertEqual(re.sub(r'\s+', '', modified), re.sub(r'\s+', '', original.decode()))
 
@@ -55,9 +56,9 @@ class LegacyLoadTraceTest(unittest.TestCase):
                 self.assertLess(begin, end)
                 previous = end
             nested = [main.index(f'legacyLoadStage("{stage}")') for stage in (
-                "manifest.parse.begin", "mapper.initialize.begin", "mapper.initialize.end",
-                "manifest.deserialize.begin", "manifest.deserialize.end", "manifest.parse.end")]
+                "manifest.parse.begin", "manifest.minijson.begin", "manifest.minijson.end", "manifest.parse.end")]
             self.assertEqual(nested, sorted(nested))
+            self.assertNotIn("MainAPIKt.getMapper()", main)
             for stage in ("request.queued", "request.begin", "request.end", "integrity.begin", "integrity.end",
                           "load.begin", "load.end", "dialogs.begin", "dialogs.end", "providers.begin", "providers.end"):
                 self.assertIn(f'legacyLoadStage("{stage}")', service)
@@ -81,6 +82,71 @@ class LegacyLoadTraceTest(unittest.TestCase):
             with self.assertRaises(ValueError):
                 TRACE.instrument(source, out)
             self.assertFalse(out.exists())
+
+    @unittest.skipUnless(shutil.which("java"), "Java is required for manifest schema checks")
+    def test_manifest_reader_fields_defaults_and_bad_types(self):
+        modules = subprocess.run(["java", "--list-modules"], capture_output=True, text=True, check=True).stdout
+        if "jdk.compiler@" not in modules:
+            self.skipTest("JDK compiler module unavailable")
+        with tempfile.TemporaryDirectory() as directory:
+            root = pathlib.Path(directory)
+            out = root / "traced"
+            TRACE.instrument(SOURCE, out)
+            main = (out / PACKAGE / "Main.java").read_text()
+            start = main.index("    // Generated only for the legacy runtime.")
+            end = main.index("    // End generated legacy helper.")
+            helper = main[start:end]
+            # DTO schema fixture, not a replacement for the real-plugin native ARM test.
+            stub = root / "BasePlugin.java"
+            stub.write_text('''package com.lagradost.cloudstream3.plugins;
+public class BasePlugin { public static class Manifest {
+    public String name, pluginClassName;
+    public boolean requiresResources;
+    public Integer version;
+    public void setName(String v) { name = v; }
+    public void setPluginClassName(String v) { pluginClassName = v; }
+    public void setRequiresResources(boolean v) { requiresResources = v; }
+    public void setVersion(Integer v) { version = v; }
+} }
+''')
+            test = root / "Main.java"
+            test.write_text('''package org.csweb.loader;
+import java.util.Map;
+import com.lagradost.cloudstream3.plugins.BasePlugin;
+import org.csweb.compat.MiniJson;
+public final class Main {
+''' + helper + r'''
+    static void check(boolean value) { if (!value) throw new AssertionError(); }
+    static void reject(String value) {
+        try { legacyManifest(value); } catch (IllegalArgumentException expected) { return; }
+        throw new AssertionError("invalid manifest accepted");
+    }
+    public static void main(String[] args) {
+        BasePlugin.Manifest full = legacyManifest("{\"name\":\"Example\",\"pluginClassName\":\"example.Plugin\",\"version\":27,\"requiresResources\":true,\"future\":123}");
+        check(full.name.equals("Example") && full.pluginClassName.equals("example.Plugin"));
+        check(full.version == 27 && full.requiresResources);
+        BasePlugin.Manifest defaults = legacyManifest("{\"pluginClassName\":\"example.Plugin\"}");
+        check(defaults.name == null && defaults.version == null && !defaults.requiresResources);
+        check(legacyManifest("{\"pluginClassName\":\"x\",\"name\":null,\"version\":null,\"requiresResources\":null}").version == null);
+        reject("[]"); reject("{}"); reject("{\"pluginClassName\":123}");
+        reject("{\"pluginClassName\":\"\"}"); reject("{\"pluginClassName\":\"x\",\"name\":123}");
+        reject("{\"pluginClassName\":\"x\",\"requiresResources\":\"true\"}");
+        reject("{\"pluginClassName\":\"x\",\"version\":2147483648}");
+        reject("{\"pluginClassName\":\"x\",\"version\":1.5}");
+        reject("{\"pluginClassName\":\"x\",\"version\":\"27\"}");
+        reject("{\"pluginClassName\":\"x\"} trailing");
+        System.out.println("manifest fields/defaults/type checks pass");
+    }
+}
+''')
+            classes = root / "classes"
+            classes.mkdir()
+            subprocess.run(["java", "-m", "jdk.compiler/com.sun.tools.javac.Main", "-source", "8", "-target", "8",
+                            "-d", str(classes), str(stub), str(test),
+                            str(ROOT / "runtime/android-compat/src/org/csweb/compat/MiniJson.java")],
+                           check=True, capture_output=True, text=True)
+            subprocess.run(["java", "-cp", str(classes), "org.csweb.loader.Main"],
+                           check=True, capture_output=True, text=True)
 
 
 if __name__ == "__main__":
