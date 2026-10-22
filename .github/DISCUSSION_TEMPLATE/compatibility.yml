@@ -1,0 +1,98 @@
+title: "[Device report] LG model — webOS version — main/legacy"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report both working and failing devices. A provider loading does not prove playback works.
+        Include the exact app build and mark untested operations as "Not tested".
+        Review attachments for credentials, tokens, private URLs and PINs before posting.
+  - type: dropdown
+    id: result
+    attributes:
+      label: Overall result
+      options:
+        - Working for the steps tested
+        - Partially working
+        - Not working
+        - Not fully tested
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Full TV model
+      description: For example, OLED65C1PTB. Do not include a serial number.
+    validations:
+      required: true
+  - type: input
+    id: webos
+    attributes:
+      label: webOS version
+    validations:
+      required: true
+  - type: input
+    id: firmware
+    attributes:
+      label: Firmware version
+  - type: input
+    id: kernel
+    attributes:
+      label: Kernel architecture, if known
+      description: Copy it from events.log if available; no root or shell access is needed.
+  - type: dropdown
+    id: variant
+    attributes:
+      label: Package variant
+      options:
+        - Main (org.csweb.tv)
+        - Legacy (org.csweb.tv.legacy)
+        - Unsure
+    validations:
+      required: true
+  - type: input
+    id: build
+    attributes:
+      label: App version and build source
+      description: Include a release/artifact link, CI run or commit so we can identify the exact build.
+    validations:
+      required: true
+  - type: input
+    id: tested_at
+    attributes:
+      label: Test date
+  - type: textarea
+    id: operations
+    attributes:
+      label: Results by operation
+      description: Replace each entry with Pass, Fail, Not tested or Not applicable.
+      value: |
+        Install / launch:
+        Remote navigation:
+        Runtime ready:
+        Repository / HTTP:
+        Extension install:
+        Provider load:
+        Provider home page:
+        Search:
+        Details / episodes:
+        Playback:
+        Audio:
+        Seek / resume:
+        Subtitles:
+        Persistence after relaunch:
+    validations:
+      required: true
+  - type: textarea
+    id: extensions
+    attributes:
+      label: Extensions, providers and media tested
+      description: Include extension versions and media resolution/codec/container/DRM if known.
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Errors, reproduction steps and previous working build
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs and screenshots
+      description: Attach events.log and runtime.log if available. Remove sensitive information first.
