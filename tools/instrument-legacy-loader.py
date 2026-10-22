@@ -50,12 +50,14 @@ def instrument(source, output):
         }
         Object version = fields.get("version");
         if (version != null) {
-            if (!(version instanceof Number))
+            // MiniJson returns Integer/Long for integer JSON tokens. Keep schema
+            // validation in integer arithmetic on the legacy ARM interpreter.
+            if (!(version instanceof Integer) && !(version instanceof Long))
                 throw new IllegalArgumentException("manifest: version must be an integer");
-            double n = ((Number) version).doubleValue();
-            if (!Double.isFinite(n) || n != Math.rint(n) || n < Integer.MIN_VALUE || n > Integer.MAX_VALUE)
+            long n = ((Number) version).longValue();
+            if (n < Integer.MIN_VALUE || n > Integer.MAX_VALUE)
                 throw new IllegalArgumentException("manifest: version must be a 32-bit integer");
-            manifest.setVersion(((Number) version).intValue());
+            manifest.setVersion((int) n);
         }
         return manifest;
     }

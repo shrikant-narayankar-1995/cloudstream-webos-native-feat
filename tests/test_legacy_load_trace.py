@@ -125,6 +125,8 @@ public final class Main {
         BasePlugin.Manifest full = legacyManifest("{\"name\":\"Example\",\"pluginClassName\":\"example.Plugin\",\"version\":27,\"requiresResources\":true,\"future\":123}");
         check(full.name.equals("Example") && full.pluginClassName.equals("example.Plugin"));
         check(full.version == 27 && full.requiresResources);
+        check(legacyManifest("{\"pluginClassName\":\"x\",\"version\":2147483647}").version == Integer.MAX_VALUE);
+        check(legacyManifest("{\"pluginClassName\":\"x\",\"version\":-2147483648}").version == Integer.MIN_VALUE);
         BasePlugin.Manifest defaults = legacyManifest("{\"pluginClassName\":\"example.Plugin\"}");
         check(defaults.name == null && defaults.version == null && !defaults.requiresResources);
         check(legacyManifest("{\"pluginClassName\":\"x\",\"name\":null,\"version\":null,\"requiresResources\":null}").version == null);
@@ -132,6 +134,8 @@ public final class Main {
         reject("{\"pluginClassName\":\"\"}"); reject("{\"pluginClassName\":\"x\",\"name\":123}");
         reject("{\"pluginClassName\":\"x\",\"requiresResources\":\"true\"}");
         reject("{\"pluginClassName\":\"x\",\"version\":2147483648}");
+        reject("{\"pluginClassName\":\"x\",\"version\":-2147483649}");
+        reject("{\"pluginClassName\":\"x\",\"version\":27.0}");
         reject("{\"pluginClassName\":\"x\",\"version\":1.5}");
         reject("{\"pluginClassName\":\"x\",\"version\":\"27\"}");
         reject("{\"pluginClassName\":\"x\"} trailing");

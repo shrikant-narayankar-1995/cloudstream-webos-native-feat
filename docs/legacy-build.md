@@ -254,3 +254,10 @@ string. Present fields are type-checked and versions must fit a 32-bit integer. 
 main DEX build, CloudStream API and plugin bytes are unchanged. This avoids global initialization
 for the loader's manifest step only; plugins may still call that mapper later, so real native
 plugin registration and eventual TV operation must be tested before claiming the app works.
+
+Run 39841593705 gets past the mapper stall but both real plugins fail the manifest version's
+floating-point validation on ARM. The local JVM schema test passes, so this difference is not
+yet explained. The legacy reader now accepts MiniJson's Integer/Long tokens and checks bounds
+using integer arithmetic, rejecting fractional/exponent tokens. No floating-point conversion
+or Math.rint is needed for an integer schema field. Native plugin registration is being retested;
+this change does not establish the cause of the global mapper stall.
