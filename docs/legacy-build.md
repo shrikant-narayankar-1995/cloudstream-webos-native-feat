@@ -178,3 +178,24 @@ descriptor before launching ART, so a restrictive umask does not remove group ac
 contents are preserved and new output is appended. Permission setup failures are reported as launch
 errors. No manual chmod or root account is needed after installing and launching the updated package.
 The log remains `/tmp/org.csweb.tv.legacy/runtime.log`; main-package permissions remain `0600`.
+
+### Locating the remaining plugin-load stall
+
+The compiler-path fix let the TV complete dex2oat in 244–674 ms, but plugin loads still timed out.
+A tester sent SIGQUIT to the correct VM while loading; ART's Signal Catcher received it and then
+crashed with SIGSEGV before producing a Java thread dump. Do not repeat that diagnostic on this build.
+
+`tools/build-runtime.sh --arch armv7` now opts into `CSWEB_LEGACY_LOAD_TRACE=1` for the DEX build.
+`tools/instrument-legacy-loader.py` validates insertion points and creates a temporary source copy;
+it never edits the shared csloader sources. Only this legacy DEX includes `[legacy-load]` stderr lines
+with elapsed milliseconds, thread name, and fixed stage labels. They cover queued/started requests,
+integrity checking, class-loader creation, manifest open/read/parse, plugin class resolution and
+construction, context/resources, `plugin.load`, dialogs and provider registration. A begin marker
+without its end marker identifies the unfinished stage; queued requests without a start marker may
+be waiting behind an earlier stuck request. Exceptions can also end a stage without an end marker,
+so consult accompanying runtime error events. No signal, stack-dump attempt, extra thread, or request
+timeout change is introduced. Progress logs contain no plugin configuration, credentials or URLs.
+
+After installing the new legacy package, reproduce one plugin load and send `runtime.log` and
+`events.log`. Root access and shell commands are not needed. The main build uses its original
+Java sources and gains no progress logging; ART's source/package build is unchanged.

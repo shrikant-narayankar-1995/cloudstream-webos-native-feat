@@ -25,9 +25,15 @@ get 4733945987ee0a840fafc34080b135259e01678412e07212b23f706334290294 /tmp/r8.jar
     https://dl.google.com/android/maven2/com/android/tools/r8/$R8/r8-$R8.jar
 CP=$P/evidence/cloudstream-app/classes.jar:$(ls /tmp/lib/*.jar | tr '\n' ':')
 # compile-only stubs first, then the shipped sources against them
+CSLOADER_SRC=$P/runtime/csloader/src
+if [ "${CSWEB_LEGACY_LOAD_TRACE:-0}" = 1 ]; then
+    apk add -q python3 >/dev/null 2>&1
+    CSLOADER_SRC=/tmp/csweb-legacy-csloader
+    python3 "$P/tools/instrument-legacy-loader.py" "$P/runtime/csloader/src" "$CSLOADER_SRC"
+fi
 javac -nowarn --release 8 -d /tmp/stubcls $(find $P/runtime/compile-stubs -name '*.java')
 javac -Xlint:all,-options,-processing,-classfile --release 8 -cp "$CP:/tmp/stubcls" -d /tmp/cls \
-    $(find $P/runtime/android-compat/src $P/runtime/csloader/src -name '*.java')
+    $(find $P/runtime/android-compat/src "$CSLOADER_SRC" -name '*.java')
 # host tests of the compat layer on the JVM (no Android needed for these classes)
 mkdir -p /tmp/testcls
 javac -nowarn --release 8 -cp /tmp/cls:/tmp/stubcls -d /tmp/testcls $P/runtime/android-compat/test/*.java
