@@ -199,3 +199,24 @@ timeout change is introduced. Progress logs contain no plugin configuration, cre
 After installing the new legacy package, reproduce one plugin load and send `runtime.log` and
 `events.log`. Root access and shell commands are not needed. The main build uses its original
 Java sources and gains no progress logging; ART's source/package build is unchanged.
+
+### Native ARM runtime reproduction test
+
+The non-blocking `legacy-runtime-test` CI job consumes the packaged `runtime-armv7` artifact on
+`ubuntu-24.04-arm`, verifies native 32-bit execution without qemu-arm registration, and sends real
+service `load` requests for unmodified BilibiliProvider and NguonC plugins. The download URLs use
+fixed repository commits; logs record plugin SHA-256 values, runtime-archive SHA-256 and host kernel.
+Only plugin loading/provider registration is tested, not searches, playback, or webOS integration.
+
+The plugins run in a disposable ARMv7 container with networking disabled, no injected credentials,
+read-only runtime/plugin mounts, and fresh temporary state for each plugin. The VM options and
+stable boot paths match the legacy launcher, including `-Xint` and inherited `BOOTCLASSPATH`.
+`tools/test-legacy-runtime.py` requires both `loaded` and a successful matching `done` event;
+`ready` alone is not success. Startup and load waits are bounded, stderr/protocol/progress logs are
+retained, and timed-out process groups are killed without SIGQUIT. The `legacy-runtime-load-test`
+artifact retains summaries and thread CPU/wait-state snapshots. No production TV is involved.
+
+These results can reproduce generic ARMv7/ART/class-loading failures but cannot reproduce the TV's
+webOS sandbox, kernel, or firmware libraries. Network-dependent plugin initialization may fail in
+this offline test for a separate reason; inspect the recorded stage and protocol error before
+attributing that failure to the TV problem. Existing main-package jobs do not depend on this job.
