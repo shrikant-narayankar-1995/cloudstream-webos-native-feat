@@ -11,7 +11,8 @@ The app ships **no content, extensions or extension repositories**. Add reposito
 
 [Downloads](https://github.com/sostk/cloudstream-webos-native/releases) ·
 [CI builds](https://github.com/sostk/cloudstream-webos-native/actions/workflows/ci.yml) ·
-[Device compatibility and reporting](docs/compatibility.md)
+[Report device compatibility](https://github.com/sostk/cloudstream-webos-native/discussions/14) ·
+[Reporting guide](docs/compatibility.md)
 
 ## Project status
 
@@ -23,7 +24,7 @@ See the [runtime feasibility decision](docs/FEASIBILITY_DECISION.md) and
 
 An experimental legacy package targets older TVs, including models with a 32-bit kernel.
 Compatibility depends on the kernel, firmware libraries, extension APIs and media codecs.
-Please [report both successful and unsuccessful device tests](docs/compatibility.md).
+Please [report both successful and unsuccessful device tests](https://github.com/sostk/cloudstream-webos-native/discussions/14).
 
 ## Features
 
@@ -281,7 +282,8 @@ builds; see the [compatibility guide](docs/compatibility.md) if Dev Manager cann
 | Extension installs but never loads | `runtime.log`, exact plugin version and whether runtime fixes are included |
 | Provider loads but video fails | Link extraction, codec/container, DRM, stream headers and network access |
 
-Use the [device report template](docs/compatibility.md) for successes, partial support and failures.
+Share successes, partial support and failures in the [device compatibility discussion](https://github.com/sostk/cloudstream-webos-native/discussions/14),
+using the [device report template](docs/compatibility.md).
 Report reproducible bugs in [Issues](https://github.com/sostk/cloudstream-webos-native/issues).
 Only install extensions you trust: they execute code in the runtime, and a matching hash does not
 establish publisher trust.

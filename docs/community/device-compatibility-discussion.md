@@ -1,5 +1,8 @@
 # Device compatibility: report working and failing LG TVs
 
+Published thread: [Device compatibility discussion #14](https://github.com/sostk/cloudstream-webos-native/discussions/14).
+This copy is retained for reference.
+
 Help us find out which combinations of TV, firmware and CSWeb TV build work.
 
 Please start a **new discussion in Compatibility** for your device, using the report form.

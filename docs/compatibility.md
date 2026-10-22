@@ -8,10 +8,11 @@ Record each operation you tried; do not mark untested features as working.
 
 ## Where to report
 
-Use [GitHub Discussions](https://github.com/sostk/cloudstream-webos-native/discussions) for device
-experiences and follow-up questions. Choose **Compatibility** if that category is available,
-then start one discussion per device/build combination. Search for your model first and add an
-update to an existing matching report where possible.
+Start with the [device compatibility discussion (#14)](https://github.com/sostk/cloudstream-webos-native/discussions/14) to report working
+or failing TVs and ask follow-up questions. Follow the reporting instructions in that thread and
+include the template below. Search for your model first and update a matching report when possible.
+If you open a separate device discussion, link it from #14 and keep it scoped to one device/build
+combination. Choose **Compatibility** if that category is available.
 
 Discussions is enabled for this repository. Reproducible crashes or regressions should have a
 separate [bug issue](https://github.com/sostk/cloudstream-webos-native/issues/new) linked from the
@@ -112,14 +113,15 @@ Do not send SIGQUIT to ART for a thread dump: its signal-dump path has crashed i
 
 ## For maintainers: set up compatibility discussions
 
-Repository settings are separate from a pull request. Discussions is enabled; merging these files
-does not create a category or publish a thread.
+Discussions is enabled and the [welcome thread (#14)](https://github.com/sostk/cloudstream-webos-native/discussions/14) has been published.
+Repository categories and pinned threads are managed separately from this pull request.
 
 1. Add a **Compatibility** category with the `compatibility` slug and an open discussion format.
    Keep the category open for both successful and failing device reports.
 2. Once this PR is merged, verify that “New discussion → Compatibility” shows the report form.
-3. Publish [the prepared welcome thread](community/device-compatibility-discussion.md) in that category
-   and pin it if desired. Link that thread here once its real URL is known.
+3. Pin the existing [welcome thread (#14)](https://github.com/sostk/cloudstream-webos-native/discussions/14) if desired. The
+   [welcome text](community/device-compatibility-discussion.md) is retained as a reference; no new
+   welcome thread is needed.
 
 Keep reports scoped to their exact builds. When a failure becomes reproducible, link a bug issue
 and update the original report after the reporter retests the fix.
