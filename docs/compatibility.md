@@ -13,9 +13,9 @@ experiences and follow-up questions. Choose **Compatibility** if that category i
 then start one discussion per device/build combination. Search for your model first and add an
 update to an existing matching report where possible.
 
-Discussions was disabled when this guide was prepared. Until the maintainer enables it, submit
-the same report as an [issue](https://github.com/sostk/cloudstream-webos-native/issues/new).
-Reproducible crashes or regressions should have a separate bug issue linked from the device report.
+Discussions is enabled for this repository. Reproducible crashes or regressions should have a
+separate [bug issue](https://github.com/sostk/cloudstream-webos-native/issues/new) linked from the
+device report.
 
 ## What has been demonstrated
 
@@ -110,18 +110,16 @@ Review logs and screenshots before posting. Remove credentials, cookies, authori
 access tokens, PINs and private stream URLs. Keep the timestamps and surrounding error lines.
 Do not send SIGQUIT to ART for a thread dump: its signal-dump path has crashed in the legacy build.
 
-## For maintainers: enable compatibility discussions
+## For maintainers: set up compatibility discussions
 
-Repository settings are separate from a pull request. Merging these files does not enable Discussions
-or publish a thread.
+Repository settings are separate from a pull request. Discussions is enabled; merging these files
+does not create a category or publish a thread.
 
-1. Open repository **Settings → General → Features** and enable **Discussions**.
-2. Add a **Compatibility** category with the `compatibility` slug and an open discussion format.
+1. Add a **Compatibility** category with the `compatibility` slug and an open discussion format.
    Keep the category open for both successful and failing device reports.
-3. Once this PR is merged, verify that “New discussion → Compatibility” shows the report form.
-4. Publish [the prepared welcome thread](community/device-compatibility-discussion.md) in that category
+2. Once this PR is merged, verify that “New discussion → Compatibility” shows the report form.
+3. Publish [the prepared welcome thread](community/device-compatibility-discussion.md) in that category
    and pin it if desired. Link that thread here once its real URL is known.
-5. Remove the temporary “Discussions was disabled” note above after setup.
 
 Keep reports scoped to their exact builds. When a failure becomes reproducible, link a bug issue
 and update the original report after the reporter retests the fix.
