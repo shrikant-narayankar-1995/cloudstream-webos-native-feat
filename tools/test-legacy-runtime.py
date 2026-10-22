@@ -26,7 +26,7 @@ def snapshot(pid):
     return tasks
 
 
-def run_case(runtime, plugin, output, load_seconds=90):
+def run_case(runtime, plugin, output, load_seconds=90, probes=False):
     state = pathlib.Path("/tmp/org.csweb.tv.legacy")
     if state.exists():
         raise RuntimeError(f"refusing to replace existing state: {state}")
@@ -59,6 +59,31 @@ def run_case(runtime, plugin, output, load_seconds=90):
                "-Djava.library.path=" + str(rt / "usr/lib/java/dex/art/natives"),
                "-cp", str(rt / "csweb/csweb-host.dex") + ":" + str(rt / "csweb/cloudstream.jar"),
                "org.csweb.loader.Main", "--serve", "1", "--data", str(state / "plugin-data")]
+    if probes:
+        # Each initializer gets its own VM and ART data directory. No signals or
+        # eager initialization are added to the app's service path.
+        for probe in ("math", "serialization", "jackson", "kotlinModule", "mapper"):
+            probe_data = state / ("probe-" + probe)
+            probe_data.mkdir()
+            probe_env = dict(env, ANDROID_DATA=str(probe_data))
+            probe_command = command[:command.index("org.csweb.loader.Main")] + [
+                "org.csweb.loader.Main$LegacyProbe", probe]
+            with (output / ("probe-" + probe + ".log")).open("wb") as log:
+                proc = subprocess.Popen(probe_command, stdout=log, stderr=log,
+                                        env=probe_env, start_new_session=True)
+                timed_out = False
+                try:
+                    proc.wait(timeout=12)
+                except subprocess.TimeoutExpired:
+                    timed_out = True
+                finally:
+                    try:
+                        os.killpg(proc.pid, signal.SIGKILL)
+                    except ProcessLookupError:
+                        pass
+                    proc.wait(timeout=5)
+            print(json.dumps({"probe": probe, "timed_out": timed_out, "exit": proc.returncode}))
+            print((output / ("probe-" + probe + ".log")).read_text(errors="replace"))
     summary = {"plugin": plugin.name, "sha256": digest, "command": command,
                "kernel": list(os.uname()), "ready": False, "loaded": False,
                "ok": False, "providers": [], "timed_out": False}
@@ -136,8 +161,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--runtime", type=pathlib.Path, required=True)
     parser.add_argument("--output", type=pathlib.Path, required=True)
+    parser.add_argument("--probes", action="store_true", help="Run bounded initializer probes in separate VMs")
     parser.add_argument("plugins", nargs="+", type=pathlib.Path)
     args = parser.parse_args()
     args.output.mkdir(parents=True, exist_ok=True)
-    results = [run_case(args.runtime.resolve(), p.resolve(), args.output) for p in args.plugins]
+    results = [run_case(args.runtime.resolve(), p.resolve(), args.output, probes=args.probes and i == 0)
+               for i, p in enumerate(args.plugins)]
     raise SystemExit(0 if all(results) else 1)

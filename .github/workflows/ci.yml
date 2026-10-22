@@ -430,7 +430,7 @@ jobs:
             -v /tmp/legacy-repro/plugins:/plugins:ro \
             -v /tmp/legacy-repro/logs:/logs \
             -v "$GITHUB_WORKSPACE/tools/test-legacy-runtime.py":/test.py:ro \
-            csweb-legacy-test python3 /test.py --runtime /runtime --output /logs \
+            csweb-legacy-test python3 /test.py --runtime /runtime --output /logs --probes \
             /plugins/BilibiliProvider.cs3 /plugins/NguonC.cs3
 
       - name: Keep plugin-load results and progress logs
@@ -441,3 +441,5 @@ jobs:
           path: /tmp/legacy-repro/logs/
           if-no-files-found: warn
           retention-days: 14
+
+

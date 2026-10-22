@@ -261,3 +261,11 @@ yet explained. The legacy reader now accepts MiniJson's Integer/Long tokens and 
 using integer arithmetic, rejecting fractional/exponent tokens. No floating-point conversion
 or Math.rint is needed for an integer schema field. Native plugin registration is being retested;
 this change does not establish the cause of the global mapper stall.
+
+Run 39842858494 confirms the integer reader parses both real manifests. Both plugins finish
+class resolution/construction and context/resources in under one second, then time out at
+`plugin.load.begin`; neither registers a provider. The manifest workaround is therefore partial.
+The native test now also invokes separate, bounded probe VMs for floating-point operations,
+kotlinx JSON initialization, Jackson's builder, KotlinModule's builder, and MainAPIKt initialization.
+The probe entry point exists only in the generated legacy DEX and is never called by the app.
+Probe logs accompany the real plugin results; a successful probe alone does not pass the job.

@@ -61,6 +61,54 @@ def instrument(source, output):
         }
         return manifest;
     }
+    // Invoked only by the disposable native CI harness, never by the app.
+    public static final class LegacyProbe {
+        public static void main(String[] args) {
+            int status = 0;
+            try {
+                String probe = args[0];
+                legacyLoadStage("probe." + probe + ".begin");
+                if (probe.equals("math")) {
+                    double value = Integer.valueOf(27).doubleValue();
+                    System.err.println("[legacy-probe] integer.double.bits=" +
+                            Long.toHexString(Double.doubleToRawLongBits(value)));
+                    System.err.println("[legacy-probe] finite=" + Double.isFinite(value));
+                    System.err.println("[legacy-probe] rint.bits=" +
+                            Long.toHexString(Double.doubleToRawLongBits(Math.rint(value))));
+                    if (Double.doubleToRawLongBits(value) != 0x403b000000000000L ||
+                            !Double.isFinite(value) || Math.rint(value) != value)
+                        throw new AssertionError("floating-point probe failed");
+                } else if (probe.equals("serialization")) {
+                    Class<?> type = Class.forName("kotlinx.serialization.json.Json");
+                    legacyLoadStage("probe.serialization.class.end");
+                    type.getField("Default").get(null);
+                } else if (probe.equals("jackson")) {
+                    Class<?> type = Class.forName("com.fasterxml.jackson.databind.json.JsonMapper");
+                    legacyLoadStage("probe.jackson.class.end");
+                    Object builder = type.getMethod("builder").invoke(null);
+                    legacyLoadStage("probe.jackson.builder.end");
+                    builder.getClass().getMethod("build").invoke(builder);
+                } else if (probe.equals("kotlinModule")) {
+                    Class<?> type = Class.forName("com.fasterxml.jackson.module.kotlin.KotlinModule$Builder");
+                    legacyLoadStage("probe.kotlinModule.class.end");
+                    Object builder = type.getDeclaredConstructor().newInstance();
+                    legacyLoadStage("probe.kotlinModule.builder.end");
+                    type.getMethod("build").invoke(builder);
+                } else if (probe.equals("mapper")) {
+                    Class<?> type = Class.forName("com.lagradost.cloudstream3.MainAPIKt");
+                    legacyLoadStage("probe.mapper.class.end");
+                    type.getMethod("getMapper").invoke(null);
+                } else throw new IllegalArgumentException("unknown probe");
+                legacyLoadStage("probe." + probe + ".end");
+            } catch (Throwable failure) {
+                failure.printStackTrace(System.err);
+                status = 1;
+            } finally {
+                System.err.flush();
+                Runtime.getRuntime().halt(status);
+            }
+        }
+    }
     // End generated legacy helper.
 '''
     main = once(main, "public final class Main {", "public final class Main {" + helper)
