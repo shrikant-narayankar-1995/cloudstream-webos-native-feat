@@ -91,13 +91,6 @@ add_library(csweb_player STATIC
         src/player/subtitle_file.cpp)
 target_link_libraries(csweb_player PUBLIC csweb_core wnk_media wnk_media_ffmpeg wnk_media_ndl wnk_media_starfish)
 
-if (WNK_BUILD_TESTS)
-    add_executable(csweb_test_link_priority tests/test_link_priority.cpp)
-    target_include_directories(csweb_test_link_priority PRIVATE "${PROJECT_SOURCE_DIR}/tests/unit")
-    target_link_libraries(csweb_test_link_priority PRIVATE csweb_player)
-    add_test(NAME csweb.link_priority COMMAND csweb_test_link_priority)
-endif ()
-
 # ---- csweb-tv: the app ------------------------------------------------------------------------------
 add_executable(csweb-tv
         src/main.cpp

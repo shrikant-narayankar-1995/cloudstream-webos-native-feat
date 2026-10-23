@@ -18,6 +18,7 @@
 #pragma once
 
 #include "app/router.hpp"
+#include "player/link_priority.hpp"
 #include "player/subtitle_file.hpp"
 #include "runtime/runtime_types.hpp"
 
