@@ -17,8 +17,15 @@ namespace csweb::player {
 inline constexpr int kAutoSkipPriority = 10;
 inline constexpr int kDefaultSourcePriority = 1;
 
+struct LinkPreferences {
+    bool prefer_dolby_vision = true;
+    bool prefer_dolby_atmos = true;
+};
+
 int quality_priority(int quality);
-int link_priority(const runtime::Link &link);
+bool is_dolby_vision(const runtime::Link &link);
+bool is_dolby_atmos(const runtime::Link &link);
+int link_priority(const runtime::Link &link, const LinkPreferences &prefs = {});
 // Torrents and magnets need CloudStream's torrent server, which the app does not have; anything
 // that is not http(s) cannot be opened either. DRM links play only with ClearKey (keys in the clear):
 // Widevine and PlayReady need licences for the TV's own protected DRM, which an app cannot use.
@@ -26,7 +33,7 @@ bool playable(const runtime::Link &link);
 // Why a link cannot play ("" when it can), for the sources list.
 std::string unsupported_reason(const runtime::Link &link);
 // Indices into `links`, best first.
-std::vector<size_t> sort_links(const std::vector<runtime::Link> &links);
+std::vector<size_t> sort_links(const std::vector<runtime::Link> &links, const LinkPreferences &prefs = {});
 
 // The request headers for a link (ExtractorLink.getAllHeaders: its headers plus Referer when it has
 // one and no header names it), with CloudStream's player User-Agent when the link sets none.

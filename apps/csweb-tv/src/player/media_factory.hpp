@@ -20,9 +20,12 @@
 
 namespace csweb::player {
 
-std::unique_ptr<wnk::media::MediaBackend> make_backend(const wnk::media::DeviceMediaCaps &device);
+std::unique_ptr<wnk::media::MediaBackend> make_backend(const wnk::media::DeviceMediaCaps &device,
+                                                       bool prefer_dolby_vision = true,
+                                                       bool prefer_dolby_atmos = true);
 std::unique_ptr<wnk::media::MediaSource> make_source(const runtime::Link &link, std::shared_ptr<wnk::net::HttpTransport> http,
-                                                     const wnk::media::DeviceMediaCaps &device, int max_height = 2160);
+                                                     const wnk::media::DeviceMediaCaps &device, int max_height = 2160,
+                                                     bool prefer_dolby_vision = true);
 bool is_adaptive(const runtime::Link &link);
 // The content key of a ClearKey link (normalised to hex), empty otherwise.
 wnk::media::ContentKeys clearkey_keys(const runtime::Link &link);

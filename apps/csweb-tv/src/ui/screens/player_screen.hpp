@@ -73,6 +73,7 @@ class PlayerScreen : public wnk::ui::Screen {
     void play_episode(wnk::ui::Ui &ui, size_t index);
     void open_episodes(wnk::ui::Ui &ui);
     std::string link_label(const runtime::Link &l) const;
+    player::LinkPreferences link_preferences() const;
 
     app::Services &s_;
     app::PlayTarget target_;

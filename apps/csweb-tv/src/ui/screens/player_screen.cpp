@@ -202,10 +202,11 @@ void PlayerScreen::load_links() {
 void PlayerScreen::links_changed() {
     size_t usable = 0;
     bool auto_skip = false;
+    const auto prefs = link_preferences();
     for (const auto &l : links_) {
         if (!player::playable(l)) continue;
         ++usable;
-        if (player::link_priority(l) >= player::kAutoSkipPriority) auto_skip = true;
+        if (player::link_priority(l, prefs) >= player::kAutoSkipPriority) auto_skip = true;
     }
     loading_text_->set_text(links_.empty() ? "Loading links…" : "Loading links… " + std::to_string(links_.size()) + " found");
     if (usable > 0) {
@@ -223,7 +224,7 @@ void PlayerScreen::links_changed() {
 
 void PlayerScreen::start_best(Ui &ui) {
     if (started_) return;
-    for (size_t i : player::sort_links(links_)) {
+    for (size_t i : player::sort_links(links_, link_preferences())) {
         if (player::playable(links_[i]) && !errored_.count(i)) {
             started_ = true;
             play_link(ui, i);
@@ -262,8 +263,12 @@ void PlayerScreen::play_link(Ui &ui, size_t index) {
     source_->set_text(link_label(link));
     ui.set_clear_color(wnk::render::kTransparent);
     auto http = s_.player_http ? s_.player_http : s_.ctx->http();
-    controller_ = std::make_unique<PlaybackController>(player::make_source(link, http, s_.device, settings::preferred_max_height(*s_.settings)),
-                                                       player::make_backend(s_.device),
+    const bool prefer_dv = settings::prefer_dolby_vision(*s_.settings);
+    const bool prefer_atmos = settings::prefer_dolby_atmos(*s_.settings);
+    controller_ = std::make_unique<PlaybackController>(player::make_source(link, http, s_.device,
+                                                                           settings::preferred_max_height(*s_.settings),
+                                                                           prefer_dv),
+                                                       player::make_backend(s_.device, prefer_dv, prefer_atmos),
                                                        s_.ctx->dispatcher(), PlaybackOptions{});
     controller_->set_state_callback(core::guarded(life_.weak(), [this](PlayState from, PlayState to, const PlaybackSnapshot &snap) {
         const std::string error = core::redact_queries(snap.error);
@@ -310,7 +315,7 @@ void PlayerScreen::play_link(Ui &ui, size_t index) {
 
 void PlayerScreen::next_mirror(Ui &ui) {
     // GeneratorPlayer.getNextLink: the next link after the current one in sorted order.
-    const auto order = player::sort_links(links_);
+    const auto order = player::sort_links(links_, link_preferences());
     auto it = std::find(order.begin(), order.end(), current_);
     for (++it; it < order.end(); ++it) {
         if (player::playable(links_[*it]) && !errored_.count(*it)) {
@@ -319,6 +324,13 @@ void PlayerScreen::next_mirror(Ui &ui) {
         }
     }
     no_links("No more links to try");
+}
+
+player::LinkPreferences PlayerScreen::link_preferences() const {
+    player::LinkPreferences p;
+    p.prefer_dolby_vision = settings::prefer_dolby_vision(*s_.settings);
+    p.prefer_dolby_atmos = settings::prefer_dolby_atmos(*s_.settings);
+    return p;
 }
 
 std::string PlayerScreen::link_label(const runtime::Link &l) const {
@@ -414,7 +426,7 @@ void PlayerScreen::open_sources(Ui &ui) {
     scroll.set_height(Dim::fixed(560));
     auto &list = scroll.add<Column>(8);
     View *current = nullptr;
-    for (size_t i : player::sort_links(links_)) {
+    for (size_t i : player::sort_links(links_, link_preferences())) {
         const auto &l = links_[i];
         std::string text = link_label(l);
         if (!player::playable(l)) text += "  ·  not supported (" + player::unsupported_reason(l) + ")";

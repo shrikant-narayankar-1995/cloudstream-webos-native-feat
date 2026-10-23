@@ -40,6 +40,49 @@ TEST("sort_best_first_stable") {
     CHECK_EQ(order[3], size_t(2));
 }
 
+TEST("dolby_tag_detection") {
+    CHECK(is_dolby_vision(link("Movie 4K DV", 2160)));
+    CHECK(is_dolby_vision(link("Movie 4K DoVi HDR", 2160)));
+    CHECK(is_dolby_vision(link("Movie 4K Dolby Vision", 2160)));
+    CHECK(is_dolby_vision(link("Movie 4K Dolby-Vision", 2160)));
+    CHECK(!is_dolby_vision(link("Movie 4K HDR", 2160)));
+    CHECK(!is_dolby_vision(link("Advocate 1080p", 1080)));
+
+    CHECK(is_dolby_atmos(link("Movie 4K Atmos", 2160)));
+    CHECK(is_dolby_atmos(link("Movie 4K Dolby Atmos", 2160)));
+    CHECK(!is_dolby_atmos(link("Movie 4K 5.1", 2160)));
+
+    Link audio_atmos = link("Movie 1080p", 1080);
+    audio_atmos.audio_tracks.push_back({.url = "https://h/stream_atmos.m4a"});
+    CHECK(is_dolby_atmos(audio_atmos));
+}
+
+TEST("sort_with_dolby_preferences") {
+    Link sdr = link("Stream SDR", 2160);
+    Link dv = link("Stream 4K DV", 2160);
+    Link atmos = link("Stream 4K Atmos", 2160);
+    Link dv_atmos = link("Stream 4K DV Atmos", 2160);
+    std::vector<Link> links{sdr, dv, atmos, dv_atmos};
+
+    LinkPreferences both_on{true, true};
+    auto order = sort_links(links, both_on);
+    // dv_atmos (8+1+2+1=12) > dv (8+1+2=11) > atmos (8+1+1=10) > sdr (8+1=9)
+    REQUIRE(order.size() == 4);
+    CHECK_EQ(order[0], size_t(3));
+    CHECK_EQ(order[1], size_t(1));
+    CHECK_EQ(order[2], size_t(2));
+    CHECK_EQ(order[3], size_t(0));
+
+    LinkPreferences dv_off{false, true};
+    order = sort_links(links, dv_off);
+    // dv_atmos (8+1+1=10), atmos (8+1+1=10) tie; then sdr and dv tie at 9
+    REQUIRE(order.size() == 4);
+    CHECK_EQ(order[0], size_t(2));  // atmos arrived before dv_atmos
+    CHECK_EQ(order[1], size_t(3));
+    CHECK_EQ(order[2], size_t(0));  // sdr arrived before dv
+    CHECK_EQ(order[3], size_t(1));
+}
+
 TEST("playable") {
     CHECK(playable(link("a", 720)));
     CHECK(!playable(link("t", 720, "TORRENT")));

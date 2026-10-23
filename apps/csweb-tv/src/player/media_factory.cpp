@@ -18,14 +18,15 @@ namespace csweb::player {
 
 using namespace wnk::media;
 
-std::unique_ptr<MediaBackend> make_backend(const DeviceMediaCaps &device) {
+std::unique_ptr<MediaBackend> make_backend(const DeviceMediaCaps &device, bool prefer_dolby_vision,
+                                           bool prefer_dolby_atmos) {
     if (!wnk::platform::kIsWebOS) return std::make_unique<PacingBackend>();
     std::string why_sf, why_ndl;
     const bool starfish = StarfishBackend::available(&why_sf);
     const bool ndl = NdlBackend::available(&why_ndl);
     StarfishOptions so;
-    so.dolby_vision = device.dolby_vision == true;
-    so.atmos = device.dolby_atmos == true;
+    so.dolby_vision = prefer_dolby_vision && (device.dolby_vision == true);
+    so.atmos = prefer_dolby_atmos && (device.dolby_atmos == true);
     if (starfish && ndl) return std::make_unique<AutoBackend>(std::make_unique<StarfishBackend>(so), std::make_unique<NdlBackend>());
     if (starfish) return std::make_unique<StarfishBackend>(so);
     if (ndl) return std::make_unique<NdlBackend>();
@@ -52,7 +53,7 @@ ContentKeys clearkey_keys(const runtime::Link &link) {
 }
 
 std::unique_ptr<MediaSource> make_source(const runtime::Link &link, std::shared_ptr<wnk::net::HttpTransport> http,
-                                         const DeviceMediaCaps &device, int max_height) {
+                                         const DeviceMediaCaps &device, int max_height, bool prefer_dolby_vision) {
     wnk::net::Headers headers;
     for (auto &h : link_headers(link)) headers.push_back(std::move(h));
     const ContentKeys keys = clearkey_keys(link);
@@ -71,7 +72,7 @@ std::unique_ptr<MediaSource> make_source(const runtime::Link &link, std::shared_
         if (device.hevc == false) o.video_codecs.erase(o.video_codecs.begin());
         if (device.uhd_panel != true) o.max_height = 1080;
         if (max_height > 0 && max_height < o.max_height) o.max_height = max_height;
-        o.dolby_vision = device.dolby_vision == true;
+        o.dolby_vision = prefer_dolby_vision && (device.dolby_vision == true);
         return std::make_unique<AdaptiveSource>(o);
     }
     FfmpegSourceOptions o;
