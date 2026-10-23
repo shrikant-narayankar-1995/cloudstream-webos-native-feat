@@ -132,6 +132,7 @@ bool is_hdr(const runtime::Link &link) {
 }
 
 VideoQualityInfo detect_quality_info(const runtime::Link &link,
+                                   bool has_stream_metadata,
                                    int stream_width,
                                    int stream_height,
                                    int dv_profile,
@@ -139,21 +140,30 @@ VideoQualityInfo detect_quality_info(const runtime::Link &link,
                                    bool stream_atmos) {
     VideoQualityInfo info;
 
-    if (stream_height >= 2160 || stream_width >= 3840) {
-        info.resolution = "4K";
-        info.is_4k = true;
-    } else if (stream_height >= 1440 || stream_width >= 2560) {
-        info.resolution = "1440p";
-    } else if (stream_height >= 1080 || stream_width >= 1920) {
-        info.resolution = "1080p";
-        info.is_1080p = true;
-    } else if (stream_height >= 720 || stream_width >= 1280) {
-        info.resolution = "720p";
-        info.is_720p = true;
-    } else if (stream_height > 0) {
-        info.resolution = std::to_string(stream_height) + "p";
+    if (has_stream_metadata) {
+        // Actual selected-stream metadata overrides link-name guesses
+        if (stream_height >= 2160 || stream_width >= 3840) {
+            info.resolution = "4K";
+            info.is_4k = true;
+        } else if (stream_height >= 1440 || stream_width >= 2560) {
+            info.resolution = "1440p";
+        } else if (stream_height >= 1080 || stream_width >= 1920) {
+            info.resolution = "1080p";
+            info.is_1080p = true;
+        } else if (stream_height >= 720 || stream_width >= 1280) {
+            info.resolution = "720p";
+            info.is_720p = true;
+        } else if (stream_height > 0) {
+            info.resolution = std::to_string(stream_height) + "p";
+        }
+
+        info.dolby_vision = (dv_profile >= 0);
+        info.hdr = (colour_transfer == 16 || colour_transfer == 18);
+        info.dolby_atmos = stream_atmos;
     } else {
-        if (link.quality >= 2160 || is_4k(link)) {
+        // While stream metadata is unavailable, guess from link metadata & name.
+        // Exclude quality 400 (Qualities.Unknown) and quality 0 (Auto).
+        if ((link.quality >= 2160 && link.quality != 400) || is_4k(link)) {
             info.resolution = "4K";
             info.is_4k = true;
         } else if (link.quality == 1440) {
@@ -164,22 +174,22 @@ VideoQualityInfo detect_quality_info(const runtime::Link &link,
         } else if (link.quality == 720 || is_720p(link)) {
             info.resolution = "720p";
             info.is_720p = true;
-        } else if (link.quality > 0 && link.quality < 720) {
+        } else if (link.quality > 0 && link.quality < 720 && link.quality != 400) {
             info.resolution = std::to_string(link.quality) + "p";
         }
-    }
 
-    info.dolby_vision = (dv_profile >= 0) || is_dolby_vision(link);
-    info.hdr = (colour_transfer == 16 || colour_transfer == 18) || is_hdr(link);
-    info.dolby_atmos = stream_atmos || is_dolby_atmos(link);
+        info.dolby_vision = is_dolby_vision(link);
+        info.hdr = is_hdr(link);
+        info.dolby_atmos = is_dolby_atmos(link);
+    }
 
     return info;
 }
 
 int link_priority(const runtime::Link &link, const LinkPreferences &prefs) {
     int p = quality_priority(link.quality) + kDefaultSourcePriority;
-    if (prefs.prefer_dolby_vision && is_dolby_vision(link)) p += 2;
-    if (prefs.prefer_dolby_atmos && is_dolby_atmos(link)) p += 1;
+    if (prefs.prefer_dolby_vision && prefs.device_dolby_vision && is_dolby_vision(link)) p += 2;
+    if (prefs.prefer_dolby_atmos && prefs.device_dolby_atmos && is_dolby_atmos(link)) p += 1;
     return p;
 }
 

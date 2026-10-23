@@ -20,6 +20,8 @@ inline constexpr int kDefaultSourcePriority = 1;
 struct LinkPreferences {
     bool prefer_dolby_vision = true;
     bool prefer_dolby_atmos = true;
+    bool device_dolby_vision = true;
+    bool device_dolby_atmos = true;
 };
 
 int quality_priority(int quality);
@@ -41,6 +43,7 @@ struct VideoQualityInfo {
 };
 
 VideoQualityInfo detect_quality_info(const runtime::Link &link,
+                                   bool has_stream_metadata = false,
                                    int stream_width = 0,
                                    int stream_height = 0,
                                    int dv_profile = -1,

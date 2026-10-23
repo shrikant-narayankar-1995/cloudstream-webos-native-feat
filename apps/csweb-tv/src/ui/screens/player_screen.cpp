@@ -282,12 +282,9 @@ void PlayerScreen::play_link(Ui &ui, size_t index) {
     source_->set_text(link_label(link));
     ui.set_clear_color(wnk::render::kTransparent);
     auto http = s_.player_http ? s_.player_http : s_.ctx->http();
-    const bool prefer_dv = settings::prefer_dolby_vision(*s_.settings);
-    const bool prefer_atmos = settings::prefer_dolby_atmos(*s_.settings);
     controller_ = std::make_unique<PlaybackController>(player::make_source(link, http, s_.device,
-                                                                           settings::preferred_max_height(*s_.settings),
-                                                                           prefer_dv),
-                                                       player::make_backend(s_.device, prefer_dv, prefer_atmos),
+                                                                           settings::preferred_max_height(*s_.settings)),
+                                                       player::make_backend(s_.device),
                                                        s_.ctx->dispatcher(), PlaybackOptions{});
     controller_->set_state_callback(core::guarded(life_.weak(), [this](PlayState from, PlayState to, const PlaybackSnapshot &snap) {
         const std::string error = core::redact_queries(snap.error);
@@ -351,6 +348,8 @@ player::LinkPreferences PlayerScreen::link_preferences() const {
     player::LinkPreferences p;
     p.prefer_dolby_vision = settings::prefer_dolby_vision(*s_.settings);
     p.prefer_dolby_atmos = settings::prefer_dolby_atmos(*s_.settings);
+    p.device_dolby_vision = (s_.device.dolby_vision == true);
+    p.device_dolby_atmos = (s_.device.dolby_atmos == true);
     return p;
 }
 
@@ -369,26 +368,30 @@ std::string PlayerScreen::link_label(const runtime::Link &l) const {
 }
 
 void PlayerScreen::populate_quality_badges(const runtime::Link &link, const wnk::media::PlaybackSnapshot *snap) {
+    bool has_stream_metadata = false;
     int stream_width = 0, stream_height = 0, dv_profile = -1, transfer = 0;
     bool atmos = false;
-    if (snap) {
+    if (snap && snap->state >= PlayState::Ready) {
         if (snap->format.video) {
             stream_width = snap->format.video->width;
             stream_height = snap->format.video->height;
             dv_profile = snap->format.video->dolby_vision_profile;
             transfer = snap->format.video->colour.transfer;
+            has_stream_metadata = true;
         }
         if (stream_width <= 0 || stream_height <= 0) {
             if (const auto *vt = snap->info.best(wnk::media::TrackType::Video)) {
                 stream_width = vt->width;
                 stream_height = vt->height;
+                has_stream_metadata = true;
             }
         }
-        if (snap->format.audio && snap->format.audio->atmos) {
-            atmos = true;
+        if (snap->format.audio) {
+            atmos = snap->format.audio->atmos;
+            has_stream_metadata = true;
         }
     }
-    auto info = player::detect_quality_info(link, stream_width, stream_height, dv_profile, transfer, atmos);
+    auto info = player::detect_quality_info(link, has_stream_metadata, stream_width, stream_height, dv_profile, transfer, atmos);
     if (info.resolution == detected_quality_.resolution &&
         info.dolby_vision == detected_quality_.dolby_vision &&
         info.hdr == detected_quality_.hdr &&
