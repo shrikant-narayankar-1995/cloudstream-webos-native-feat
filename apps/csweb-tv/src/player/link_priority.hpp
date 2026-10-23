@@ -25,6 +25,28 @@ struct LinkPreferences {
 int quality_priority(int quality);
 bool is_dolby_vision(const runtime::Link &link);
 bool is_dolby_atmos(const runtime::Link &link);
+bool is_4k(const runtime::Link &link);
+bool is_1080p(const runtime::Link &link);
+bool is_720p(const runtime::Link &link);
+bool is_hdr(const runtime::Link &link);
+
+struct VideoQualityInfo {
+    std::string resolution;
+    bool is_4k = false;
+    bool is_1080p = false;
+    bool is_720p = false;
+    bool dolby_vision = false;
+    bool hdr = false;
+    bool dolby_atmos = false;
+};
+
+VideoQualityInfo detect_quality_info(const runtime::Link &link,
+                                   int stream_width = 0,
+                                   int stream_height = 0,
+                                   int dv_profile = -1,
+                                   int colour_transfer = 0,
+                                   bool stream_atmos = false);
+
 int link_priority(const runtime::Link &link, const LinkPreferences &prefs = {});
 // Torrents and magnets need CloudStream's torrent server, which the app does not have; anything
 // that is not http(s) cannot be opened either. DRM links play only with ClearKey (keys in the clear):

@@ -127,3 +127,47 @@ TEST("headers") {
     h = link_headers(l);
     CHECK_EQ(h.size(), size_t(2));  // the link's own Referer and User-Agent win
 }
+
+TEST("video_quality_detection") {
+    // 4K detection
+    CHECK(is_4k(link("Movie 4K UHD", 400)));
+    CHECK(is_4k(link("Movie 2160p HDR", 0)));
+    CHECK(is_4k(link("Regular Name", 2160)));
+    CHECK(!is_4k(link("Movie 1080p FHD", 1080)));
+
+    // 1080p detection
+    CHECK(is_1080p(link("Movie 1080p", 400)));
+    CHECK(is_1080p(link("Movie FHD", 0)));
+    CHECK(is_1080p(link("Direct link", 1080)));
+    CHECK(!is_1080p(link("Movie 4K", 2160)));
+    CHECK(!is_1080p(link("Movie 720p", 720)));
+
+    // 720p detection
+    CHECK(is_720p(link("Movie 720p", 400)));
+    CHECK(is_720p(link("Direct link", 720)));
+    CHECK(!is_720p(link("Movie 1080p", 1080)));
+
+    // HDR detection
+    CHECK(is_hdr(link("Movie 4K HDR10", 2160)));
+    CHECK(is_hdr(link("Movie HLG", 1080)));
+    CHECK(!is_hdr(link("Movie 4K SDR", 2160)));
+
+    // detect_quality_info with stream dimensions
+    auto q_stream4k = detect_quality_info(link("Auto Stream", 0), 3840, 2160, 5, 16, true);
+    CHECK_EQ(q_stream4k.resolution, std::string("4K"));
+    CHECK(q_stream4k.is_4k);
+    CHECK(q_stream4k.dolby_vision);
+    CHECK(q_stream4k.hdr);
+    CHECK(q_stream4k.dolby_atmos);
+
+    auto q_stream1080 = detect_quality_info(link("Auto Stream", 0), 1920, 1080, -1, 0, false);
+    CHECK_EQ(q_stream1080.resolution, std::string("1080p"));
+    CHECK(q_stream1080.is_1080p);
+    CHECK(!q_stream1080.dolby_vision);
+
+    // detect_quality_info with metadata fallback
+    auto q_meta = detect_quality_info(link("Movie 1080p Atmos", 400));
+    CHECK_EQ(q_meta.resolution, std::string("1080p"));
+    CHECK(q_meta.is_1080p);
+    CHECK(q_meta.dolby_atmos);
+}

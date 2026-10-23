@@ -84,6 +84,98 @@ bool is_dolby_atmos(const runtime::Link &link) {
     return false;
 }
 
+bool is_4k(const runtime::Link &link) {
+    if (link.quality >= 2160) return true;
+    auto match = [](const std::string &s) {
+        if (s.empty()) return false;
+        if (contains_word_ci(s, "4k") || contains_ci(s, "2160p") || contains_word_ci(s, "2160")) return true;
+        if (contains_word_ci(s, "uhd") || contains_ci(s, "ultra hd") || contains_ci(s, "ultrahd")) return true;
+        return false;
+    };
+    return match(link.name) || match(link.source) || match(link.url);
+}
+
+bool is_1080p(const runtime::Link &link) {
+    if (link.quality == 1080) return true;
+    if (link.quality >= 2160 || is_4k(link)) return false;
+    if (link.quality > 1080) return false;
+    auto match = [](const std::string &s) {
+        if (s.empty()) return false;
+        if (contains_ci(s, "1080p") || contains_word_ci(s, "1080")) return true;
+        if (contains_word_ci(s, "fhd") || contains_ci(s, "full hd") || contains_ci(s, "fullhd")) return true;
+        return false;
+    };
+    return match(link.name) || match(link.source) || match(link.url);
+}
+
+bool is_720p(const runtime::Link &link) {
+    if (link.quality == 720) return true;
+    if (is_4k(link) || is_1080p(link)) return false;
+    if (link.quality > 720) return false;
+    auto match = [](const std::string &s) {
+        if (s.empty()) return false;
+        if (contains_ci(s, "720p") || contains_word_ci(s, "720")) return true;
+        if (contains_word_ci(s, "hd") && !contains_ci(s, "full hd") && !contains_ci(s, "ultra hd")) return true;
+        return false;
+    };
+    return match(link.name) || match(link.source) || match(link.url);
+}
+
+bool is_hdr(const runtime::Link &link) {
+    auto match = [](const std::string &s) {
+        if (s.empty()) return false;
+        if (contains_word_ci(s, "hdr") || contains_ci(s, "hdr10") || contains_ci(s, "hdr10+")) return true;
+        if (contains_ci(s, "hlg")) return true;
+        return false;
+    };
+    return match(link.name) || match(link.source) || match(link.url);
+}
+
+VideoQualityInfo detect_quality_info(const runtime::Link &link,
+                                   int stream_width,
+                                   int stream_height,
+                                   int dv_profile,
+                                   int colour_transfer,
+                                   bool stream_atmos) {
+    VideoQualityInfo info;
+
+    if (stream_height >= 2160 || stream_width >= 3840) {
+        info.resolution = "4K";
+        info.is_4k = true;
+    } else if (stream_height >= 1440 || stream_width >= 2560) {
+        info.resolution = "1440p";
+    } else if (stream_height >= 1080 || stream_width >= 1920) {
+        info.resolution = "1080p";
+        info.is_1080p = true;
+    } else if (stream_height >= 720 || stream_width >= 1280) {
+        info.resolution = "720p";
+        info.is_720p = true;
+    } else if (stream_height > 0) {
+        info.resolution = std::to_string(stream_height) + "p";
+    } else {
+        if (link.quality >= 2160 || is_4k(link)) {
+            info.resolution = "4K";
+            info.is_4k = true;
+        } else if (link.quality == 1440) {
+            info.resolution = "1440p";
+        } else if (link.quality == 1080 || is_1080p(link)) {
+            info.resolution = "1080p";
+            info.is_1080p = true;
+        } else if (link.quality == 720 || is_720p(link)) {
+            info.resolution = "720p";
+            info.is_720p = true;
+        } else if (link.quality > 0 && link.quality < 720) {
+            info.resolution = std::to_string(link.quality) + "p";
+        }
+    }
+
+    info.dolby_vision = (dv_profile >= 0) || is_dolby_vision(link);
+    info.hdr = (colour_transfer == 16 || colour_transfer == 18) || is_hdr(link);
+    info.dolby_atmos = stream_atmos || is_dolby_atmos(link);
+
+    return info;
+}
+
 int link_priority(const runtime::Link &link, const LinkPreferences &prefs) {
     int p = quality_priority(link.quality) + kDefaultSourcePriority;
     if (prefs.prefer_dolby_vision && is_dolby_vision(link)) p += 2;
