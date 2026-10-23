@@ -144,6 +144,8 @@ def main(rootfs, arch, out):
     put(os.path.join(HERE, "trust", "cacerts"), "trust/cacerts")
     if arch == "armv7":  # the legacy package's bundled libcurl verifies against it (runtime/make-trust-pem.sh)
         put(os.path.join(HERE, "trust", "ca-bundle.pem"), "trust/ca-bundle.pem")
+        put(os.path.join(native, "libcsweb_legacy_math.so.armv7"),
+            "usr/lib/java/dex/art/natives/libcsweb_legacy_math.so")
     put(os.path.join(HERE, "out", "csweb-host.dex"), "csweb/csweb-host.dex")
 
     apk = os.path.join(PROJECT, "evidence", "cloudstream-app", "app-prerelease-release.apk")

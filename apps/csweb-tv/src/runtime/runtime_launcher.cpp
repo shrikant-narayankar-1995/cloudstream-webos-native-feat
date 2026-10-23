@@ -91,6 +91,12 @@ LaunchPlan plan_runtime_launch(const std::string &runtime_dir, const std::string
     }
     s.args.insert(s.args.end(), {rt + "/usr/bin/dalvikvm", "-Xmx" + std::to_string(heap_mb) + "m",
               "-Xnoimage-dex2oat", "-Xcompiler-option", "--compiler-filter=verify"});
+#ifdef CSWEB_LEGACY
+    // Compare against the repeatable ARMv7 crash in boot-wolfssljni-hostdex.oat.
+    // Retain the image's data/paths, but execute Java through ART's interpreter.
+    s.args.push_back("-Xint");
+    plan.aot_status += "; interpreter (-Xint)";
+#endif
     s.args.insert(s.args.end(), aot.options.begin(), aot.options.end());
     for (std::string a : {"-Djavax.net.ssl.trustStore=" + rt + "/trust/cacerts",
                           "-Djava.library.path=" + rt + "/usr/lib/java/dex/art/natives", std::string("-cp"),
@@ -99,6 +105,19 @@ LaunchPlan plan_runtime_launch(const std::string &runtime_dir, const std::string
         s.args.push_back(std::move(a));
     }
     s.env = {"PATH=" + rt + "/bin", "ANDROID_DATA=" + tmp_dir + "/art", "HOME=" + tmp_dir + "/home"};
+#ifdef CSWEB_LEGACY
+    // This ART's plugin compiler does not forward -Xbootclasspath. Without the environment value,
+    // dex2oat realpaths libart's directory and rejects the image's stable /tmp/.../rt jar locations.
+    // Reuse the validated VM option verbatim, including the jar order; keep imageless fallback as-is.
+    for (const auto &option : aot.options) {
+        const std::string prefix = "-Xbootclasspath:";
+        if (option.compare(0, prefix.size(), prefix) == 0) {
+            s.env.push_back("BOOTCLASSPATH=" + option.substr(prefix.size()));
+            plan.aot_status += "; compiler bootclasspath inherited";
+            break;
+        }
+    }
+#endif
     if (!icu.empty() && exists(runtime_dir + "/usr/share/icu/" + icu)) s.env.push_back("ICU_DATA=" + rt + "/usr/share/icu/" + icu);
     s.stderr_path = tmp_dir + "/runtime.log";
     plan.ok = true;

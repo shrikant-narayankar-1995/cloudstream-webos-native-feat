@@ -7,8 +7,8 @@
 #   runtime-legacy, webos-legacy: the legacy package for TVs with a 32-bit kernel (org.csweb.tv.legacy:
 #            runtime-armv7 and a bundled libcurl, docs/legacy-build.md). Separate jobs, caches and artifacts;
 #            allowed to fail, so they never hold back the jobs above.
-# The kit is checked out at the commit tools/fetch-kit.sh pins. No plugin from a repository is
-# downloaded or run: the tests use the project's own fixtures (and its conformance test plugin).
+# The kit is checked out at the commit tools/fetch-kit.sh pins. Main build tests use this project's
+# own fixtures. The isolated legacy-runtime-test job additionally loads fixed third-party revisions.
 name: CI
 
 on:
@@ -274,7 +274,7 @@ jobs:
 
       - name: Runtime cache key
         id: runtime-key
-        run: echo "key=runtime-armv7-${{ hashFiles('runtime/**', 'tools/build-runtime.sh', 'tools/fetch-runtime-inputs.sh', 'test-plugins/conformance/**') }}" >> "$GITHUB_OUTPUT"
+        run: echo "key=runtime-armv7-${{ hashFiles('runtime/**', 'tools/build-runtime.sh', 'tools/fetch-runtime-inputs.sh', 'tools/instrument-legacy-loader.py', 'test-plugins/conformance/**') }}" >> "$GITHUB_OUTPUT"
 
       - name: Cache the runtime
         id: runtime-cache
@@ -374,3 +374,72 @@ jobs:
           name: org.csweb.tv.legacy-ipk
           path: ${{ env.KIT }}/build/webos-legacy/dist/org.csweb.tv.legacy_*_arm.ipk
           retention-days: 14
+
+  legacy-runtime-test:
+    name: Plugin load test (armv7, native ARM)
+    needs: runtime-legacy
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 15
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Get the packaged legacy runtime
+        uses: actions/download-artifact@v4
+        with:
+          name: runtime-armv7
+
+      - name: Prepare native ARMv7 test container
+        run: |
+          test ! -e /proc/sys/fs/binfmt_misc/qemu-arm
+          mkdir -p /tmp/legacy-repro/runtime /tmp/legacy-repro/plugins /tmp/legacy-repro/logs
+          tar -C /tmp/legacy-repro/runtime -xf runtime-armv7.tar
+          docker build --platform linux/arm/v7 --build-arg TEST_UID="$(id -u)" \
+            --build-arg TEST_GID="$(id -g)" -t csweb-legacy-test - <<'DOCKERFILE'
+          FROM alpine:edge
+          ARG TEST_UID
+          ARG TEST_GID
+          RUN apk add --no-cache python3 && \
+              addgroup -g "$TEST_GID" cswebtest && \
+              adduser -D -H -u "$TEST_UID" -G cswebtest cswebtest
+          DOCKERFILE
+          docker run --rm --platform linux/arm/v7 csweb-legacy-test sh -ec '
+            test "$(apk --print-arch)" = armv7
+            test "$(getconf LONG_BIT)" = 32
+          '
+          docker run --rm --platform linux/arm/v7 --user "$(id -u):$(id -g)" \
+            csweb-legacy-test python3 -c 'import os, pwd; print(pwd.getpwuid(os.getuid()).pw_name)'
+
+      - name: Fetch fixed plugin revisions and record provenance
+        run: |
+          curl -fSL --retry 3 -o /tmp/legacy-repro/plugins/BilibiliProvider.cs3 \
+            https://raw.githubusercontent.com/NivinCNC/CNCVerse-Cloud-Stream-Extension/947a28fefc8fb79c2067323a5701b7c2d4e5cfa8/BilibiliProvider.cs3
+          curl -fSL --retry 3 -o /tmp/legacy-repro/plugins/NguonC.cs3 \
+            https://raw.githubusercontent.com/h0dev/0cs3/1db6f185b9bab8627d83df22a087c661efe7a5d8/NguonC.cs3
+          sha256sum /tmp/legacy-repro/plugins/*.cs3 > /tmp/legacy-repro/logs/plugin-sha256.txt
+          uname -a > /tmp/legacy-repro/logs/host-kernel.txt
+          sha256sum runtime-armv7.tar > /tmp/legacy-repro/logs/runtime-sha256.txt
+
+      - name: Load unmodified plugins in the ARMv7 runtime
+        run: |
+          docker run --rm --platform linux/arm/v7 --network none --user "$(id -u):$(id -g)" --cap-drop ALL \
+            --security-opt no-new-privileges --pids-limit 256 --memory 1g \
+            -v /tmp/legacy-repro/runtime/runtime-armv7:/runtime:ro \
+            -v /tmp/legacy-repro/plugins:/plugins:ro \
+            -v /tmp/legacy-repro/logs:/logs \
+            -v "$GITHUB_WORKSPACE/tools/test-legacy-runtime.py":/test.py:ro \
+            csweb-legacy-test python3 /test.py --runtime /runtime --output /logs --probes \
+            /plugins/BilibiliProvider.cs3 /plugins/NguonC.cs3
+
+      - name: Keep plugin-load results and progress logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: legacy-runtime-load-test
+          path: /tmp/legacy-repro/logs/
+          if-no-files-found: warn
+          retention-days: 14
+
+

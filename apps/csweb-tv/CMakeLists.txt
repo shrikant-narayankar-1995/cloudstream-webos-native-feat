@@ -56,6 +56,27 @@ if (WNK_BUILD_TESTS)
         target_link_libraries(csweb_test_${t} PRIVATE csweb_core)
         add_test(NAME csweb.${t} COMMAND csweb_test_${t})
     endforeach ()
+    # Compile the launcher independently in each mode so legacy-only environment changes are covered.
+    foreach (mode main legacy)
+        add_executable(csweb_test_runtime_launcher_${mode}
+                tests/test_runtime_launcher.cpp src/runtime/runtime_launcher.cpp)
+        target_include_directories(csweb_test_runtime_launcher_${mode} PRIVATE
+                "${CMAKE_CURRENT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/tests/unit")
+        target_include_directories(csweb_test_runtime_launcher_${mode} SYSTEM PRIVATE "${PROJECT_SOURCE_DIR}/third_party")
+        if (mode STREQUAL "legacy")
+            target_compile_definitions(csweb_test_runtime_launcher_${mode} PRIVATE CSWEB_LEGACY)
+        endif ()
+        add_test(NAME csweb.runtime_launcher_${mode} COMMAND csweb_test_runtime_launcher_${mode})
+        add_executable(csweb_test_child_process_log_${mode}
+                tests/test_child_process_log.cpp src/core/child_process.cpp)
+        target_include_directories(csweb_test_child_process_log_${mode} PRIVATE
+                "${CMAKE_CURRENT_SOURCE_DIR}/src" "${PROJECT_SOURCE_DIR}/tests/unit")
+        target_link_libraries(csweb_test_child_process_log_${mode} PRIVATE Threads::Threads)
+        if (mode STREQUAL "legacy")
+            target_compile_definitions(csweb_test_child_process_log_${mode} PRIVATE CSWEB_LEGACY)
+        endif ()
+        add_test(NAME csweb.child_process_log_${mode} COMMAND csweb_test_child_process_log_${mode})
+    endforeach ()
 endif ()
 
 # ---- csweb_player: link choice, subtitle files, the kit media pipeline for a link ----------------------
@@ -126,6 +147,9 @@ if (NOT CSWEB_LEGACY)
         message(WARNING "CSWeb TV: runtime/dist/runtime-aarch64 missing; the package will not run plugins")
     endif ()
 elseif (WNK_WEBOS)
+    target_sources(csweb-tv PRIVATE src/app/legacy_curl_diagnostics.cpp)
+    target_compile_definitions(csweb-tv PRIVATE CSWEB_LEGACY_CURL_DIAGNOSTICS)
+    target_link_libraries(csweb-tv PRIVATE ${CMAKE_DL_LIBS})
     # Legacy package: the armv7 runtime (tools/build-runtime.sh --arch armv7) ...
     if (EXISTS "${_csweb_root}/runtime/dist/runtime-armv7/lib/ld-musl-armhf.so.1")
         list(APPEND _csweb_runtimes "${_csweb_root}/runtime/dist/runtime-armv7")

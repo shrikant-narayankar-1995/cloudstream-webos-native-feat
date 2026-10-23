@@ -40,7 +40,7 @@ LDFLAGS_ARM="-tno-glibc-polyfill -Wl,--build-id=sha1"
 CFLAGS_ARM="-Os -fPIC -ffunction-sections -fdata-sections"
 
 KEY=$(printf '%s|%s|%s|%s|%s|%s' "$CURL_VERSION" "$CURL_SHA256" "$MBEDTLS_VERSION" "$CA_BUNDLE" "$CC_ID" \
-    "$(sha256sum "${BASH_SOURCE[0]}" | cut -c1-16)" | sha256sum | cut -c1-16)
+    "$(sha256sum "${BASH_SOURCE[0]}" "$ROOT/tools/patch-curl-diagnostics.py" | sha256sum | cut -c1-16)" | sha256sum | cut -c1-16)
 STAMP="$PREFIX/.csweb-libcurl"
 if [[ -f "$STAMP" && "$(cat "$STAMP")" == "$KEY" && -f "$PREFIX/lib/libcurl.so.4" ]]; then
     note "libcurl $CURL_VERSION up to date in $PREFIX"
@@ -64,6 +64,9 @@ rm -rf "$WORK"
 mkdir -p "$WORK"
 tar -xjf "$CACHE/mbedtls-$MBEDTLS_VERSION.tar.bz2" -C "$WORK"
 tar -xJf "$CACHE/curl-$CURL_VERSION.tar.xz" -C "$WORK"
+# Preserve detailed initialization failures for the legacy app's events.log.
+need python3 "to instrument legacy curl initialization"
+python3 "$ROOT/tools/patch-curl-diagnostics.py" "$WORK/curl-$CURL_VERSION" "$WORK/mbedtls-$MBEDTLS_VERSION"
 DEPS="$WORK/deps"
 
 note "building mbedTLS $MBEDTLS_VERSION (static, PIC)"
@@ -106,6 +109,8 @@ cp "$(readlink -f "$WORK/destdir/csweb/lib/libcurl.so.4")" "$PREFIX/lib/libcurl.
     echo "    sha256 $CURL_SHA256"
     echo "    $MBEDTLS_URL"
     echo "    sha256 $MBEDTLS_SHA256"
+    echo "Local modifications: initialization diagnostics, ARM EABI getrandom support for old NDK headers,"
+    echo "and /dev/urandom fallback (tools/patch-curl-diagnostics.py)."
     echo "Default CA bundle: $CA_BUNDLE"
 } > "$PREFIX/licenses-libcurl/SOURCES.txt"
 cp "$WORK/curl-$CURL_VERSION/COPYING" "$PREFIX/licenses-libcurl/curl-COPYING.txt"

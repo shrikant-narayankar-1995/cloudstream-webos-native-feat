@@ -6,6 +6,9 @@
 #include <cstring>
 
 #include <fcntl.h>
+#ifdef CSWEB_LEGACY
+#include <sys/stat.h>
+#endif
 #include <sys/wait.h>
 #include <unistd.h>
 
@@ -40,6 +43,15 @@ bool ChildProcess::start(const ChildSpec &spec, LineHandler on_line, ExitHandler
     const int err_fd = spec.stderr_path.empty()
                            ? ::open("/dev/null", O_WRONLY | O_CLOEXEC)
                            : ::open(spec.stderr_path.c_str(), O_WRONLY | O_CREAT | O_APPEND | O_CLOEXEC, 0600);
+#ifdef CSWEB_LEGACY
+    // The app and Dev Manager's prisoner account share webOS group 5000. Upgrade existing 0600
+    // logs too, and use the open descriptor so umask and pathname races cannot undo the mode.
+    if (!spec.stderr_path.empty() && (err_fd < 0 || ::fchmod(err_fd, 0640) != 0)) {
+        if (error) *error = std::string("runtime log permissions: ") + std::strerror(errno);
+        for (int fd : {in[0], in[1], out[0], out[1], err_fd}) if (fd >= 0) ::close(fd);
+        return false;
+    }
+#endif
     std::vector<char *> argv{const_cast<char *>(spec.path.c_str())};
     for (const auto &a : spec.args) argv.push_back(const_cast<char *>(a.c_str()));
     argv.push_back(nullptr);

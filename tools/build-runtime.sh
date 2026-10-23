@@ -105,7 +105,11 @@ else
     run alpine:edge sh /p/runtime/native/build-wolfssl.sh "$ARCH"
 fi
 step "compat layer and csloader (DEX)"
-run alpine:edge sh /p/runtime/build.sh
+if [[ $ARCH == armv7 ]]; then
+    run -e CSWEB_LEGACY_LOAD_TRACE=1 alpine:edge sh /p/runtime/build.sh
+else
+    run alpine:edge sh /p/runtime/build.sh
+fi
 
 step "dist"
 python3 "$ROOT/runtime/make_dist.py" "$ROOT/runtime/rootfs/$ARCH" "$ARCH" "$DIST"
